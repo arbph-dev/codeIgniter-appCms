@@ -1,0 +1,695 @@
+  /*          public\assets\css\test_style.css           */
+  /* ------------------------------------------------------------ */
+  /* 
+  2026-03-15 : integration article section en mobile first
+  2026-03-22 : séparation structure et theme
+    G:\WWW\PROJET\DAILY\CodeIgniter\Travaux\MODULARISATION\step 1.md
+
+  */
+  /* ------------------------------------------------------------ */
+:root {
+  --struct-header-h-thin : 6%;
+  --struct-header-h-normal : 8vh;
+  --struct-header-h-big : 10%;
+
+  --struct-nav-h-normal : 4vh;
+
+  --struct-tab-h-normal : 80vh;
+
+  --struct-footer-h-thin : 5%;
+  --struct-footer-h-normal : 8vh;
+  --struct-footer-h-big : 10%;    
+
+
+
+}
+
+* {box-sizing: border-box}
+
+body, html {
+  min-height: 100%; /* height: 100%; Set height of body and the document to 100% */
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  min-height:100%;/* min-height:100vh;*/
+  display:flex;
+  flex-direction:column;
+}
+
+main{
+  flex:1;
+}
+
+.wrapper{
+  width: 100%; /* width: 100vw; = peut causer overflow */
+  min-height: 100vh;
+  padding: 10px 10px;
+}
+
+  /* ------------------------------------------------------------ */
+
+header{
+  position: relative;
+  overflow: hidden;    
+  padding: 0px 10px;  /*vertical horizontal */
+  margin: 0;
+  min-height: var( --struct-header-h-normal );
+}
+
+header > * {
+    position: relative;
+    z-index: 1;
+}
+
+header h1{  
+  padding: 0px 10px;
+  text-align: center;
+  margin:0; /* evite overflow */
+}
+
+.protoss-title{  
+  margin:0;  
+} 
+
+.rwdnav{  
+  text-align: right;
+}
+
+.bg-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+
+
+.mnu-svg
+ {
+
+    text-align: center;
+    width: 60%;
+    height: 400px;
+    z-index: 0;
+    margin-left:20%; /* evite overflow */
+    margin-right:20%;
+}
+
+
+/* ------------------------------------------------------------ */
+nav{
+  position: fixed;
+  inset:0;
+  transform: translateX(-100%);
+  transition: transform .3s ease;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+nav.open{
+  transform: translateX(0);
+}
+
+nav a {
+  float: left;
+  /*text-align: center;*/
+  padding: 12px;
+  text-decoration: none;
+  font-size: 17px;
+
+}
+
+
+
+  /* -------------------- Onglet tabs---------------------------------------- */
+  .tabcontent {
+    display: none;
+    padding: 10px 20px;
+    /* min-height: 80vh;*/
+    /*    min-height: 80%; */ 
+    min-height: var( --struct-tab-h-normal );
+
+  }
+
+  /* ------------------------------------------------------------ */
+  .cp_soft-card {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+  }
+
+  /* ------------------------------------------------------------ */
+  .cp_zealot-card {
+  box-shadow: 0 8px 24px rgba(16, 6, 155, 0.534);
+  transition: transform 0.3s ease;
+  background: linear-gradient( rgba(0, 0, 255, 0.95), rgba(0, 0, 255, 0.15)),url("../img/zealot.jpg");
+  background-repeat: no-repeat;
+  /* background-size: cover; */
+  background-size: 100% auto;
+  /*background-position: center;*/
+  background-position-y:  20%;    
+  }
+
+  /* ------------------------------------------------------------ */
+
+.cp_artanis-card {
+  box-shadow: 0 8px 24px rgba(16, 6, 155, 0.534);
+  transition: transform 0.3s ease;
+
+  background:
+    linear-gradient(-45deg, rgba(0,0,255,0.95), rgba(223,231,248,0.712)),
+    url("../img/artanis.jpg");
+
+  background-size: 400% 400%, cover;
+  background-position: 0% 50%, center;
+  background-repeat: no-repeat;
+
+  animation: artanis_AnimGrad 12s ease infinite;
+}
+
+@keyframes artanis_AnimGrad {
+  0%   { background-position: 0% 50%, center; }
+  50%  { background-position: 100% 50%, center; }
+  100% { background-position: 0% 50%, center; }
+}
+
+.cp_artanis-card h3
+{
+  color: orange;
+}
+
+
+
+
+
+  /* ----------------- LEAFLET ---------------------------------- */
+
+.leafletContainer{
+  display: flex;
+  flex-direction: column;
+}
+
+#leafletMap{
+  flex: 1 0 auto;
+	padding: 5px;
+	height: 40vh;
+	box-shadow: 0 0 10px #999;
+}
+
+#leafletInfo{
+	flex: 0 1 auto;
+  padding: 1vw;
+ 	height: 10vh;
+}
+
+
+
+
+  /* ------------------------------------------------------------ */
+
+  footer{
+    min-height: var( --struct-footer-h-normal );
+    width: 100%;
+  }
+
+/*  ARTICLES / SECTION  -----------------------------------------------------------------------------------------------
+
+*/
+article{
+  padding: 10px;      
+}
+
+article > section > div{ 
+  display: flex;
+  flex-direction: column;  
+}
+
+article > section > div > aside {
+  flex: 1 1 auto;
+  width: 100%;
+}
+  
+    /* ------------------------------------------------------------ 
+                cp_codeval
+    */
+
+  .cp_codeval { 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden; 
+    display: block;
+  }
+
+  .cp_codeval .titre { 
+    background-color: #0000ff;
+    color: #cfcfcf;
+    cursor: pointer;
+    padding: 10px; 
+  }
+
+  .cp_codeval .result { display: none; padding: 10px; }
+
+  .cp_codeval .scriptcode { display: none; padding: 10px; }
+
+  /* .cp_codeval .scriptcode textarea { height: 200px; width: 100%; overflow-y: auto; } */
+  .cp_codeval .scriptcode textarea { height: auto; width: 100%; overflow-y: auto; }  
+
+
+    /* ------------------------------------------------------------ 
+                cp_callout
+    */
+
+  .cp_callout {
+      border: 1px solid #ccc;
+      margin: 1rem 0;
+      padding: 0;
+      border-radius: 5px;
+      overflow: hidden;
+      display:block;
+  }
+  .cp_callout .titre {
+      background-color: #f1f1f1;
+      padding: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  .cp_callout .content {
+      display: none;
+      padding: 10px;
+      background-color: #fff;
+      margin-top: 10px; /* Espace entre les autres éléments de la page */
+      max-height: 150px; /* Hauteur maximale du conteneur pour éviter que le contenu ne déborde */
+      overflow-y: auto; /* Ajoute une barre de défilement si le texte dépasse la hauteur définie */
+  }
+
+
+  .danger{ color:red }
+  .info{ color:blue; }
+  .note{color:#0b9d14;}
+  .warning{color:orange;}
+
+  .cp_callout .danger .titre{ display: flex; align-items: center; border-bottom: 5px solid red; background-color: lightpink; }
+  .cp_callout .info .titre{ display: flex; align-items: center; border-bottom: 5px solid blue; background-color: lightcyan;}
+  .cp_callout .note .titre { display: flex; align-items: center; border-bottom: 5px solid #0b9d14; background-color: #7fd0ae;}
+  .cp_callout .warning .titre { display: flex; align-items: center; border-bottom: 5px solid #ea8f1b; background-color: #f45819; }
+  
+  /* ------------------------------------------------------------ */
+
+
+  .cp_carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 6px;
+  }
+
+  /* Ratio desktop 16/9 */
+  .cp_carousel-ready {
+    aspect-ratio: 16 / 9;
+  }
+
+  .cp_carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cp_slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+  }
+
+  .cp_slide.active {
+    display: block;
+  }
+
+
+/*                     TABLEAUX                */
+.cp_table {  
+    width: 100%;  
+    border-collapse: collapse;  
+    margin-top: 10px;  
+}  
+  
+.cp_table th, .cp_table td {  
+    border: 1px solid #ccc;  
+    padding: 6px 10px;  
+    text-align: left;  
+}  
+  
+.cp_table th {  
+    background: #f5f5f5;  
+}  
+  
+.cp_table tr:hover {  
+    background: #fafafa;  
+}  
+
+
+
+
+
+
+
+
+
+
+/*---------------------- dialog et forms ---------------------------------------*/
+
+
+/* -------------------------------  */
+/* Formulaire */
+
+form.form_style1 {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  display:flex;
+	flex-wrap: wrap;
+}
+
+
+form.form_style1 > label {
+  /* display: block; */
+  width: 40%;
+  padding: 12px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #9be7b4;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+form.form_style1 select {
+  width: 60%;
+  padding: 12px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #9be7b4;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+form.form_style1 input[type="text"] , 
+form.form_style1 input[type="email"], 
+form.form_style1 input[type="number"], 
+form.form_style1 input[type="date"],
+form.form_style1 input[type="password"]
+{
+  width: 60%;
+  padding: 12px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #9be7b4;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+form.form_style1 input[type=text]:invalid {
+    border: 4px solid #972e3c;
+}
+
+/* a conserver pour rwd ??
+form.form_style1 input[type="radio"] {
+  width: 60%;
+  padding: 12px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #9be7b4;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+form.form_style1 input[type="radio"]:checked {
+  border: 6px solid black;
+  box-shadow: 0 0 0 3px orange;
+
+}
+  #form3 > label.radio > input[type=radio]
+
+  #form3 > div.radio > label:nth-child(1)
+*/
+
+div.radio {
+  display: inline-flex;
+  flex-direction: row;
+  width: 100%;
+  border: 1px solid #9be7b4;
+}
+
+div.radio > label{
+  flex:1 0 auto;
+  padding: 12px;
+  /*margin: 8px 0;*/
+  border-radius: 4px;
+}
+
+div.radio  > label > input[type="radio"]:checked {
+  border: 6px solid black;
+  box-shadow: 0 0 0 3px orange;
+
+}
+
+
+div.checkbox {
+  display: inline-flex;
+  flex-direction: row;
+  width: 100%;
+  border: 1px solid #9be7b4;
+}
+
+div.checkbox > label{
+  flex:1 0 auto;
+  padding: 12px;
+  /*margin: 8px 0;*/
+  border-radius: 4px;
+}
+
+div.checkbox  > label > input[type="checkbox"]:checked {
+  border: 6px solid black;
+  box-shadow: 0 0 0 3px orange;
+
+}
+
+
+
+form.form_style1 textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #9be7b4;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+ 
+
+form.form_style1 input[type=submit] {
+  width: 60%;
+  padding: 12px;
+  margin: 8px auto;
+  display: inline-block;
+  border: 1px solid #45a049;;
+  background-color: #9be7b4;;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+form.form_style1 input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+
+/*
+
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+*/
+
+
+
+/* COMPOSANT dialog  */
+/* État ouvert du dialogue */
+dialog:open {
+  opacity: 1;
+  transform: scaleY(1);
+  margin: auto;
+  width: 80vw;
+  min-height: 40vh;
+}
+
+/* État fermé du dialogue */
+dialog {
+  opacity: 0;
+  transform: scaleY(0);
+  transition:
+    opacity 0.7s ease-out,
+    transform 0.7s ease-out,
+    overlay 0.7s ease-out allow-discrete,
+    display 0.7s ease-out allow-discrete;
+  /* Equivalent to
+  transition: all 0.7s allow-discrete; */
+}
+
+/* État avant ouverture */
+/* Doit se trouver après la règle dialog:open précédente pour prendre effet,
+    car la spécificité est la même */
+@starting-style {
+  dialog:open {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+}
+
+/* Transition du ::backdrop lorsque la boîte de dialogue modale est promue en couche supérieure */
+dialog::backdrop {
+  background-color: transparent;
+  transition:
+    display 0.7s allow-discrete,
+    overlay 0.7s allow-discrete,
+    background-color 0.7s;
+  /* Equivalent to
+  transition: all 0.7s allow-discrete; */
+}
+
+dialog:open::backdrop {
+  background-color: rgb(0 0 0 / 25%);
+}
+
+/* Cette règle @starting-style ne peut pas être imbriquée dans le sélecteur ci‑dessus
+   car le sélecteur imbriqué ne peut pas représenter des pseudo-éléments. */
+
+@starting-style {
+  dialog:open::backdrop {
+    background-color: transparent;
+  }
+}
+
+/*----------------------------------------------------------------------------------------*/
+
+#dataList_article{
+  background-color    : white; 
+}
+
+#dataList_article.ListSimple{
+  background-color    : white; 
+}
+
+
+
+/* États : Loading, Error, Empty */
+.loading-state, .error-state, .empty-state {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    border: 2px dashed red;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.loading-state p {
+    font-size: 1.2rem;
+    color: orange;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.error-state p {
+    color: #d32f2f;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.error-state button,
+.empty-state button {
+    margin-top: 1rem;
+    padding: 0.5rem 1.5rem;
+    background-color: lightgray;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.error-state button:hover,
+.empty-state button:hover {
+    background-color: darkgray;
+}
+
+.empty-state p {
+    color: peru;
+    font-size: 1.1rem;
+}
+
+
+
+  /* ----- RWD specifique  PC -------------------------------------------------------------------------------  */
+  @media (min-width: 768px) {
+
+  /* -------------------- header pc ------------------------------------- */
+  header{
+    height: var( --struct-header-h-normal );
+  }
+  header div.rwdnav{ display: none; }
+
+  .closebtn{ display: none; }
+
+  /* -------------------- article pc ------------------------------------- */
+  article > section > div{ 
+    display: flex;
+    flex-direction: row;
+  }
+  article > section > div > aside{
+	  flex: 0 0 360px;
+/*	  background: rgb(191, 238, 240); */
+    height: auto;
+    padding: 1vw;    
+  }
+
+  article > section > div > div{
+    flex: 1 1 auto;
+    width: auto;
+    height: auto;
+    padding:1vw;  
+  }
+
+
+article > section > div > div > h3::before {
+    content: '\1F4D1';
+}
+
+
+/* -------------------- nav pc ------------------------------------- */
+
+  nav{
+    position : relative;
+    flex-direction: row;
+    width: 100%;
+    transform: translateX(0);
+    height: var( --struct-nav-h-normal );     
+    z-index: 1; 
+  }
+
+  /* -------------------- footer pc ------------------------------------- */
+    footer {
+      height: var( --struct-footer-h-normal );
+    }
+  }
+
