@@ -62,9 +62,12 @@ class AdresseService
      */
     public function mapToAdresse(array $result): array
     {
-        $mapper = ($result['source'] ?? '') === 'ban' 
+       /* 
+       $mapper = ($result['source'] ?? '') === 'ban' 
                 ? $this->getBanToAdresseMapper() 
-                : $this->getNominatimToAdresseMapper();
+                : $this->getNominatimToAdresseMapper(); 
+        */
+        $mapper = ($result['source'] ?? '') === 'ban' ? new BanAdresseMapper() : new NominatimAdresseMapper();
 
         $mapping = $mapper->apply($result);
 
