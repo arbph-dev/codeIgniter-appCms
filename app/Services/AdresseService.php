@@ -6,6 +6,11 @@ use App\Libraries\FieldMapper;
 use App\Models\AdresseModel;
 use App\Sources\BanSource;
 use App\Sources\NominatimSource;
+
+use Mappers\Adresse\BanAdresseMapper;
+use Mappers\Adresse\NominatimAdresseMapper;
+
+    
 use Config\Services;
 
 class AdresseService
