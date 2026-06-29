@@ -1,4 +1,4 @@
 
 # Architecture
 
-[DescriptorDefinition](DescriptorDefinition.md)
+[DescriptorDefinition](documentation/ARCHITECTURE/DescriptorDefinition.md)
