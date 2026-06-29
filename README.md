@@ -1,1 +1,3 @@
-IA no more !!
+
+"in the light we trust, we the people !!"
+
