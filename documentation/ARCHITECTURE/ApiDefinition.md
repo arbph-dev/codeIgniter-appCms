@@ -11,8 +11,18 @@ Elle ne contient aucun code métier.
 
 ## Exemple
 
-```
-{    name: 'adresseApi',    baseUrl: '/api/adresse',    endpoints: {        list   : 'GET /',        detail : 'GET /:id',        create : 'POST /',        update : 'PUT /:id',        delete : 'DELETE /:id'    }}
+```json
+{
+  name: 'adresseApi',
+  baseUrl: '/api/adresse',
+  endpoints: {
+        list   : 'GET /',
+        detail : 'GET /:id',
+        create : 'POST /',
+        update : 'PUT /:id',
+        delete : 'DELETE /:id'
+    }
+}
 ```
 
 ---
