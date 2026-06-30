@@ -1,0 +1,54 @@
+            /*-------------------------------*/
+            /* 
+            
+            app/Libraries/Components/AdminRenderers/RawAdminRenderer.php
+
+            .cp_wysedit_zone
+            .cp_toolbar
+            .cp_wysedit_toggle
+            .cp_wysedit_textarea
+            .cp_wysedit_view  
+            */
+
+            .cp_wysedit_section {
+                margin-bottom: 1em;
+            }
+
+            .cp_wysedit_h2 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+            }
+
+            .cp_wysedit_div {
+            display: flex;
+            gap: 1em;
+            }
+
+            .cp_wysedit_content {
+            flex: 1;
+            border: 1px solid #ccc;
+            padding: 0.5em;
+            min-height: 100px;
+            background-color: #fff;
+            }
+
+            .cp_wysedit_aside {
+            width: 150px;
+            background-color: #f0f0f0;
+            padding: 0.5em;
+            }
+
+            .cp_wysedit_textarea {
+            width: 100%;
+            min-height: 150px;
+            font-family: monospace;
+            font-size: 1em;
+            margin-top: 1em;
+            }
+
+            .cp_wysedit_view {
+            border: 1px solid #ccc;
+            padding: 0.5em;
+            min-height: 150px;
+            background-color: #fafafa;
+            }
