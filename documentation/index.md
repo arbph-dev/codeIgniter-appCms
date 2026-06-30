@@ -13,9 +13,12 @@
 
 ## DescriptorDefinition
 DescriptorDefinition
-[Documentation](ARCHITECTURE/DescriptorDefinition.md)
-[Implémentation](refactoring/app/Libraries/Components/DescriptorDefinition.php)
 
+[Documentation](ARCHITECTURE/DescriptorDefinition.md)
+
+[Implémentation](/refactoring/app/Libraries/Components/DescriptorDefinition.php)
+
+---
 
 [EntityDefinition](ARCHITECTURE/EntityDefinition.md)
 
