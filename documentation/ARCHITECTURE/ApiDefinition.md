@@ -11,7 +11,7 @@ Elle ne contient aucun code métier.
 
 ## Exemple
 
-```json
+```js
 {
   name: 'adresseApi',
   baseUrl: '/api/adresse',
