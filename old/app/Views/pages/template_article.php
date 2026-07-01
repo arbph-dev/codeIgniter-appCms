@@ -1,0 +1,17 @@
+<?= $this->extend('layouts/layout_nonav') ?>
+
+<?= $this->section('nav') ?>
+<nav>
+<a href="/technologies/<?= $rubrique ?>"><?= $rubrique ?></a>
+
+    <?php foreach ($nav as $item): ?>
+        <a href="<?= $item['url'] ?>"><?= $item['label'] ?></a>
+    <?php endforeach; ?>
+</nav>
+<?= $this->endSection() ?>
+
+<?= $this->section('content') ?>
+<article>
+    <?= $this->include($content) ?>
+</article>
+<?= $this->endSection() ?>
