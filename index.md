@@ -23,21 +23,6 @@ Les étapes du projet sont abordées dans [index](/project/index.md)
 - [sections](/documentation/sections.md)
 - [parts](/documentation/parts.md)
 
-## Exploitation
-
-### visualisation Category
-[https://zealot.fr/cms/category/test-cat](https://zealot.fr/cms/category/test-cat)
-
-```php
-$routes->get( 'cms/category/(:segment)', 'CmsController::category/$1');
-```
-	
-
-controller : CmsController
-méthode : category
-paramètre : string **slug** de l'article a consulter
-
----
 
 
 ## Administration
