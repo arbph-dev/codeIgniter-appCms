@@ -113,7 +113,14 @@ Il orchestre simplement plusieurs composants simples.
 Principe validé :
 
 ```
-$type = $part['type'] ?? 'raw';if ($type === 'raw') {    echo $part['content'];} else {    echo view(        "components/{$type}",        $part    );}
+$type = $part['type'] ?? 'raw';
+
+if ($type === 'raw') {
+    echo $part['content'];
+}
+else {
+    echo view( "components/{$type}", $part );
+}
 ```
 
 Le CMS devient un moteur de rendu basé sur les descripteurs.
