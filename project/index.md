@@ -27,24 +27,7 @@ paramètre : ---
 ---
 
 
-## Vue PHP
 
-Principe validé :
-
-```php
-$type = $part['type'] ?? 'raw';
-
-if ($type === 'raw') {
-    echo $part['content'];
-}
-else {
-    echo view( "components/{$type}", $part );
-}
-```
-
-Le CMS devient un moteur de rendu basé sur les descripteurs.
-
----
 
 
 
