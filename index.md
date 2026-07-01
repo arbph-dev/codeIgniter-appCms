@@ -11,8 +11,11 @@ Construire une plateforme SPA professionnelle permettant :
 - composants JS
 - système expert futur
 
----
 
+## Projet
+Les étapes du projet sont abordées dans [index](/project/index.md)
+
+---
 ## Architecture CMS
 Structure validée :
 ```
@@ -24,13 +27,11 @@ parts
 ### categories
 
 
-
-
 ### articles
 
 ### sections
 
----
+
 ### Part
 Part devient l'unité de rendu.
 Une part contient :
