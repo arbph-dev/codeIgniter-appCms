@@ -1,4 +1,24 @@
-Dans cette section on regroupe le snotes inhérentes au projet
+Dans cette section on regroupe les notes inhérentes au projet
+
+Portail CMS : categories → articles → sections → parts
+MySQL 8+ / MariaDB 10.5+ (InnoDB, utf8mb4)
+Descripteurs de composants stockés en JSON sur parts.config
+
+## Administration
+
+### visualisation cms
+```php
+$routes->get( 'admin/cmstree', 'Admin\CmsTree::index' );
+```
+	https://zealot.fr/admin/cmstree
+
+controller : Admin\CmsTree
+méthode : index
+paramètre : ---
+
+
+# Audit
+---
 
 Phase 0 - Stabilisation
     Objectifs
