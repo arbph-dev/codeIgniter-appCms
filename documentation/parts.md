@@ -29,5 +29,10 @@ else {
 }
 ```
 
+## Migrations
+Les parts sont stockées dans la table cmsparts.
 
+La migration est détaillé ici : 
+
+## Model
 
