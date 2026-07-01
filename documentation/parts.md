@@ -32,7 +32,7 @@ else {
 ## Migrations
 Les parts sont stockées dans la table cmsparts.
 
-La migration est détaillé ici : 
+La migration est détaillé ici : [migration cmsparts](/documentation/MIGRATIONS/cmsparts.md#migration)
 
 ## Model
 
