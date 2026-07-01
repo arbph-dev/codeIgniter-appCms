@@ -5,7 +5,7 @@ permet une gestion des catégories d'articles
 
 
 
-## SQL
+## Migration
 
 
 ```sql
