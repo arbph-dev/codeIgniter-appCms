@@ -112,7 +112,7 @@ Il orchestre simplement plusieurs composants simples.
 
 Principe validé :
 
-```
+```php
 $type = $part['type'] ?? 'raw';
 
 if ($type === 'raw') {
