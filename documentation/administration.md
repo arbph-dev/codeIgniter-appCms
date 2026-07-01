@@ -6,11 +6,13 @@ les controleurs :
 le service :
 
 les vues:
+‎- admin/cmspart/index
+- admin/cmspart/edit
 
 ## Controleurs
 
 ### CmsPart
-Le controleur CmsPart permet la gestion des [Parts](/documentation/parts.md)
+Le controleur CmsPart permet la gestion CRUD des [Parts](/documentation/parts.md)
 
 Il emploie le service : 
 
@@ -27,7 +29,7 @@ Les méthodes du controleur :
 
 
 
-### visualisation cms
+# visualisation cms
 url : [https://zealot.fr/admin/cmstree](https://zealot.fr/admin/cmstree)
 
 routes : 
