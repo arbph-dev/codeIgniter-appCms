@@ -17,7 +17,7 @@ L'application doit permettre de présenter le contenu et de le gérér en propos
 
 ## Modules 
 Les modules principaux seront :
-- categories
+- [categories](/documentation/categories.md)
 - articles
 - sections
 - parts
