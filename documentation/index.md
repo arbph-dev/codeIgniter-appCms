@@ -18,9 +18,9 @@ L'application doit permettre de présenter le contenu et de le gérér en propos
 ## Modules 
 Les modules principaux seront :
 - [categories](/documentation/categories.md)
-- articles
-- sections
-- parts
+- [articles](/documentation/articles.md)
+- [sections](/documentation/sections.md)
+- [parts](/documentation/parts.md)
 
 ## Composants
 Les composants sont réalisés su rla base de composant javascript, des composant sélementaires pourront se combiner
