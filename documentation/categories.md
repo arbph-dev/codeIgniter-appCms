@@ -11,10 +11,17 @@
 ```php
 $routes->get( 'cms/category/(:segment)', 'CmsController::category/$1');
 ```
-	
 
-controller : CmsController
-méthode : category
-paramètre : string **slug** de l'article a consulter
+controller :
+
+CmsController
+
+méthode :
+
+category
+
+paramètre :
+
+string **slug** de l'article a consulter
 
 ---
