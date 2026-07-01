@@ -1,0 +1,509 @@
+  /* ------------------------------------------------------------ */
+  /*
+  2026-03-15 : integration article section en mobile first
+
+  TODO
+    DIMENSION STRUCTURE
+      largeur
+
+      hauteur
+
+
+        100vh = 
+
+PC 16 / 9 TELEPHONE 9/16
+- body 100% et min-height:100vh;
+PC  :
+TEL :
+
+- header
+PC  : header n'as pas de dimension
+  5vh
+TEL : header n'as pas de dimension
+
+- nav
+  PC  :  auto
+
+- main
+  div .tabcontent
+    min-height: 80vh;
+- footer
+    min-height: 5%;
+
+mettre en vh ou en% mais eviter mixer 2
+
+PC
+header        10
+nav           5
+main
+  tabcontent  80
+footer        5
+
+= 100
+
+  */
+  /* ------------------------------------------------------------ */
+  :root {
+    --primary-bg-color: #ffffff;
+    --primary-color: #0000ff;
+    --struct-p10 : 5vw;
+
+    /* palette Protoss */  
+    --protoss-blue:#2aa9ff;  
+    --protoss-light:#7fd3ff;  
+    --protoss-glow:rgba(42,169,255,.7);  
+    --protoss-bg:#020a18;
+
+
+
+  }
+
+
+  * {box-sizing: border-box}
+
+  /* Set height of body and the document to 100% */
+  body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    background-color: var(--primary-bg-color);
+    color: var(--primary-color);
+  }
+
+body{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+main{
+  flex:1;
+}
+
+
+
+
+  .wrapper{
+    width: 100%; /* width: 100vw; = peut causer overflow */
+    min-height: 100vh;
+    padding: 10px 10px;
+    font-family: Arial, Helvetica, sans-serif;    
+    background-color: rgba(11, 78, 223, 0.6); /* Black w/opacity/see-through */
+  }
+
+  /* ------------------------------------------------------------ */
+
+
+
+  header.blue{
+    background-color: var(--primary-color); 
+    color: orange;
+    position: relative;
+    overflow: hidden;    
+    /* border: 1px solid black; */
+    /* padding: 1px 10px; /* vertical horizontal */
+    padding: 0px 10px;  /*vertical horizontal */
+    margin: 0;
+  }
+
+  header.blue > * {
+      position: relative;
+      z-index: 1;
+  }
+
+  header.blue h1{  
+    color: white;
+    padding: 0px 10px;
+    text-align: center;
+    margin:0; /* evite overflow */
+  }
+
+.protoss-title{  
+  color:white;  
+  text-shadow:  
+  0 0 8px var(--protoss-glow),  
+  0 0 18px var(--protoss-glow);  
+  margin:0;  
+} 
+
+
+  header.blue > div{  
+    color: orange;
+/*    display: flex;*/
+  }
+
+  .rwdnav{  
+    text-align: right;
+  }
+
+  .bg-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+  }
+
+/* ------------------------------------------------------------ */
+
+  nav{
+    position: fixed;
+    inset:0;
+    background:#555;
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+        display: flex;
+    flex-direction: column;
+  }
+
+  nav.open{
+    transform: translateX(0);
+  }
+
+  nav a {
+    float: left;
+    /*text-align: center;*/
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+
+  }
+
+  /* Navbar links on mouse-over */
+  nav a:hover {
+    background-color: #000;
+  }
+
+  /* Current/active navbar link */
+  nav a.active {
+    background-color: var(--primary-color);
+  }
+
+  /* ------------------------------------------------------------ */
+  .tabcontent {
+    display: none;
+    padding: 10px 20px;
+    min-height: 80vh;    /*    min-height: 80%; */
+  }
+
+  /* ------------------------------------------------------------ */
+  .cp_soft-card {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+  }
+
+  /* ------------------------------------------------------------ */
+  /*
+  .animated-bg {
+background: linear-gradient(-45deg, #ff4d4d, #6c6cff, #00ffd5, #ffb347);
+background-size: 400% 400%;
+animation: gradientFlow 12s ease infinite;
+}
+
+
+
+    animation: TopContent_AnimGrad 10s infinite;
+    animation-direction: alternate-reverse;
+
+
+@keyframes artanis_AnimGrad { from {
+  background-color: rgba(52, 149, 240, 0.842);
+} 
+to {
+  background-color: rgba(126, 230, 112, 0.5);
+} 
+
+}
+
+linear-gradient( -45deg, rgba(0, 0, 255, 0.95), rgba(223, 231, 248, 0.712)),url("../img/artanis.jpg")    
+
+  */
+  .cp_zealot-card {
+  box-shadow: 0 8px 24px rgba(16, 6, 155, 0.534);
+  transition: transform 0.3s ease;
+  background: linear-gradient( rgba(0, 0, 255, 0.95), rgba(0, 0, 255, 0.15)),url("../img/zealot.jpg");
+  background-repeat: no-repeat;
+  /* background-size: cover; */
+  background-size: 100% auto;
+  /*background-position: center;*/
+  background-position-y:  20%;    
+  }
+
+
+/* background: linear-gradient( -45deg, rgba(0, 0, 255, 0.95), rgba(223, 231, 248, 0.712)),url("../img/artanis.jpg"); */  
+/* ------------------------------- ARTANIS ----------------------------------------------------  
+@keyframes artanis_AnimGrad { 
+  from {
+   background : linear-gradient( -45deg, rgba(0, 0, 255, 0.95), rgba(223, 231, 248, 0.712)),url("../img/artanis.jpg")
+  } 
+  to {
+  background : linear-gradient( 45deg, rgba(0, 0, 255, 0.95), rgba(223, 231, 248, 0.712)),url("../img/artanis.jpg")
+  } 
+}
+
+  .cp_artanis-card {
+  box-shadow: 0 8px 24px rgba(16, 6, 155, 0.534);
+  transition: transform 0.3s ease;
+  animation: artanis_AnimGrad 10s infinite;
+  animation-direction: alternate-reverse;
+  background-size: cover;
+  background-position: center;    
+  }
+
+
+*/
+.cp_artanis-card {
+  box-shadow: 0 8px 24px rgba(16, 6, 155, 0.534);
+  transition: transform 0.3s ease;
+
+  background:
+    linear-gradient(-45deg, rgba(0,0,255,0.95), rgba(223,231,248,0.712)),
+    url("../img/artanis.jpg");
+
+  background-size: 400% 400%, cover;
+  background-position: 0% 50%, center;
+  background-repeat: no-repeat;
+
+  animation: artanis_AnimGrad 12s ease infinite;
+}
+
+@keyframes artanis_AnimGrad {
+  0%   { background-position: 0% 50%, center; }
+  50%  { background-position: 100% 50%, center; }
+  100% { background-position: 0% 50%, center; }
+}
+
+.cp_artanis-card h3
+{
+  color: orange;
+}
+
+
+
+
+
+  /* ----------------- LEAFLET ---------------------------------- */
+
+.leafletContainer{
+  display: flex;
+  flex-direction: column;
+}
+
+#leafletMap{
+  flex: 1 0 auto;
+	padding: 5px;
+	height: 40vh;
+	box-shadow: 0 0 10px #999;
+}
+
+#leafletInfo{
+	flex: 0 1 auto;
+  padding: 1vw;
+ 	height: 10vh;
+}
+
+
+
+
+  /* ------------------------------------------------------------ */
+
+  footer{
+    min-height: 5%;
+    width: 100%; /* width: 100vw; peut causer overflow */
+    background-color: var(--primary-color); 
+    color: orange;
+  }
+
+/*  ARTICLES / SECTION  -----------------------------------------------------------------------------------------------
+
+*/
+  article{
+      /* background-color: var(--primary-color); */
+    background-color: var(--primary-bg-color);
+    border: 2px solid #ccc;
+    border-radius: 20px;    
+    padding: 10px;      
+  }
+
+  article > header { 
+    background-color: var(--primary-color); 
+  }
+  article > header > h1 { 
+    background-color: var(--primary-bg-color);
+    color: #acacac;
+  }
+  article > header > p { 
+    color: #eef110;
+  }  
+  article > section { background-color: #dcdcdc; }
+
+  article > section > h2{
+    color: blueviolet;
+  }
+  article > section > div{ 
+    display: flex;
+    flex-direction: column;  
+  }
+  article > section > div > aside {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+  
+    /* ------------------------------------------------------------ 
+                cp_codeval
+    */
+
+  .cp_codeval { 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden; 
+    display: block;
+  }
+
+  .cp_codeval .titre { 
+    background-color: #0000ff;
+    color: #cfcfcf;
+    cursor: pointer;
+    padding: 10px; 
+  }
+
+  .cp_codeval .result { display: none; padding: 10px; }
+
+  .cp_codeval .scriptcode { display: none; padding: 10px; }
+
+  .cp_codeval .scriptcode textarea { height: 200px; width: 100%; overflow-y: auto; }
+
+
+    /* ------------------------------------------------------------ 
+                cp_codeval
+    */
+
+  .cp_callout {
+      border: 1px solid #ccc;
+      margin: 1rem 0;
+      padding: 0;
+      border-radius: 5px;
+      overflow: hidden;
+      display:block;
+  }
+  .cp_callout .titre {
+      background-color: #f1f1f1;
+      padding: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  .cp_callout .content {
+      display: none;
+      padding: 10px;
+      background-color: #fff;
+      margin-top: 10px; /* Espace entre les autres éléments de la page */
+      max-height: 150px; /* Hauteur maximale du conteneur pour éviter que le contenu ne déborde */
+      overflow-y: auto; /* Ajoute une barre de défilement si le texte dépasse la hauteur définie */
+  }
+
+
+  .danger{ color:red }
+  .info{ color:blue; }
+  .note{color:#0b9d14;}
+  .warning{color:orange;}
+
+  .cp_callout .danger .titre{ display: flex; align-items: center; border-bottom: 5px solid red; background-color: lightpink; }
+  .cp_callout .info .titre{ display: flex; align-items: center; border-bottom: 5px solid blue; background-color: lightcyan;}
+  .cp_callout .note .titre { display: flex; align-items: center; border-bottom: 5px solid #0b9d14; background-color: #7fd0ae;}
+  .cp_callout .warning .titre { display: flex; align-items: center; border-bottom: 5px solid #ea8f1b; background-color: #f45819; }
+  
+  /* ------------------------------------------------------------ */
+
+
+  .cp_carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 6px;
+  }
+
+  /* Ratio desktop 16/9 */
+  .cp_carousel-ready {
+    aspect-ratio: 16 / 9;
+  }
+
+  .cp_carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cp_slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+  }
+
+  .cp_slide.active {
+    display: block;
+  }
+
+
+
+
+
+
+
+  /* ----- RWD specifique  PC
+
+  */
+  @media (min-width: 768px) {
+
+
+  header{min-height: 10vh;}
+
+  article > section > div{ 
+    display: flex;
+    flex-direction: row;
+  }
+  article > section > div > aside{
+	  flex: 0 0 360px;
+	  background: rgb(191, 238, 240);
+    height: auto;
+    padding: 1vw;    
+  }
+
+article > section > div > div{
+  flex: 1 1 auto;
+  width: auto;
+  background-color    : var(--theme-color-2); 
+  color               : var(--theme-color-6);
+  height: auto;
+  padding:1vw;  
+}
+
+/* -------------------- nav pc -------------------------------------*/
+
+
+    nav{
+      position : relative;
+      height: auto;
+      flex-direction: row;
+      width: 100%;
+      transform: translateX(0);
+      min-height: 5vh;      
+    }
+
+    header div.rwdnav{
+      display: none;    
+    }
+
+    .closebtn{
+      display: none;    
+    }
+
+    footer {
+      min-height: 10vh;
+    }
+  }
+
