@@ -15,14 +15,22 @@ Le controleur CmsPart permet la gestion des [Parts](/documentation/parts.md)
 Il emploie le service : 
 
 Les méthodes du controleur :
+
 - CmsPart.index
+
 - CmsPart.edit
-‎- CmsPart.update
-‎- CmsPart.create
-‎- CmsPart.insert
-‎- CmsPart.delete
-‎- CmsPart.up
-‎- CmsPart.down
+‎
+- CmsPart.update
+‎
+- CmsPart.create
+‎
+- CmsPart.insert
+‎
+- CmsPart.delete
+‎
+- CmsPart.up
+‎
+- CmsPart.down
 
 
 
