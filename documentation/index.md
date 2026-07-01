@@ -1,6 +1,31 @@
 
+
+# Structure du contenu
+
+Le contenu se répartit dans des **articles** de différentes **categories**.
+Les **catgories** ont une structure hiérachique.
+
+Les **articles** des **categories** sont composés de une à plusieurs **sections**.
+
+Les **sections** sont composées de **parts**.
+Une part est assimilable à un paragraphe , elle incluera un composant et une zone aside
+
+
+## Modules 
+Les modules principaux seront :
+- categories
+- articles
+- sections
+- parts
+
+
+
+
+
+
 # Architecture
 
+## Classes
 [ApiDefinition](ARCHITECTURE/ApiDefinition.md)
 
 [ApplicationDefinition](ARCHITECTURE/ApplicationDefinition.md)
@@ -11,7 +36,7 @@
 
 [CompositeComponentDefinition](ARCHITECTURE/CompositeComponentDefinition.md)
 
-## DescriptorDefinition
+### DescriptorDefinition
 DescriptorDefinition
 
 [Documentation](ARCHITECTURE/DescriptorDefinition.md)
