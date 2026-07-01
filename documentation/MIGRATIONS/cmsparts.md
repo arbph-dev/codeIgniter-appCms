@@ -1,25 +1,7 @@
 
 # cmsparts
 
----
-config JSON — exemples par type :
-type = 'codeval'
-```
-{ "rows": 12, "script": "const P2_rel_bar = 0.3\n..." }
-```
-type = 'apex'
-```
-{ "chart": "moteurCouple", "height": 350, "payload": {} }
-```
-type = 'mermaid'
-```
-{ "definition": "gantt\n  dateFormat YYYY-MM-DD\n  ...", "autorun": false }
-```
-type = 'raw'
-```
-config NULL 
-content et aside contiennent le HTML directement
-```
+
 
 ## Migration
 ```sql
