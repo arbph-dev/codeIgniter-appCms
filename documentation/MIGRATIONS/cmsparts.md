@@ -21,7 +21,7 @@ config NULL
 content et aside contiennent le HTML directement
 ```
 
-## Migrations
+## Migration
 ```sql
 CREATE TABLE IF NOT EXISTS `cmsparts` (  
 `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,  
