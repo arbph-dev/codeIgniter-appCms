@@ -1,8 +1,10 @@
 La partie administration est réalisé avec :
 
 les controleurs :
-- [Admin\CmsTree](/refactoring/app/Controllers/Admin/CmsTree.php)
-‎
+- [Admin/CmsPart](refactoring/app/Controllers/Admin/CmsPart.php)
+- [Admin/CmsTree](/refactoring/app/Controllers/Admin/CmsTree.php)
+
+
 le service :
 
 les vues:
