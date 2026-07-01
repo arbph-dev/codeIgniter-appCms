@@ -1,7 +1,7 @@
 La partie administration est réalisé avec :
 
 les controleurs :
-- Admin\CmsTree
+- [Admin\CmsTree](/refactoring/app/Controllers/Admin/CmsTree.php)
 
 le service :
 
@@ -15,6 +15,6 @@ routes :
 ```php
 $routes->get( 'admin/cmstree', 'Admin\CmsTree::index' );
 ```
-controller : Admin\CmsTree 
+controller : [Admin\CmsTree](/refactoring/app/Controllers/Admin/CmsTree.php)
 méthode : index
 paramètre : ---
