@@ -16,19 +16,32 @@ Construire une plateforme SPA professionnelle permettant :
 Les étapes du projet sont abordées dans [index](/project/index.md)
 
 ---
-## Architecture CMS
-Structure validée :
+# Architecture CMS
+## Structure
 - [categories](/documentation/categories.md)
 - [articles](/documentation/articles.md)
 - [sections](/documentation/sections.md)
 - [parts](/documentation/parts.md)
 
+## Exploitation
+
+### visualisation Category
+```php
+$routes->get( 'cms/category/(:segment)', 'CmsController::category/$1');
+```
+	https://zealot.fr/cms/category/test-cat
+
+controller : CmsController
+méthode : category
+paramètre : string **slug** de l'article a consulter
+
+---
+
+
 ## Administration
 
 - [administration](/documentation/administration.md)
 
-
----
 
 # Ressources
 
