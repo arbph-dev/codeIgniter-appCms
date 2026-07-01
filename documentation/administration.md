@@ -7,9 +7,14 @@ les controleurs :
 
 le service :
 
-les vues:
-‎- admin/cmspart/index
-- admin/cmspart/edit
+
+les vues :
+‎- [admin/cmspart/index](/refactoring/app/Views/admin/cmspart/index.php)
+- [admin/cmspart/edit](/refactoring/app/Views/admin/cmspart/edit.php)
+- [admin/cmstree/index.php](/refactoring/app/Views/admin/cmstree/index.php)
+  emploie la vue admin/cmstree/node
+- [admin/cmstree/node.php](/refactoring/app/Views/admin/cmstree/node.php)
+
 
 ## Controleurs
 
