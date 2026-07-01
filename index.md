@@ -18,8 +18,8 @@ Les étapes du projet sont abordées dans [index](/project/index.md)
 ---
 ## Architecture CMS
 Structure validée :
-- categories
-- articles
-- sections
+- [categories](/documentation/categories.md)
+- [articles](/documentation/articles.md)
+- [sections](/documentation/sections.md)
 - [parts](/documentation/parts.md)
 
