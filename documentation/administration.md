@@ -1,7 +1,7 @@
 La partie administration est réalisé avec :
 
 les controleurs :
-- [Admin/CmsPart](refactoring/app/Controllers/Admin/CmsPart.php)
+- [Admin/CmsPart](/refactoring/app/Controllers/Admin/CmsPart.php)
 - [Admin/CmsTree](/refactoring/app/Controllers/Admin/CmsTree.php)
 
 
@@ -14,7 +14,7 @@ les vues:
 ## Controleurs
 
 ### CmsPart
-Le controleur CmsPart permet la gestion CRUD des [Parts](/documentation/parts.md)
+Le controleur [Admin/CmsPart](/refactoring/app/Controllers/Admin/CmsPart.php) permet la gestion CRUD des [Parts](/documentation/parts.md)
 
 Il emploie le service : 
 
@@ -28,8 +28,8 @@ Les méthodes du controleur :
 - CmsPart.up
 - CmsPart.down
 
-
-
+### CmsTree
+[Admin/CmsTree](/refactoring/app/Controllers/Admin/CmsTree.php) à la charge d'afficher le cms en representant sa structure hiérarchique
 
 # visualisation cms
 url : [https://zealot.fr/admin/cmstree](https://zealot.fr/admin/cmstree)
