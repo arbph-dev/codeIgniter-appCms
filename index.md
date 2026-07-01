@@ -23,3 +23,18 @@ Structure validée :
 - [sections](/documentation/sections.md)
 - [parts](/documentation/parts.md)
 
+## Administration
+
+### visualisation cms
+
+[https://zealot.fr/admin/cmstree](https://zealot.fr/admin/cmstree)
+
+```php
+$routes->get( 'admin/cmstree', 'Admin\CmsTree::index' );
+```
+controller : Admin\CmsTree 
+méthode : index
+paramètre : ---
+
+
+---
