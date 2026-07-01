@@ -14,7 +14,7 @@ $routes->get( 'cms/category/(:segment)', 'CmsController::category/$1');
 
 controller :
 
-CmsController
+- [CmsController](/refactoring/app/Controllers/CmsController.php)
 
 méthode :
 
