@@ -1,18 +1,25 @@
-Dans cette section on regroupe les notes inhérentes au projet
+Le portail actuel doit évoluer
 
-Portail CMS : categories → articles → sections → parts
-MySQL 8+ / MariaDB 10.5+ (InnoDB, utf8mb4)
-Descripteurs de composants stockés en JSON sur parts.config
+## Description
+
+Dans cette section on regroupe les notes inhérentes au projet de refactoring
+
+Les fonctionnalités à mettre en oeuvre : 
+- Portail CMS : categories → articles → sections → parts
+- MySQL 8+ / MariaDB 10.5+ (InnoDB, utf8mb4)
+- Descripteurs de composants stockés en JSON sur parts.config
+
 
 ## Administration
 
 ### visualisation cms
+
+[https://zealot.fr/admin/cmstree](https://zealot.fr/admin/cmstree)
+
 ```php
 $routes->get( 'admin/cmstree', 'Admin\CmsTree::index' );
 ```
-	https://zealot.fr/admin/cmstree
-
-controller : Admin\CmsTree
+controller : Admin\CmsTree 
 méthode : index
 paramètre : ---
 
