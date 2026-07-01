@@ -18,20 +18,8 @@ Les étapes du projet sont abordées dans [index](/project/index.md)
 ---
 ## Architecture CMS
 Structure validée :
-```
-categories
-articles
-sections
-parts
-```
-### categories
-
-
-### articles
-
-### sections
-
-
-### Part
-Part devient l'unité de rendu.
+- categories
+- articles
+- sections
+- [parts](/documentation/parts.md)
 
