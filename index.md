@@ -26,10 +26,12 @@ Les étapes du projet sont abordées dans [index](/project/index.md)
 ## Exploitation
 
 ### visualisation Category
+[https://zealot.fr/cms/category/test-cat](https://zealot.fr/cms/category/test-cat)
+
 ```php
 $routes->get( 'cms/category/(:segment)', 'CmsController::category/$1');
 ```
-	https://zealot.fr/cms/category/test-cat
+	
 
 controller : CmsController
 méthode : category
