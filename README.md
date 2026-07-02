@@ -1,5 +1,18 @@
 # Zealot v2 - CMS Headless
 
+```mermaid
+graph TD
+
+CmsController --> CmsService
+
+CmsService --> DescriptorFactory
+
+DescriptorFactory --> Descriptor
+
+Descriptor --> Renderer
+
+Renderer --> View
+```
 Un CMS professionnel basé sur CodeIgniter 4.7 pour gérer :
 - Contenu structuré (catégories → articles → sections → parts)
 - Composants JavaScript avancés (Apex, Mermaid, ThreeJS)
