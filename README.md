@@ -7,3 +7,49 @@ Un CMS professionnel basé sur CodeIgniter 4.7 pour gérer :
 
 **Statut** : Migration vers refactorisation
 **Tech** : PHP 8+, CodeIgniter 4.7, MySQL 8+/MariaDB, JavaScript ES6+
+
+```mermaid
+flowchart TB
+
+    subgraph PHP
+        AR["AdminRenderer"]
+    end
+
+    subgraph HTML
+        T["textarea"]
+        P["pre.mermaid"]
+        B["Render button"]
+    end
+
+    subgraph AdminJS
+        BS["admin/bootstrap.js"]
+    end
+
+    subgraph Core
+        EB["EventBus"]
+    end
+
+    subgraph Components
+        MC["components/mermaid.js"]
+    end
+
+    subgraph Library
+        M["Mermaid"]
+    end
+
+    AR --> T
+    AR --> P
+    AR --> B
+
+    B --> BS
+
+    BS -->|copie| P
+
+    BS -->|publish| EB
+
+    EB --> MC
+
+    MC --> M
+
+    M --> P
+```
