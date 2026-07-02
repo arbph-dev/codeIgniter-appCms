@@ -47,11 +47,11 @@ class CmsService
             ->first();
     }
     // --- CATEGORY TREE
-    public function getFullCategory(string $slug): array
+    public function getFullCategory(string $slug): ?array
     {
         $category = $this->getCategory($slug);
 
-        if (!$category) { return []; }
+        if (!$category) { return null; }
 
         $category['articles'] = $this->getArticlesByCategory( $category['id'] );
 
