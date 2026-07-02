@@ -23,7 +23,7 @@ class ApexAdminRenderer
             <td>
                 <input
                     type="text"
-                    name="cfg[id]"
+                    name="config[id]"
                     value="{$id}">
             </td>
         </tr>
@@ -32,7 +32,7 @@ class ApexAdminRenderer
             <th>Type de graphique</th>
             <td>
 
-                <select name="cfg[chart]">
+                <select name="config[chart]">
 
                     <option value="line"        {$this->selected($chart,'line')}>Line</option>
                     <option value="bars"        {$this->selected($chart,'bars')}>Bars</option>
@@ -51,7 +51,7 @@ class ApexAdminRenderer
 
                 <input
                     type="number"
-                    name="cfg[height]"
+                    name="config[height]"
                     value="{$height}">
 
             </td>
