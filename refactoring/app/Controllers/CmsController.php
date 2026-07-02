@@ -34,8 +34,9 @@ class CmsController extends BaseController
      */
     public function article(string $slug)
     {
-        //return $this->cms->renderArticle($slug);
-        $article = $this->cms->getArticle($slug);
+        // return $this->cms->renderArticle($slug);
+        // $article = $this->cms->getArticle($slug);
+        $article = $this->cms->getPublishedArticle($slug);
 
         if (!$article)
         {
