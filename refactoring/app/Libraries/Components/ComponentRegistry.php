@@ -11,12 +11,11 @@ use App\Libraries\Components\Renderers\MermaidRenderer;
 class ComponentRegistry
 {
     protected array $renderers = [
-
         'raw'      => RawRenderer::class,
         'apex'     => ApexRenderer::class,
         'codeval'  => CodeValRenderer::class,
         'mermaid'  => MermaidRenderer::class,
-
+        'callout'  => CalloutRenderer::class,
     ];
 
     public function getRenderer(string $type): ?object
