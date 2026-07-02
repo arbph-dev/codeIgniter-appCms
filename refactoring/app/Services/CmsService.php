@@ -404,7 +404,7 @@ class CmsService
 
     public function renderArticle(string $slug): string
     {
-        $article = $this->getFullArticle($slug);
+        $article = $this->getFullArticle($slug);// contient sections + parts
 
         $html = '';
 
