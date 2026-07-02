@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Libraries\Cms\ComponentRegistry;
-use App\Libraries\Cms\DescriptorFactory;
+use App\Libraries\Components\ComponentRegistry;
+use App\Libraries\Components\DescriptorFactory;
 
 class TestDescriptor extends BaseController
 {
