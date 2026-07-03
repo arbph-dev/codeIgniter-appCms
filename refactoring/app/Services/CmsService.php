@@ -357,36 +357,23 @@ class CmsService
     // ----------------------------------------------------
     // RENDER renderSection
     // ----------------------------------------------------
-
-    public function renderSection(int $sectionId): string
+    private function renderSectionData(array $section, array $parts): string
     {
-        $section = $this->sections->find($sectionId);
-
-        if (!$section)
-        {
-            return '';
-        }
-
         $html = '';
-
-        /*
-        foreach ($this->loadDescriptors($sectionId) as $descriptor)
-        {
-            $html .= $this->renderer->render($descriptor);
-        }
-        */
-        foreach ($this->getPartsBySection($sectionId) as $part)
+        foreach ($parts as $part)
         {
             $html .= $this->renderPart($part);
         }
 
-        return view(
-            'cms/section',
-            [
-                'section' => $section,
-                'content' => $html
-            ]
-        );
+        return view('cms/section', ['section' => $section, 'content' => $html]);
+    }
+    
+    public function renderSection(int $sectionId): string
+    {
+        $section = $this->sections->find($sectionId);
+        if (!$section) { return ''; }
+
+        return $this->renderSectionData($section, $this->getPartsBySection($sectionId));
     }
 
     public function renderSectionBySlug(string $slug): string
@@ -458,13 +445,9 @@ class CmsService
     }  
   
   
-    public function getPartsBySection(int $sectionId): array  
+    public function getPartsBySection(int $sectionId, bool $includeUnpublished = false): array  
     {  
-        return $this->parts  
-        ->where('section_id', $sectionId)  
-        ->where('is_published', 1)  
-        ->orderBy('position', 'ASC')  
-        ->findAll();  
+        return $this->parts->findBySection($sectionId, $includeUnpublished);
     }
 
     // ----------------------------------------------------  
@@ -608,7 +591,7 @@ class CmsService
 
                     $section['children'] = [];
 
-                    foreach ($this->getPartsBySection($section['id']) as $part)
+                    foreach ($this->getPartsBySection($section['id'] , true ) as $part)
                     {
                         $part = $this->enrichPart($part);
 
