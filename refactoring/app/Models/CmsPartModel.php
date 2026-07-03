@@ -53,15 +53,15 @@ class CmsPartModel extends Model
     }
      */
 
-    public function findBySection(int $sectionId , bool $includeUnpublished = false ): array
+    public function findBySection(int $sectionId, bool $includeUnpublished = false): array
     {
+        $builder = $this->where('section_id', $sectionId)
+                        ->orderBy('position', 'ASC'); // ← toujours appliqué
 
-        $builder = $this->where('section_id', $sectionId);
-        if (! $includeUnpublished) {
-            $builder
-                ->where('is_published', 1)
-                ->orderBy('position', 'ASC');
+        if (!$includeUnpublished) {
+            $builder->where('is_published', 1);
         }
+
         return $builder->findAll();
     }
     
