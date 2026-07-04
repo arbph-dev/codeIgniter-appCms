@@ -854,6 +854,7 @@ Le point clé : **aucun module ne connaît les autres**. L'auth publie `app:read
 
 Si demain vous ajoutez un spinner ou un log analytics, vous abonnez juste un nouveau subscriber à `auth:success` — sans toucher au reste.
 
+```
 js/
 ├── core/
 │   └── eventBus.js          (existant)
@@ -862,6 +863,8 @@ js/
 │       ├── auth.service.js   ← appels fetch / localStorage
 │       ├── auth.controller.js ← écoute le bus, orchestre
 │       └── auth.ui.js        ← affiche/cache le formulaire
+```
+
 
 ```
 window:load
