@@ -846,6 +846,8 @@ async function login(email, password) {
     }
 
     if (!res.ok) { console.error(data.error); return; }
+    localStorage.setItem('bearer_token', data.token);
+}
 ```
 
 # Authentification  JS / API 
@@ -894,7 +896,6 @@ bus.publish       showLoginForm()
 
 
 
-    localStorage.setItem('bearer_token', data.token);
-}
+
 ```
 
