@@ -87,10 +87,10 @@ $routes->get('/admin', 'Admin::index');
 
 ## 2026-07-04
 Documentation
-[API](/documentation/API/index.md)
-  [Organisation](/documentation/API/Entreprise.md)
-  [Entreprise](/documentation/API/Entreprise.md)
-  [CodeNaf](/documentation/API/Codenaf.md)
+- [API](/documentation/API/index.md)
+- [Organisation](/documentation/API/Organisation.md)
+- [Entreprise](/documentation/API/Entreprise.md)
+- [CodeNaf](/documentation/API/CodeNaf.md)
 
 [METIERS](/documentation/METIERS/index.md)
 
