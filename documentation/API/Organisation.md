@@ -172,7 +172,7 @@ DELETE /api/organisation/:id                Supprimer une organisation (soft del
 ### Méthodes clés
 
 #### `withRelations()`
-Charge les relations avec les tables associées :
+Charges les relations avec les tables associées :
 - `organisation_types` → type
 - `adresses` → adresse
 - `images` (pour logo et cover)
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `organisations` (
 ## Validations
 
 | Champ | Règle | Message |
-|-------|-------|---------|
+|-------|-------|----------|
 | `nom` | Obligatoire, max 255 | Le nom est requis |
 | `slug` | Unique, max 255 | Slug déjà utilisé |
 | `organisation_type_id` | FK valide | Type inexistant |
