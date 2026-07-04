@@ -171,7 +171,7 @@ Données utilisées par plusieurs modules métier.
 ---
 
 ### Image
-**Fichier de documentation :** ⏳ À créer
+[Fichier de documentation](/documentation/API/Image.md)
 
 | Endpoint | Méthode | Description |
 |----------|---------|-------------|
