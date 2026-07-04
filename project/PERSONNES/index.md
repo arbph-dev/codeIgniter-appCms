@@ -12,8 +12,14 @@ Priorité
 
 | fichier | staut | Notes |
 | --- | --- | --- |
-| personne | à réviser | element principal. Contraintez prenom a créér |
-| personne | à réviser | element principal. Contraintez prenom a créér |
+| personne | à réviser | element principal. Contrainte :  prenom a créér |
+| personne | à réviser | element principal. Contrainte : prenom a créér |
+| personne | à réviser | element principal. Contrainte :  prenom a créér |
+| personne | à réviser | element principal. Contrainte : prenom a créér |
+| personne | à réviser | element principal. Contrainte :  prenom a créér |
+| personne | à réviser | element principal. Contrainte : prenom a créér |
+| personne | à réviser | element principal. Contrainte :  prenom a créér |
+| personne | à réviser | element principal. Contrainte : prenom a créér |
 
 # Déterminer les relations
 
