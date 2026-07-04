@@ -80,3 +80,19 @@ $routes->get('/', 'Cms::index');
 $routes->get('/user', 'User::index');
 $routes->get('/admin', 'Admin::index');
 ```
+
+
+
+# historique
+
+## 2026-07-04
+Documentation
+[API](/documentation/API/index.md)
+  [Organisation](/documentation/API/Entreprise.md)
+  [Entreprise](/documentation/API/Entreprise.md)
+  [CodeNaf](/documentation/API/Codenaf.md)
+
+[METIERS](/documentation/METIERS/index.md)
+
+🎯 Prochaines étapes : Vous retrouvez vos projets — créez un dossier project/ dans le repo avec vos notes et données pour documenter les 10 modules restants. À votre rythme ! 📁
+
