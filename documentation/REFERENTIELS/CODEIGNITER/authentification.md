@@ -862,10 +862,19 @@ js/
 │   └── eventBus.js          (existant)
 ├── features/
 │   └── auth/
-│       ├── auth.service.js   ← appels fetch / localStorage
-│       ├── auth.controller.js ← écoute le bus, orchestre
-│       └── auth.ui.js        ← affiche/cache le formulaire
+│       ├── auth.service.js   	← appels fetch / localStorage
+│       ├── auth.controller.js 	← écoute le bus, orchestre
+│       ├── auth.renderer.js    ← affiche/cache le formulaire
+│       └── auth.store.js    	← donnés et états
 ```
+
+[auth.controller](/old/public/assets/js/features/auth/auth.controller.js)
+[auth.renderer](/old/public/assets/js/features/auth/auth.renderer.js)
+[auth.service](/old/public/assets/js/features/auth/auth.service.js)
+[auth.store](/old/public/assets/js/features/auth/auth.store.js)
+[index](/old/public/assets/js/features/auth/index.js)
+
+
 
 
 ```
