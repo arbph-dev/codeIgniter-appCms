@@ -53,6 +53,48 @@ Une Organisation est la classe principale elle
 
 
 ### Entreprises
+ - une **Entreprise** et un Etablissement ont la même **forme juridique** ? OUI 
+- requête sur **siret** ou **siren** (Siret peut être modifié en cas de déménagement )
+- siren sert d'id ?
+- Numéro de sécurité sociale
+	👤 Identifiants entrepreneurs individuels / micro-entreprises
+	Pour les entrepreneurs individuels : utilisé pour les contributions personnelles (pas un identifiant public de l’entreprise, mais lié).
+- N° de gestion INPI pour EI protégée
+	Pour protéger le nom et distinguer les activités de la personne physique.
+- Numéro d’agrément ou licence sectorielle selon le métier :
+		transport (licence transport)
+		sécurité (autorisation CNAPS)
+		agences de voyage
+		agroalimentaire
+		sanitaire, social, médical
+		BTP (numéro Qualibat, RGE…)
+- Marques et protections
+- Numéro de dépôt de marque (INPI)
+		Si l’entreprise a déposé une marque.
+- Numéro de brevet / modèle
+		Déposés à l’INPI.
+
+```mermaid
+classDiagram
+    
+    %% ====================
+    %%     Entreprises
+    %% ====================
+    class Entreprise {
+        +int id
+        +int codeFormejuridique_id
+        +string name
+        +string siren
+        +string phone
+        +string email
+        +class address
+        +bigint naf_code_id
+    }
+
+    Entreprise --> Etablissement : "1..* établissements"
+	Entreprise --> CodeFormejuridique : "1..1 forme juridique"
+```
+
 
 ### Etablissements
 Les **Etablissement**, dont le siège social, ont chacun :
