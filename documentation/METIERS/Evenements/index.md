@@ -2,7 +2,7 @@
 
 ## Tâches
 - [ ] Compléter le document
-- [ ] liers les document
+- [X] liers les document
 - [ ] ajouter created_at, updated_at (traçabilité)     
 - [ ] gestion des sources (livre,site, vidéo, film, témoins)
 - [ ] Décrire les données
