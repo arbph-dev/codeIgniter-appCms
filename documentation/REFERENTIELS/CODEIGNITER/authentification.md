@@ -847,6 +847,51 @@ async function login(email, password) {
 
     if (!res.ok) { console.error(data.error); return; }
 
+
+# Authentification  JS / API 
+L'idée est de créer un module auth dédié qui parle uniquement via le bus, comme les autres modules (sidebar, carousel, etc.).
+Le point clé : **aucun module ne connaît les autres**. L'auth publie `app:ready`, l'app réagit. 
+
+Si demain vous ajoutez un spinner ou un log analytics, vous abonnez juste un nouveau subscriber à `auth:success` — sans toucher au reste.
+
+js/
+├── core/
+│   └── eventBus.js          (existant)
+├── features/
+│   └── auth/
+│       ├── auth.service.js   ← appels fetch / localStorage
+│       ├── auth.controller.js ← écoute le bus, orchestre
+│       └── auth.ui.js        ← affiche/cache le formulaire
+
+```
+
+window:load
+    │
+    └─► bus.publish('auth:check')
+            │
+    ┌───────┴────────┐
+    │ token valide   │ pas de token / expiré
+    │                │
+    ▼                ▼
+apiGetProfile()   bus.publish('auth:required')
+    │                │
+    ▼                ▼
+bus.publish       showLoginForm()
+('auth:success')      │
+    │             submit ──► bus.publish('auth:login:submit')
+    │                              │
+    │                         apiLogin()
+    │                              │
+    └──────────────────────────────┘
+                   │
+            bus.publish('auth:success')
+                   │
+            bus.publish('app:ready')  ──► initArticleLoader(), etc.
+```
+
+
+
+
     localStorage.setItem('bearer_token', data.token);
 }
 ```
