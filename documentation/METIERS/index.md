@@ -2,6 +2,52 @@
 
 ## Economie
 
+### Interaction
+```mermaid
+  flowchart LR
+    %% ================================
+    %%        COMPTABILITE
+    %% ================================
+    subgraph COMPTA[Module : Comptabilité]
+        PLANPCG[Plan Comptable]
+        ECRITURES[Ecritures comptables]
+        REGLEMENT[Reglements]
+        ANALYTIQUE[Analytique]
+    end
+	
+    subgraph CRM[Module : Commercial]
+        FACTURATION[Facturation]
+    end
+
+    subgraph PAIE[Module : Paie]
+        CHARGES[Charges sociales/patronales]
+    end
+    
+    subgraph MAINT[Module : Maintenance]
+        GMAO[Ordres de travail]
+    end
+    
+    
+    subgraph CORE[Module : Core Système]
+        USERS[Gestion des Utilisateurs]
+    end
+
+    subgraph PROD[Production]
+        EQP[Équipements énergie]
+        PRODREP[Rapports de production]
+    end
+
+	A@{ shape: doc, label: "Factures" }
+
+    USERS --> COMPTA
+    FACTURATION --> ECRITURES
+    CHARGES --> ECRITURES
+    EQP --> A
+    A --> ECRITURES
+    GMAO --> ANALYTIQUE
+    PRODREP --> ANALYTIQUE
+    
+```
 ### Organisation
 Une Organisation est la classe principale elle 
 
