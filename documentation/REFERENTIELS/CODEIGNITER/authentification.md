@@ -846,7 +846,7 @@ async function login(email, password) {
     }
 
     if (!res.ok) { console.error(data.error); return; }
-
+```
 
 # Authentification  JS / API 
 L'idée est de créer un module auth dédié qui parle uniquement via le bus, comme les autres modules (sidebar, carousel, etc.).
@@ -864,7 +864,6 @@ js/
 │       └── auth.ui.js        ← affiche/cache le formulaire
 
 ```
-
 window:load
     │
     └─► bus.publish('auth:check')
