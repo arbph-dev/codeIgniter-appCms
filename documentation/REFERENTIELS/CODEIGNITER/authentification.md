@@ -68,12 +68,12 @@ Copy **from** vendor/codeigniter4/shield/src/Config/  **to** your project's conf
 
 On vérifie en ftp
 ```
-sftp://rxrhgiw@ftp.cluster100.hosting.ovh.net/home/rxrhgiw/www/app/Config/Autoload.php
+/home/rxrhgiw/www/app/Config/Autoload.php
     public $helpers = ['auth', 'setting']; => ok
     
-sftp://rxrhgiw@ftp.cluster100.hosting.ovh.net/home/rxrhgiw/www/app/Config/Auth.php
-sftp://rxrhgiw@ftp.cluster100.hosting.ovh.net/home/rxrhgiw/www/app/Config/AuthGroups.php
-sftp://rxrhgiw@ftp.cluster100.hosting.ovh.net/home/rxrhgiw/www/app/Config/AuthToken.php
+/home/rxrhgiw/www/app/Config/Auth.php
+/home/rxrhgiw/www/app/Config/AuthGroups.php
+/home/rxrhgiw/www/app/Config/AuthToken.php
 	Namespace Config => ok
 
 ```
@@ -243,7 +243,7 @@ php spark shield:user create -n USERALIAS -e USER@DOMAIN.MIL
 ```
 
 ```
-rxrhgiw@ssh02.cluster100.gra.hosting.ovh.net (php/8.2/production/stable64) ~/www $ php spark shield:user create -n codster -e admin@zealot.fr
+hosting.ovh.net (php/8.2/production/stable64) ~/www $ php spark shield:user create -n codster -e admin@zealot.fr
 
 CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-04-09 16:42:22 UTC+00:00
 
@@ -251,7 +251,7 @@ Password : PASSWORD
 Password confirmation : PASSWORD
 User "USERALIAS" created
 The user is added to the default group.
-rxrhgiw@ssh02.cluster100.gra.hosting.ovh.net (php/8.2/production/stable64) ~/www $
+hosting.ovh.net (php/8.2/production/stable64) ~/www $
 ```
 
 
@@ -289,13 +289,13 @@ php spark shield:user list
 CodeIgniter v4.6.4 Command Line Tool - Server Time: 2026-01-23 03:39:14 UTC+01:00 
 Id User 5 USERALIAS (admin@elfennel.fr)
 
-rxrhgiw@ssh02.cluster100.gra.hosting.ovh.net (php/8.2/production/stable64) ~/www $ php spark shield:user list
+hosting.ovh.net (php/8.2/production/stable64) ~/www $ php spark shield:user list
 
 CodeIgniter v4.7.0 Command Line Tool - Server Time: 2026-04-09 16:44:47 UTC+00:00
 
 Id      User
 1       USERALIAS (USER@DOMAIN.MIL)
-rxrhgiw@ssh02.cluster100.gra.hosting.ovh.net (php/8.2/production/stable64) ~/www $
+hosting.ovh.net (php/8.2/production/stable64) ~/www $
 ```
 
 
