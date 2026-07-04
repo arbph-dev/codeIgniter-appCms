@@ -1,8 +1,8 @@
 # METIERS
 
-## Economie
+Interaction entre les modules
 
-### Interaction
+
 ```mermaid
   flowchart LR
     %% ================================
@@ -48,6 +48,24 @@
     PRODREP --> ANALYTIQUE
     
 ```
+## Economie
+
+### comptabilité
+
+  ```mermaid
+  flowchart LR
+    %% ================================
+    %%        COMPTABILITE
+    %% ================================
+    subgraph COMPTA[Module : Comptabilité]
+        PLANPCG[Plan Comptable]
+        ECRITURES[Ecritures comptables]
+        REGLEMENT[Reglements]
+        ANALYTIQUE[Analytique]
+    end
+  ```
+
+
 ### Organisation
 Une Organisation est la classe principale elle 
 
