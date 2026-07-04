@@ -356,6 +356,498 @@ public $filters = [
     'tokens' => ['before' => ['api/*']],
 ];
 ```
+---
 
-[[DAILY/2026-04-07/filters.php]]
+#  Authentification Token Shield/CodeIgniter 4.
+
+## app/Config/Filters.php
+
+```php
+public array $globals = [
+    'before' => [
+        'session' => ['except' => [
+            'login*',
+            'register*',
+            'auth/a/*',
+            'api/*',          // ← exclure toutes les routes API
+        ]],
+    ],
+    'after' => [
+        'toolbar' => ['except' => ['api/*']],
+    ],
+];
+
+public array $filters = [
+    'tokens' => ['before' => ['api/*']],  // ← protéger api/* avec Bearer token
+];
+```
+
+## app/Config/Routes.php
+```php
+// Routes Shield (login web, register web, etc.)
+service('auth')->routes($routes);
+
+// Routes API — pas de filtre session ici, géré dans Filters.php
+$routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) {
+    $routes->post('login',    'AuthController::login');
+    $routes->post('register', 'AuthController::register');
+
+    // Routes protégées (filtre tokens appliqué globalement via Filters.php)
+    $routes->get('profile',   'AuthController::profile');
+    $routes->post('logout',   'AuthController::logout');
+});
+```
+## app/Controllers/Api/AuthController.php
+```php
+<?php
+
+namespace App\Controllers\Api;
+
+use App\Controllers\BaseController;
+use App\Models\UserModel;
+use CodeIgniter\Shield\Entities\User;
+
+class AuthController extends BaseController
+{
+    // ─── POST /api/login ─────────────────────────────────────────
+    public function login()
+    {
+        // Si déjà connecté via session, on clean
+        if (auth()->loggedIn()) {
+            auth()->logout();
+        }
+
+        $rules = [
+            'email'    => 'required|valid_email',
+            'password' => 'required|min_length[8]',
+        ];
+
+        if (! $this->validate($rules)) {
+            return $this->response
+                ->setStatusCode(422)
+                ->setJSON(['errors' => $this->validator->getErrors()]);
+        }
+
+        $credentials = [
+            'email'    => $this->request->getVar('email'),
+            'password' => $this->request->getVar('password'),
+        ];
+
+        $result = auth()->attempt($credentials);
+
+        if (! $result->isOK()) {
+            return $this->response
+                ->setStatusCode(401)
+                ->setJSON(['error' => 'Email ou mot de passe invalide']);
+        }
+
+        // Générer le token — le nom identifie l'appareil/client
+        $token = auth()->user()->generateAccessToken('webapp');
+
+        return $this->response
+            ->setStatusCode(200)
+            ->setJSON([
+                'token' => $token->raw_token,   // ← stocker en localStorage
+                'user'  => [
+                    'id'    => auth()->id(),
+                    'email' => auth()->user()->email,
+                ],
+            ]);
+    }
+
+    // ─── POST /api/register ──────────────────────────────────────
+    public function register()
+    {
+        $rules = [
+            'username' => 'required|min_length[3]|is_unique[users.username]',
+            'email'    => 'required|valid_email|is_unique[auth_identities.secret]',
+            'password' => 'required|min_length[8]',
+        ];
+
+        if (! $this->validate($rules)) {
+            return $this->response
+                ->setStatusCode(422)
+                ->setJSON(['errors' => $this->validator->getErrors()]);
+        }
+
+        $userModel = model(UserModel::class);
+
+        $user = new User([
+            'username' => $this->request->getVar('username'),
+            'email'    => $this->request->getVar('email'),
+            'password' => $this->request->getVar('password'),
+        ]);
+
+        $userModel->save($user);
+        $user = $userModel->findById($userModel->getInsertID());
+
+        // Activer directement (ou laisser la vérification email selon config)
+        $user->activate();
+
+        // Ajouter au groupe par défaut
+        $user->addGroup('user');
+
+        // Retourner un token directement après register
+        $token = $user->generateAccessToken('webapp');
+
+        return $this->response
+            ->setStatusCode(201)
+            ->setJSON([
+                'message' => 'Compte créé avec succès',
+                'token'   => $token->raw_token,
+                'user'    => [
+                    'id'    => $user->id,
+                    'email' => $user->email,
+                ],
+            ]);
+    }
+
+    // ─── GET /api/profile (protégé) ──────────────────────────────
+    public function profile()
+    {
+        $user = auth('tokens')->user();
+
+        return $this->response
+            ->setStatusCode(200)
+            ->setJSON([
+                'id'       => $user->id,
+                'username' => $user->username,
+                'email'    => $user->email,
+                'groups'   => $user->getGroups(),
+            ]);
+    }
+
+    // ─── POST /api/logout (protégé) ──────────────────────────────
+    public function logout()
+    {
+        $user       = auth('tokens')->user();
+        $rawToken   = $this->request->getHeaderLine('Authorization');
+        $rawToken   = str_replace('Bearer ', '', $rawToken);
+
+        $user->revokeAccessToken($rawToken); // supprime de la DB
+
+        return $this->response
+            ->setStatusCode(200)
+            ->setJSON(['message' => 'Déconnecté avec succès']);
+    }
+}
+```
+
+
+
+
+```php
+
+```
+
+```js
+const API_BASE = 'https://monsite.com/api';
+
+// ─── Login ────────────────────────────────────────────────────────
+async function login(email, password) {
+    const res = await fetch(`${API_BASE}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        console.error(data.error || data.errors);
+        return;
+    }
+
+    // Stocker le token
+    localStorage.setItem('bearer_token', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    console.log('Connecté :', data.user);
+}
+
+// ─── Helper : requête authentifiée ───────────────────────────────
+async function authFetch(url, options = {}) {
+    const token = localStorage.getItem('bearer_token');
+
+    return fetch(url, {
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+            ...options.headers,
+        },
+    });
+}
+
+// ─── Profile ──────────────────────────────────────────────────────
+async function getProfile() {
+    const res = await authFetch(`${API_BASE}/profile`);
+    const data = await res.json();
+    console.log('Profil :', data);
+}
+
+// ─── Logout ───────────────────────────────────────────────────────
+async function logout() {
+    await authFetch(`${API_BASE}/logout`, { method: 'POST' });
+    localStorage.removeItem('bearer_token');
+    localStorage.removeItem('user');
+}
+
+// ─── Register ─────────────────────────────────────────────────────
+async function register(username, email, password) {
+    const res = await fetch(`${API_BASE}/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        console.error(data.errors);
+        return;
+    }
+
+    localStorage.setItem('bearer_token', data.token);
+    console.log('Inscrit et connecté :', data.user);
+}
+```
+
+
+# Activer la vérification email 
+
+Résumé du flux complet
+
+| Config `Auth.actions['register']` | Register retourne        | Login si non activé |
+| --------------------------------- | ------------------------ | ------------------- |
+| `null` (désactivé)                | token immédiat           | — (toujours activé) |
+| `EmailActivator`                  | message "vérifiez email" | 403 + message       |
+
+Le lien dans l'email pointe vers **`/auth/a/email-activate`** (route Shield standard) — une fois cliqué, l'utilisateur est activé en base et peut se connecter via l'API normalement.
+
+Views for all of these pages are defined in the Auth config file, with the $views array.
+https://shield.codeigniter.com/references/authentication/auth_actions/
+```
+    /**
+     * --------------------------------------------------------------------
+     * View files
+     * --------------------------------------------------------------------
+     */
+    public array $views = [
+        'login'                       => '\CodeIgniter\Shield\Views\login',
+        'register'                    => '\CodeIgniter\Shield\Views\register',
+        'layout'                      => '\CodeIgniter\Shield\Views\layout',
+        'action_email_2fa'            => '\CodeIgniter\Shield\Views\email_2fa_show',
+        'action_email_2fa_verify'     => '\CodeIgniter\Shield\Views\email_2fa_verify',
+        'action_email_2fa_email'      => '\CodeIgniter\Shield\Views\Email\email_2fa_email',
+        'action_email_activate_show'  => '\CodeIgniter\Shield\Views\email_activate_show',
+        'action_email_activate_email' => '\CodeIgniter\Shield\Views\Email\email_activate_email',
+        'magic-link-login'            => '\CodeIgniter\Shield\Views\magic_link_form',
+        'magic-link-message'          => '\CodeIgniter\Shield\Views\magic_link_message',
+        'magic-link-email'            => '\CodeIgniter\Shield\Views\Email\magic_link_email',
+    ];
+
+```
+
+
+
+1. Activer la vérification email — app/Config/Auth.php
+**EmailActivator** confirme l'adresse email du nouvel utilisateur en lui envoyant un lien qu'il doit suivre pour activer son compte. 
+CodeIgniter Shield On l'active ainsi :
+Pour **désactiver** la vérification, remettre `null`. Le controller API détectera ça automatiquement.
+app/Config/Auth.php
+
+```php
+public array $actions = [
+    'register' => \CodeIgniter\Shield\Authentication\Actions\EmailActivator::class,
+    'login'    => null,
+];
+```
+
+
+Configurer l'envoi d'email — `app/Config/Email.php`
+
+```php
+public string $fromEmail  = 'noreply@monsite.com';
+public string $fromName   = 'Mon App';
+public string $protocol   = 'smtp';
+public string $SMTPHost   = 'smtp.monsite.com';
+public string $SMTPPort   = 587;
+public string $SMTPUser   = 'user@monsite.com';
+public string $SMTPPass   = 'motdepasse';
+public string $SMTPCrypto = 'tls';
+```
+
+### Register API adapté 
+app/Controllers/Api/AuthController.php
+Le principe : on lit setting('Auth.actions')['register'] pour savoir si la vérif email est configurée, et on adapte la réponse.
+
+```php
+// ─── POST /api/register ──────────────────────────────────────
+public function register()
+{
+    $rules = [
+        'username' => 'required|min_length[3]|is_unique[users.username]',
+        'email'    => 'required|valid_email|is_unique[auth_identities.secret]',
+        'password' => 'required|min_length[8]',
+    ];
+
+    if (! $this->validate($rules)) {
+        return $this->response
+            ->setStatusCode(422)
+            ->setJSON(['errors' => $this->validator->getErrors()]);
+    }
+
+    $userModel = model(\CodeIgniter\Shield\Models\UserModel::class);
+
+    $user = new \CodeIgniter\Shield\Entities\User([
+        'username' => $this->request->getVar('username'),
+        'email'    => $this->request->getVar('email'),
+        'password' => $this->request->getVar('password'),
+    ]);
+
+    $userModel->save($user);
+    $user = $userModel->findById($userModel->getInsertID());
+    $userModel->addToDefaultGroup($user);
+
+    // ── Vérifier si EmailActivator est configuré ──────────────
+    $hasEmailActivation = setting('Auth.actions')['register'] !== null;
+
+    if ($hasEmailActivation) {
+        // Déclencher l'envoi de l'email via le mécanisme Shield
+        // On utilise le session authenticator uniquement pour déclencher l'action
+        /** @var \CodeIgniter\Shield\Authentication\Authenticators\Session $authenticator */
+        $authenticator = auth('session')->getAuthenticator();
+        $authenticator->startLogin($user);
+        $authenticator->startUpAction('register', $user);
+        // Pas de token retourné : le compte n'est pas encore actif
+        return $this->response
+            ->setStatusCode(200)
+            ->setJSON([
+                'message'        => 'Compte créé. Vérifiez votre email pour activer votre compte.',
+                'email_verified' => false,
+            ]);
+    }
+
+    // Pas de vérification email → activer directement et retourner le token
+    $user->activate();
+    $token = $user->generateAccessToken('webapp');
+
+    return $this->response
+        ->setStatusCode(201)
+        ->setJSON([
+            'message'        => 'Compte créé avec succès.',
+            'email_verified' => true,
+            'token'          => $token->raw_token,
+            'user'           => [
+                'id'    => $user->id,
+                'email' => $user->email,
+            ],
+        ]);
+}
+```
+
+### Login API adapté
+Si aucun activator n'est configuré dans Auth.actions['register'], isActivated() retourne toujours true. CodeIgniter Shield Donc ce check est safe dans les deux cas :
+
+```php
+// ─── POST /api/login ─────────────────────────────────────────
+public function login()
+{
+    if (auth()->loggedIn()) {
+        auth()->logout();
+    }
+
+    $rules = [
+        'email'    => 'required|valid_email',
+        'password' => 'required',
+    ];
+
+    if (! $this->validate($rules)) {
+        return $this->response
+            ->setStatusCode(422)
+            ->setJSON(['errors' => $this->validator->getErrors()]);
+    }
+
+    $result = auth()->attempt([
+        'email'    => $this->request->getVar('email'),
+        'password' => $this->request->getVar('password'),
+    ]);
+
+    if (! $result->isOK()) {
+        return $this->response
+            ->setStatusCode(401)
+            ->setJSON(['error' => 'Email ou mot de passe invalide']);
+    }
+
+    $user = auth()->user();
+
+    // ── Vérifier l'activation email si configurée ─────────────
+    if ($user->isNotActivated()) {
+        // Déconnecter la session créée par attempt()
+        auth()->logout();
+
+        return $this->response
+            ->setStatusCode(403)
+            ->setJSON([
+                'error'          => 'Compte non activé. Vérifiez votre email.',
+                'email_verified' => false,
+            ]);
+    }
+
+    $token = $user->generateAccessToken('webapp');
+
+    return $this->response
+        ->setStatusCode(200)
+        ->setJSON([
+            'token'          => $token->raw_token,
+            'email_verified' => true,
+            'user'           => [
+                'id'    => $user->id,
+                'email' => $user->email,
+            ],
+        ]);
+}
+```
+
+### Côté JS — gérer les deux cas
+```js
+async function register(username, email, password) {
+    const res = await fetch(`${API_BASE}/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) { console.error(data.errors); return; }
+
+    if (!data.email_verified) {
+        // Afficher un message "consultez vos emails"
+        showMessage(data.message);
+        return;
+    }
+
+    // Vérif désactivée → connecté directement
+    localStorage.setItem('bearer_token', data.token);
+}
+
+async function login(email, password) {
+    const res = await fetch(`${API_BASE}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+
+    if (res.status === 403 && !data.email_verified) {
+        showMessage('Compte non activé — vérifiez votre email.');
+        return;
+    }
+
+    if (!res.ok) { console.error(data.error); return; }
+
+    localStorage.setItem('bearer_token', data.token);
+}
+```
 
