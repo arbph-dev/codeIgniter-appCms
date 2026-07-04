@@ -31,7 +31,7 @@ classDiagram
     }
     
     Entreprise --> Etablissement : "1..* établissements"
-    
+    address --> Etablissement : "1..* établissements"
 ```
 ### Services (d'entreprise)
 ==a distinguer des prestations (de service)==
@@ -41,8 +41,13 @@ classDiagram
 - un **service** direction est présent dans plusieurs **Entreprise** 
 - un **service entreprise** à un parent service d'entreprise (relation hiérarchique ), les relations hiérarchiques sont propre a chaque **entreprise**
 
-
-
+## Evolutions
+### activites_etablissement (pivot)
+Les **activites_etablissement** (pivot)
+- aeEtab_id -> ( etablissement->entreprise_id ) -> entreprise.id
+- aeAct_id -> naf.id ->  activites du referentiel insee
+- aeNom -> appellation interne de l'activité
+  
 
 ---
 ## CMS
