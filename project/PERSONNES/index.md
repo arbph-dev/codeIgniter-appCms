@@ -12,14 +12,15 @@ Priorité
 
 | fichier | staut | Notes |
 | --- | --- | --- |
-| personne | à réviser | element principal. Contrainte :  prenom a créér |
-| personne | à réviser | element principal. Contrainte : prenom a créér |
-| personne | à réviser | element principal. Contrainte :  prenom a créér |
-| personne | à réviser | element principal. Contrainte : prenom a créér |
-| personne | à réviser | element principal. Contrainte :  prenom a créér |
-| personne | à réviser | element principal. Contrainte : prenom a créér |
-| personne | à réviser | element principal. Contrainte :  prenom a créér |
-| personne | à réviser | element principal. Contrainte : prenom a créér |
+| [personne](/project/PERSONNES/personne.md) | à réviser | element principal. Contrainte :  prenom a créér |
+| [personne_alias](/project/PERSONNES/personne_alias.md) | à réviser | Une personne peut avoir un nom de scène : Johny Halliday et Philipe SMET |
+| [personne_distinctions](/project/PERSONNES/personne_distinctions.md) | à réviser | element principal. Contrainte : prenom a créér |
+| [personne_ideologies](/project/PERSONNES/personne_ideologies.md) | à réviser | table réductrice pour certains, luxueuse pour d'autres |
+| [personne_migration.sql](/project/PERSONNES/personne_migration.sql) | à réviser | Migration des tables a compléter avec un seeder |
+| [personne_parcours](/project/PERSONNES/personne_parcours.md) | à réviser | un parcours n’est PAS une relation c’est un évènement temporel. |
+| [personne_relations](/project/PERSONNES/personne_relations.md) | à réviser | relations d'une personne, voir [relation_types](/project/PERSONNES/relation_types.md) |
+| [prenom](/project/PERSONNES/prenom.md) | à réviser | prenom a créér depuis la table mot |
+| [relation_types](/project/PERSONNES/relation_types.md) | à réviser | définit le srelations entre personnes et organisations |
 
 # Déterminer les relations
 
