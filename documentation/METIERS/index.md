@@ -65,6 +65,33 @@ Interaction entre les modules
     end
   ```
 
+#### Plan Comptable
+
+#### Ecritures comptables
+
+```mermaid
+classDiagram
+    %% ====================
+    %% Ecritures comptables
+    %% ====================
+    class PcgEntry {
+        +int id
+        +datetime date
+        +decimal debit
+        +decimal credit
+        +bigint account_id
+        +bigint company_id
+        +string reference
+        +string description
+        +bigint analytic_section_id
+    }
+
+    PcgEntry --> PcgNode : "utilise"
+
+```
+
+---
+
 
 ### Organisation
 Une Organisation est la classe principale elle 
