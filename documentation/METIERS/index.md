@@ -67,6 +67,24 @@ Interaction entre les modules
 
 #### Plan Comptable
 
+```mermaid
+classDiagram
+    %% ============================
+    %% Compte Plan Comptable General
+    %% ============================
+    class ComptePcg {
+        +unsignedInteger numpcg
+        +text nom
+        +unsignedInteger parentnum
+        +unsignedTinyInteger classe
+        +timestamps ts
+        +parent() ComptePcg
+        +children() ComptePcg[]
+    }
+
+    ComptePcg --> ComptePcg : parent
+ ```
+
 #### Ecritures comptables
 
 ```mermaid
