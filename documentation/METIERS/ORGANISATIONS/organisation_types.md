@@ -50,17 +50,26 @@ erDiagram
 ## SQL migration
 
 ```sql
-CREATE TABLE organisation_types (
-    id         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    code       VARCHAR(100)    NOT NULL,
-    label      VARCHAR(255)    NOT NULL,
-    source     VARCHAR(255)    DEFAULT NULL,
-    created_at DATETIME        DEFAULT NULL,
-    updated_at DATETIME        DEFAULT NULL,
-    PRIMARY KEY (id),
-    UNIQUE KEY uk_code (code)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  COMMENT='Référentiel types organisation — piloté par seeder';
+CREATE TABLE `organisation_types` (
+  `id` bigint UNSIGNED NOT NULL,
+  `code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `label` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+ALTER TABLE `organisation_types`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `code` (`code`),
+  ADD KEY `idx_code` (`code`);
+
+
+ALTER TABLE `organisation_types`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+COMMIT;
+
 
 INSERT INTO organisation_types (code, label, source) VALUES
     ('entreprise',           'Entreprise',             'INPI / INSEE'),
