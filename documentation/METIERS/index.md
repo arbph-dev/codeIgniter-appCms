@@ -110,6 +110,11 @@ classDiagram
 
 ---
 
+## Entités
+
+### Personnes
+[Personnes](/documentation/METIERS/PERSONNES/index.md)
+
 
 ### Organisation
 Une Organisation est la classe principale elle 
