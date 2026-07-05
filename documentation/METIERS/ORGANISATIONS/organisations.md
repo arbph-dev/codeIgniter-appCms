@@ -1,7 +1,16 @@
-- [[Z/METIERS/economie/organisation_types]]
-	une organisation : Parti Socialiste est un parti politique
 
-- Nécessite : [[Z/METIERS/economie/organisation_alias]] ; une organisation peut avoir un **sigle**
+| Identifiant | Concerne | Exemple |
+| --- | --- | --- |
+| SIREN	|L'organisation (personne morale) |	552 100 554|
+| SIRET	|Un établissement |	55210055400013 |
+| TVA intracommunautaire|	Assujettissement TVA | FR40552100554 |
+|RNA |	Associations loi 1901 |	W751234567 |
+
+
+une organisation : Parti Socialiste est un parti politique
+
+
+organisation_alias ; une organisation peut avoir un **sigle**
 
 - [[Z/METIERS/economie/organisation_relations]]
 	une organisation : Parti Socialiste  **membre** de l'organisation NUPES
