@@ -71,15 +71,14 @@ ALTER TABLE `organisation_types`
 COMMIT;
 
 
-INSERT INTO organisation_types (code, label, source) VALUES
-    ('entreprise',           'Entreprise',             'INPI / INSEE'),
-    ('association',          'Association',             'RNA / INPI'),
-    ('institution',          'Institution',             'manuel'),
-    ('media',                'Média',                   'manuel / scraping'),
-    ('parti_politique',      'Parti politique',         'Poligraph PT-'),
-    ('groupe_parlementaire', 'Groupe parlementaire',    'Poligraph GP-'),
-    ('syndicat',             'Syndicat',                'manuel'),
-    ('collectivite',         'Collectivité',            'INSEE');
+INSERT INTO `organisation_types` VALUES
+(1, 'ENTREPRISE', 'Entreprise', 'Société commerciale, artisan, indépendant', NULL, NULL),
+(2, 'ASSOCIATION', 'Association loi 1901', 'Association déclarée en préfecture', NULL, NULL),
+(3, 'COOPERATIVE', 'Coopérative', 'SCOP, SCIC, coopérative agricole…', NULL, NULL),
+(4, 'ETAB_PUBLIC', 'Établissement public', 'EPIC, EPA, hôpital…', NULL, NULL),
+(5, 'ETAB_SCOLAIRE', 'Établissement scolaire', 'Lycée, collège, école', NULL, NULL),
+(6, 'COLLECTIVITE', 'Collectivité territoriale', 'Commune, département, région', NULL, NULL),
+(7, 'MUSEE', 'Musée / Site culturel', 'Musée, site patrimonial', NULL, NULL);
 ```
 
 SHOW COLUMNS FROM organisation_types;
