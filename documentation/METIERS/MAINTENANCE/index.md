@@ -51,9 +51,22 @@ liers les **caracteristique** aux **articletype**
 ---
 ## caracteristique 
 [caracteristique](/documentation/METIERS/MAINTENANCE/caracteristique.md)
-voir grandeurs
-liers les caractèrisitques aux types : **articletype** et **typeeqp**
 
+liers les caractèrisitques aux types : **articletype** et **typeeqp**
+voir grandeurs
+
+### Unité => nom ; symbole ; SI , oui
+Unité => nom ; symbole ; SI , oui
+
+### Grandeur
+but : représenter une grandeur physique
+lien :  unité
+
+**exemple**
+Unité => Volt ; symbole => V ; SI => oui
+grandeur => tension d'alimentation ; unité Volt
+grandeur => tension de commande; unité Volt
+grandeur => tension d'emploi des contacts; unité Volt
 
 ## equipements
 
