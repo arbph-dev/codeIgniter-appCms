@@ -200,7 +200,7 @@ COLLATE=utf8mb4_unicode_ci;
 
 Je trouve cette version plus expressive et plus évolutive, tout en restant simple. Elle permettra plus tard d'ajouter un troisième type d'entité (par exemple etablissement) sans remettre en cause la logique générale.
 
-ok, next
+
 
 Je passerais directement à la table relations, car elle concrétise toute la logique que nous venons de définir.
 
