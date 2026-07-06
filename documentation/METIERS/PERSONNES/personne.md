@@ -3,71 +3,30 @@
 # Strucutre
 
 
- Ordre de création respectant les dépendances FK :
+## modules liés
+- relation
+	- relations
+	- relation_types          (référentiel, pas de FK)
+- adresse
+- distinction
 
-0. relation_types          (référentiel, pas de FK)
-[[Z/METIERS/identité/relation_types]] 
-1. personnes               (auto-référentielle merge_into_id)
-2. personne_alias          (→ personnes)
-3. personne_identifiants   (→ personnes)
-4. personne_parcours       (→ personnes, organisations, adresses)
---   5. personne_relations      (→ personnes, relation_types)
-[[Z/METIERS/identité/personne_relations]]
+## module
+- personnes               (auto-référentielle merge_into_id)
+- personne_alias          (→ personnes)
+- personne_parcours       (→ personnes, organisations, adresses)
 
-
---   6. personne_distinctions   (→ personnes)
---   7. personne_mandats        (→ personnes, organisations)
---   8. personnages             (autonome)
---   9. personnes_role          (→ personnes, personnages)
---  10. view_personne_timeline  (vue)
---
--- FK vers oeuvres ajoutées en PHASE 2 (table oeuvres à venir) :
---   personne_parcours.oeuvre_id
---   personne_mandats.oeuvre_id
---   personnages.oeuvre_id
---   personnes_role.oeuvre_id
--- =========================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[[Z/METIERS/identité/personne]]
-[[Z/METIERS/identité/personne_alias]]
-
-Relations
-- [[Z/METIERS/identité/personne_relations]]
-- [[Z/METIERS/identité/relation_types]]
-
-- [[Z/METIERS/identité/personne_distinctions]] vers [[Z/METIERS/distinction]]
 
 voir [[Z/PROJETS/Akinator/a trier#Réflexion sur l'Intégration de l'API OMDB]]
 - Film,  Auteur ,Réalisateur, Acteur
 
-# Notes
+## Notes
 
-Déduction automatique
-
-Engagements vers organisation.
-
- Les `Personnes` se lient à `organisations.id` 
- — elles peuvent donc être liées à une entreprise **ou** une association sans distinction
+`personnes` se lient à `organisations` 
+elles peuvent donc être liées à une entreprise **ou** une association sans distinction
  
-une personne peut être **dirigeant** d'une entreprise
-	relation_type = administrateur
-ET 
-**adhérent** d'une association
-	relation_type = membre
+une personne peut être :
+- **dirigeant** d'une entreprise => relation_type = administrateur
+- **adhérent** d'une association =>	relation_type = membre
 
 
 créer une VIEW : view_personne_timeline
@@ -78,85 +37,103 @@ Une propriété vivant BOOLEAN DEFAULT TRUE,
 se déduit automatiquement des dates
 - si connues
 - sinon BOOLEAN doit devenir tri state 0 non vivan, 1 oui vivant, -1 INCONNU vivant
+
 ## Structure
 
-
+## SQL
 
 ```sql
-CREATE TABLE personnes (  
-id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,  
-  
-prenoms VARCHAR(255) NOT NULL,  
-nom VARCHAR(255) NOT NULL,  
-  
-nom_complet VARCHAR(255) NOT NULL,  
-  
-surnom VARCHAR(255) NULL,  
-nom_naissance VARCHAR(255) NULL,  
-  
-sexe ENUM(  
-'homme',  
-'femme',  
-'autre',  
-'inconnu'  
-) DEFAULT 'inconnu',  
-  
-naissance_date DATE NULL,  
-  
-naissance_precision ENUM(  
-'annee',  
-'mois',  
-'jour'  
-) NULL,  
-  
-naissance_lieu VARCHAR(255) NULL,  
-  
-deces_date DATE NULL,  
-  
-deces_precision ENUM(  
-'annee',  
-'mois',  
-'jour'  
-) NULL,  
-  
-deces_lieu VARCHAR(255) NULL,  
-  
-nationalite VARCHAR(255) NULL,  
-  
-bio TEXT NULL,  
-detail LONGTEXT NULL,  
-  
-slug VARCHAR(255) NULL UNIQUE,  
-  
-confidence_score TINYINT UNSIGNED NULL,  
-verified_at DATETIME NULL,  
-  
-created_at DATETIME NULL,  
-updated_at DATETIME NULL,  
-deleted_at DATETIME NULL,  
-  
-INDEX idx_nom (nom),  
-INDEX idx_prenoms (prenoms),  
-INDEX idx_nom_complet (nom_complet),  
-INDEX idx_slug (slug),  
-  
-INDEX idx_naissance_date (naissance_date),  
-  
-FULLTEXT ft_personne (  
-prenoms,  
-nom,  
-nom_complet,  
-surnom,  
-bio  
-)  
-)  
-ENGINE=InnoDB  
-DEFAULT CHARSET=utf8mb4  
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+CREATE TABLE `personnes` (
+  `id` bigint UNSIGNED NOT NULL,
+
+  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prenoms` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nom_complet` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+
+  `nom_naissance` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `civilite` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sexe` char(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+
+  `date_naissance` date DEFAULT NULL,
+  `precision_naissance` enum('annee','mois','jour') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `naissance_adresse_id` bigint UNSIGNED DEFAULT NULL,
+
+  `date_deces` date DEFAULT NULL,
+  `precision_deces` enum('annee','mois','jour') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deces_adresse_id` bigint UNSIGNED DEFAULT NULL,
+
+  `nationalite` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+
+  `bio` text COLLATE utf8mb4_unicode_ci,
+  `detail` longtext COLLATE utf8mb4_unicode_ci,
+
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `source` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+
+  `quality_score` tinyint UNSIGNED DEFAULT NULL,
+
+  `verified_at` datetime DEFAULT NULL,
+  `verified_by` int UNSIGNED DEFAULT NULL,
+
+  `merge_into_id` bigint UNSIGNED DEFAULT NULL,
+
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+
+) ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `personnes`
+  ADD PRIMARY KEY (`id`),
+
+  ADD UNIQUE KEY `slug` (`slug`),
+
+  ADD KEY `idx_nom` (`nom`),
+  ADD KEY `idx_prenoms` (`prenoms`),
+  ADD KEY `idx_nom_complet` (`nom_complet`),
+  ADD KEY `idx_naissance` (`date_naissance`),
+
+  ADD KEY `idx_naissance_adresse` (`naissance_adresse_id`),
+  ADD KEY `idx_deces_adresse` (`deces_adresse_id`),
+
+  ADD KEY `idx_verified_by` (`verified_by`),
+  ADD KEY `idx_merge` (`merge_into_id`);
+
+ALTER TABLE `personnes`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `personnes`
+  ADD CONSTRAINT `fk_personne_naissance_adresse`
+    FOREIGN KEY (`naissance_adresse_id`)
+    REFERENCES `adresses` (`id`)
+    ON DELETE SET NULL,
+
+  ADD CONSTRAINT `fk_personne_deces_adresse`
+    FOREIGN KEY (`deces_adresse_id`)
+    REFERENCES `adresses` (`id`)
+    ON DELETE SET NULL,
+
+  ADD CONSTRAINT `fk_personne_verified_by`
+    FOREIGN KEY (`verified_by`)
+    REFERENCES `users` (`id`)
+    ON DELETE SET NULL,
+
+  ADD CONSTRAINT `fk_personne_merge`
+    FOREIGN KEY (`merge_into_id`)
+    REFERENCES `personnes` (`id`)
+    ON DELETE SET NULL;
+
+COMMIT;
 ```
 
 
-### Examples
+### seeder
 
 ```cs
 id,prenoms,nom,nom_complet,surnom,nom_naissance,sexe,naissance_date,naissance_precision,naissance_lieu,deces_date,deces_precision,deces_lieu,nationalite,bio,detail,slug,confidence_score,verified_at,created_at,updated_at,deleted_at
@@ -172,33 +149,10 @@ id,prenoms,nom,nom_complet,surnom,nom_naissance,sexe,naissance_date,naissance_pr
 10,"Ryszard","Kapuscinski","Ryszard Kapuscinski",,,"homme","1932-03-04","jour","Pinsk, Pologne","2007-01-23","jour","Varsovie, Pologne","polonaise","Ryszard Kapuscinski est un journaliste et écrivain polonais.","<p>Ryszard Kapuscinski est considéré comme une figure majeure du grand reportage littéraire.</p>","ryszard-kapuscinski",94,"2026-05-27 00:00:00","2026-05-27 00:00:00","2026-05-27 00:00:00"
 ```
 
----
-### Versions
-
-#### PERSONNE — structure enrichie
-
-```sql
-CREATE TABLE personnes (
-	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-prenoms VARCHAR(255) NOT NULL,
-nom VARCHAR(255) NOT NULL,
-nom_complet VARCHAR(255) NOT NULL,
-sexe ENUM('H','F','X') NULL,
-date_naissance DATE NULL,
-date_deces DATE NULL,
-nationalite VARCHAR(120) NULL,
-profession_principale VARCHAR(255) NULL, -- a eviter 
-description_courte TEXT NULL,
-niveau_notoriete TINYINT NULL,
-vivant BOOLEAN DEFAULT TRUE,
-created_at DATETIME NULL,
-updated_at DATETIME NULL
-);
-```
 
 
 ## Backend
-app/Models/PersonneModel.php
+app/Models/PersonneModel.php - a revoir
 
 
 ## Relations
