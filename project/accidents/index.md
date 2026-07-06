@@ -1,4 +1,35 @@
-## Accidents
+# Accidents
+
+## source : 
+https://www.data.gouv.fr/datasets/bases-de-donnees-annuelles-des-accidents-corporels-de-la-circulation-routiere-annees-de-2005-a-2024
+
+La base Etalab de données des accidents corporels de la circulation d'une année donnée, est répartie
+en 4 rubriques sous la forme pour chacune d'elles d'un fichier au format csv.
+1. La rubrique **CARACTERISTIQUES** qui décrit les circonstances générales de l’accident
+2. La rubrique **LIEUX** qui décrit le lieu principal de l’accident
+3. La rubrique **VEHICULES** impliqués
+4. La rubrique **USAGERS** impliqués
+
+Le n° d'identifiant de l’accident **Num_Acc** présent dans ces 4 rubriques permet d'établir un lien entre toutes les variables qui décrivent un accident. 
+
+Quand un accident comporte plusieurs véhicules, il faut aussi pouvoir relier chaque véhicule à ses occupants. 
+Ce lien est fait par la variable **id_vehicule**
+
+---
+## fichiers
+
+|      | CARACTERISTIQUE | LIEU  | USAGERS  | VEHICULES  |
+| ---- | --------------- | --- | --- | --- |
+| 2024 | ACCIDENT/CARACTERISTIQUE/caract-2024.csv | ACCIDENT/LIEU/lieux-2024.csv | ACCIDENT/USAGERS/usagers-2024.csv |                                                                             |
+| 2023 | ACCIDENT/CARACTERISTIQUE/caract-2023.csv | ACCIDENT/LIEU/lieux-2023.csv | ACCIDENT/USAGERS/usagers-2023.csv| ACCIDENT/VEHICULES/vehicules-2023.csv |
+| 2022 | ACCIDENT/CARACTERISTIQUE/carcteristiques-2022.csv  | ACCIDENT/LIEU/lieux-2022.csv\|lieux-2022.csv | ACCIDENT/USAGERS/usagers-2022.csv | ACCIDENT/VEHICULES/vehicules-2022.csv|
+|      | ACCIDENT/CARACTERISTIQUE/caracteristiques_2016.csv | ACCIDENT/LIEU/lieux_2016.csv | ACCIDENT/USAGERS/usagers_2016.csv | ACCIDENT/VEHICULES/vehicules_2016.csv |
+|      | ACCIDENT/CARACTERISTIQUE/caracteristiques_2015.csv |    |   | ACCIDENT/VEHICULES/vehicules_2015.csv |
+
+
+
+
+## Notes
 - [ ] Quelle structure finale pour Adresse?
 - [ ] valider migration create_accidents_table
 
