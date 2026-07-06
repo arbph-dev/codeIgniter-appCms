@@ -11,7 +11,7 @@ On retrouve le même schéma que le reste du modèle :
 - parcours_types
 
 
-```
+```sql
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -38,19 +38,24 @@ ALTER TABLE `parcours_types`
 COMMIT;
 ```
 
-Puis un seeder du style :
+### seeder
 ```
-INSERT INTO parcours_types (code,label) VALUES
-('naissance','Naissance'),
-('formation','Formation'),
-('activite','Activité'),
-('fonction','Fonction'),
-('mandat','Mandat'),
-('adhesion','Adhésion'),
-('publication','Publication'),
-('distinction','Distinction'),
-('mission','Mission'),
-('evenement','Évènement'),
-('deces','Décès');
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+INSERT INTO parcours_types (code,label,description,created_at,updated_at) VALUES
+('naissance','Naissance','Naissance de la personne',NOW(),NOW()),
+('formation','Formation','Études et formations',NOW(),NOW()),
+('activite','Activité','Activité professionnelle générale',NOW(),NOW()),
+('fonction','Fonction','Fonctions occupées (ex : ministre, directeur)',NOW(),NOW()),
+('mandat','Mandat','Mandats électifs ou institutionnels',NOW(),NOW()),
+('adhesion','Adhésion','Adhésions à des organisations, partis, associations',NOW(),NOW()),
+('publication','Publication','Livres, articles, rapports',NOW(),NOW()),
+('distinction','Distinction','Prix, décorations, médailles',NOW(),NOW()),
+('mission','Mission','Missions spécifiques, opérations militaires, reportages',NOW(),NOW()),
+('evenement','Évènement','Évènements marquants divers',NOW(),NOW()),
+('deces','Décès','Décès de la personne',NOW(),NOW());
+COMMIT;
 ```
 
