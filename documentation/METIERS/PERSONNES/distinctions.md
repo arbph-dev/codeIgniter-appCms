@@ -40,3 +40,16 @@ Concept	à généraliser :
 - (éventuellement) Images	/ imageobjet
 - (éventuellement) Liens externes / 	lienobjet
 
+Mais avec des champs standards, ainsi on retrouve partout la même convention.
+- objet_type  
+- objet_id
+
+
+|Table|Colonnes|
+|---|---|
+|relations|source_type / source_id, target_type / target_id|
+|documentobjet|objet_type / objet_id|
+|distinction_objets|objet_type / objet_id|
+|personne_parcours|objet_type / objet_id|
+
+
