@@ -52,10 +52,89 @@ SHOW COLUMNS FROM organisations;
 SHOW INDEX FROM organisations;
 ```
 
+
+| Field                | Type            | Null | Key | Default | Extra          |
+| -------------------- | --------------- | ---- | --- | ------- | -------------- |
+| id                   | bigint unsigned | NO   | PRI | _NULL_  | auto_increment |
+| nom                  | varchar(255)    | NO   | MUL | _NULL_  |                |
+| slug                 | varchar(255)    | YES  | UNI | _NULL_  |                |
+| organisation_type_id | bigint unsigned | YES  | MUL | _NULL_  |                |
+| description          | text            | YES  |     | _NULL_  |                |
+| detail               | longtext        | YES  |     | _NULL_  |                |
+| site_web             | varchar(255)    | YES  |     | _NULL_  |                |
+| urlreg               | varchar(255)    | YES  |     | _NULL_  |                |
+| email                | varchar(255)    | YES  |     | _NULL_  |                |
+| telephone            | varchar(50)     | YES  |     | _NULL_  |                |
+| lien_facebook        | varchar(255)    | YES  |     | _NULL_  |                |
+| lien_instagram       | varchar(255)    | YES  |     | _NULL_  |                |
+| lien_linkedin        | varchar(255)    | YES  |     | _NULL_  |                |
+| adresse_id           | bigint unsigned | YES  | MUL | _NULL_  |                |
+| logo_id              | int unsigned    | YES  | MUL | _NULL_  |                |
+| cover_id             | int unsigned    | YES  | MUL | _NULL_  |                |
+| siren                | char(9)         | YES  | MUL | _NULL_  |                |
+| tva_intracom         | varchar(20)     | YES  |     | _NULL_  |                |
+| actif                | tinyint(1)      | NO   |     | 1       |                |
+| rna                  | varchar(20)     | YES  |     | _NULL_  |                |
+| date_creation        | date            | YES  |     | _NULL_  |                |
+| date_dissolution     | date            | YES  |     | _NULL_  |                |
+| created_at           | datetime        | YES  |     | _NULL_  |                |
+| updated_at           | datetime        | YES  |     | _NULL_  |                |
+| deleted_at           | datetime        | YES  |     | _NULL_  |                |
+
+
 ## SQL
 
 ```sql
+CREATE TABLE `organisations` (
+  `id` bigint UNSIGNED NOT NULL,
+  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `organisation_type_id` bigint UNSIGNED DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `detail` longtext COLLATE utf8mb4_unicode_ci,
+  `site_web` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `urlreg` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Lien annuaire institutionnel',
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telephone` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lien_facebook` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lien_instagram` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lien_linkedin` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `adresse_id` bigint UNSIGNED DEFAULT NULL COMMENT 'FK → adresses.id',
+  `logo_id` int UNSIGNED DEFAULT NULL COMMENT 'FK → images.id (picl)',
+  `cover_id` int UNSIGNED DEFAULT NULL COMMENT 'FK → images.id (pich)',
+  `siren` char(9) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tva_intracom` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `actif` tinyint(1) NOT NULL DEFAULT '1',
+  `rna` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `date_creation` date DEFAULT NULL,
+  `date_dissolution` date DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Table mère — entreprises, associations, établissements scolaires…';
 
+-- Index pour la table `organisations`
+ALTER TABLE `organisations`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `slug` (`slug`),
+  ADD KEY `idx_nom` (`nom`(100)),
+  ADD KEY `idx_slug` (`slug`),
+  ADD KEY `idx_siren` (`siren`),
+  ADD KEY `idx_type` (`organisation_type_id`),
+  ADD KEY `fk_org_adresse` (`adresse_id`),
+  ADD KEY `fk_org_logo` (`logo_id`),
+  ADD KEY `fk_org_cover` (`cover_id`);
+
+-- AUTO_INCREMENT pour la table `organisations`
+ALTER TABLE `organisations` MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+-- Contraintes pour la table `organisations`
+ALTER TABLE `organisations`
+  ADD CONSTRAINT `fk_org_adresse` FOREIGN KEY (`adresse_id`) REFERENCES `adresses` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `fk_org_cover` FOREIGN KEY (`cover_id`) REFERENCES `images` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `fk_org_logo` FOREIGN KEY (`logo_id`) REFERENCES `images` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `fk_org_type` FOREIGN KEY (`organisation_type_id`) REFERENCES `organisation_types` (`id`) ON DELETE SET NULL;
+COMMIT;
 ```
 
 ---
