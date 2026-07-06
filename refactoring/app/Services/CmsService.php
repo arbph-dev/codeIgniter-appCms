@@ -487,7 +487,7 @@ class CmsService
     // ----------------------------------------------------  
     public function getFullArticle(string $slug): array
     {
-        $article = $this->getArticle($slug);
+        $article = $this->getPublishedArticle($slug);//$article = $this->getArticle($slug);
 
         if (!$article)
         {
