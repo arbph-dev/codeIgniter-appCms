@@ -75,7 +75,7 @@ voir :
 - `grandeur_cible_id`  
 - `description` (ex: "Énergie thermique calculée à partir du débit et des températures")
 
-### conversions_complexes_entrees
+### conversions_grandeurs_entrees
 liste les grandeurs nécessaires aux conversions :
 - `id`
 - `conversion_grandeurs_id` (FK vers conversions_grandeurs)
