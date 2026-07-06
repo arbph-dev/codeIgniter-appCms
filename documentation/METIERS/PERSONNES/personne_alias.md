@@ -1,36 +1,80 @@
+# personne_alias
+
+## Notes
 Une personne peut avoir un nom de scène : Johny Halliday et Philipe SMET
+
+Lorsqu'une personne possède plusieurs alias, on peut afficher un seul alias privilégié en utilisant `is_principal`.
+
+## Structure
+
+
+## SQL
+
 ```sql
--- =========================================================  
--- PERSONNE ALIAS  
--- =========================================================  
-  
-CREATE TABLE personne_alias (  
-id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,  
-  
-personne_id BIGINT UNSIGNED NOT NULL,  
-  
-alias VARCHAR(255) NOT NULL,  
-  
-type ENUM(  
-'pseudonyme',  
-'nom_naissance',  
-'nom_usage',  
-'translitteration',  
-'autre'  
-) DEFAULT 'autre',  
-  
-created_at DATETIME NULL,  
-updated_at DATETIME NULL,  
-  
-CONSTRAINT fk_alias_personne  
-FOREIGN KEY (personne_id)  
-REFERENCES personnes(id)  
-ON DELETE CASCADE,  
-  
-INDEX idx_alias (alias),  
-INDEX idx_type (type)  
-)  
-ENGINE=InnoDB  
-DEFAULT CHARSET=utf8mb4  
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+--
+-- Structure de la table `personne_alias`
+--
+
+CREATE TABLE `personne_alias` (
+  `id` bigint UNSIGNED NOT NULL,
+
+  `personne_id` bigint UNSIGNED NOT NULL,
+
+  `alias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+
+  `alias_type` enum(
+    'pseudonyme',
+    'nom_naissance',
+    'nom_usage',
+    'nom_scene',
+    'nom_plume',
+    'translitteration',
+    'autre'
+  ) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'autre',
+
+  `is_principal` tinyint(1) NOT NULL DEFAULT '0',
+
+  `date_debut` date DEFAULT NULL,
+  `date_fin` date DEFAULT NULL,
+
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+
+) ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Index
+--
+
+ALTER TABLE `personne_alias`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_personne` (`personne_id`),
+  ADD KEY `idx_alias` (`alias`),
+  ADD KEY `idx_alias_type` (`alias_type`),
+  ADD KEY `idx_personne_alias` (`personne_id`,`alias`);
+
+--
+-- AUTO_INCREMENT
+--
+
+ALTER TABLE `personne_alias`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- Contraintes
+--
+
+ALTER TABLE `personne_alias`
+  ADD CONSTRAINT `fk_personne_alias_personne`
+    FOREIGN KEY (`personne_id`)
+    REFERENCES `personnes` (`id`)
+    ON DELETE CASCADE;
+
+COMMIT;
 ```
