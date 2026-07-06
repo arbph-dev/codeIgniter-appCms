@@ -5,6 +5,12 @@ Une personne peut avoir un nom de scène : Johny Halliday et Philipe SMET
 
 Lorsqu'une personne possède plusieurs alias, on peut afficher un seul alias privilégié en utilisant `is_principal`.
 
+Pour certains usages (nom marital, pseudonyme abandonné...)
+- date_debut DATE NULL,
+- date_fin DATE NULL,
+
+
+
 ## Structure
 
 | Field        | Type                                                  | Null | Key | Default | Extra          |
