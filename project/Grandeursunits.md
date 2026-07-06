@@ -65,7 +65,7 @@ voir :
 - role a ajouter
 
 |id|objet_type|objet_id|grandeur_physique_id| valeur | unite_id |
-|---|---|---|---|---|
+|---|---|---|---|---|---|
 |1|1|25 (compresseur principal) |6 (énergie électrique) |NULL |NULL| 
 |2|1|25 (compresseur principal) |4 (tension électrique) |400 |5| 
 |2|1|25 (compresseur principal) |5 (tension électrique) |400 |5| 
