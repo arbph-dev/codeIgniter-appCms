@@ -1,97 +1,93 @@
-## personne_parcours
-### backend
-#### Model 
-app/Models/PersonneParcoursModel.php
+# personne_parcours
 
-Très important : un parcours n’est PAS une relation.
+Très important : un parcours n’est PAS une relation.C’est un évènement temporel.
 
-C’est un évènement temporel.
+un parcours doit obligatoirement avoir un type
+
+## SQL
+
 ```sql
-CREATE TABLE personne_parcours (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
-    personne_id BIGINT UNSIGNED NOT NULL,
+CREATE TABLE `personne_parcours` (
 
-    organisation_id BIGINT UNSIGNED NULL,
+  `id` bigint UNSIGNED NOT NULL,
 
-    titre VARCHAR(255) NOT NULL,
+  `personne_id` bigint UNSIGNED NOT NULL,
 
-    resume TEXT NULL,
-    detail LONGTEXT NULL,
+  -- nature de l'évènement
+  `type` BIGINT UNSIGNED NOT NULL,
 
-    date_debut DATE NULL,
-    date_fin DATE NULL,
+  `titre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 
-    lieu VARCHAR(255) NULL,
+  -- période
+  `date_debut` date DEFAULT NULL,
+  `precision_debut` enum('annee','mois','jour') DEFAULT NULL,
 
-    created_at DATETIME NULL,
-    updated_at DATETIME NULL,
+  `date_fin` date DEFAULT NULL,
+  `precision_fin` enum('annee','mois','jour') DEFAULT NULL,
 
-    CONSTRAINT fk_parcours_personne
-        FOREIGN KEY (personne_id)
-        REFERENCES personnes(id),
+  -- objet concerné
+  `structure_objet`
+      enum('organisation','entreprise','etablissement')
+      COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 
-    CONSTRAINT fk_parcours_organisation
-        FOREIGN KEY (organisation_id)
-        REFERENCES organisations(id)
-);
+  `structure_id` bigint UNSIGNED DEFAULT NULL,
 
--- =========================================================
--- PERSONNE PARCOURS
--- =========================================================
+  `adresse_id` bigint UNSIGNED DEFAULT NULL,
 
-CREATE TABLE personne_parcours (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `source` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 
-    personne_id BIGINT UNSIGNED NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
 
-    organisation_id BIGINT UNSIGNED NULL,
+  PRIMARY KEY (`id`),
 
-    titre VARCHAR(255) NOT NULL,
-
-    resume TEXT NULL,
-    detail LONGTEXT NULL,
-
-    lieu VARCHAR(255) NULL,
-
-    date_debut DATE NULL,
-    date_fin DATE NULL,
-
-    source VARCHAR(100) NULL,
-    source_id VARCHAR(255) NULL,
-
-    created_at DATETIME NULL,
-    updated_at DATETIME NULL,
-
-    CONSTRAINT fk_parcours_personne
-        FOREIGN KEY (personne_id)
-        REFERENCES personnes(id)
-        ON DELETE CASCADE,
-
-    CONSTRAINT fk_parcours_organisation
-        FOREIGN KEY (organisation_id)
-        REFERENCES organisations(id)
-        ON DELETE SET NULL,
-
-    INDEX idx_personne (personne_id),
-    INDEX idx_organisation (organisation_id),
-
-    INDEX idx_dates (date_debut, date_fin),
-
-    FULLTEXT ft_parcours (
-        titre,
-        resume
-    )
-)
-ENGINE=InnoDB
+  KEY `idx_personne` (`personne_id`),
+  KEY `idx_type` (`type`),
+  KEY `idx_debut` (`date_debut`),
+  KEY `idx_fin` (`date_fin`),
+  KEY `idx_structure` (`structure_objet`,`structure_id`),
+  KEY `idx_adresse` (`adresse_id`),
+  KEY `idx_type` (`type`)
+) ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE `personne_parcours`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `personne_parcours`
+  ADD CONSTRAINT `fk_parcours_personne`
+    FOREIGN KEY (`personne_id`)
+    REFERENCES `personnes` (`id`)
+    ON DELETE CASCADE,
+
+  ADD CONSTRAINT `fk_parcours_adresse`
+    FOREIGN KEY (`adresse_id`)
+    REFERENCES `adresses` (`id`)
+    ON DELETE SET NULL;
+
+  ADD CONSTRAINT `fk_personne_parcours_type`
+    FOREIGN KEY (`type`)
+    REFERENCES `parcours_types` (`id`)
+    ON DELETE RESTRICT;
+
+COMMIT;
+
 
 ```
-Exemples :
 
+## Exemples :
 titre
 Grand reporter
 Conseillère au CSA
 Présentatrice Soir 3
+
+## backend
+### Model 
+app/Models/PersonneParcoursModel.php
+
