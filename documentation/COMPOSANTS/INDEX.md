@@ -332,6 +332,19 @@ bus.subscribe('mermaid:preset', ({ id, type }) => setAndRender(id, builder()))
   
 - Les abonnements aux events existants (tabs:switch, nav:goto) restent intacts — quand les onglets arriveront, runInArticle() ignorera automatiquement les éléments déjà dans rendered.
 
+#### Evolution à considérer
+modifier [MermaidRenderer.php](/refactoring/app/Libraries/Components/Renderers/MermaidRenderer.php)
+
+avec l'attribut **data-autorun** on peut rendre uniquement les éléments data-autorun="true" dans un contexte admin.
+```
+    $autorun    = $descriptor->get('autorun', '0') === '1' ? 'true' : 'false';
+
+    return <<<HTML
+
+<pre id="{$id}" class="mermaid" data-autorun="{$autorun}">
+```
+
+
 ---
 
 ## 3. Composants Métier (Features)
