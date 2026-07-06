@@ -34,9 +34,9 @@ Le schéma reste compact tout en restant très extensible.
 - commentaire
 
 ## Notes
-Concept	à généraliser
-Documents	/ documentobjet
-Distinctions /	distinction_objets
-(éventuellement) Images	/ imageobjet
-(éventuellement) Liens externes / 	lienobjet
+Concept	à généraliser :
+- [document](/documentation/METIERS/MAINTENANCE/document.md) / [documentobjet](/documentation/METIERS/MAINTENANCE/documentobjet.md)
+- Distinctions /	distinction_objets
+- (éventuellement) Images	/ imageobjet
+- (éventuellement) Liens externes / 	lienobjet
 
