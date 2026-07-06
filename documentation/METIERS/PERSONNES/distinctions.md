@@ -17,21 +17,21 @@ Le schéma reste compact tout en restant très extensible.
   puis une seule table d'attribution.
 ---
 **table distinctions**
-id
-code
-label
-organisme
-description
+- id
+- code
+- label
+- organisme
+- description
 
 ---
 **table distinction_objets**
-id
-distinction_id
-objet_type ( personne | organisation )
-objet_id
-date_attribution
-reference
-commentaire
+- id
+- distinction_id
+- objet_type ( personne | organisation )
+- objet_id
+- date_attribution
+- reference
+- commentaire
 
 ## Notes
 Concept	à généraliser
