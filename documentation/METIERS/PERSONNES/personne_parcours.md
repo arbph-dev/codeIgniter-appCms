@@ -69,7 +69,7 @@ ALTER TABLE `personne_parcours`
   ADD CONSTRAINT `fk_parcours_adresse`
     FOREIGN KEY (`adresse_id`)
     REFERENCES `adresses` (`id`)
-    ON DELETE SET NULL;
+    ON DELETE SET NULL,
 
   ADD CONSTRAINT `fk_personne_parcours_type`
     FOREIGN KEY (`type`)
