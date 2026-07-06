@@ -7,6 +7,17 @@ Lorsqu'une personne possède plusieurs alias, on peut afficher un seul alias pri
 
 ## Structure
 
+| Field        | Type                                                  | Null | Key | Default | Extra          |
+| ------------ | ----------------------------------------------------- | ---- | --- | ------- | -------------- |
+| id           | bigint unsigned                                       | NO   | PRI | _NULL_  | auto_increment |
+| personne_id  | bigint unsigned                                       | NO   | MUL | _NULL_  |                |
+| alias        | varchar(255)                                          | NO   | MUL | _NULL_  |                |
+| alias_type   | enum('pseudonyme','nom_naissance','nom_usage','nom... | NO   | MUL | autre   |                |
+| is_principal | tinyint(1)                                            | NO   |     | 0       |                |
+| date_debut   | date                                                  | YES  |     | _NULL_  |                |
+| date_fin     | date                                                  | YES  |     | _NULL_  |                |
+| created_at   | datetime                                              | YES  |     | _NULL_  |                |
+| updated_at   | datetime                                              | YES  |     | _NULL_  |                |
 
 ## SQL
 
