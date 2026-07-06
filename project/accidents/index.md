@@ -158,3 +158,45 @@ class AccidentService
 
 ```
 
+## Migration Laravel
+```php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up()
+    {
+        Schema::create('accidents', function (Blueprint $table) {
+            $table->string('num_acc', 32)->primary();
+            $table->smallInteger('an')->nullable()->index();
+            $table->tinyInteger('mois')->nullable()->index();
+            $table->tinyInteger('jour')->nullable();
+            $table->string('hrmn', 10)->nullable();
+            $table->tinyInteger('lum')->nullable();
+            $table->tinyInteger('agg')->nullable();
+            $table->tinyInteger('inter')->nullable(); // 'int' reserved, use 'inter'
+            $table->tinyInteger('atm')->nullable();
+            $table->tinyInteger('col')->nullable()->index();
+            $table->string('com', 6)->nullable();
+            $table->text('adr')->nullable();
+            $table->char('gps',1)->nullable();
+            $table->decimal('lat', 10, 5)->nullable()->index();
+            $table->decimal('long', 10, 5)->nullable()->index();
+            $table->string('dep', 5)->nullable()->index();
+            $table->string('domain', 32)->default('routier'); // routier, marine, avion, rail...
+            $table->timestamps();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('accidents');
+    }
+};
+
+```
+
+
+
+
