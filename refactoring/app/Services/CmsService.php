@@ -171,6 +171,11 @@ class CmsService
                 $part['type_icon']  = '📝';
                 break;
 
+            case 'callout':
+                $part['type_label'] = 'Callout';
+                $part['type_icon']  = '📢';
+                break;
+
             case 'codeval':
                 $part['type_label'] = 'CodeVal';
                 $part['type_icon']  = '💻';
@@ -391,18 +396,16 @@ class CmsService
 
     public function renderArticle(string $slug): string
     {
+
         $article = $this->getFullArticle($slug);// contient sections + parts
-
+        if (!$article) { return ''; }
+ 
         $html = '';
-
         foreach ($article['sections'] as $section)
         {
-            $html .= $this->renderSection(
-                $section['id']
-            );
+            $html .= $this->renderSectionData($section, $section['parts']);
         }
-
-        return $html;
+        return $html;        
     }
 
     //-- renderCategory
