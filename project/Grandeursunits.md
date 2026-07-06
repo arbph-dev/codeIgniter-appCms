@@ -1,6 +1,31 @@
+Version proposée
+
+bilan : 
+
+Appréciation générale
+
+Je situerais cette proposition à 7,5/10 en l'état, principalement parce que la structure de base est saine mais que plusieurs concepts restent mêlés.
+
+Les points forts sont :
+
+séparation entre unités, grandeurs et caractéristiques ;
+volonté de rendre les calculs paramétrables plutôt que codés en dur ;
+utilisation de objet_type / objet_id, qui s'intègre bien à ton architecture générique ;
+ouverture vers des calculs multi-variables.
+
+Les principaux points à améliorer sont :
+
+introduire explicitement la notion de dimension physique (référentiel métrologique) ;
+gérer les conversions simples par facteur + offset plutôt que par des formules ;
+renommer les "conversions complexes" en calculs physiques ;
+supprimer eval() au profit d'un véritable moteur d'expressions ;
+concevoir les formules comme un graphe de dépendances, ce qui permettra d'enchaîner automatiquement des calculs complexes sans multiplier le code métier.
+
+À mon avis, cette dernière évolution est celle qui donnera le plus de valeur à long terme à ton CMS technique et à son module GMAO.
+
+---
 
 But : convertir les grandeurs entre différences unités
-
 environnement code Igniter, PHP MySql
 
 
