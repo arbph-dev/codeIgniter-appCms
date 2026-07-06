@@ -6,6 +6,9 @@
 + actif BOOLEAN NOT NULL DEFAULT TRUE,
 + tva_intracom VARCHAR(20) NULL,
 
+
+- [ ] modifier back et front end
+
 ## Note
 
 | Identifiant | Concerne | Exemple |
