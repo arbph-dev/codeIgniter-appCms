@@ -229,5 +229,29 @@ return new class extends Migration {
 ```
 
 
+Enum : TypeCollision.php
 
+Utiliser les PHP enums (casts) pour : `lum`, `agg`, `int`, `atm`, `col`, `catr`, `circ`, `surf`, `catv`, `catu`, `grav`, `sexe`, `manv`, `trajet`, etc.  
+Avantage : clarté, labels, sérialisation JSON contrôlée.
+
+```php
+enum TypeCollision: int
+{
+    case Frontale = 1;
+    case Arriere = 2;
+    case Cote = 3;
+    case Chaine = 4;
+    case Multiples = 5;
+    case Autre = 6;
+    case SansCollision = 7;
+
+    public static function label(self $c): string
+    {
+        return match($c) {
+            self::Frontale => 'Deux véhicules - frontale',
+            self::Arriere => 'Deux véhicules – par l’arrière',
+            ...
+        };
+    }
+}
 
