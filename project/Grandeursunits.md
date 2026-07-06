@@ -4,13 +4,12 @@ But : convertir les grandeurs entre différences unités
 environnement code Igniter, PHP MySql
 
 
-tables 
+## Tables
+
 - unites : décrit toutes les unités des grandeurs physiques
 - grandeurs_physiques
-
-
-
-## Tables
+- caracteristiques
+- conversions_complexes
 
 ### unites
 
@@ -19,56 +18,101 @@ tables
 - `symbole` (ex: "m", "s", "K")
 - `type` (ex: "longueur", "temps", "température") — pour catégoriser les unités
 
+Voir l'un ou l'autre
+- enum sur char 4 , L pour la grandeur , P puissance , Tm couple mécanique, Tem couple éléctromagnétique
+- table (type_unit id , label) + fk  type_unit_id sur (type_unit, id)
+
+
+|id|nom|symbole|type| 
+|---|---|---|---|
+|1|millimètre|mm|longueur| 
+|2|mètre|m|longueur| 
+|3|kilomètre|km|longueur| 
+|4|millivolt|mV|tension électrique| 
+|5|volt|V|tension électrique|
+|6|kilovolt|kV|tension électrique| 
+|7|degrés|°C|température|
+|8|kelvin|K|température|
+
+
 ### grandeurs_physiques
-- id (PK)
-- nom (ex: "débit", "température", "énergie thermique")
+- `id` (PK)
+- `nom` (ex: "débit", "température", "énergie thermique")
 - `description`
 - `unite_id` (FK vers `unites`) — unité de base associée à la grandeur
 
-||||| 
+|id|nom|description|unite_id| 
 |---|---|---|---|
-||||| 
+|1|longueur|distance ou mesure de l'arete horizontale de face |2| 
+|2|hauteur|mesure de l'arete verticale de face |2| 
+|3|profondeur|niveau ou mesure de l'arete verticale de dessus |2| 
+|4|tension électrique|différence de potentiel |5| 
+|5|température| mesure physique |7| 
+|6|température| mesure physique en unité légale |8|
+|6|énergie électrique| énergie primaire nécessaire aux équipements |NULL|
 
-### c) Table `caracteristiques`
+### caracteristiques
 
 - `id` (PK)
-- `equipement_id` (FK vers équipements)
+- `objet_type` type des équipements, générique  ( compresseur = 1 ,compresseur à piston = 2 , pompe, pompe centrifuge, moteur electrique, moteur cc)
+- `objet_id` id de l'équipements
 - `grandeur_physique_id` (FK vers `grandeurs_physiques`)
 - `valeur`
 - `unite_id` (FK vers `unites`) — unité dans laquelle la valeur est exprimée
-- `date_mesure` (optionnel)
 
-table conversions_complexes :
-id
-grandeur_cible_id
-description (ex: "Énergie thermique calculée à partir du débit et des températures")
-Créer une table conversions_complexes_entrees (pour lister les grandeurs nécessaires) :
-id
-conversion_complexe_id (FK vers conversions_complexes)
-grandeur_entree_id
-role (ex: "débit", "température_entrée", "température_sortie")
-Stocker la formule PHP dans conversions_complexes (ex: "Q = debit * Cp * (T_sortie - T_entree)"), ou mieux, stocker un identifiant de fonction PHP qui sera codée dans votre application.
+voir : 
+- hiérachie entre type d'équipements
+- role a ajouter
 
-Pour les conversions complexes :
+|id|objet_type|objet_id|grandeur_physique_id| valeur | unite_id |
+|---|---|---|---|---|
+|1|1|25 (compresseur principal) |6 (énergie électrique) |NULL |NULL| 
+|2|1|25 (compresseur principal) |4 (tension électrique) |400 |5| 
+|2|1|25 (compresseur principal) |5 (tension électrique) |400 |5| 
+
+### conversions_grandeurs
+- `id`
+- `grandeur_cible_id`  
+- `description` (ex: "Énergie thermique calculée à partir du débit et des températures")
+
+### conversions_complexes_entrees
+liste les grandeurs nécessaires aux conversions :
+- `id`
+- `conversion_grandeurs_id` (FK vers conversions_grandeurs)
+- `grandeur_entree_id`
+- `role` (ex: "débit", "température_entrée", "température_sortie")
+- `formule`
+
+Voir l'un ou l'autre
+- Stocker la formule PHP dans (ex: "Q = debit * Cp * (T_sortie - T_entree)")
+- Stocker un identifiant de fonction PHP 
+---
+- envisager une bibliothèque dédiée d’évaluation mathématique (ex: `nxp/math-executor` via Composer) ?
+
+## conversions
 
 - Récupérer les grandeurs d’entrée nécessaires.
+- Remplacer les variables par leurs valeurs puis 
+- nettoiyer l’expression pour n’autoriser que les caractères mathématiques.
+- gérer des conversions simples (1 variable) ou complexes (plusieurs variables) avec la même méthode.
 - Passer ces valeurs à une fonction PHP dédiée qui applique la formule.
-- Exemple : une classe `ConversionService` avec une méthode `convertirComplexe($conversionComplexeId, $valeursEntrees)`
 
 
-exemple PHP sécurisé et flexible pour gérer à la fois des conversions simples et complexes avec des formules dynamiques, sans exposer votre code aux risques liés à `eval()` non filtré :
+
+Exemple : une classe `ConversionService` avec une méthode `convertir qui calcule une formule mathématique en remplaçant les variables par leurs valeurs.
+**paramètres**
+- `$formule` : Expression mathématique avec noms de variables (ex: "debit * cp * (tempSortie - tempEntree)")
+- $variables Tableau associatif ['nom_variable' => valeur_numérique] résultant de requetes sur les données via modele
+**résultat**
+- float|string Résultat du calcul ou message d'erreur
 
 ```php
 <?php
-
 class ConversionService {
     
     /**
-     * Calcule une formule mathématique en remplaçant les variables par leurs valeurs.
-     * Autorise uniquement chiffres et opérateurs pour éviter les injections.
-     * 
-     * @param string $formule Expression mathématique avec noms de variables (ex: "debit * cp * (tempSortie - tempEntree)")
-     * @param array $variables Tableau associatif ['nom_variable' => valeur_numérique]
+     * @param string 
+     * @param array 
      * @return float|string Résultat du calcul ou message d'erreur
      */
     public function convertir(string $formule, array $variables) {
@@ -123,9 +167,3 @@ echo "Sécurité : " . $service->convertir("valeur * system('ls')", ['valeur' =>
 
 ---
 
-### Points clés :
-
-- La méthode `convertir()` remplace les variables par leurs valeurs puis nettoie l’expression pour n’autoriser que les caractères mathématiques.
-- Cela réduit fortement les risques liés à `eval()`.
-- Vous pouvez gérer des conversions simples (1 variable) ou complexes (plusieurs variables) avec la même méthode.
-- Pour des besoins plus avancés, envisagez une bibliothèque dédiée d’évaluation mathématique (ex: `nxp/math-executor` via Composer).
