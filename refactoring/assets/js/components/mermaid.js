@@ -58,7 +58,31 @@ const DIAGRAMS = {
 
 const rendered = new Set()
 
-function runInArticle(articleId) {
+/**
+ * Rendu initial : tous les .mermaid présents dans le DOM au chargement.
+ * Appelé une seule fois dans initMermaid().
+ * Compat future onglets : les éléments déjà rendus sont dans `rendered`,
+ * runInArticle() les ignorera automatiquement.
+ */
+function bootstrapDom()
+{
+    const nodes = [...document.querySelectorAll('.mermaid')]
+        .filter(el => el.id && !rendered.has(el.id))
+ 
+    if (!nodes.length) { return }
+ 
+    nodes.forEach(el => rendered.add(el.id))
+    mermaid.run({ nodes })
+    console.log(`[mermaid] bootstrap: ${nodes.length} diagramme(s) rendus`)
+}
+ 
+/**
+ * Rendu différé : déclenché par tabs:switch ou nav:goto.
+ * Seuls les éléments DANS le conteneur articleId et pas encore rendus
+ * sont traités — évite les doubles rendus au changement d'onglet.
+ */
+function runInArticle(articleId) 
+{
     const article = byId(articleId)
     if (!article) return
 
@@ -72,7 +96,8 @@ function runInArticle(articleId) {
     console.log(`[mermaid] ${nodes.length} diagramme(s) rendu(s) dans #${articleId}`)
 }
 
-function reRender(id) {
+function reRender(id) 
+{
     const el = byId(id)
     if (!el) {
         console.warn(`Mermaid: #${id} introuvable`)
@@ -83,7 +108,8 @@ function reRender(id) {
     mermaid.run({ nodes: [el] })
 }
 
-async function setAndRender(id, definition) {
+async function setAndRender(id, definition) 
+{
     const el = byId(id)
     if (!el) {
         console.warn(`Mermaid: #${id} introuvable`)
@@ -128,6 +154,9 @@ export function initMermaid() {
         }
         setAndRender(id, builder())
     })
+
+    // --- Rendu initial de tous les éléments déjà dans le DOM
+    bootstrapDom()
 }
 
 
