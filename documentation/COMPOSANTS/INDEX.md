@@ -322,6 +322,16 @@ bus.subscribe('mermaid:preset', ({ id, type }) => setAndRender(id, builder()))
 - `sequenceMinimal` — diagramme de séquence simple
 - `ganttEmpty` — gantt vide
 
+
+#### Historique
+
+**2026-07-07** - ajout de bootstrapDom()
+
+- ajout de bootstrapDom() appelée à la fin de initMermaid(). 
+    Elle scanne tous les .mermaid présents dans le DOM au chargement, les ajoute au Set rendered, et appelle mermaid.run().
+  
+- Les abonnements aux events existants (tabs:switch, nav:goto) restent intacts — quand les onglets arriveront, runInArticle() ignorera automatiquement les éléments déjà dans rendered.
+
 ---
 
 ## 3. Composants Métier (Features)
