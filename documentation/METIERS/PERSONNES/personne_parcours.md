@@ -51,8 +51,7 @@ CREATE TABLE `personne_parcours` (
   KEY `idx_debut` (`date_debut`),
   KEY `idx_fin` (`date_fin`),
   KEY `idx_structure` (`structure_objet`,`structure_id`),
-  KEY `idx_adresse` (`adresse_id`),
-  KEY `idx_type` (`type`)
+  KEY `idx_adresse` (`adresse_id`)
 ) ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_unicode_ci;
@@ -77,8 +76,10 @@ ALTER TABLE `personne_parcours`
     ON DELETE RESTRICT;
 
 COMMIT;
+```
 
-
+```
+SHOW COLUMNS FROM personne_parcours
 ```
 
 ## Exemples :
