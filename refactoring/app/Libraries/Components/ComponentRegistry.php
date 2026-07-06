@@ -7,6 +7,7 @@ use App\Libraries\Components\Renderers\RawRenderer;
 use App\Libraries\Components\Renderers\ApexRenderer;
 use App\Libraries\Components\Renderers\CodeValRenderer;
 use App\Libraries\Components\Renderers\MermaidRenderer;
+use App\Libraries\Components\Renderers\CalloutRenderer;  // ← ajout 
 
 class ComponentRegistry
 {
