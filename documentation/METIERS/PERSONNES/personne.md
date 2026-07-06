@@ -40,6 +40,35 @@ se déduit automatiquement des dates
 
 ## Structure
 
+| Field                | Type                        | Null | Key | Default | Extra          |
+| -------------------- | --------------------------- | ---- | --- | ------- | -------------- |
+| id                   | bigint unsigned             | NO   | PRI | _NULL_  | auto_increment |
+| nom                  | varchar(255)                | NO   | MUL | _NULL_  |                |
+| prenoms              | varchar(255)                | NO   | MUL | _NULL_  |                |
+| nom_complet          | varchar(512)                | NO   | MUL | _NULL_  |                |
+| nom_naissance        | varchar(255)                | YES  |     | _NULL_  |                |
+| civilite             | varchar(20)                 | YES  |     | _NULL_  |                |
+| sexe                 | char(1)                     | YES  |     | _NULL_  |                |
+| date_naissance       | date                        | YES  | MUL | _NULL_  |                |
+| precision_naissance  | enum('annee','mois','jour') | YES  |     | _NULL_  |                |
+| naissance_adresse_id | bigint unsigned             | YES  | MUL | _NULL_  |                |
+| date_deces           | date                        | YES  |     | _NULL_  |                |
+| precision_deces      | enum('annee','mois','jour') | YES  |     | _NULL_  |                |
+| deces_adresse_id     | bigint unsigned             | YES  | MUL | _NULL_  |                |
+| nationalite          | varchar(120)                | YES  |     | _NULL_  |                |
+| bio                  | text                        | YES  |     | _NULL_  |                |
+| detail               | longtext                    | YES  |     | _NULL_  |                |
+| slug                 | varchar(255)                | YES  | UNI | _NULL_  |                |
+| source               | varchar(100)                | YES  |     | _NULL_  |                |
+| quality_score        | tinyint unsigned            | YES  |     | _NULL_  |                |
+| verified_at          | datetime                    | YES  |     | _NULL_  |                |
+| verified_by          | int unsigned                | YES  | MUL | _NULL_  |                |
+| merge_into_id        | bigint unsigned             | YES  | MUL | _NULL_  |                |
+| created_at           | datetime                    | YES  |     | _NULL_  |                |
+| updated_at           | datetime                    | YES  |     | _NULL_  |                |
+| deleted_at           | datetime                    | YES  |     | _NULL_  |                |
+
+
 ## SQL
 
 ```sql
