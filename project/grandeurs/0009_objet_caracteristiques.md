@@ -485,4 +485,49 @@ COLLATE=utf8mb4_unicode_ci
 COMMENT='Valeurs de référence des caractéristiques techniques';
 ```
 
+## Index
+```sql
+CREATE INDEX idx_objet_caracteristiques__structure
+ON objet_caracteristiques
+(
+    structure_type,
+    structure_id
+);
 
+CREATE INDEX idx_objet_caracteristiques__caracteristique
+ON objet_caracteristiques
+(
+    caracteristique_id
+);
+
+CREATE INDEX idx_objet_caracteristiques__role
+ON objet_caracteristiques
+(
+    role
+);
+
+CREATE INDEX idx_objet_caracteristiques__designation
+ON objet_caracteristiques
+(
+    designation
+);
+
+CREATE INDEX idx_objet_caracteristiques__origine
+ON objet_caracteristiques
+(
+    origine
+);
+```
+Une évolution que je proposerais immédiatement
+
+Je remplacerais la clé unique que j'avais imaginée par une plus complète.
+```sql
+UNIQUE
+(
+    structure_type,
+    structure_id,
+    caracteristique_id,
+    role,
+    designation
+)
+```
