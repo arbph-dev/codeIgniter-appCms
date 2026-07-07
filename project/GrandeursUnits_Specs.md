@@ -685,5 +685,10 @@ Le modèle obtenu constitue un socle métrologique générique, indépendant des
 Les évolutions identifiées concernent principalement les services et les préférences d'utilisation ; elles ne remettent pas en cause la structure actuelle des tables.
 
 
-
+✅ 004 constantes_physiques
+✅ 005 formules_physiques
+✅ 006 formules_physiques_entrees
+✅ 007 unites_preferences
+✅ 008 caracteristiques
+✅ 009 objet_caracteristiques
 
