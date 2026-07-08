@@ -105,3 +105,18 @@ Exemple :
 |CHIMIE|R|
 
 Le référentiel devient beaucoup plus riche.
+
+
+**stocker les constantes dans leur unité de référence**.
+Cela évitera toute ambiguïté lors des calculs.
+
+Par exemple :
+
+g = 9.80665 m/s²
+Cp eau = 4186 J/(kg·K)
+R = 8.314462618 J/(mol·K)
+
+Le moteur de calcul travaillera toujours avec ces valeurs de référence.
+
+
+
