@@ -14,4 +14,20 @@
 - FK(unite_defaut_id)
 - UNIQUE(nom)
 
-  
+## Seeder
+Quelques grandeurs.
+- Longueur
+- Hauteur
+- Largeur
+- Diamètre
+- Température
+- Température entrée
+- Température sortie
+- Pression
+- Débit
+- Puissance électrique
+- Puissance thermique
+- Consommation
+- Tension
+- Intensité
+
