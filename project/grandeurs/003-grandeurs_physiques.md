@@ -1,10 +1,15 @@
 # grandeurs physiques
 
 
+## Note
+Evolution : supprimer **unite_defaut_id **
+Laisser ce choix à une future table : unites_preferences
+
+
 ## table : grandeurs_physiques
 - id
 - dimension_id
-- unite_defaut_id
+- unite_defaut_id *voir note
 - nom
 - description
 
