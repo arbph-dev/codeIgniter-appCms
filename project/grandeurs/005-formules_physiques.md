@@ -66,6 +66,18 @@ Puissance thermique version 2 : Q × Cp(T) × ΔT
   - deux décimales ;
   - six décimales.
 
+## seeder
 
+ATTENTION le seeder des formules_physiques fait référence à : SPEED
+Il n'existe probablement pas dans **grandeurs_physiques** voir grandeurs_physiques.seed.sql.
+
+Le référentiel des grandeurs doit être enrichi avant de finaliser ce seeder. 
+Ajouter des grandeurs dérivées courantes comme :
+- SPEED
+- ACCELERATION
+- FORCE
+- TORQUE
+- FREQUENCY
+- SPECIFIC_HEAT
 
 
