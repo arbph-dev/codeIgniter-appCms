@@ -228,6 +228,22 @@ ne doivent jamais contenir d'information propre à un équipement, un bâtiment 
 
 Elles constituent un socle métrologique universel, partagé par l'ensemble des modules du CMS.
 
+
+
+### M-018 — Le périmètre fonctionnel prime sur la généralisation
+
+Un modèle ne doit pas être généralisé au-delà des besoins identifiés du projet.
+
+On accepte une légère duplication ou une simplification si elle rend le modèle plus lisible et plus adapté au domaine fonctionnel.
+
+Autrement dit :
+
+on conçoit pour les besoins réels ;
+on laisse une porte ouverte aux évolutions ;
+mais on évite les abstractions prématurées.
+
+Je trouve que c'est une excellente règle. Elle complète parfaitement M-013 (Simplicité) et nous aidera à garder un référentiel pragmatique.
+
 On référence toujours les données par leur code. C'est une règle simple, mais elle rendra les migrations et les jeux de données beaucoup plus portables et résistants aux évolutions. C'est le genre de convention qui paie sur le long terme.
 
 
