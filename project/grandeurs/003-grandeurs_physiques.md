@@ -2,8 +2,14 @@
 
 
 ## Note
-Evolution : supprimer **unite_defaut_id **
-Laisser ce choix à une future table : unites_preferences
+
+- unite_defaut_id
+Evolution : supprimer **unite_defaut_id** et laisser ce choix à une future table : unites_preferences
+
+- symbole : limité à 16 caractères, devrait suffire
+
+- est_calculable : boolean
+pourrait être remplacé une table de stratégies de production
 
 
 ## table : grandeurs_physiques
