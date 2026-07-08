@@ -46,7 +46,5 @@ Prévoir une trentaine d'unités.
 ### Débit
 - m³/s
 - m³/h
-
-L/s
-
-L/min
+- L/s
+- L/min
