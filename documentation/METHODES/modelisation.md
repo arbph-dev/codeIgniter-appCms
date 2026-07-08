@@ -90,7 +90,23 @@ relation_types
 parcours_types
 intervention_types
 
-C'est très homogène.
+Tous les référentiels utilisent un champ code.
+
+Les codes sont :
+
+uniques ;
+stables ;
+indépendants de la langue.
+
+Ils sont utilisés par :
+
+les seeders ;
+les API ;
+les services ;
+les scripts SQL.
+
+
+
 
 ## Champs de qualité
 Toujours les mêmes noms.
