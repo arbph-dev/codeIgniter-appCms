@@ -64,17 +64,13 @@ CREATE TABLE grandeurs_physiques
     dimension_id BIGINT UNSIGNED NOT NULL
         COMMENT 'Dimension physique',
 
-    unite_defaut_id BIGINT UNSIGNED NOT NULL
-        COMMENT 'Unité utilisée par défaut',
-
     code VARCHAR(64) NOT NULL
         COMMENT 'Code fonctionnel stable',
 
     nom VARCHAR(100) NOT NULL
         COMMENT 'Nom de la grandeur',
-
-    symbole VARCHAR(16) NULL
-        COMMENT 'Notation scientifique',
+ 
+    notation VARCHAR(32) NULL COMMENT 'Notation scientifique',
 
     est_calculable TINYINT(1) NOT NULL DEFAULT 1
         COMMENT '1 = peut être produite par une formule',
@@ -106,11 +102,6 @@ CREATE TABLE grandeurs_physiques
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
 
-    CONSTRAINT fk_grandeurs_physiques__unites
-        FOREIGN KEY (unite_defaut_id)
-        REFERENCES unites(id)
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT
 
 )
 ENGINE = InnoDB
@@ -125,9 +116,6 @@ COMMENT = 'Référentiel des grandeurs physiques';
 
 CREATE INDEX idx_grandeurs_physiques__dimension
 ON grandeurs_physiques(dimension_id);
-
-CREATE INDEX idx_grandeurs_physiques__unite
-ON grandeurs_physiques(unite_defaut_id);
 
 CREATE INDEX idx_grandeurs_physiques__ordre
 ON grandeurs_physiques(ordre_affichage);
