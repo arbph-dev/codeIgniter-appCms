@@ -216,6 +216,18 @@ Je propose donc une règle de projet
 
 Interdiction d'utiliser des identifiants numériques "en dur" dans les seeders du référentiel.
 
+
+### M-016 — Les référentiels sont indépendants du métier
+
+Les tables :
+- dimensions
+- unites
+- grandeurs_physiques
+
+ne doivent jamais contenir d'information propre à un équipement, un bâtiment ou un client.
+
+Elles constituent un socle métrologique universel, partagé par l'ensemble des modules du CMS.
+
 On référence toujours les données par leur code. C'est une règle simple, mais elle rendra les migrations et les jeux de données beaucoup plus portables et résistants aux évolutions. C'est le genre de convention qui paie sur le long terme.
 
 
