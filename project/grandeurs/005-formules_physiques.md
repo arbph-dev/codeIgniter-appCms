@@ -55,11 +55,17 @@ Puissance thermique version 1 : Q × Cp × ΔT
 
 Puissance thermique version 2 : Q × Cp(T) × ΔT
 
-- remplacer **actif** par un champ **etat** VARCHAR(20).
-permet de gérer :
-- BROUILLON
-- VALIDEE
-- OBSOLETE
-- ARCHIVEE
+- remplacer **actif** par un champ **etat** VARCHAR(20) qui permet de gérer :
+  - BROUILLON
+  - VALIDEE
+  - OBSOLETE
+  - ARCHIVEE
+
+- ajouter **decimales** SMALLINT , Certaines formules produisent naturellement :
+  - un entier ;
+  - deux décimales ;
+  - six décimales.
+
+
 
 
