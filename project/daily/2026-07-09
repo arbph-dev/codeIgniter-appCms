@@ -1,0 +1,12 @@
+
+modifier old, a copier dans les src
+
+app\Views\layouts\layout_nonav.php
+
+modifier
+<script src="/assets/js/test_main.js" type="module"></script>  
+<script src="/assets/js/main.js" type="module"></script>  
+
+but supprimer login pour acces public
+
+check de sroutes et filters réalisé voir doc/referentiels
