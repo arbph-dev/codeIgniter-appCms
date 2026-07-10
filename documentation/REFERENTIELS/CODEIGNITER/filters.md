@@ -2,6 +2,7 @@ je voudrais rendre public mon portail
 j'ai une page : https://zealot.fr/technologies/vap/requalification
 mais elle affiche le login shield.
 je dois  ajouter 'technologies au $globals dans filters ?
+
 ---
 
 Le filtre `session` est appliqué sur toutes les routes, 
