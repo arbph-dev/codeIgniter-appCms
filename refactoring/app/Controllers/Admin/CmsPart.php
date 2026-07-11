@@ -49,7 +49,8 @@ class CmsPart extends BaseController
      */
     public function update(int $id)
     {
-        //$this->cms->updatePart( $id , $this->request->getPost() );
+        //dd($this->request->getPost());
+
         if (! $this->cms->updatePart( $id, $this->request->getPost() ) )
         {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
