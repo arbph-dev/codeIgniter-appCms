@@ -112,6 +112,8 @@ bus.publish('carousel:stop', '2')    // Arrêter carousel 2
 
 ### 1.5 CallOut (Encadré d'information)
 
+[en détail](/documentation/COMPOSANTS/1.5-CallOut.md)
+
 | Aspect | Fichier | Statut | Notes |
 |--------|---------|--------|-------|
 | **JS** | `ihm/callout.js` | ✅ Simple | Initialisation des callouts |
