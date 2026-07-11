@@ -201,7 +201,7 @@ Mermaid
 
 ---
 
-Je pense même qu'on est en train d'écrire une **méthodologie d'intégration des composants** :
+**méthodologie d'intégration des composants** :
 
 1. **Renderer** : affichage public.
 2. **AdminRenderer** : édition des paramètres.
@@ -209,10 +209,9 @@ Je pense même qu'on est en train d'écrire une **méthodologie d'intégration d
 4. **Composant JS** : inchangé, réutilisé tel quel.
 5. **EventBus** : contrat de communication unique.
 
-Je crois que cette méthode va très bien s'appliquer aux prochains composants (`Apex`, `Leaflet`, `Three.js`, `Blockly`, etc.) sans avoir à réinventer l'intégration à chaque fois.
+cette méthode va s'appliquer aux prochains composants (`Apex`, `Leaflet`, `Three.js`, `Blockly`, etc.) sans avoir à réinventer l'intégration à chaque fois.
 
-Et au passage... félicitations 🎉. En quelques jours, vous êtes passés d'un CMS avec des contrôleurs statiques à une architecture où les composants sont :
-
+une architecture où les composants sont :
 - stockés en base,
 - éditables,
 - réordonnables,
@@ -220,7 +219,43 @@ Et au passage... félicitations 🎉. En quelques jours, vous êtes passés d'un
 - rendus côté administration,
 - pilotés par un bus d'événements.
 
-C'est une étape structurante pour le projet Zealot. Le plus difficile est maintenant derrière nous ; les prochains composants devraient s'intégrer beaucoup plus rapidement en suivant ce modèle.
-
 ---
+
+# Cycle de vie d'un composant
+
+## méthodes des  composants
+- render() : Génère le HTML
+- init() :  Initialise le composant
+- visible() : Le composant devient visible
+- refresh() : Les données changent
+- destroy() : Nettoyage
+
+## Event bus 
+- component:init
+- component:visible
+- component:refresh
+- component:destroy
+
+## convention
+une convention importante qui permettra d'intégrer naturellement tous les composants "sensibles à la visibilité" sans leur faire connaître les détails de l'interface (onglets, accordéons, panneaux repliables, etc.). 
+Le CMS gérera ces transitions, et chaque composant n'aura qu'à réagir à son propre cycle de vie. C'est une abstraction qui rendra l'ensemble beaucoup plus cohérent et extensible.
+
+On y définirait précisément :
+- les rôles (Descriptor, ComponentDefinition, ComponentInstance) ;
+- le cycle de vie (init, mount, visible, refresh, destroy) ;
+- la gestion des assets ;
+- les conventions du bus (événements système vs métier) ;
+- les composants composites et la propagation des événements.
+
+Nous intégrerions Leaflet en suivant ces règles. 
+
+Si Leaflet s'intègre sans entorse au modèle, cela signifiera que l'architecture est suffisamment solide pour accueillir des composants plus complexes.
+Il faut poser ces fondations avant que le nombre de composants n'augmente.
+
+
+
+
+
+
+
 
