@@ -13,241 +13,285 @@ import { bus } from '/assets/js/core/eventBus.js'
 import { byId, qsa } from '/assets/js/core/domhelper.js'
 
 /* =============================================================================
-   1. ENGINE
+   1. DONNEES DE DEMONSTRATION
    ========================================================================= */
 
-/**
- * Générateur config ligne simple
- */
-function buildLineConfig(data, options = {}) {
-    return {
-        chart: {
-            type: 'line',
-            height: options.height || 350,
-            zoom: { enabled: false }
-        },
+const SAMPLE_LINE = [ 12, 18, 15, 22, 20, 27, 24 ]
 
-        series: [{
-            name: options.name || 'Serie',
-            data
-        }],
+const SAMPLE_BARS = [ { name: 'Valeurs', data: [14, 9, 17, 12] } ]
 
-        xaxis: options.xaxis || {},
+const SAMPLE_CATEGORIES = [ 'A' , 'B' , 'C', 'D' ]
 
-        yaxis: options.yaxis || {},
-
-        stroke: {
-            curve: options.curve || 'straight'
-        },
-
-        title: {
-            text: options.title || '',
-            align: 'left'
-        },
-
-        dataLabels: {
-            enabled: false
-        }
-    }
-}
-
-/**
- * Générateur config barres
- */
-function buildBarConfig(series, categories = [], options = {}) {
-    return {
-        chart: {
-            type: 'bar',
-            height: options.height || 350
-        },
-
-        series,
-
-        xaxis: {
-            categories
-        },
-
-        title: {
-            text: options.title || '',
-            align: 'left'
-        }
-    }
-}
-
+const SAMPLE_MOTEUR = [
+    { vitesse:1000, couple:110 },
+    { vitesse:1500, couple:145 },
+    { vitesse:2000, couple:170 },
+    { vitesse:2500, couple:182 },
+    { vitesse:3000, couple:176 },
+    { vitesse:3500, couple:160 },
+    { vitesse:4000, couple:138 }
+]
 
 /* =============================================================================
-   2. REGISTRY
-   Catalogue des types de graphiques
+   2. ENGINE
+   ========================================================================= */
 
+function buildLineConfig(data = [], options = {})
+{
+    return {
 
-   yaxis: {
-    logarithmic: true,
-    logBase: 10,          // optionnel
-    title: { text: 'Couple (Nm)' }
+        chart: { type: 'line', height: options.height ?? 350, zoom: { enabled:false } },
+
+        series: [
+            { name: options.name ?? 'Série', data }
+        ],
+
+        xaxis: options.xaxis ?? {},
+        
+        yaxis: options.yaxis ?? {},
+        
+        stroke: { width: options.width ?? 3, curve: options.curve ?? 'straight' },
+
+        markers: { size: options.markerSize ?? 4 },
+
+        grid: { show:true },
+
+        title: { text: options.title ?? '', align:'left' },
+
+        dataLabels:{ enabled:false }
+
+    }
 }
 
+function buildBarConfig( series = [], categories = [], options = {} )
+{
+    return {
 
+        chart:{ type:'bar', height: options.height ?? 350 },
+        series,
+        xaxis:{ categories },
+        title:{ text: options.title ?? '', align:'left' }
+    }
+}
+
+/* =============================================================================
+   3. REGISTRY
    ========================================================================= */
 
 const CHARTS = {
 
-    line(payload) {
-        return buildLineConfig(payload.data, payload.options)
-    },
+    line(payload = {})
+    {
+        return buildLineConfig(
 
-    bars(payload) {
-        return buildBarConfig(
-            payload.series,
-            payload.categories,
-            payload.options
+            payload.data ?? SAMPLE_LINE,
+
+            payload.options ?? {}
+
         )
     },
 
-    moteurCouple(payload = {}) {
+    bars(payload = {})
+    {
+        return buildBarConfig(
 
-        const data = payload.data || []
-    
+            payload.series ?? SAMPLE_BARS,
+
+            payload.categories ?? SAMPLE_CATEGORIES,
+
+            payload.options ?? {}
+
+        )
+    },
+
+    moteurCouple(payload = {})
+    {
+        const data = payload.data ?? SAMPLE_MOTEUR
+
         return buildLineConfig(
+
             data.map(p => p.couple),
+
             {
-                name: 'Couple',
-    
-                title: 'Courbe Couple / Vitesse',
-    
-                xaxis: {
-                    categories: data.map(p => p.vitesse),
-                    title: { text: 'Vitesse (RPM)' }
+
+                name:'Couple',
+
+                title:'Courbe Couple / Vitesse',
+
+                xaxis:{
+                    categories:data.map(p => p.vitesse),
+                    title:{
+                        text:'Vitesse (RPM)'
+                    }
                 },
-    
-                yaxis: {
-                    title: { text: 'Couple (Nm)' }
+
+                yaxis:{
+                    title:{
+                        text:'Couple (Nm)'
+                    }
                 }
+
             }
+
         )
     }
+
 }
 
-
 /* =============================================================================
-   3. RENDERER
-   Gestion des instances ApexCharts
+   4. RENDERER
    ========================================================================= */
 
 const instances = new Map()
 
-function renderChart(id, config) {
-
+function renderChart(id, config)
+{
     const el = byId(id)
 
-    if (!el) {
-        console.warn(`Apex: container ${id} introuvable`)
+    if (!el)
+    {
+        console.warn(`Apex : container ${id} introuvable`)
         return
     }
 
     destroyChart(id)
 
-    const chart = new ApexCharts(el, config)
+    try
+    {
+        const chart = new ApexCharts(el, config)
 
-    chart.render()
+        chart.render()
 
-    instances.set(id, chart)
+        instances.set(id, chart)
+    }
+    catch(e)
+    {
+        console.error("Erreur ApexCharts")
+
+        console.error(e)
+
+        console.dir(config)
+    }
+
 }
 
-function updateChart(id, series) {
+function updateChart(id, series)
+{
     instances.get(id)?.updateSeries(series)
 }
 
-function destroyChart(id) {
+function destroyChart(id)
+{
     const chart = instances.get(id)
 
     if (!chart) return
 
     chart.destroy()
+
     instances.delete(id)
 }
 
-function listCharts() {
+function listCharts()
+{
     console.table([...instances.keys()])
 }
 
-
 /* =============================================================================
-   4. BOOTSTRAP DOM
-   Auto-instanciation depuis data-chart
+   5. BOOTSTRAP DOM
    ========================================================================= */
 
-function bootstrapFromDOM() {
-
+function bootstrapFromDOM()
+{
     qsa('.cp_apex').forEach(el => {
 
         const type = el.dataset.chart
 
-        if (!type || !CHARTS[type]) return
+        if (!type)
+        {
+            console.warn("Apex : data-chart absent", el)
+            return
+        }
 
-        bus.publish('apex:render', {
-            id: el.id,
+        if (!CHARTS[type])
+        {
+            console.warn(`Apex : type "${type}" inconnu`)
+            return
+        }
+
+        bus.publish('apex:render',{
+
+            id:el.id,
+
             type,
-            payload: {}
+
+            payload:{}
+
         })
+
     })
 }
 
-
 /* =============================================================================
-   5. INDEX
-   API publique
+   6. API PUBLIQUE
    ========================================================================= */
 
-export function initApex() {
-
-    bus.subscribe('apex:render', ({ id, type, payload = {} }) => {
+export function initApex()
+{
+    bus.subscribe('apex:render', ({id,type,payload={}})=>{
 
         const builder = CHARTS[type]
 
-        if (!builder) {
-            console.warn(`Apex chart type inconnu : ${type}`)
+        if(!builder)
+        {
+            console.warn(`Apex chart inconnu : ${type}`)
             return
         }
 
         const config = builder(payload)
 
-        console.log('---------------------------------------------')
-        console.log('---------------------------------------------')
-        console.log(type)
-        console.dir(config)
-        console.log('---------------------------------------------')
-        renderChart(id, config)
+        if (!Array.isArray(config.series))
+        {
+            console.warn("Configuration Apex invalide")
+
+            console.dir(config)
+
+            return
+        }
+
+        renderChart(id,config)
+
     })
 
+    bus.subscribe('apex:update',({id,series})=>{
 
-    bus.subscribe('apex:update', ({ id, series }) => {
-        updateChart(id, series)
+        updateChart(id,series)
+
     })
 
+    bus.subscribe('apex:destroy',(id)=>{
 
-    bus.subscribe('apex:destroy', (id) => {
         destroyChart(id)
+
     })
 
+    bus.subscribe('apex:list',()=>{
 
-    bus.subscribe('apex:list', () => {
         listCharts()
-    })
 
+    })
 
     bootstrapFromDOM()
 }
 
-
 /* =============================================================================
-   6. API exposée (CodeVal / debug console)
+   7. API DEBUG
    ========================================================================= */
 
-window.apexRender = (id, type, payload = {}) =>
-    bus.publish('apex:render', { id, type, payload })
+window.apexRender = (id,type,payload={}) =>
+    bus.publish('apex:render',{id,type,payload})
 
 window.apexDestroy = (id) =>
-    bus.publish('apex:destroy', id)
+    bus.publish('apex:destroy',id)
 
 window.apexList = () =>
     bus.publish('apex:list')
