@@ -20,13 +20,24 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 
+<!-- Three.js -->
+<script type="importmap">
+{
+    "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+}
+</script>
 <!-- ===================================================================== -->
-<!-- CSS composants -->
+<!-- Composants CMS -->
 <!-- ===================================================================== -->
 
 <link rel="stylesheet" href="/assets/css/components/callout.css">
+
 <link rel="stylesheet" href="/assets/css/components/leaflet.css">
 
+<link rel="stylesheet" href="/assets/css/components/threejs.css">
 <!-- ===================================================================== -->
 <!-- CMS -->
 <!-- ===================================================================== -->
