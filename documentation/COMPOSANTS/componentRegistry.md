@@ -18,33 +18,18 @@ Or, on commence à voir apparaître un véritable cycle de vie :
 
 ```
 register()
-
-↓
-
-init()
-
-↓
-
-render()
-
-↓
-
-show()
-
-↓
-
-update()
-
-↓
-
-destroy()
+    -> init()
+    -> render()
+    -> show()
+    -> update()
+    -> destroy()
 ```
 
 C'est exactement ce que Leaflet nous a fait découvrir.
 
 ## Je proposerais donc de le faire légèrement évoluer
 
-```
+````js
 // /assets/js/core/componentRegistry.js
 
 const registry = new Map()
@@ -67,38 +52,27 @@ export function list()
 export function boot()
 {
     registry.forEach(component => {
-
         component.init()
-
     })
 }
 ```
 
 Et un composant s'enregistrerait ainsi :
 
-```
-register('leaflet', {
-
-    init : initLeaflet
-
-})
+```js
+register('leaflet', { init : initLeaflet })
 ```
 
 Aujourd'hui cela paraît inutile.
 
 Demain, Three.js pourra faire :
 
-```
+```js
 register('threejs', {
-
     init    : initThree,
-
     version : '0.1',
-
     destroy : destroyThree,
-
     debug   : true
-
 })
 ```
 
@@ -106,65 +80,42 @@ sans modifier le Registry.
 
 ---
 
-## Je pense même qu'on ira encore un peu plus loin
-
-Je ne stockerais pas une fonction.
-
-Je stockerais carrément le composant.
+Stocker le composant.
 
 Par exemple Apex :
 
-```
+```js
 register('apex', {
-
     init: initApex,
-
     render(id,payload){...},
-
     destroy(id){...},
-
     list(){...}
-
 })
 ```
 
 Leaflet :
 
-```
+```js
 register('leaflet', {
-
     init: initLeaflet,
-
     render(id,payload){...},
-
     destroy(id){...},
-
     list(){...}
-
 })
 ```
 
-Three.js exactement pareil.
-
----
-
-## Et là on obtient quelque chose d'intéressant
-
 Le CMS pourrait demander :
-
-```
+```js
 ComponentRegistry.get('leaflet')
 ```
 
 puis
-
-```
+```js
 .render(...)
 ```
 
 ou
-
-```
+```js
 .destroy(...)
 ```
 
