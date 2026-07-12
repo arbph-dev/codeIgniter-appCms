@@ -1,20 +1,17 @@
 /*
 /assets/js/components/three/viewers/Viewer.js
-Il sait :
 
-créer le renderer ;
-créer la caméra ;
-créer la scène ;
-appeler le ResourceLoader.
-
-
-Il encapsule :
-
-- `THREE.Scene` new THREE.Scene()
-- `Renderer` renderer.render(...)
-- `Camera` new PerspectiveCamera()
-- boucle d'animation animate()
-- resize
+Responsabilités
+- encapsule une scène Three.js
+- encapsule un renderer WebGL
+- encapsule une caméra
+- gère le cycle de vie
+    - init()
+    - refresh()
+    - destroy()
+- gère le rendu
+- gère le redimensionnement
+- délègue le chargement des ressources
 */
 export class Viewer
 {
@@ -22,5 +19,27 @@ export class Viewer
     {
         this.element = element;
         this.options = options;
+
+        this.scene = null;
+        this.camera = null;
+        this.renderer = null;
+
+        this.resource = null;
+
+        this.animationId = null;
+
+        this.state = {};
     }
+
+    init() {}
+
+    refresh() {}
+
+    resize() {}
+
+    render() {}
+
+    animate() {}
+
+    destroy() {}
 }
