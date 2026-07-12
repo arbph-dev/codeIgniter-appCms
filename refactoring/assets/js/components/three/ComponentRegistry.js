@@ -17,42 +17,69 @@ export class ComponentRegistry
 
     /**
      * Enregistre un composant.
+     *
+     * @param {Object} params
+     * @param {string} params.type
+     * @param {*} params.component
      */
-    static register(type, componentClass)
+    static register({ type = '' , component = null } )
     {
         if (!type) {
-            throw new Error("ThreeJS Registry : type manquant.");
+            throw new Error( 'ComponentRegistry : type manquant.');
         }
 
-        this.components.set(type, componentClass);
+        if (!component) {
+            throw new Error( `ComponentRegistry : composant '${type}' invalide.`);
+        }
+
+        this.components.set(type, component);
     }
 
     /**
-     * Retourne une classe.
+     * Retourne un composant.
+     *
+     * @param {Object} params
+     * @param {string} params.type
+     * @returns {*|null}
      */
-    static get(type)
+    static get({
+        type = ''
+    })
     {
         return this.components.get(type) ?? null;
     }
 
     /**
-     * Vérifie l'existence.
+     * Vérifie si un composant est enregistré.
+     *
+     * @param {Object} params
+     * @param {string} params.type
+     * @returns {boolean}
      */
-    static has(type)
+    static has({
+        type = ''
+    })
     {
         return this.components.has(type);
     }
 
     /**
-     * Supprime un composant.
+     * Désenregistre un composant.
+     *
+     * @param {Object} params
+     * @param {string} params.type
      */
-    static unregister(type)
+    static unregister({
+        type = ''
+    })
     {
         this.components.delete(type);
     }
 
     /**
-     * Liste les types enregistrés.
+     * Retourne la liste des types enregistrés.
+     *
+     * @returns {string[]}
      */
     static list()
     {
@@ -60,7 +87,7 @@ export class ComponentRegistry
     }
 
     /**
-     * Vide le registre.
+     * Vide complètement le registre.
      */
     static clear()
     {
