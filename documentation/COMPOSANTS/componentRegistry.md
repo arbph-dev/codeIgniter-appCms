@@ -29,7 +29,7 @@ C'est exactement ce que Leaflet nous a fait découvrir.
 
 ## Je proposerais donc de le faire légèrement évoluer
 
-````js
+```js
 // /assets/js/core/componentRegistry.js
 
 const registry = new Map()
