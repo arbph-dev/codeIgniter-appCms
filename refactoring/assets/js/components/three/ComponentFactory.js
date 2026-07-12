@@ -24,6 +24,6 @@ export class ComponentFactory
             );
         }
 
-        return new ComponentClass(element, options);
+        return new ComponentClass( { element, options } );
     }
 }
