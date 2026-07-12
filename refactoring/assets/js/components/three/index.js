@@ -11,3 +11,23 @@
 
 Aucune connaissance de Three.js.
 */
+
+function init() {
+  
+}
+
+function create() {
+  
+}
+
+function destroy() {
+  
+}
+
+function refresh() {
+  
+}
+
+function get() {
+  
+}
