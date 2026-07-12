@@ -9,21 +9,33 @@ class ThreeRenderer implements ComponentRendererInterface
 {
     public function render(DescriptorDefinition $descriptor): string
     {
-        $id     = htmlspecialchars($descriptor->get('id',     uniqid('THREE_')), ENT_QUOTES, 'UTF-8');
-        $scene  = htmlspecialchars($descriptor->get('scene',  'cube'),           ENT_QUOTES, 'UTF-8');
-        $width  = (int) ($descriptor->get('width',  800));
-        $height = (int) ($descriptor->get('height', 400));
-        $model  = htmlspecialchars($descriptor->get('model',  ''),               ENT_QUOTES, 'UTF-8');
+        $id = htmlspecialchars(
+            $descriptor->get('id', uniqid('THREE_')),
+            ENT_QUOTES,
+            'UTF-8'
+        );
 
-        $modelAttr = $model ? " data-model=\"{$model}\"" : '';
+        $options = $descriptor->get('options', []);
+
+        // Compatibilité : si options n'est pas un tableau
+        if (!is_array($options)) {
+            $options = [];
+        }
+
+        $optionsJson = htmlspecialchars(
+            json_encode(
+                $options,
+                JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+            ),
+            ENT_QUOTES,
+            'UTF-8'
+        );
 
         return <<<HTML
 <div
     id="{$id}"
     class="cp_threejs"
-    data-scene="{$scene}"
-    data-width="{$width}"
-    data-height="{$height}"{$modelAttr}>
+    data-options="{$optionsJson}">
 </div>
 HTML;
     }
