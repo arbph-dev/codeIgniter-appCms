@@ -1,0 +1,203 @@
+/* =============================================================================
+   CMS ARTICLE
+   Fichier : /assets/css/cms/article.css
+   ============================================================================= */
+
+
+/* =============================================================================
+   Reset
+   ============================================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+
+/* =============================================================================
+   Page
+   ============================================================================= */
+
+body {
+    font-family: system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+
+    background: #f4f7fb;
+    color: #1a2a4a;
+
+    padding: 1.5rem 1rem;
+}
+
+
+/* =============================================================================
+   Article
+   ============================================================================= */
+
+.cms_article_wrap {
+
+    max-width: 820px;
+
+    margin: 0 auto;
+
+    background: #fff;
+
+    border-radius: 8px;
+
+    box-shadow: 0 4px 20px rgba(0,0,0,.10);
+
+    overflow: hidden;
+}
+
+
+/* =============================================================================
+   Header
+   ============================================================================= */
+
+.cms_article_header {
+
+    padding: 2rem 2rem 1.2rem;
+
+    background: #1a2a4a;
+
+    color: #fff;
+
+    border-bottom: 4px solid #eee236;
+}
+
+.cms_article_header h1 {
+
+    font-size: clamp(1.3rem,3vw,2rem);
+
+    line-height: 1.25;
+
+    color: #eee236;
+
+    margin-bottom: .5rem;
+}
+
+.cms_article_header p {
+
+    font-size: .95rem;
+
+    opacity: .85;
+}
+
+.cms_article_meta {
+
+    margin-top: .8rem;
+
+    font-size: .8rem;
+
+    opacity: .6;
+}
+
+
+/* =============================================================================
+   Corps article
+   ============================================================================= */
+
+.cms_article_body {
+
+    padding: 1.5rem 2rem 2rem;
+}
+
+
+/* =============================================================================
+   Sections
+   ============================================================================= */
+
+.cms_section {
+
+    margin-bottom: 2rem;
+}
+
+.cms_section:last-child {
+
+    margin-bottom: 0;
+}
+
+.cms_section_header {
+
+    margin-bottom: 1rem;
+
+    padding-bottom: .4rem;
+
+    border-bottom: 1px solid #d8dce5;
+}
+
+.cms_section_header h2 {
+
+    color: #0057b8;
+
+    font-size: 1.35rem;
+}
+
+.cms_section_body {
+
+    display: block;
+}
+
+
+/* =============================================================================
+   Parts
+   ============================================================================= */
+
+.cms_part {
+
+    margin-bottom: 2rem;
+}
+
+.cms_part:last-child {
+
+    margin-bottom: 0;
+}
+
+.cms_part_header {
+
+    margin-bottom: .6rem;
+}
+
+.cms_part_header h3 {
+
+    color: #0057b8;
+
+    font-size: 1.10rem;
+}
+
+.cms_part_content {
+
+    margin-bottom: .6rem;
+}
+
+.cms_part_aside {
+
+    margin-top: .6rem;
+
+    padding-left: .8rem;
+
+    border-left: 3px solid #eee236;
+
+    color: #555;
+
+    font-size: .90rem;
+}
+
+
+/* =============================================================================
+   Responsive
+   ============================================================================= */
+
+@media (max-width:600px)
+{
+
+    .cms_article_header,
+    .cms_article_body {
+
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+}
