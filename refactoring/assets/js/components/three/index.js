@@ -58,7 +58,7 @@ export function create(element)
 
     try
     {
-        const instance = ComponentFactory.create(element, options);
+        const instance = ComponentFactory.create( { element, options} );
         instance.init();
         INSTANCES.set(id, instance);
         return instance;
