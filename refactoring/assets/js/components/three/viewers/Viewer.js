@@ -16,3 +16,11 @@ Il encapsule :
 - boucle d'animation animate()
 - resize
 */
+export class Viewer
+{
+    constructor({ element, options })
+    {
+        this.element = element;
+        this.options = options;
+    }
+}
