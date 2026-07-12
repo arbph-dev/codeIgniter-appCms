@@ -21,12 +21,18 @@ class ThreeRenderer implements ComponentRendererInterface
         if (!is_array($options)) {
             $options = [];
         }
+        
+        $optionsJson = json_encode(
+            $options,
+            JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+        );
+
+        if ($optionsJson === false) {
+            $optionsJson = '{}';
+        }
 
         $optionsJson = htmlspecialchars(
-            json_encode(
-                $options,
-                JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
-            ),
+            $optionsJson,
             ENT_QUOTES,
             'UTF-8'
         );
