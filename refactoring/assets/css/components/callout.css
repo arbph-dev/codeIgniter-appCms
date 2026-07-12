@@ -8,10 +8,18 @@
    ============================================================================= */
 
 :root {
-    --col-danger  : #f01313;
-    --col-info    : #0000ff;
-    --col-note    : #0b9d14;
-    --col-warning : #f79503;
+        --col-danger           : #f01313;
+        --col-danger-secondary : #fdd8d0;
+
+        --col-info             : #0000ff;
+        --col-info-secondary   : #d0d8fd;
+        
+        --col-note             : #0b9d14;
+        --col-note-secondary   : #d0f0da;        
+        
+        --col-warning          : #f79503;
+        --col-warning-secondary: #fdf3d0;
+
 }
 
 /* =============================================================================
@@ -39,16 +47,57 @@
    Variantes
    ============================================================================= */
 
+/*  ---- info ---- */
 .cp_callout--info {
     border-color: var(--col-info);
 }
 
 .cp_callout--info .cp_callout_title {
     background: var(--col-info);
-    color: #d0d8fd;
+    color: var(--col-info-secondary);
+}
+.cp_callout--info .cp_callout_content {
+    background: var(--col-info-secondary);
+    color: var(--col-info);
 }
 
-.cp_callout--info .cp_callout_content {
-    background: #d0d8fd;
-    color: var(--col-info);
+/* ---- warning ----- */
+
+.cp_callout--warning {
+    border-color: var(--col-warning);
+}
+.cp_callout--warning .cp_callout_title {
+    background  : var(--col-warning);
+    color       : var(--col-warning-secondary);
+}
+.cp_callout--warning .cp_callout_content {
+    background  : var(--col-warning-secondary);
+    color       : var(--col-warning);
+}
+
+/* ---- danger ----- */
+.cp_callout--danger {
+    border-color: var(--col-danger);
+}
+.cp_callout--danger .cp_callout_title {
+    background  : var(--col-danger);
+    color       : var(--col-danger-secondary);
+}
+.cp_callout--danger .cp_callout_content {
+    background  : var(--col-danger-secondary);
+    color       : var(--col-danger);
+}
+
+
+/* ---- tip ----- */
+.cp_callout--tip {
+    border-color: var(--col-note);
+}
+.cp_callout--tip .cp_callout_title {
+    background  : var(--col-note);
+    color       : var(--col-note-secondary);
+}
+.cp_callout--tip .cp_callout_content {
+    background  : var(--col-note-secondary);
+    color       : var(--col-note);
 }
