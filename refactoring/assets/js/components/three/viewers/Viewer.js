@@ -1,11 +1,18 @@
 /*
 /assets/js/components/three/viewers/Viewer.js
+Il sait :
+
+créer le renderer ;
+créer la caméra ;
+créer la scène ;
+appeler le ResourceLoader.
+
 
 Il encapsule :
 
-- `THREE.Scene`
-- `Renderer`
-- `Camera`
-- boucle d'animation
+- `THREE.Scene` new THREE.Scene()
+- `Renderer` renderer.render(...)
+- `Camera` new PerspectiveCamera()
+- boucle d'animation animate()
 - resize
 */
