@@ -12,22 +12,48 @@
 Aucune connaissance de Three.js.
 */
 
-function init() {
+// import Registry
+
+const INSTANCES = new Map();
+
+function init( container =document ) {
+  //recherche .cp_threejs
+  
+ // create(element)
+  
+  // Lecture data-options 
+  // JSON.parse(data-options)
+
+  // validation
+  
+  //Registry.create(options);
+
+  //instance.init()
+  
+  //instances.set(id,instance)
+  
+  //Registry.registerResource('cube', CubeResource);
+}
+
+function create(element) {
   
 }
 
-function create() {
+function destroy( id ) {
   
 }
 
-function destroy() {
+function refresh( id ) {
   
 }
 
-function refresh() {
+function get( id ) {
   
 }
 
-function get() {
+
+function publish()
+{
   
 }
+
