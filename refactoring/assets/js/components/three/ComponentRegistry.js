@@ -42,9 +42,7 @@ export class ComponentRegistry
      * @param {string} params.type
      * @returns {*|null}
      */
-    static get({
-        type = ''
-    })
+    static get( { type = '' } )
     {
         return this.components.get(type) ?? null;
     }
@@ -56,9 +54,7 @@ export class ComponentRegistry
      * @param {string} params.type
      * @returns {boolean}
      */
-    static has({
-        type = ''
-    })
+    static has( { type = '' } )
     {
         return this.components.has(type);
     }
@@ -69,9 +65,7 @@ export class ComponentRegistry
      * @param {Object} params
      * @param {string} params.type
      */
-    static unregister({
-        type = ''
-    })
+    static unregister( { type = '' } )
     {
         this.components.delete(type);
     }
