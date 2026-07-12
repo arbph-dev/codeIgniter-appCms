@@ -1,40 +1,54 @@
-   /* /assets/css/components/callout.css  */
-    :root {
-        --col-danger  : #f01313;
-        --col-info    : #0000ff;
-        --col-note    : #0b9d14;
-        --col-warning : #f79503;
-    }
+/* =============================================================================
+   COMPONENT : CALLOUT
+   Fichier : /assets/css/components/callout.css
+   ============================================================================= */
 
-    .cp_callout {
-        border: 1px solid #5f5e5e;
-        margin: 1rem 0;
-        border-radius: 5px;
-        overflow: hidden;
-    }
+/* =============================================================================
+   Variables
+   ============================================================================= */
 
-    .cp_callout_title {
-        display: block;
-        padding: 8px 12px;
-        font-weight: bold;
-    }
+:root {
+    --col-danger  : #f01313;
+    --col-info    : #0000ff;
+    --col-note    : #0b9d14;
+    --col-warning : #f79503;
+}
 
-    .cp_callout_content {
-        padding: 10px 12px;
-    }
+/* =============================================================================
+   Structure
+   ============================================================================= */
 
-    .cp_callout--info    { border-color: var(--col-info); }
-    .cp_callout--info    .cp_callout_title  { background: var(--col-info);    color: #d0d8fd; }
-    .cp_callout--info    .cp_callout_content { background: #d0d8fd; color: var(--col-info); }
+.cp_callout {
+    border: 1px solid #5f5e5e;
+    margin: 1rem 0;
+    border-radius: 5px;
+    overflow: hidden;
+}
 
-    .cp_callout--warning { border-color: var(--col-warning); }
-    .cp_callout--warning .cp_callout_title  { background: var(--col-warning); color: #fdf3d0; }
-    .cp_callout--warning .cp_callout_content { background: #fdf3d0; color: var(--col-warning); }
+.cp_callout_title {
+    display: block;
+    padding: 8px 12px;
+    font-weight: bold;
+}
 
-    .cp_callout--danger  { border-color: var(--col-danger); }
-    .cp_callout--danger  .cp_callout_title  { background: var(--col-danger);  color: #fdd8d0; }
-    .cp_callout--danger  .cp_callout_content { background: #fdd8d0; color: var(--col-danger); }
+.cp_callout_content {
+    padding: 10px 12px;
+}
 
-    .cp_callout--tip     { border-color: var(--col-note); }
-    .cp_callout--tip     .cp_callout_title  { background: var(--col-note);    color: #d0f0da; }
-    .cp_callout--tip     .cp_callout_content { background: #d0f0da; color: var(--col-note); }
+/* =============================================================================
+   Variantes
+   ============================================================================= */
+
+.cp_callout--info {
+    border-color: var(--col-info);
+}
+
+.cp_callout--info .cp_callout_title {
+    background: var(--col-info);
+    color: #d0d8fd;
+}
+
+.cp_callout--info .cp_callout_content {
+    background: #d0d8fd;
+    color: var(--col-info);
+}
