@@ -11,7 +11,7 @@ export class ComponentFactory
      * @param {Object} options
      * @returns {Object}
      */
-    static create(element, options = {})
+    static create({ element, options = {} } )
     {
         const type = options.type ?? 'viewer';
 
