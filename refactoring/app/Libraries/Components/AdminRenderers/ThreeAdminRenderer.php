@@ -4,29 +4,34 @@
 namespace App\Libraries\Components\AdminRenderers;
 
 use App\Libraries\Components\DescriptorDefinition;
-use App\Libraries\Components\Renderers\ComponentRendererInterface;
 
-class ThreeAdminRenderer implements ComponentRendererInterface
+class ThreeAdminRenderer
 {
-    private const SCENES = ['cube', 'terrain', 'galaxy', 'model', 'vectors'];
-
     public function render(DescriptorDefinition $descriptor): string
     {
-        $id     = htmlspecialchars($descriptor->get('id',    'THREE_' . uniqid()), ENT_QUOTES, 'UTF-8');
-        $scene  = $descriptor->get('scene',  'cube');
-        $width  = (int) ($descriptor->get('width',  800));
-        $height = (int) ($descriptor->get('height', 400));
-        $model  = htmlspecialchars($descriptor->get('model', ''), ENT_QUOTES, 'UTF-8');
+        $id = htmlspecialchars(
+            $descriptor->get('id', ''),
+            ENT_QUOTES,
+            'UTF-8'
+        );
 
-        $options = implode("\n", array_map(
-            fn(string $s) => sprintf(
-                '                    <option value="%s"%s>%s</option>',
-                $s,
-                $scene === $s ? ' selected' : '',
-                ucfirst($s)
-            ),
-            self::SCENES
-        ));
+        $options = $descriptor->get('options', []);
+
+        if (!is_array($options)) {
+            $options = [];
+        }
+
+        $type = htmlspecialchars(
+            $options['type'] ?? 'viewer',
+            ENT_QUOTES,
+            'UTF-8'
+        );
+
+        $resource = htmlspecialchars(
+            $options['resource'] ?? '',
+            ENT_QUOTES,
+            'UTF-8'
+        );
 
         return <<<HTML
 
@@ -35,42 +40,40 @@ class ThreeAdminRenderer implements ComponentRendererInterface
     <table class="form">
 
         <tr>
-            <th style="width:180px">Identifiant</th>
+            <th>Identifiant</th>
             <td>
-                <input type="text" name="config[id]" value="{$id}">
+                <input
+                    type="text"
+                    name="config[id]"
+                    value="{$id}">
             </td>
         </tr>
 
         <tr>
-            <th>Scène</th>
+            <th>Type</th>
             <td>
-                <select name="config[scene]" id="threeSceneSelect"
-                    onchange="document.getElementById('threeModelRow').style.display =
-                        this.value === 'model' ? '' : 'none'">
-{$options}
+
+                <select name="config[options][type]">
+
+                    <option value="viewer" {$this->selected($type,'viewer')}>Viewer</option>
+                    <option value="editor" {$this->selected($type,'editor')}>Editor</option>
+                    <option value="simulation" {$this->selected($type,'simulation')}>Simulation</option>
+
                 </select>
+
             </td>
         </tr>
 
         <tr>
-            <th>Largeur (px)</th>
+            <th>Ressource</th>
             <td>
-                <input type="number" name="config[width]"  value="{$width}"  min="200" max="1920">
-            </td>
-        </tr>
 
-        <tr>
-            <th>Hauteur (px)</th>
-            <td>
-                <input type="number" name="config[height]" value="{$height}" min="100" max="1080">
-            </td>
-        </tr>
+                <input
+                    type="text"
+                    name="config[options][resource]"
+                    value="{$resource}"
+                    placeholder="cube">
 
-        <tr id="threeModelRow" style="display:<?= $scene === 'model' ? '' : 'none' ?>">
-            <th>Chemin modèle OBJ</th>
-            <td>
-                <input type="text" name="config[model]" value="{$model}"
-                    placeholder="/assets/img/3js/model3d/..." style="width:100%">
             </td>
         </tr>
 
@@ -79,5 +82,11 @@ class ThreeAdminRenderer implements ComponentRendererInterface
 </div>
 
 HTML;
+
+    }
+
+    protected function selected($a, $b): string
+    {
+        return $a === $b ? 'selected' : '';
     }
 }
