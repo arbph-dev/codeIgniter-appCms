@@ -275,7 +275,6 @@ Stabilisation
 ---
 
 ## Phase 2
-
 CMS
 
 - catégories
@@ -287,80 +286,56 @@ CMS
 ---
 
 ## Phase 3
-
 Features
 
-Images
-
-Mots
-
-Relations
-
-Organisation
+- Images
+- Mots
+- Relations
+- Organisation
 
 ---
 
 ## Phase 4
-
 Composants composites
 
-Workspace
-
-Node
-
-Editor
-
-Property Editor
-
-ImageDescriptor
+- Workspace
+- Node
+- Editor
+- Property Editor
+- ImageDescriptor
 
 ---
 
 ## Phase 5
-
 Assistant métier
 
-Suggestions
-
-Recherche
-
-Indexation
-
-Référencement
-
-Connaissance
+- Suggestions
+- Recherche
+- Indexation
+- Référencement
+- Connaissance
 
 ---
 
 ## Phase 6
-
 Ateliers
 
-Alternateur
-
-Pompe
-
-PID
-
-Automatisme
-
-Maintenance
+- Alternateur
+- Pompe
+- PID
+- Automatisme
+- Maintenance
 
 ---
 
 ## Phase 7
-
 Industrialisation
 
-Documentation
-
-Tests
-
-Packaging
-
-Plugins
-
-API publiques
+- Documentation
+- Tests
+- Packaging
+- Plugins
+- API publiques
 
 ---
 
@@ -373,7 +348,7 @@ Celles que nous avons identifiées.
 - Mermaid
 - Leaflet
 - SVG.js (à étudier)
-- Cytoscape.js (graphe de connaissances)
+- Cytoscape.js (graphe de connaissances) https://js.cytoscape.org/#demos
 - ELK.js (mise en page automatique)
 - MathJax ou KaTeX
 - Monaco Editor
