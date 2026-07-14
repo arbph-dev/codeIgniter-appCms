@@ -95,6 +95,7 @@ modelworkbench/
 On retrouve exactement les domaines fonctionnels.
 
 | Domaine Fonctionnel | Notes |
+| --- | --- |
 | core | gère Three.js. |
 | analysis | analyse les modèles. |
 | transform | modifie les modèles. |
