@@ -18,6 +18,7 @@ service('auth')->routes($routes);
 $routes->get('/', 'Cms::index');
 $routes->get('/user', 'User::index');
 $routes->get('/admin', 'Admin::index');
+$routes->get( 'admin/modelworkbench', 'Admin\ModelWorkbench::index' );
 
 
 $routes->group('admin/cmspart', static function($routes)
