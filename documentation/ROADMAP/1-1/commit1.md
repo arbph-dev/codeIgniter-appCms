@@ -52,7 +52,7 @@ modelworkbench/
 │   ├── EventBus.js
 │   └── Config.js
 │
-├── analysis/
+├── services/
 │   ├── GeometryAnalysis.js
 │   ├── HierarchyAnalysis.js
 │   └── MaterialAnalysis.js
@@ -94,43 +94,13 @@ modelworkbench/
 
 On retrouve exactement les domaines fonctionnels.
 
-```
-core
-```
-
-gère Three.js.
-
-```
-analysis
-```
-
-analyse les modèles.
-
-```
-transform
-```
-
-modifie les modèles.
-
-```
-io
-```
-
-importe/exporte.
-
-```
-ui
-```
-
-gère les panneaux.
-
-```
-data
-```
-
-décrit les objets.
-
-Aucun mélange.
+| Domaine Fonctionnel | Notes |
+| core | gère Three.js. |
+| analysis | analyse les modèles. |
+| transform | modifie les modèles. |
+| io | importe/exporte. |
+| ui | gère les panneaux. |
+| data | décrit les objets. |
 
 ---
 
