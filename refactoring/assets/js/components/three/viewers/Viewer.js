@@ -13,28 +13,32 @@ Responsabilités
 - gère le redimensionnement
 - délègue le chargement des ressources
 */
-// assets/js/components/three/viewers/Viewer.js
+// /assets/js/components/three/viewers/Viewer.js
 
 import * as THREE from 'three';
 
 import { ResourceLoader } from '/assets/js/components/three/resources/ResourceLoader.js';
+import { SceneTimer }     from '/assets/js/shared/three/SceneTimer.js';
 
 export class Viewer
 {
-    constructor({ element, options })
+    constructor({
+        element,
+        options
+    })
     {
         this.element = element;
         this.options = options;
 
-        this.scene = null;
-        this.camera = null;
+        this.scene    = null;
+        this.camera   = null;
         this.renderer = null;
 
         this.resource = null;
 
         this.animationId = null;
 
-        this.clock = new THREE.Clock();
+        this.clock = new SceneTimer();
 
         this.state = {};
     }
@@ -44,7 +48,7 @@ export class Viewer
      */
     init()
     {
-        const width = this.element.clientWidth || 800;
+        const width  = this.element.clientWidth  || 800;
         const height = this.element.clientHeight || 400;
 
         // -----------------------------------------------------------------
@@ -68,57 +72,28 @@ export class Viewer
             1000
         );
 
-        this.camera.position.set(
-            2,
-            2,
-            4
-        );
+        this.camera.position.set(2, 2, 4);
 
         // -----------------------------------------------------------------
         // Renderer
         // -----------------------------------------------------------------
 
-        this.renderer = new THREE.WebGLRenderer({
+        this.renderer = new THREE.WebGLRenderer({ antialias: true });
 
-            antialias: true
+        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setSize(width, height);
 
-        });
-
-        this.renderer.setPixelRatio(
-            window.devicePixelRatio
-        );
-
-        this.renderer.setSize(
-            width,
-            height
-        );
-
-        this.element.appendChild(
-            this.renderer.domElement
-        );
+        this.element.appendChild(this.renderer.domElement);
 
         // -----------------------------------------------------------------
         // Lumières
         // -----------------------------------------------------------------
 
-        const ambient = new THREE.AmbientLight(
-            0xffffff,
-            0.6
-        );
-
+        const ambient = new THREE.AmbientLight(0xffffff, 0.6);
         this.scene.add(ambient);
 
-        const light = new THREE.DirectionalLight(
-            0xffffff,
-            2
-        );
-
-        light.position.set(
-            5,
-            10,
-            5
-        );
-
+        const light = new THREE.DirectionalLight(0xffffff, 2);
+        light.position.set(5, 10, 5);
         this.scene.add(light);
 
         // -----------------------------------------------------------------
@@ -126,11 +101,8 @@ export class Viewer
         // -----------------------------------------------------------------
 
         this.resource = ResourceLoader.load({
-
-            resource: this.options.resource,
-
-            viewer: this
-
+            resource : this.options.resource,
+            viewer   : this
         });
 
         this.resource.init();
@@ -139,15 +111,13 @@ export class Viewer
         // Resize
         // -----------------------------------------------------------------
 
-        window.addEventListener(
-            'resize',
-            () => this.resize()
-        );
+        window.addEventListener('resize', () => this.resize());
 
         // -----------------------------------------------------------------
         // Animation
         // -----------------------------------------------------------------
 
+        this.clock.start();
         this.animate();
     }
 
@@ -158,36 +128,26 @@ export class Viewer
 
     resize()
     {
-        const width = this.element.clientWidth;
+        const width  = this.element.clientWidth;
         const height = this.element.clientHeight;
 
         this.camera.aspect = width / height;
-
         this.camera.updateProjectionMatrix();
-
-        this.renderer.setSize(
-            width,
-            height
-        );
+        this.renderer.setSize(width, height);
 
         this.render();
     }
 
     render()
     {
-        this.renderer.render(
-            this.scene,
-            this.camera
-        );
+        this.renderer.render(this.scene, this.camera);
     }
 
     animate()
     {
-        this.animationId = requestAnimationFrame(
-            () => this.animate()
-        );
+        this.animationId = requestAnimationFrame(() => this.animate());
 
-        const delta = this.clock.getDelta();
+        const delta = this.clock.tick();
 
         this.resource?.update(delta);
 
@@ -196,9 +156,7 @@ export class Viewer
 
     destroy()
     {
-        cancelAnimationFrame(
-            this.animationId
-        );
+        cancelAnimationFrame(this.animationId);
 
         this.resource?.destroy();
 
