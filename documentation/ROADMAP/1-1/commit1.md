@@ -145,6 +145,7 @@ wb.resetCamera();
 ```
 
 Toutes les futures commandes passeront par cette interface.
+
 ---
 # Extensions
 
