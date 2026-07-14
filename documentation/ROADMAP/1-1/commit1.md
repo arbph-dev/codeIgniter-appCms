@@ -154,7 +154,6 @@ Cette architecture sera quasiment identique pour
 - BuildingsWorkbench
 - TrajectoryWorkbench
 - PhysicsWorkbench
-```
 
 Seuls les dossiers du Domaine Fonctionnel ci dessous évolueront
 ```
