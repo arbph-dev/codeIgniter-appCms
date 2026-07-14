@@ -15,10 +15,12 @@ Responsabilités
 */
 // /assets/js/components/three/viewers/Viewer.js
 
+
 import * as THREE from 'three';
 
 import { ResourceLoader } from '/assets/js/components/three/resources/ResourceLoader.js';
 import { SceneTimer }     from '/assets/js/shared/three/SceneTimer.js';
+import * as SU            from '/assets/js/shared/three/SceneUtils.js';
 
 export class Viewer
 {
@@ -89,12 +91,7 @@ export class Viewer
         // Lumières
         // -----------------------------------------------------------------
 
-        const ambient = new THREE.AmbientLight(0xffffff, 0.6);
-        this.scene.add(ambient);
-
-        const light = new THREE.DirectionalLight(0xffffff, 2);
-        light.position.set(5, 10, 5);
-        this.scene.add(light);
+        SU.addDefaultLights(this.scene);
 
         // -----------------------------------------------------------------
         // Resource
