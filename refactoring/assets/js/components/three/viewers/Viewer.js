@@ -40,7 +40,9 @@ export class Viewer
 
         this.animationId = null;
 
-        this.clock = new SceneTimer();
+        this.clock    = new SceneTimer();
+        this._visible  = false;
+        this._observer = null;
 
         this.state = {};
     }
@@ -111,6 +113,12 @@ export class Viewer
         window.addEventListener('resize', () => this.resize());
 
         // -----------------------------------------------------------------
+        // Visibilité
+        // -----------------------------------------------------------------
+
+        this._initObserver();
+
+        // -----------------------------------------------------------------
         // Animation
         // -----------------------------------------------------------------
 
@@ -144,6 +152,8 @@ export class Viewer
     {
         this.animationId = requestAnimationFrame(() => this.animate());
 
+        if (!this._visible) return;
+
         const delta = this.clock.tick();
 
         this.resource?.update(delta);
@@ -151,9 +161,39 @@ export class Viewer
         this.render();
     }
 
+    /**
+     * Suspend le rendu GPU quand le composant quitte le viewport.
+     * Reprend proprement à son retour grâce à clock.resume().
+     */
+    _initObserver()
+    {
+        this._observer = new IntersectionObserver(
+            (entries) =>
+            {
+                this._visible = entries[0].isIntersecting;
+
+                if (this._visible)
+                {
+                    // Réinitialise _tLast pour éviter un delta explosif
+                    // accumulé pendant la période d'invisibilité.
+                    this.clock.resume();
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        this._observer.observe(this.element);
+    }
+
     destroy()
     {
         cancelAnimationFrame(this.animationId);
+
+        if (this._observer)
+        {
+            this._observer.disconnect();
+            this._observer = null;
+        }
 
         this.resource?.destroy();
 
