@@ -1,4 +1,4 @@
-# Commit 1 — Création de l'architecture
+# Création de l'architecture
 On pose les fondations de l'architecture.
 
 Le but du commit est qu'à la fin :
