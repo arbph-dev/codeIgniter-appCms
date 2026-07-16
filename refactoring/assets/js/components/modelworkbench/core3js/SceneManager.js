@@ -1,8 +1,7 @@
 /**
- 
-    '/assets/js/components/modelworkbench/core3js/SceneManager.js'
-
-* --------------------------------------------------------------------
+ * '/assets/js/components/modelworkbench/core3js/SceneManager.js'
+ * 
+ * --------------------------------------------------------------------
  * ModelWorkbench
  * Phase 0 - Commit 1
  *
@@ -23,31 +22,133 @@
  *  - repère XYZ
  *  - boucle de rendu
  *  - gestion du redimensionnement
+ * -------------------------------------------------------------
+ * ModelWorkbench — Commit 2
+ *
+ * Responsabilités :
+ *  - créer la scène Three.js
+ *  - créer la caméra
+ *  - créer le renderer WebGL
+ *  - gérer la boucle d'animation
+ *  - gérer le redimensionnement
+ *
+ * Commit 3 ajoutera :
+ *  - LightManager
+ *  - GridManager
+ *  - AxisManager
+ *  - OrbitControls
  * --------------------------------------------------------------------
  */
+import * as THREE     from 'three';
+import { SceneTimer } from '/assets/js/shared/three/SceneTimer.js';
 
 export class SceneManager
 {
-    constructor()
+    constructor({ container })
     {
-        this.scene = null;
+        this.container = container;
+
+        this.scene    = null;
+        this.camera   = null;
+        this.renderer = null;
+        this.clock    = new SceneTimer();
+
+        this._animationId = null;
+
+        // Bind — nécessaire pour pouvoir retirer l'écouteur dans destroy()
+        this._onResize = this._onResize.bind(this);
 
         this.initialize();
     }
 
-    /**
-     * Initialise la scène Three.js.
-     */
+    // ─── Initialisation ───────────────────────────────────────────────────────
+
     initialize()
     {
-        this.createScene();
+        this._createScene();
+        this._createCamera();
+        this._createRenderer();
+        this._initResize();
+        this._start();
     }
 
-    /**
-     * Création de la scène.
-     */
-    createScene()
+    _createScene()
     {
-        this.scene = null;
+        this.scene = new THREE.Scene();
+        this.scene.background = new THREE.Color(0x1a1a2e);
+    }
+
+    _createCamera()
+    {
+        const w = this.container.clientWidth  || 800;
+        const h = this.container.clientHeight || 600;
+
+        this.camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 1000);
+        this.camera.position.set(0, 2, 5);
+    }
+
+    _createRenderer()
+    {
+        const w = this.container.clientWidth  || 800;
+        const h = this.container.clientHeight || 600;
+
+        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setSize(w, h);
+
+        this.container.appendChild(this.renderer.domElement);
+    }
+
+    // ─── Resize ───────────────────────────────────────────────────────────────
+
+    _initResize()
+    {
+        window.addEventListener('resize', this._onResize);
+    }
+
+    _onResize()
+    {
+        const w = this.container.clientWidth;
+        const h = this.container.clientHeight;
+
+        if (w === 0 || h === 0) return;
+
+        this.camera.aspect = w / h;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(w, h);
+    }
+
+    // ─── Boucle d'animation ───────────────────────────────────────────────────
+
+    _start()
+    {
+        this.clock.start();
+        this._animate();
+    }
+
+    _animate()
+    {
+        this._animationId = requestAnimationFrame(() => this._animate());
+
+        // delta disponible pour les futurs managers (LightManager, modèles...)
+        const delta = this.clock.tick(); // eslint-disable-line no-unused-vars
+
+        this.renderer.render(this.scene, this.camera);
+    }
+
+    // ─── Cycle de vie ─────────────────────────────────────────────────────────
+
+    destroy()
+    {
+        cancelAnimationFrame(this._animationId);
+
+        window.removeEventListener('resize', this._onResize);
+
+        this.renderer?.dispose();
+
+        if (this.renderer?.domElement?.parentNode === this.container)
+        {
+            this.container.removeChild(this.renderer.domElement);
+        }
     }
 }
