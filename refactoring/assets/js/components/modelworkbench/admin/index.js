@@ -10,16 +10,25 @@
 *
 * Les fonctionnalités seront ajoutées progressivement au fil
 * des commits.
+* 
+* ModelWorkbench — Commit 2
+*
+* Point d'entrée Administration.
+* Responsabilité : lire le container DOM, initialiser le Workbench.
 * --------------------------------------------------------------------
 */
-    
-    //import { ModelWorkbench } from '../ModelWorkbench.js';
-    import { ModelWorkbench } from '/assets/js/components/modelworkbench/ModelWorkbench.js'
-    
-    /**
-     * Initialise le ModelWorkbench (Administration).
-     */
-    export function initModelWorkbench()
+ 
+import { ModelWorkbench } from '/assets/js/components/modelworkbench/ModelWorkbench.js';
+ 
+export function initModelWorkbench()
+{
+    const container = document.getElementById('modelworkbench');
+ 
+    if (!container)
     {
-        new ModelWorkbench();
-    }   
+        console.error('ModelWorkbench : container #modelworkbench introuvable.');
+        return;
+    }
+ 
+    new ModelWorkbench({ container });
+}
