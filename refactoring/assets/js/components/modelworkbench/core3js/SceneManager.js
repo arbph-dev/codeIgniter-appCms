@@ -38,9 +38,21 @@
  *  - AxisManager
  *  - OrbitControls
  * --------------------------------------------------------------------
+ * ModelWorkbench — Commit 3
+ *
+ * Responsabilités :
+ *  - créer la scène, la caméra, le renderer
+ *  - orchestrer LightManager, GridManager, AxisManager
+ *  - initialiser OrbitControls
+ *  - gérer la boucle d'animation et le resize
+ * -------------------------------------------------------------------- 
  */
-import * as THREE     from 'three';
-import { SceneTimer } from '/assets/js/shared/three/SceneTimer.js';
+import * as THREE            from 'three';
+import { OrbitControls }     from 'three/addons/controls/OrbitControls.js';
+import { SceneTimer }        from '/assets/js/shared/three/SceneTimer.js';
+import { LightManager }      from './LightManager.js';
+import { GridManager }       from './GridManager.js';
+import { AxisManager }       from './AxisManager.js';
 
 export class SceneManager
 {
@@ -51,11 +63,15 @@ export class SceneManager
         this.scene    = null;
         this.camera   = null;
         this.renderer = null;
+        this.controls = null;
         this.clock    = new SceneTimer();
+
+        this.lightManager = null;
+        this.gridManager  = null;
+        this.axisManager  = null;
 
         this._animationId = null;
 
-        // Bind — nécessaire pour pouvoir retirer l'écouteur dans destroy()
         this._onResize = this._onResize.bind(this);
 
         this.initialize();
@@ -68,6 +84,8 @@ export class SceneManager
         this._createScene();
         this._createCamera();
         this._createRenderer();
+        this._createManagers();
+        this._createControls();
         this._initResize();
         this._start();
     }
@@ -97,6 +115,24 @@ export class SceneManager
         this.renderer.setSize(w, h);
 
         this.container.appendChild(this.renderer.domElement);
+    }
+
+    _createManagers()
+    {
+        this.lightManager = new LightManager({ scene: this.scene });
+        this.lightManager.initialize();
+
+        this.gridManager = new GridManager({ scene: this.scene });
+        this.gridManager.initialize();
+
+        this.axisManager = new AxisManager({ scene: this.scene });
+        this.axisManager.initialize();
+    }
+
+    _createControls()
+    {
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls.enableDamping = true;
     }
 
     // ─── Resize ───────────────────────────────────────────────────────────────
@@ -130,8 +166,10 @@ export class SceneManager
     {
         this._animationId = requestAnimationFrame(() => this._animate());
 
-        // delta disponible pour les futurs managers (LightManager, modèles...)
         const delta = this.clock.tick(); // eslint-disable-line no-unused-vars
+
+        // enableDamping requiert un appel par frame
+        this.controls.update();
 
         this.renderer.render(this.scene, this.camera);
     }
@@ -143,6 +181,12 @@ export class SceneManager
         cancelAnimationFrame(this._animationId);
 
         window.removeEventListener('resize', this._onResize);
+
+        this.lightManager?.destroy();
+        this.gridManager?.destroy();
+        this.axisManager?.destroy();
+
+        this.controls?.dispose();
 
         this.renderer?.dispose();
 
