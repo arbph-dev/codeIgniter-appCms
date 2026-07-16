@@ -1,8 +1,6 @@
 /**
-
-    '/assets/js/components/modelworkbench/ModelWorkbench.js'
- 
-* --------------------------------------------------------------------
+ *    '/assets/js/components/modelworkbench/ModelWorkbench.js'
+ * --------------------------------------------------------------------
  * ModelWorkbench
  * Phase 0 - Commit 1
  *
@@ -13,26 +11,32 @@
  *  - Coordonner le Workbench.
  *
  * Les fonctionnalités seront ajoutées progressivement.
+ * 
+ * --------------------------------------------------------------------
+ * ModelWorkbench — Commit 2
+ *
+ * Responsabilités :
+ *  - recevoir le container DOM
+ *  - initialiser et coordonner les sous-composants
  * --------------------------------------------------------------------
  */
-
-// import { SceneManager } from './core3js/SceneManager.js';
+ 
 import { SceneManager } from '/assets/js/components/modelworkbench/core3js/SceneManager.js';
-
+ 
 export class ModelWorkbench
 {
-    constructor()
+    constructor({ container })
     {
+        this.container    = container;
         this.sceneManager = null;
-
+ 
         this.initialize();
     }
-
-    /**
-     * Initialisation du Workbench.
-     */
+ 
     initialize()
     {
-        this.sceneManager = new SceneManager();
+        this.sceneManager = new SceneManager({
+            container: this.container
+        });
     }
 }
