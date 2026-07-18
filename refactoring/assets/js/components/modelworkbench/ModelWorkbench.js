@@ -25,62 +25,64 @@
  *
  * Nouveauté : loadModel(path) — charge un modèle et l'ajoute à la scène.
  * --------------------------------------------------------------------
+ * ModelWorkbench — Commit 4 / Step 3
+ * --------------------------------------------------------------------
  */
- 
+
 import { SceneManager }  from '/assets/js/components/modelworkbench/core3js/SceneManager.js';
 import { LoaderFactory } from '/assets/js/components/modelworkbench/io/LoaderFactory.js';
- 
+
 export class ModelWorkbench
 {
     constructor({ container })
     {
         this.container    = container;
         this.sceneManager = null;
- 
-        this.initialize();
 
-        //const wb = new ModelWorkbench({ container });
-        //window._wb = wb;  // expose pour la console        
+        this.initialize();
     }
- 
+
     initialize()
     {
         this.container.style.width  = '1024px';
         this.container.style.height = '768px';
- 
+
         this.sceneManager = new SceneManager({
             container: this.container
         });
     }
- 
+
     /**
      * Charge un modèle et l'ajoute à la scène.
      *
-     * @param   {string} path            Chemin vers le fichier OBJ.
+     * @param   {string} path
      * @param   {Object} [options]
-     * @param   {string} [options.mtl]         Chemin vers le fichier MTL.
-     * @param   {number} [options.targetSize]  Diagonale cible (défaut : 3).
-     * @returns {Promise<THREE.Object3D>}
+     * @param   {string} [options.mtl]
+     * @param   {number} [options.targetSize=3]
+     * @returns {Promise<{ obj, mixer, animations, clips }>}
      *
      * @example
-     * // OBJ seul
-     * await wb.loadModel('/models/ship.obj')
+     * // GLTF animé
+     * const { obj, clips } = await wb.loadModel('/models/soldier.glb')
+     * clips.find(c => c.name === 'Walk')?.action.play()
      *
      * // OBJ + MTL
-     * await wb.loadModel('/models/ship.obj', { mtl: '/models/ship.mtl' })
-     *
-     * // Taille personnalisée
-     * await wb.loadModel('/models/ship.obj', { mtl: '/models/ship.mtl', targetSize: 5 })
+     * const { obj } = await wb.loadModel('/models/ship.obj', { mtl: '/models/ship.mtl' })
      */
     async loadModel(path, options = {})
     {
-        const obj = await LoaderFactory.load({ path, ...options });
- 
-        this.sceneManager.scene.add(obj);
- 
-        console.log('ModelWorkbench : modèle chargé —', path, obj);
- 
-        return obj;
+        const result = await LoaderFactory.load({ path, ...options });
+
+        this.sceneManager.scene.add(result.obj);
+
+        if (result.mixer)
+        {
+            this.sceneManager.addMixer(result.mixer);
+        }
+
+        console.log('ModelWorkbench : modèle chargé —', path);
+        console.log('animations :', result.clips.map(c => c.name));
+
+        return result;
     }
 }
-
