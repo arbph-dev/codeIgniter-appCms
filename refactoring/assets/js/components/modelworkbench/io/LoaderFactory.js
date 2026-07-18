@@ -2,21 +2,13 @@
  * /assets/js/components/modelworkbench/io/LoaderFactory.js
  *
  * --------------------------------------------------------------------
- * ModelWorkbench — Commit 4 / Step 3
- *
- * Tous les loaders retournent le même contrat :
- *  {
- *    obj        : THREE.Object3D      — objet centré et normalisé
- *    mixer      : THREE.AnimationMixer | null
- *    animations : THREE.AnimationClip[]
- *    clips      : { name, clip, action }[]  — accès nommé aux animations
- *  }
+ * ModelWorkbench — Commit 4 / Step 4
  *
  * Formats supportés :
  *  [x] OBJ
  *  [x] OBJ + MTL
  *  [x] GLTF / GLB
- *  [ ] 3DS
+ *  [x] 3DS
  * --------------------------------------------------------------------
  */
 
@@ -24,6 +16,7 @@ import * as THREE        from 'three';
 import { OBJLoader }     from 'three/addons/loaders/OBJLoader.js';
 import { MTLLoader }     from 'three/addons/loaders/MTLLoader.js';
 import { GLTFLoader }    from 'three/addons/loaders/GLTFLoader.js';
+import { TDSLoader }     from 'three/addons/loaders/TDSLoader.js';
 import * as SU           from '/assets/js/shared/three/SceneUtils.js';
 
 export class LoaderFactory
@@ -45,6 +38,7 @@ export class LoaderFactory
             'obj'  : () => this._loadOBJ(path, targetSize),
             'gltf' : () => this._loadGLTF(path, targetSize),
             'glb'  : () => this._loadGLTF(path, targetSize),
+            '3ds'  : () => this._load3DS(path, targetSize),
         };
 
         const loader = loaders[ext];
@@ -59,7 +53,7 @@ export class LoaderFactory
         return loader();
     }
 
-    // ─── Résultat sans animation (OBJ, OBJ+MTL) ───────────────────────────────
+    // ─── Résultat sans animation (OBJ, OBJ+MTL, 3DS) ─────────────────────────
 
     static _result(obj)
     {
@@ -147,7 +141,6 @@ export class LoaderFactory
 
                     SU.prepareObject(obj, targetSize);
 
-                    // Mixer — créé uniquement si le fichier contient des animations
                     let mixer = null;
                     let clips = [];
 
@@ -162,12 +155,7 @@ export class LoaderFactory
                         }));
                     }
 
-                    resolve({
-                        obj,
-                        mixer,
-                        animations : gltf.animations ?? [],
-                        clips
-                    });
+                    resolve({ obj, mixer, animations: gltf.animations ?? [], clips });
                 },
                 undefined,
                 (error) =>
@@ -176,6 +164,34 @@ export class LoaderFactory
                     reject(error);
                 }
             );
+        });
+    }
+
+    // ─── 3DS ──────────────────────────────────────────────────────────────────
+
+    static _load3DS(path, targetSize)
+    {
+        // TDSLoader charge les textures depuis le même dossier que le .3ds
+        const basePath = path.substring(0, path.lastIndexOf('/') + 1);
+
+        return new Promise((resolve, reject) =>
+        {
+            new TDSLoader()
+                .setPath(basePath)
+                .load(
+                    path,
+                    (obj) =>
+                    {
+                        SU.prepareObject(obj, targetSize);
+                        resolve(this._result(obj));
+                    },
+                    undefined,
+                    (error) =>
+                    {
+                        console.error('LoaderFactory 3DS — erreur :', path, error);
+                        reject(error);
+                    }
+                );
         });
     }
 }
