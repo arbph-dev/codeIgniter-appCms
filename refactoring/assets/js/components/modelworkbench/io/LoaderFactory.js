@@ -2,41 +2,47 @@
  * /assets/js/components/modelworkbench/io/LoaderFactory.js
  *
  * --------------------------------------------------------------------
- * ModelWorkbench — Commit 4 / Step 1
- *
- * Responsabilités :
- *  - détecter le format depuis l'extension du fichier
- *  - déléguer au bon loader
- *  - retourner une Promise<THREE.Object3D>
- *  - centrer et normaliser l'objet chargé
+ * ModelWorkbench — Commit 4 / Step 2
  *
  * Formats supportés :
  *  [x] OBJ
- *  [ ] OBJ + MTL
+ *  [x] OBJ + MTL
  *  [ ] GLTF / GLB
  *  [ ] 3DS
  * --------------------------------------------------------------------
  */
 
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 import * as SU       from '/assets/js/shared/three/SceneUtils.js';
 
 export class LoaderFactory
 {
     /**
-     * Charge un modèle 3D depuis son chemin.
-     * Détecte le format automatiquement depuis l'extension.
-     *
-     * @param   {Object} params
-     * @param   {string} params.path  Chemin vers le fichier.
+     * @param {Object} params
+     * @param {string} params.path        Chemin vers le fichier OBJ.
+     * @param {string} [params.mtl]       Chemin vers le fichier MTL (optionnel).
+     * @param {number} [params.targetSize] Diagonale cible (défaut : 3).
      * @returns {Promise<THREE.Object3D>}
+     *
+     * @example
+     * // OBJ seul
+     * LoaderFactory.load({ path: '/models/ship.obj' })
+     *
+     * // OBJ + MTL
+     * LoaderFactory.load({ path: '/models/ship.obj', mtl: '/models/ship.mtl' })
      */
-    static load({ path })
+    static load({ path, mtl, targetSize = 3 })
     {
         const ext = path.split('.').pop().toLowerCase();
 
+        if (ext === 'obj' && mtl)
+        {
+            return this._loadOBJMTL(path, mtl, targetSize);
+        }
+
         const loaders = {
-            'obj' : () => this._loadOBJ(path),
+            'obj' : () => this._loadOBJ(path, targetSize),
         };
 
         const loader = loaders[ext];
@@ -53,18 +59,15 @@ export class LoaderFactory
 
     // ─── OBJ ──────────────────────────────────────────────────────────────────
 
-    static _loadOBJ(path)
+    static _loadOBJ(path, targetSize)
     {
         return new Promise((resolve, reject) =>
         {
-            const loader = new OBJLoader();
-
-            loader.load(
+            new OBJLoader().load(
                 path,
                 (obj) =>
                 {
-                    SU.centerObject(obj);
-                    SU.normalizeSize(obj, 2);
+                    SU.prepareObject(obj, targetSize);
                     resolve(obj);
                 },
                 undefined,
@@ -74,6 +77,51 @@ export class LoaderFactory
                     reject(error);
                 }
             );
+        });
+    }
+
+    // ─── OBJ + MTL ────────────────────────────────────────────────────────────
+
+    static _loadOBJMTL(path, mtlPath, targetSize)
+    {
+        // MTLLoader.setPath() attend le dossier, pas le chemin complet
+        const basePath = mtlPath.substring(0, mtlPath.lastIndexOf('/') + 1);
+        const mtlFile  = mtlPath.substring(mtlPath.lastIndexOf('/') + 1);
+
+        return new Promise((resolve, reject) =>
+        {
+            new MTLLoader()
+                .setPath(basePath)
+                .load(
+                    mtlFile,
+                    (materials) =>
+                    {
+                        materials.preload();
+
+                        new OBJLoader()
+                            .setMaterials(materials)
+                            .load(
+                                path,
+                                (obj) =>
+                                {
+                                    SU.prepareObject(obj, targetSize);
+                                    resolve(obj);
+                                },
+                                undefined,
+                                (error) =>
+                                {
+                                    console.error('LoaderFactory OBJ — erreur :', path, error);
+                                    reject(error);
+                                }
+                            );
+                    },
+                    undefined,
+                    (error) =>
+                    {
+                        console.error('LoaderFactory MTL — erreur :', mtlPath, error);
+                        reject(error);
+                    }
+                );
         });
     }
 }
