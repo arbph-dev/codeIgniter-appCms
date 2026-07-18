@@ -171,15 +171,16 @@ export class LoaderFactory
 
     static _load3DS(path, targetSize)
     {
-        // TDSLoader charge les textures depuis le même dossier que le .3ds
+        // setPath() fixe le dossier de base — load() ne reçoit que le nom de fichier
         const basePath = path.substring(0, path.lastIndexOf('/') + 1);
-
+        const file     = path.substring(path.lastIndexOf('/') + 1);
+ 
         return new Promise((resolve, reject) =>
         {
             new TDSLoader()
                 .setPath(basePath)
                 .load(
-                    path,
+                    file,
                     (obj) =>
                     {
                         SU.prepareObject(obj, targetSize);
