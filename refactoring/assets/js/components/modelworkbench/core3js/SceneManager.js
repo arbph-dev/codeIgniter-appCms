@@ -46,7 +46,13 @@
  *  - initialiser OrbitControls
  *  - gérer la boucle d'animation et le resize
  * -------------------------------------------------------------------- 
+ * ModelWorkbench — Commit 4 / Step 3
+ *
+ * Nouveauté : addMixer() + mise à jour des mixers dans _animate().
+ * Le delta de SceneTimer est maintenant consommé.
+ * --------------------------------------------------------------------
  */
+
 import * as THREE            from 'three';
 import { OrbitControls }     from 'three/addons/controls/OrbitControls.js';
 import { SceneTimer }        from '/assets/js/shared/three/SceneTimer.js';
@@ -70,6 +76,7 @@ export class SceneManager
         this.gridManager  = null;
         this.axisManager  = null;
 
+        this._mixers      = [];
         this._animationId = null;
 
         this._onResize = this._onResize.bind(this);
@@ -135,6 +142,24 @@ export class SceneManager
         this.controls.enableDamping = true;
     }
 
+    // ─── Mixers ───────────────────────────────────────────────────────────────
+
+    /**
+     * Enregistre un AnimationMixer pour qu'il soit mis à jour dans la boucle.
+     * Appelé par ModelWorkbench après chaque chargement GLTF animé.
+     *
+     * @param {THREE.AnimationMixer} mixer
+     */
+    addMixer(mixer)
+    {
+        this._mixers.push(mixer);
+    }
+
+    removeMixer(mixer)
+    {
+        this._mixers = this._mixers.filter(m => m !== mixer);
+    }
+
     // ─── Resize ───────────────────────────────────────────────────────────────
 
     _initResize()
@@ -166,9 +191,11 @@ export class SceneManager
     {
         this._animationId = requestAnimationFrame(() => this._animate());
 
-        const delta = this.clock.tick(); // eslint-disable-line no-unused-vars
+        const delta = this.clock.tick();
 
-        // enableDamping requiert un appel par frame
+        // Animations GLTF
+        this._mixers.forEach(m => m.update(delta));
+
         this.controls.update();
 
         this.renderer.render(this.scene, this.camera);
@@ -186,8 +213,10 @@ export class SceneManager
         this.gridManager?.destroy();
         this.axisManager?.destroy();
 
-        this.controls?.dispose();
+        this._mixers.forEach(m => m.stopAllAction());
+        this._mixers = [];
 
+        this.controls?.dispose();
         this.renderer?.dispose();
 
         if (this.renderer?.domElement?.parentNode === this.container)
