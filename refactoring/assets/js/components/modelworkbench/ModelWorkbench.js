@@ -1,6 +1,8 @@
 /**
- *    '/assets/js/components/modelworkbench/ModelWorkbench.js'
- * --------------------------------------------------------------------
+
+    '/assets/js/components/modelworkbench/ModelWorkbench.js'
+ 
+* --------------------------------------------------------------------
  * ModelWorkbench
  * Phase 0 - Commit 1
  *
@@ -20,6 +22,7 @@
  *  - initialiser et coordonner les sous-composants
  * --------------------------------------------------------------------
  * ModelWorkbench — Commit 4 / Step 1
+ *
  * Nouveauté : loadModel(path) — charge un modèle et l'ajoute à la scène.
  * --------------------------------------------------------------------
  */
@@ -35,6 +38,9 @@ export class ModelWorkbench
         this.sceneManager = null;
  
         this.initialize();
+
+        //const wb = new ModelWorkbench({ container });
+        //window._wb = wb;  // expose pour la console        
     }
  
     initialize()
@@ -50,21 +56,31 @@ export class ModelWorkbench
     /**
      * Charge un modèle et l'ajoute à la scène.
      *
-     * @param   {string} path  Chemin vers le fichier (ex. '/assets/models/barco.obj').
+     * @param   {string} path            Chemin vers le fichier OBJ.
+     * @param   {Object} [options]
+     * @param   {string} [options.mtl]         Chemin vers le fichier MTL.
+     * @param   {number} [options.targetSize]  Diagonale cible (défaut : 3).
      * @returns {Promise<THREE.Object3D>}
      *
      * @example
-     * await wb.loadModel('/assets/img/3js/model3d/bateaux/barco/Barco_obj/Barco.obj')
+     * // OBJ seul
+     * await wb.loadModel('/models/ship.obj')
+     *
+     * // OBJ + MTL
+     * await wb.loadModel('/models/ship.obj', { mtl: '/models/ship.mtl' })
+     *
+     * // Taille personnalisée
+     * await wb.loadModel('/models/ship.obj', { mtl: '/models/ship.mtl', targetSize: 5 })
      */
-    async loadModel(path)
+    async loadModel(path, options = {})
     {
-        const obj = await LoaderFactory.load({ path });
+        const obj = await LoaderFactory.load({ path, ...options });
  
         this.sceneManager.scene.add(obj);
  
-        console.log('ModelWorkbench : modèle chargé —', path);
-        console.log(obj);
+        console.log('ModelWorkbench : modèle chargé —', path, obj);
  
         return obj;
     }
 }
+
