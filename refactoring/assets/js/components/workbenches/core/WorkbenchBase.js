@@ -83,7 +83,47 @@ export class WorkbenchBase
     onInitialized() { /* hook */ }
     onModelLoaded(model) { /* hook */ }
     onSelectionChanged(selection) { /* hook */ }
+    
+    // ─── Resize ───────────────────────────────────────────────────────────────
+    /**
+     * Gère le redimensionnement de la vue Three.js
+     * À appeler lors du resize de la fenêtre ou du conteneur
+     */
+    handleResize()
+    {
+        if (!this.sceneManager) return;
+        
+        const canvasContainer = this._canvasEl;
+        if (!canvasContainer) return;
 
+        const width = canvasContainer.clientWidth;
+        const height = canvasContainer.clientHeight;
+
+        this.sceneManager.handleResize(width, height);
+    }
+
+    /**
+     * Active l'écoute automatique du resize de la fenêtre
+     */
+    enableAutoResize()
+    {
+        this._resizeHandler = () => this.handleResize();
+        window.addEventListener('resize', this._resizeHandler);
+        
+        // Premier appel pour initialiser correctement
+        setTimeout(() => this.handleResize(), 50);
+    }
+
+    /**
+     * Désactive l'écoute du resize (à appeler dans destroy())
+     */
+    disableAutoResize()
+    {
+        if (this._resizeHandler) {
+            window.removeEventListener('resize', this._resizeHandler);
+            this._resizeHandler = null;
+        }
+    }
     // ─── Méthodes communes utiles ────────────────────────────
     fitToView(target = null)
     {
@@ -122,6 +162,8 @@ export class WorkbenchBase
     // ─── Cycle de vie ────────────────────────────────────────
     destroy()
     {
+        this.disableAutoResize();
+        
         this.sceneManager?.destroy();
         this.toolbar?.destroy();
         this.inspector?.destroy();
