@@ -3,6 +3,10 @@
  * --------------------------------------------------------------------
  * ModelWorkbench — Commit 8
  * --------------------------------------------------------------------
+ * ModelWorkbench — Commit 9
+ * Vider ModelWorkbench et charger les modeles
+ * evite d'avoir plusieurs modeles affichés
+ * --------------------------------------------------------------------
  */
 
 import { SceneManager }     from '/assets/js/components/modelworkbench/core3js/SceneManager.js';
@@ -27,6 +31,14 @@ export class ModelWorkbench
         this.modelTreeView = null;
         this.inspector     = null;
         this.statusBar     = null;
+
+        
+        // ← Référence 
+        // modèle chargé
+        // Object3D racine du modèle chargé
+        this.currentModel     = null;//commit 9     
+        this.currentRoot      = null;//commit 9
+        
 
         this.initialize();
     }
@@ -95,7 +107,14 @@ export class ModelWorkbench
 
     async loadModelDescriptor(model)
     {
+        // commit 9 : Vider l'ancien modèle avant d'en charger un nouveau
+        this.clearCurrentModel();
+        this.currentModel = model;
+
         await this.loadModel(model);
+
+        // commit 9 : Marquer visuellement le modèle comme actif dans le catalogue
+        this.modelTreeView?.markAsLoaded?.(model.id);
     }
 
     async loadModel(model)
@@ -105,6 +124,9 @@ export class ModelWorkbench
             mtl        : model.resource.mtl,
             targetSize : model.transform.targetSize,
         });
+
+        // commit 9 : Garder une référence à la racine du modèle
+        this.currentRoot = result.obj;
 
         this.sceneManager.scene.add(result.obj);
 
@@ -148,4 +170,43 @@ export class ModelWorkbench
         this.sceneManager?.destroy();
         this.container.innerHTML = '';
     }
+
+    // commit 9 
+
+    /** Vide le modèle actuellement chargé */
+    clearCurrentModel()
+    {
+        if (this.currentRoot)
+        {
+            this.sceneManager.scene.remove(this.currentRoot);
+            
+            // Nettoyage mémoire (important pour Three.js)
+            this.currentRoot.traverse((child) => {
+                if (child.geometry) child.geometry.dispose();
+                if (child.material) {
+                    if (Array.isArray(child.material)) {
+                        child.material.forEach(mat => mat.dispose());
+                    } else {
+                        child.material.dispose();
+                    }
+                }
+            });
+
+            this.currentRoot = null;
+        }
+
+        // Réinitialiser les autres panneaux
+        this.treeView?.renderEmpty?.() || (this.treeView && (this.treeView._body.innerHTML = ''));
+        this.inspector?.showEmpty?.() || this.inspector?._empty();
+        this.statusBar?.clear?.();
+    }
+
+    // Optionnel : bouton "Vider la scène" dans la Toolbar
+    clearScene()
+    {
+        this.clearCurrentModel();
+        this.currentModel = null;
+        this.modelTreeView?.clearSelection?.();
+    }
+
 }
