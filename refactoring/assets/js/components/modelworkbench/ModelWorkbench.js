@@ -35,6 +35,9 @@
  *
  * Orchestre le layout, les composants UI et les services d'analyse.
  * --------------------------------------------------------------------
+* ModelWorkbench — Commit 7
+ * ModelWorkbench reçoit un ModelDescriptor et plus un chemin de fichier.
+ * voir /assets/js/components/modelworkbench/data/modelList.js 
  */
  
 import { SceneManager }     from '/assets/js/components/modelworkbench/core3js/SceneManager.js';
@@ -120,28 +123,26 @@ export class ModelWorkbench
     // ─── API publique ─────────────────────────────────────────────────────────
  
     /**
-     * Charge un modèle et l'ajoute à la scène.
-     * @param   {string} path
-     * @param   {Object} [options] { mtl, targetSize }
-         {string} [options.mtl]
-         {number} [options.targetSize=3]
-         
-     * @returns {Promise<{ obj, mixer, animations, clips }>}
+     * @param   {Object} model
      */
-    async loadModel(path, options = {})
+    async loadModel(model)
     {
-        const result = await LoaderFactory.load({ path, ...options });
- 
+        const result = await LoaderFactory.load(
+        {
+            path       : model.resource.path,
+            mtl        : model.resource.mtl,
+            targetSize : model.transform.targetSize,
+        });
+
         this.sceneManager.scene.add(result.obj);
- 
+
         if (result.mixer)
         {
             this.sceneManager.addMixer(result.mixer);
         }
- 
-        // Analyse automatique + mise à jour UI
+
         this.analyze(result);
- 
+
         return result;
     }
  
