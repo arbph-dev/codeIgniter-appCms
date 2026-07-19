@@ -17,6 +17,8 @@
  *  - SceneManager ;
  *  - le chargement des ressources.
  * --------------------------------------------------------------------
+ * commit9 
+ * Ajouter 2 deux méthodes
  */
 
 export class ModelTreeView
@@ -181,4 +183,19 @@ export class ModelTreeView
         this.onSelect = null;
         this._selectedId = null;
     }
+    // commit 9
+    clearSelection()
+    {
+        this._clearSelection();
+        this._selectedId = null;
+    }
+    
+    // commit 9
+    markAsLoaded(id)
+    {
+        // Mise en évidence du modèle chargé (optionnel mais très utile)
+        this.container.querySelectorAll('.wb-model-item').forEach(el => {
+            el.classList.toggle('is-loaded', el.dataset.modelId === id);
+        });
+    }    
 }
