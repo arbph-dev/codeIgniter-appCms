@@ -84,6 +84,11 @@ class Filters extends BaseFilters
                 'csrf', // 2026-04-23 pour logout et plus generalement secureite
                 '/', // acces pour anonymous
                 'technologies*',    // ← toutes les pages sous /technologies
+                // === CMS Public ===
+                'cms/article/*',      // tous les articles
+                'cms/category/*',     // toutes les catégories
+                'cms/section/*',      // sections
+                'cms/part/*',         // parts                
             ]],
         ],
         'after' => [
