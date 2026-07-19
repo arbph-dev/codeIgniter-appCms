@@ -1,7 +1,8 @@
 /**
  * /assets/js/components/modelworkbench/ModelWorkbench.js
  * --------------------------------------------------------------------
-
+ * ModelWorkbench — Commit 8
+ * --------------------------------------------------------------------
  */
 
 import { SceneManager }     from '/assets/js/components/modelworkbench/core3js/SceneManager.js';
