@@ -31,7 +31,6 @@
  *
  * Nouveauté : analyze(result) — rapport complet sur un modèle chargé.
  * --------------------------------------------------------------------
- */
 * ModelWorkbench — Commit 6
  *
  * Orchestre le layout, les composants UI et les services d'analyse.
@@ -122,11 +121,11 @@ export class ModelWorkbench
  
     /**
      * Charge un modèle et l'ajoute à la scène.
-     *
      * @param   {string} path
-     * @param   {Object} [options]
-     * @param   {string} [options.mtl]
-     * @param   {number} [options.targetSize=3]
+     * @param   {Object} [options] { mtl, targetSize }
+         {string} [options.mtl]
+         {number} [options.targetSize=3]
+         
      * @returns {Promise<{ obj, mixer, animations, clips }>}
      */
     async loadModel(path, options = {})
