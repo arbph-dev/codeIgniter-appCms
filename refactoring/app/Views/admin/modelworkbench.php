@@ -1,5 +1,6 @@
 <?php
 /**
+ *  app/Views/admin/modelworkbench.php
  * --------------------------------------------------------------------
  * ModelWorkbench
  * Phase 0 - Commit 1
@@ -26,11 +27,7 @@
 
 <body>
 
-<div id="modelworkbench">
-
-    <!-- Zone principale du Workbench -->
-
-</div>
+<div id="modelworkbench" style="height: 700px;"></div>
 
 <script type="module">
 
@@ -42,6 +39,7 @@
         bus.publish(evtName, page);
 
     document.addEventListener('DOMContentLoaded', initModelWorkbench);
+
 
 </script>
 
