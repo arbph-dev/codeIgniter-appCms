@@ -1,6 +1,6 @@
 /**
  * SceneDescriptor.js
- * Contrat pour une scène complète (SceneWorkbench)
+ * Contrat pour une scène complète
  */
 
 export const SceneDescriptor = {
@@ -9,11 +9,10 @@ export const SceneDescriptor = {
     slug: 'string',
 
     classification: {
-        category: 'string',           // 'military', 'urban', 'historical', 'training'...
+        category: 'string',
         tags: ['string']
     },
 
-    // Dimensions globales de la scène
     realWorld: {
         unit: 'meter',
         width: 'number',
@@ -21,21 +20,21 @@ export const SceneDescriptor = {
         maxHeight: 'number'
     },
 
-    // Composition de la scène
-    terrain: 'TerrainDescriptor|null',     // Référence ou objet complet
-    skybox: 'SkyboxDescriptor|null',
+    // Références uniquement (plus flexible)
+    terrain: 'string|null',        // terrainId
+    skybox: 'string|null',         // skyboxId
 
     models: [
         {
-            modelId: 'string',             // référence à un ModelDescriptor
-            instanceId: 'string',          // identifiant unique dans cette scène
+            modelId: 'string',           // ex: 'b17'
+            instanceId: 'string',        // identifiant unique dans la scène
             transform: {
                 position: { x: 0, y: 0, z: 0 },
                 rotation: { x: 0, y: 0, z: 0 },
                 scale:    { x: 1, y: 1, z: 1 }
             },
             visible: true,
-            animations: [                  // Animations actives sur cette instance
+            animations: [
                 {
                     clipName: 'string',
                     loop: true,
@@ -46,20 +45,20 @@ export const SceneDescriptor = {
         }
     ],
 
-    lighting: {
-        ambient: { intensity: 0.6, color: '#ffffff' },
-        directional: {
-            position: { x: 50, y: 100, z: 50 },
-            intensity: 1.2,
-            castShadow: true
-        },
-        environment: {
-            hdri: 'string|null',           // chemin vers une HDR
-            intensity: 1.0
+    // === Éclairage multi-sources ===
+    lights: [
+        {
+            type: 'ambient' | 'directional' | 'point' | 'spot',
+            name: 'string',
+            intensity: 'number',
+            color: 'string',                  // '#ffffff'
+            position: { x: 0, y: 0, z: 0 },   // pour point & spot
+            target: { x: 0, y: 0, z: 0 },     // pour directional & spot
+            castShadow: 'boolean',
+            parameters: {}                    // distance, angle, penumbra, etc.
         }
-    },
+    ],
 
-    // Paramètres globaux
     environment: {
         fog: {
             enabled: false,
@@ -70,16 +69,11 @@ export const SceneDescriptor = {
         backgroundColor: '#000000'
     },
 
-    // Métadonnées
     metadata: {
         description: 'string|null',
         author: 'string|null',
         createdAt: 'string',
-        version: 'string'
-    },
-
-    // Pour futures extensions
-    layers: [],          // ex: annotations, zones d'intérêt, paths...
-    tags: []
+        version: 'string',
+        historicalContext: 'string|null'     // ex: "Raid sur Saint-Leu-d'Esserent - 4 juillet 1944"
+    }
 };
-
