@@ -32,31 +32,94 @@
  * Nouveauté : analyze(result) — rapport complet sur un modèle chargé.
  * --------------------------------------------------------------------
  */
-
-import { SceneManager }    from '/assets/js/components/modelworkbench/core3js/SceneManager.js';
-import { LoaderFactory }   from '/assets/js/components/modelworkbench/io/LoaderFactory.js';
-import { GeometryAnalysis} from '/assets/js/components/modelworkbench/services/GeometryAnalysis.js';
-
+* ModelWorkbench — Commit 6
+ *
+ * Orchestre le layout, les composants UI et les services d'analyse.
+ * --------------------------------------------------------------------
+ */
+ 
+import { SceneManager }     from '/assets/js/components/modelworkbench/core3js/SceneManager.js';
+import { LoaderFactory }    from '/assets/js/components/modelworkbench/io/LoaderFactory.js';
+import { GeometryAnalysis } from '/assets/js/components/modelworkbench/services/GeometryAnalysis.js';
+import { Toolbar }          from '/assets/js/components/modelworkbench/ui/Toolbar.js';
+import { TreeView }         from '/assets/js/components/modelworkbench/ui/TreeView.js';
+import { Inspector }        from '/assets/js/components/modelworkbench/ui/Inspector.js';
+import { StatusBar }        from '/assets/js/components/modelworkbench/ui/StatusBar.js';
+ 
 export class ModelWorkbench
 {
     constructor({ container })
     {
-        this.container    = container;
+        this.container = container;
+ 
         this.sceneManager = null;
-
+        this.toolbar      = null;
+        this.treeView     = null;
+        this.inspector    = null;
+        this.statusBar    = null;
+ 
         this.initialize();
     }
-
+ 
+    // ─── Initialisation ───────────────────────────────────────────────────────
+ 
     initialize()
     {
-        this.container.style.width  = '1024px';
-        this.container.style.height = '768px';
-
+        this._createLayout();
+        this._createScene();
+        this._createUI();
+    }
+ 
+    /**
+     * Construit la structure DOM du Workbench dans le container.
+     * La vue PHP reste propre : <div id="modelworkbench"></div>
+     */
+    _createLayout()
+    {
+        this.container.innerHTML = '';
+ 
+        this._toolbarEl   = this._el('div', 'wb-toolbar');
+        this._treeviewEl  = this._el('div', 'wb-treeview');
+        this._canvasEl    = this._el('div', 'wb-canvas');
+        this._inspectorEl = this._el('div', 'wb-inspector');
+        this._statusbarEl = this._el('div', 'wb-statusbar');
+ 
+        const main = this._el('div', 'wb-main');
+        main.append(this._treeviewEl, this._canvasEl, this._inspectorEl);
+ 
+        this.container.append(this._toolbarEl, main, this._statusbarEl);
+    }
+ 
+    _createScene()
+    {
         this.sceneManager = new SceneManager({
-            container: this.container
+            container: this._canvasEl
         });
     }
-
+ 
+    _createUI()
+    {
+        this.toolbar = new Toolbar({
+            container    : this._toolbarEl,
+            sceneManager : this.sceneManager,
+        });
+ 
+        this.treeView = new TreeView({
+            container : this._treeviewEl,
+            onSelect  : (node) => this.inspector.showNode(node),
+        });
+ 
+        this.inspector = new Inspector({
+            container: this._inspectorEl,
+        });
+ 
+        this.statusBar = new StatusBar({
+            container: this._statusbarEl,
+        });
+    }
+ 
+    // ─── API publique ─────────────────────────────────────────────────────────
+ 
     /**
      * Charge un modèle et l'ajoute à la scène.
      *
@@ -69,20 +132,20 @@ export class ModelWorkbench
     async loadModel(path, options = {})
     {
         const result = await LoaderFactory.load({ path, ...options });
-
+ 
         this.sceneManager.scene.add(result.obj);
-
+ 
         if (result.mixer)
         {
             this.sceneManager.addMixer(result.mixer);
         }
-
-        console.log('ModelWorkbench : modèle chargé —', path);
-        console.log('animations :', result.clips.map(c => c.name));
-
+ 
+        // Analyse automatique + mise à jour UI
+        this.analyze(result);
+ 
         return result;
     }
-
+ 
     /**
      * Analyse un modèle chargé.
      * Reçoit le contrat retourné par loadModel().
@@ -103,14 +166,37 @@ export class ModelWorkbench
     analyze(result)
     {
         const report = GeometryAnalysis.analyze(result);
-
-        console.group('GeometryAnalysis');
-        console.log('global',     report.global);
-        console.log('hierarchy',  report.hierarchy);
-        console.log('materials',  report.materials);
-        console.log('animations', report.animations);
-        console.groupEnd();
-
+ 
+        this.statusBar.render(report.global);
+        this.treeView.render(result.obj);
+        this.inspector.showGlobal(report);
+ 
         return report;
     }
+ 
+    // ─── Utilitaires ──────────────────────────────────────────────────────────
+ 
+    _el(tag, cls)
+    {
+        const el = document.createElement(tag);
+        el.className = cls;
+        return el;
+    }
+ 
+    // ─── Cycle de vie ─────────────────────────────────────────────────────────
+ 
+    destroy()
+    {
+        this.toolbar?.destroy();
+        this.treeView?.destroy();
+        this.inspector?.destroy();
+        this.statusBar?.destroy();
+        this.sceneManager?.destroy();
+        this.container.innerHTML = '';
+    }
 }
+
+
+
+
+
