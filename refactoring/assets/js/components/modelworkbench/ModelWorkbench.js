@@ -81,6 +81,7 @@ export class ModelWorkbench
         this.toolbar = new Toolbar({
             container    : this._toolbarEl,
             sceneManager : this.sceneManager,
+            onClearScene  : () => this.clearScene()          // ← Ajout
         });
 
         this.modelTreeView = new ModelTreeView({
