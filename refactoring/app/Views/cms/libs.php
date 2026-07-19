@@ -43,3 +43,4 @@
 <!-- ===================================================================== -->
 
 <link rel="stylesheet" href="/assets/css/cms/article.css">
+<link rel="stylesheet" href="/assets/css/components/workbench.css">
