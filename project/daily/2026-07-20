@@ -1,0 +1,264 @@
+
+# Point sur les travaux 
+
+
+on a crée WorkbenchBase  : refactoring/assets/js/components/workbenches/core/WorkbenchBase.js
+ModelWorkbench doit hérité de WorkbenchBase
+
+WorkbenchBase cree le code html puis selectionne les elements dom
+- A ameliorer avec _el => ajouter dans workbenches/core/WorkbenchBase.js ?
+
+WorkbenchBase reference ces elements DOM:
+```js
+this._toolbarEl   = this.container.querySelector('.wb-toolbar');
+this._leftEl      = this.container.querySelector('.wb-left');
+this._canvasEl    = this.container.querySelector('.wb-canvas');
+this._inspectorEl = this.container.querySelector('.wb-inspector');
+this._statusbarEl = this.container.querySelector('.wb-statusbar');
+```
+
+ModelWorkbench a besoin des element _modelTreeEl, _treeviewEl, etc. dans _createLayout() de la classe parente.
+
+- WorkbenchBase doit gerer le panel de gauche **_leftEl** (ancien leftPanel) et **main**
+```
+const main = this._el('div', 'wb-main');
+main.append(leftPanel, this._canvasEl, this._inspectorEl);
+```
+- ModelWorkbench cree **_modelTreeEl**, **_treeviewEl** et les ajoute a **_leftEl**
+
+
+Le this.emit('selectionChanged', node) permet de connecter naturellement le TreeView à l’Inspector.
+
+- Mettre a jour  TreeView.js pour ajouter la méthode clear() 
+
+
+- le simports relatifs dans  ModelWorkbench.js - extends WorkbenchBase sont relatif a /assets/... et non au dossier
+
+## ModelWorkbench - verion production
+```
+    _createLayout()
+    {
+        this.container.innerHTML = '';
+
+        this._toolbarEl   = this._el('div', 'wb-toolbar');
+        this._modelTreeEl = this._el('div', 'wb-models');
+        this._treeviewEl  = this._el('div', 'wb-treeview');
+        this._canvasEl    = this._el('div', 'wb-canvas');
+        this._inspectorEl = this._el('div', 'wb-inspector');
+        this._statusbarEl = this._el('div', 'wb-statusbar');
+
+        // Panneau gauche : liste des modèles (haut) + hiérarchie de scène (bas)
+        const leftPanel = this._el('div', 'wb-left');
+        leftPanel.append(this._modelTreeEl, this._treeviewEl);
+
+        const main = this._el('div', 'wb-main');
+        main.append(leftPanel, this._canvasEl, this._inspectorEl);
+
+        this.container.append(this._toolbarEl, main, this._statusbarEl);
+    }
+```
+
+
+
+
+
+
+
+----
+
+
+---
+
+## Methode _el
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/components/modelworkbench/ModelWorkbench.js#L157
+```js
+_el(tag, cls)
+{
+    const el = document.createElement(tag);
+    el.className = cls;
+    return el;
+}
+```
+
+
+
+
+
+## ModelWorkbench.js - extends WorkbenchBase
+```js
+/**
+ * ModelWorkbench.js
+ * Workbench spécialisé dans la visualisation et manipulation de modèles 3D
+ */
+
+import { WorkbenchBase } from '../core/WorkbenchBase.js';
+import { LoaderFactory } from '../io/LoaderFactory.js';
+import { GeometryAnalysis } from '../services/GeometryAnalysis.js';
+
+import { Toolbar } from '../ui/Toolbar.js';
+import { ModelTreeView } from '../ui/ModelTreeView.js';
+import { TreeView } from '../ui/TreeView.js';
+import { Inspector } from '../ui/Inspector.js';
+import { StatusBar } from '../ui/StatusBar.js';
+
+import { MODEL_LIST } from '../data/modelList.js';
+
+export class ModelWorkbench extends WorkbenchBase
+{
+    constructor({ container })
+    {
+        super({ 
+            container, 
+            workbenchType: 'model' 
+        });
+
+        this.currentModel = null;      // ModelDescriptor actuel
+        this.currentRoot  = null;      // THREE.Object3D racine du modèle chargé
+    }
+
+    // Surcharge de la création des composants UI
+    _createUIComponents()
+    {
+        // Toolbar
+        this.toolbar = new Toolbar({
+            container    : this._toolbarEl,
+            sceneManager : this.sceneManager,
+            onClearScene : () => this.clear()
+        });
+
+        // Catalogue des modèles (gauche haut)
+        this.modelTreeView = new ModelTreeView({
+            container : this._modelTreeEl || this._leftEl,
+            models    : MODEL_LIST,
+            onSelect  : (model) => this.loadModelDescriptor(model)
+        });
+
+        // Arbre de hiérarchie du modèle chargé (gauche bas)
+        this.treeView = new TreeView({
+            container : this._treeviewEl,
+            onSelect  : (node) => this.emit('selectionChanged', node)
+        });
+
+        // Panneau d'inspection
+        this.inspector = new Inspector({
+            container : this._inspectorEl
+        });
+
+        // Barre de statut
+        this.statusBar = new StatusBar({
+            container : this._statusbarEl
+        });
+    }
+
+    // ─── Chargement de modèle ─────────────────────────────────────
+
+    async loadModelDescriptor(model)
+    {
+        this.clearCurrentModel();
+        
+        this.currentModel = model;
+        const result = await this.loadModel(model);
+        
+        this.onModelLoaded(result);
+        this.modelTreeView?.markAsLoaded?.(model.id);
+    }
+
+    async loadModel(model)
+    {
+        const result = await LoaderFactory.load({
+            path       : model.resource.path,
+            mtl        : model.resource.mtl,
+            targetSize : model.transform.targetSize,
+        });
+
+        this.currentRoot = result.obj;
+        this.sceneManager.scene.add(result.obj);
+
+        if (result.mixer)
+        {
+            this.sceneManager.addMixer(result.mixer);
+        }
+
+        this.analyze(result);
+
+        return result;
+    }
+
+    analyze(result)
+    {
+        const report = GeometryAnalysis.analyze(result);
+
+        this.statusBar.render(report.global);
+        this.treeView.render(result.obj);
+        this.inspector.showGlobal(report);
+
+        return report;
+    }
+
+    // ─── Nettoyage ───────────────────────────────────────────────
+
+    clearCurrentModel()
+    {
+        if (this.currentRoot)
+        {
+            this.sceneManager.scene.remove(this.currentRoot);
+
+            // Nettoyage mémoire Three.js
+            this.currentRoot.traverse((child) => {
+                if (child.geometry) child.geometry.dispose();
+
+                if (child.material) {
+                    if (Array.isArray(child.material)) {
+                        child.material.forEach(mat => mat.dispose?.());
+                    } else {
+                        child.material.dispose?.();
+                    }
+                }
+            });
+
+            this.currentRoot = null;
+        }
+
+        this.treeView?.clear?.();
+        this.inspector?._empty?.();
+        this.statusBar?.clear?.();
+    }
+
+    clear()
+    {
+        this.clearCurrentModel();
+        this.currentModel = null;
+        this.modelTreeView?.clearSelection?.();
+        super.clear();                    // Appel à la méthode de la classe parent
+    }
+
+    // ─── Hooks ───────────────────────────────────────────────────
+
+    onInitialized()
+    {
+        this.enableAutoResize();
+        console.log('%cModelWorkbench initialized', 'color: #0f0; font-weight: bold');
+    }
+
+    onModelLoaded(result)
+    {
+        console.log('Model loaded:', this.currentModel?.name);
+        // Tu peux émettre un événement si besoin
+        this.emit('modelLoaded', { model: this.currentModel, result });
+    }
+
+    // ─── Destruction ─────────────────────────────────────────────
+
+    destroy()
+    {
+        this.clearCurrentModel();
+        super.destroy();                  // Appel à la destruction de la classe parent
+    }
+}
+```
+
+
+
+
+
+
