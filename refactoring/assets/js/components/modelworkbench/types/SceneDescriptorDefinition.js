@@ -8,12 +8,6 @@ SceneDescriptor
 ├── environment
 └── metadata
 
- * Contrat métier d'une scène
-
-ModelDescriptor ->   ModelResource  -> ( SceneModelAsset -> SceneModelInstance )
-                                                        │
-                                                        ▼
-                                                SceneDescriptor
  */
 
 export const SceneDescriptor =
