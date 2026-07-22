@@ -2,7 +2,7 @@
 
 Une Scene est un ensemble d'instances
 
-l'impélementation retenue est ici :[/assets/js/components/modelworkbench/types/SceneDescriptorDefinition.js](/refactoring/assets/js/components/modelworkbench/types/SceneDescriptorDefinition.js)
+l'impélementation retenue est ici :[/assets/js/components/modelworkbench/types/SceneDescriptor.js](/refactoring/assets/js/components/modelworkbench/types/SceneDescriptor.js)
 
 ```
 SceneDescriptor
