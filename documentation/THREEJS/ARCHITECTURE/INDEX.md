@@ -1,4 +1,40 @@
+# Architecture Three.js / Workbench
 
+> Version 1.0 — Architecture cible
+>
+> Ce dossier décrit l'architecture du moteur Three.js de Zealot.
+> L'objectif est de construire une architecture indépendante de Three.js,
+> fondée sur les Descriptors, Resources, Instances et Workbench.
+
+---
+
+# Vision générale
+
+```
+                           CMS
+                            │
+                    DescriptorDefinition
+                            │
+                            ▼
+                     ThreeRenderer
+                            │
+                            ▼
+                    WorkbenchManager
+                            │
+          ┌─────────────────┴─────────────────┐
+          ▼                                   ▼
+   ModelWorkbench                     SceneWorkbench
+          │                                   │
+          ├──────────────┐                    │
+          ▼              ▼                    ▼
+   ModelResource     LightResource      SceneDescriptor
+          │              │                    │
+          ▼              ▼                    ▼
+     SceneModelInstance  SceneLightInstance  Runtime
+                            │
+                            ▼
+                        THREE.Scene
+```
 # Arborescence
 
 ```
