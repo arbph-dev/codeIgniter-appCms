@@ -19,3 +19,12 @@ Langages
         Events
         Modules
         Web Components
+
+
+
+Shell
+    recherche de fichiers
+        recherche de fichiers php dans un dossier
+            ```
+            find app/Controllers/ -name "*.php" | sort
+            ```
