@@ -1,79 +1,102 @@
-/**
- * SceneDescriptor.js
- * Contrat pour une scène complète
+/*
+/assets/js/components/modelworkbench/types/SceneDescriptor.js
+
  */
 
-export const SceneDescriptor = {
-    id: 'string',
-    name: 'string',
-    slug: 'string',
+export const SceneDescriptor =
+{
+    id   : 'string',
+    name : 'string',
+    slug : 'string',
 
-    classification: {
-        category: 'string',
-        tags: ['string']
+    classification :
+    {
+        category : 'string',
+        tags     : ['string']
     },
 
-    realWorld: {
-        unit: 'meter',
-        width: 'number',
-        depth: 'number',
-        maxHeight: 'number'
+    realWorld :
+    {
+        unit      : 'meter',
+        width     : 'number',
+        depth     : 'number',
+        maxHeight : 'number'
     },
 
-    // Références uniquement (plus flexible)
-    terrain: 'string|null',        // terrainId
-    skybox: 'string|null',         // skyboxId
+    resources :
+    {
+        terrain : 'terrainId|null',
+        skybox  : 'skyboxId|null'
+    },
 
-    models: [
+    models :
+    [
         {
-            modelId: 'string',           // ex: 'b17'
-            instanceId: 'string',        // identifiant unique dans la scène
-            transform: {
-                position: { x: 0, y: 0, z: 0 },
-                rotation: { x: 0, y: 0, z: 0 },
-                scale:    { x: 1, y: 1, z: 1 }
+            instanceId : 'string',
+            modelId    : 'string',
+
+            transform :
+            {
+                position : { x:0, y:0, z:0 },
+                rotation : { x:0, y:0, z:0 },
+                scale    : { x:1, y:1, z:1 }
             },
-            visible: true,
-            animations: [
+
+            visible : true,
+
+            animations :
+            [
                 {
-                    clipName: 'string',
-                    loop: true,
-                    speed: 1.0,
-                    playing: false
+                    clipName : 'string',
+                    loop     : true,
+                    speed    : 1,
+                    playing  : false
                 }
             ]
         }
     ],
 
-    // === Éclairage multi-sources ===
-    lights: [
+    lights :
+    [
         {
-            type: 'ambient' | 'directional' | 'point' | 'spot',
-            name: 'string',
-            intensity: 'number',
-            color: 'string',                  // '#ffffff'
-            position: { x: 0, y: 0, z: 0 },   // pour point & spot
-            target: { x: 0, y: 0, z: 0 },     // pour directional & spot
-            castShadow: 'boolean',
-            parameters: {}                    // distance, angle, penumbra, etc.
+            instanceId : 'string',
+            lightId    : 'string',
+
+            transform :
+            {
+                position : { x:0, y:0, z:0 },
+                rotation : { x:0, y:0, z:0 }
+            },
+
+            visible : true,
+
+            overrides :
+            {
+                intensity : 'number|null',
+                color     : 'string|null'
+            }
         }
     ],
 
-    environment: {
-        fog: {
-            enabled: false,
-            color: '#a0a0a0',
-            near: 100,
-            far: 1000
+    environment :
+    {
+        fog :
+        {
+            enabled : false,
+            color   : '#a0a0a0',
+            near    : 100,
+            far     : 1000
         },
-        backgroundColor: '#000000'
+
+        backgroundColor : '#000000'
     },
 
-    metadata: {
-        description: 'string|null',
-        author: 'string|null',
-        createdAt: 'string',
-        version: 'string',
-        historicalContext: 'string|null'     // ex: "Raid sur Saint-Leu-d'Esserent - 4 juillet 1944"
+    metadata :
+    {
+        description       : 'string|null',
+        author            : 'string|null',
+        createdAt         : 'string',
+        version           : 'string',
+        historicalContext : 'string|null'
     }
 };
