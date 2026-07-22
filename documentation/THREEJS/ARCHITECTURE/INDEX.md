@@ -140,14 +140,10 @@ Three.js
 - [ ] Phase 10 — Intégration CMS
 
 ---
+# [Descriptors](/documentation/THREEJS/ARCHITECTURE/descriptors/INDEX.md)
 
-# Resources
 
-documentation/THREEJS/ARCHITECTURE/resources/INDEX.md
-documentation/THREEJS/ARCHITECTURE/resources/ModelResource.md
-documentation/THREEJS/ARCHITECTURE/resources/TerrainResource.md
-documentation/THREEJS/ARCHITECTURE/resources/SkyboxResource.md
-documentation/THREEJS/ARCHITECTURE/resources/LightResource.md
+# [Resources](/documentation/THREEJS/ARCHITECTURE/resources/INDEX.md)
 
 ---
 # Instances
