@@ -4,12 +4,9 @@
 # Workbenches
 
 - [core/WorkbenchBase.md](/documentation/THREEJS/ARCHITECTURE/workbenches/WorkbenchBase.md)
+- [model/ModelWorkbench.md](/documentation/THREEJS/ARCHITECTURE/workbenches/ModelWorkbench.md)
 
 
-
-- []()
-model/ModelWorkbench.md
-/documentation/THREEJS/ARCHITECTURE/workbenches/ModelWorkbench.md
 
 - []()
 scene/SceneWorkbench.md
