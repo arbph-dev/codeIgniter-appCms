@@ -35,6 +35,12 @@
                             ▼
                         THREE.Scene
 ```
+
+
+les Workbench manipulent le métier et les interactions utilisateur, les Providers savent acquérir les données, les Resources les normalisent, les Instances les contextualisent dans une scène, et le moteur de rendu (Three.js aujourd'hui, un autre demain) n'est plus que la dernière étape de la chaîne.
+
+---
+
 # Arborescence
 
 ```
