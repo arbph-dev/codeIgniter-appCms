@@ -60,7 +60,7 @@
 
 | Partie | Description |
 |---------|-------------|
-| descriptors | Contrats métier |
+| [Descriptors](/documentation/THREEJS/ARCHITECTURE/descriptors/INDEX.md) | Contrats métier |
 | resources | Ressources réutilisables |
 | instances | Utilisation des ressources dans une scène |
 | workbenches | Outils d'édition |
