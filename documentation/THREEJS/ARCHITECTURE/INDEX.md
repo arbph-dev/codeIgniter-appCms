@@ -170,7 +170,29 @@ documentation/THREEJS/ARCHITECTURE/workbenches/skybox/SkyboxWorkbench.md
 documentation/THREEJS/ARCHITECTURE/workbenches/light/LightWorkbench.md
 
 ---
-# Providers
+## Providers
+En parallèle, les données externes s'intègrent sans modifier cette architecture :
+```
+Fichier OBJ ───────┐
+API BAN ───────────┤
+API SIRENE ────────┤
+GeoTIFF / MNT ─────┤
+IFC ───────────────┤
+IoT ───────────────┘
+        │
+        ▼
+     Provider
+        │
+        ▼
+     Resource
+        │
+        ▼
+     Instance
+        │
+        ▼
+     Scene
+```
+les Workbench manipulent le métier et les interactions utilisateur, les Providers savent acquérir les données, les Resources les normalisent, les Instances les contextualisent dans une scène, et le moteur de rendu (Three.js aujourd'hui, un autre demain) n'est plus que la dernière étape de la chaîne.
 
 documentation/THREEJS/ARCHITECTURE/providers/INDEX.md
 documentation/THREEJS/ARCHITECTURE/providers/Provider.md
