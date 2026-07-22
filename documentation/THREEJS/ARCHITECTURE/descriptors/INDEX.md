@@ -1,0 +1,17 @@
+documentation/THREEJS/ARCHITECTURE/descriptors/ModelDescriptor.md
+
+documentation/THREEJS/ARCHITECTURE/descriptors/SceneDescriptor.md
+
+documentation/THREEJS/ARCHITECTURE/descriptors/TerrainDescriptor.md
+
+documentation/THREEJS/ARCHITECTURE/descriptors/SkyboxDescriptor.md
+
+documentation/THREEJS/ARCHITECTURE/descriptors/LightDescriptor.md
+
+documentation/THREEJS/ARCHITECTURE/descriptors/ModelInstanceDescriptor.md
+
+documentation/THREEJS/ARCHITECTURE/descriptors/TerrainInstanceDescriptor.md
+
+documentation/THREEJS/ARCHITECTURE/descriptors/SkyboxInstanceDescriptor.md
+
+documentation/THREEJS/ARCHITECTURE/descriptors/LightInstanceDescriptor.md
