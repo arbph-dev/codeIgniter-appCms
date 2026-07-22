@@ -1,41 +1,34 @@
 # SceneDescriptor
 
+Une Scene est un ensemble d'instances
+
 l'impélementation retenue est ici :[/assets/js/components/modelworkbench/types/SceneDescriptorDefinition.js](/refactoring/assets/js/components/modelworkbench/types/SceneDescriptorDefinition.js)
 
-
-
+```
 SceneDescriptor
-│
 ├── assets
-│
 ├── instances
-│
 ├── environment
-│
 └── metadata
+```
 
-où
 
-instances
 
-contiendrait :
 
-ModelInstance
-LightInstance
-CameraInstance
-TerrainInstance
-SkyboxInstance
 
-Tous partageant :
+## Instances
+contiendra :
+- ModelInstance
+- LightInstance
+- CameraInstance
+- TerrainInstance
+- SkyboxInstance
 
-id
-resourceId
-transform
-visible
-metadata
+Toutes les instances partageant :
+- id
+- resourceId
+- transform
+- visible
+- metadata
 
-Autrement dit :
 
-Scene
-    =
-ensemble d'instances
