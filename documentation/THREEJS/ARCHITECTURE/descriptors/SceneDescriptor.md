@@ -1,3 +1,8 @@
+# SceneDescriptor
+
+l'impélementation retenue est ici :[/assets/js/components/modelworkbench/types/SceneDescriptorDefinition.js](/refactoring/assets/js/components/modelworkbench/types/SceneDescriptorDefinition.js)
+
+
 
 SceneDescriptor
 │
