@@ -1,16 +1,38 @@
+
+# Arborescence
+
+```
+/assets
+  /js
+    /components
+      /modelworkbench
+        /descriptors
+          /ModelDescriptor.js
+          /SceneDescriptor.js
+          /TerrainDescriptor.js
+          /SkyboxDescriptor.js
+          /LightDescriptor.js
+          /ModelInstanceDescriptor.js
+          /TerrainInstanceDescriptor.js
+          /SkyboxInstanceDescriptor.js
+          /LightInstanceDescriptor.js
+```
+
+
+
 ---
 # Descriptors
 
 documentation/THREEJS/ARCHITECTURE/descriptors/INDEX.md
-documentation/THREEJS/ARCHITECTURE/descriptors/ModelDescriptor.md
-documentation/THREEJS/ARCHITECTURE/descriptors/SceneDescriptor.md
-documentation/THREEJS/ARCHITECTURE/descriptors/TerrainDescriptor.md
-documentation/THREEJS/ARCHITECTURE/descriptors/SkyboxDescriptor.md
-documentation/THREEJS/ARCHITECTURE/descriptors/LightDescriptor.md
-documentation/THREEJS/ARCHITECTURE/descriptors/ModelInstanceDescriptor.md
-documentation/THREEJS/ARCHITECTURE/descriptors/TerrainInstanceDescriptor.md
-documentation/THREEJS/ARCHITECTURE/descriptors/SkyboxInstanceDescriptor.md
-documentation/THREEJS/ARCHITECTURE/descriptors/LightInstanceDescriptor.md
+[ModelDescriptor.js](documentation/THREEJS/ARCHITECTURE/descriptors/ModelDescriptor.md)
+[SceneDescriptor.js](documentation/THREEJS/ARCHITECTURE/descriptors/SceneDescriptor.md)
+[TerrainDescriptor.js](documentation/THREEJS/ARCHITECTURE/descriptors/TerrainDescriptor.md)
+[SkyboxDescriptor.js](documentation/THREEJS/ARCHITECTURE/descriptors/SkyboxDescriptor.md)
+[LightDescriptor.js](documentation/THREEJS/ARCHITECTURE/descriptors/LightDescriptor.md)
+[ModelInstanceDescriptor.js](documentation/THREEJS/ARCHITECTURE/descriptors/ModelInstanceDescriptor.md)
+[TerrainInstanceDescriptor.js](documentation/THREEJS/ARCHITECTURE/descriptors/TerrainInstanceDescriptor.md)
+[SkyboxInstanceDescriptor.js](documentation/THREEJS/ARCHITECTURE/descriptors/SkyboxInstanceDescriptor.md)
+[LightInstanceDescriptor.js](documentation/THREEJS/ARCHITECTURE/descriptors/LightInstanceDescriptor.md)
 
 ---
 # Resources
