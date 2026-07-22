@@ -54,10 +54,27 @@
           /LightInstanceDescriptor.js
 ```
 
-
-
 ---
-# [Descriptors](/documentation/THREEJS/ARCHITECTURE/descriptors/INDEX.md)
+
+# Documentation
+
+| Partie | Description |
+|---------|-------------|
+| descriptors | Contrats métier |
+| resources | Ressources réutilisables |
+| instances | Utilisation des ressources dans une scène |
+| workbenches | Outils d'édition |
+| providers | Sources externes (API, fichiers...) |
+| dialogs | Interfaces utilisateur |
+| builders | Construction des objets |
+| registry | Catalogues d'objets |
+| factory | Création d'objets |
+| runtime | Adaptation vers Three.js |
+| services | Calculs métier |
+| ui | Composants graphiques |
+
+
+## [Descriptors](/documentation/THREEJS/ARCHITECTURE/descriptors/INDEX.md)
 - [ModelDescriptor.js](/documentation/THREEJS/ARCHITECTURE/descriptors/ModelDescriptor.md)
 - [SceneDescriptor.js](/documentation/THREEJS/ARCHITECTURE/descriptors/SceneDescriptor.md)
 - [TerrainDescriptor.js](/documentation/THREEJS/ARCHITECTURE/descriptors/TerrainDescriptor.md)
@@ -69,6 +86,67 @@
 - [LightInstanceDescriptor.js](/documentation/THREEJS/ARCHITECTURE/descriptors/LightInstanceDescriptor.md)
 
 ---
+
+
+
+
+---
+
+# Dépendances
+
+```
+Descriptor
+      │
+      ▼
+Resource
+      │
+      ▼
+Instance
+      │
+      ▼
+SceneDescriptor
+      │
+      ▼
+SceneWorkbench
+      │
+      ▼
+Runtime
+      │
+      ▼
+Three.js
+```
+
+---
+
+# Règles d'architecture
+
+- Les Descriptors sont indépendants de Three.js.
+- Une Resource est créée à partir d'un Descriptor.
+- Une Instance référence une Resource.
+- Une Scene manipule uniquement des Instances.
+- Les Workbench créent et modifient les Descriptors, Resources et Instances.
+- Les Providers alimentent les Resources.
+- Les Builders produisent les objets techniques.
+- Le Runtime est le seul à manipuler Three.js.
+- Les Renderers PHP ne contiennent aucune logique métier.
+
+---
+
+# Roadmap
+
+- [ ] Phase 1 — Descriptors
+- [ ] Phase 2 — Resources
+- [ ] Phase 3 — Instances
+- [ ] Phase 4 — WorkbenchBase
+- [ ] Phase 5 — Workbench spécialisés
+- [ ] Phase 6 — Dialogs
+- [ ] Phase 7 — Providers
+- [ ] Phase 8 — Builders
+- [ ] Phase 9 — Runtime
+- [ ] Phase 10 — Intégration CMS
+
+---
+
 # Resources
 
 documentation/THREEJS/ARCHITECTURE/resources/INDEX.md
