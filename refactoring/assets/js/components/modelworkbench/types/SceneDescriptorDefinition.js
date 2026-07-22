@@ -1,12 +1,5 @@
-/**
- * SceneDescriptorDefinition.js
-SceneDescriptor doit évoluer vers 
-
-SceneDescriptor
-├── assets
-├── instances
-├── environment
-└── metadata
+/*
+/assets/js/components/modelworkbench/types/SceneDescriptorDefinition.js
 
  */
 
