@@ -21,9 +21,9 @@ Décrire les données métier indépendamment du moteur graphique.
 ## Principes
 
 Descriptor
-→ Resource
-→ Instance
-  - [ModelInstanceDescriptor.js](/documentation/THREEJS/ARCHITECTURE/descriptors/ModelInstanceDescriptor.md)
-  - [TerrainInstanceDescriptor.js](/documentation/THREEJS/ARCHITECTURE/descriptors/TerrainInstanceDescriptor.md)
-  - [SkyboxInstanceDescriptor.js](/documentation/THREEJS/ARCHITECTURE/descriptors/SkyboxInstanceDescriptor.md)
-  - [LightInstanceDescriptor.js](/documentation/THREEJS/ARCHITECTURE/descriptors/LightInstanceDescriptor.md)
+- Resource
+> Instance
+>  - [ModelInstanceDescriptor.js](/documentation/THREEJS/ARCHITECTURE/descriptors/ModelInstanceDescriptor.md)
+>  - [TerrainInstanceDescriptor.js](/documentation/THREEJS/ARCHITECTURE/descriptors/TerrainInstanceDescriptor.md)
+>  - [SkyboxInstanceDescriptor.js](/documentation/THREEJS/ARCHITECTURE/descriptors/SkyboxInstanceDescriptor.md)
+>  - [LightInstanceDescriptor.js](/documentation/THREEJS/ARCHITECTURE/descriptors/LightInstanceDescriptor.md)
