@@ -122,5 +122,13 @@ un fichier de code doit comporter un fichier de notes ? NON
 
 https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Config/Routes.php
 
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Config/Routes.php
+Zealot - Refactoring/
+├── 00 - Vision & Objectifs/
+├── 01 - Phase 0 - Consolidation & Nettoyage/
+├── 02 - Phase 1 - Architecture/
+├── 03 - Phase 2 - Refactoring Core/
+├── 04 - Phase 3 - Améliorations & Features/
+├── Archives/
+├── Templates/
+└── Roadmap.md
 
