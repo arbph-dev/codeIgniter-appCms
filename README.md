@@ -122,8 +122,60 @@ un fichier de code doit comporter un fichier de notes ? NON
 
 https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Config/Routes.php
 
-Zealot - Refactoring/
-├── 00 - Vision & Objectifs/
+
+---
+
+
+# Zealot - Refactoring/
+
+## 00 - Vision & Objectifs/
+
+### Consolidation (en cours)
+- Inventaire complet
+- Nettoyage des doublons
+- Documentation des flux critiques
+- Figer la structure de dossiers
+- Mise à jour ZEALOT-STATE-ACTUEL.md
+
+### Base 
+Centralisation de la logique (Services)
+Refactoring des contrôleurs principaux
+Amélioration du système d’authentification & permissions
+Standardisation des réponses API
+
+### Architecture
+Introduction des Repositories
+Event system
+Cache stratégique
+ComponentRegistry
+
+### Evolutions
+Amélioration du ModelWorkbench
+Outils de génération de CRUD
+Documentation développeur
+Tests automatisés sur les parties critiques
+
+
+## Inventaire complet
+1. Ce qui marche (fichier : Ce-qui-marche-bien.md)
+Authentification
+Système de composants (ComponentRegistry + Renderers)
+ModelWorkbench (même s’il est lourd)
+API par domaine
+Gestion CMS de base (articles, sections, parts)
+etc.
+
+2. Ce qui est à analyser pour réemploi (Elements-a-reutiliser.md)Quels contrôleurs / services sont propres ?
+Quels renderers sont matures ?
+Quelles parties du ModelWorkbench sont réutilisables ?
+Helpers / Traits utiles
+
+3. Structure des dossiers (Structure-dossiers-decision.md)Décision finale sur l’organisation de app/ (Controllers, Services, Libraries, Models, Components, etc.)
+Figer cette structure avant de continuer.
+
+
+
+
 ├── 01 - Phase 0 - Consolidation & Nettoyage/
 ├── 02 - Phase 1 - Architecture/
 ├── 03 - Phase 2 - Refactoring Core/
