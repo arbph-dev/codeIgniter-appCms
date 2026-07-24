@@ -139,3 +139,32 @@ updatePaginationUI() {
     this.divContent.appendChild(this.renderPaginationControls())
 }
 ```
+
+---
+
+### Liste Treeview
+G:\WEB\BACKUP\Hostinger\25-10-23\public\build\assets\pure_script.js
+G:\WEB\BACKUP\Hostinger\25-10-23\resources\views\vaeexps\index.blade.php
+
+```js
+//affiche masque tous les elements
+window.TreeCmp_toggleAll = () => {
+    const btn = document.getElementById('TreeCmp_toggleAll');
+    const expand = btn.dataset.state !== 'expanded';
+
+    document.querySelectorAll('.TreeCmp_children').forEach(el => {
+        el.classList.toggle('TreeCmp_hidden', !expand);
+    });
+
+    document.querySelectorAll('.TreeCmp_toggle').forEach(el => {
+        el.textContent = expand ? '▼' : '▶';
+    });
+
+    btn.textContent = expand ? 'Tout replier' : 'Tout déplier';
+    btn.dataset.state = expand ? 'expanded' : 'collapsed';
+}
+
+```
+
+
+
