@@ -177,6 +177,159 @@ export const InvoicePropertySet = [
         }
     }
 ]
+// ==========================================
+// PROPERTYSET : CLIENT
+// ==========================================
+
+export const ClientPropertySet = [
+    {
+        name: 'name',
+        type: 'text',
+        description: 'Nom de la société',
+        default: '',
+        validate: validateMinLength(2),
+        options: {
+            pattern: "[a-zA-Z0-9À-ÿ '&.-]{2,100}",
+            placeholder: 'Nom de la société'
+        }
+    },
+    {
+        name: 'siret',
+        type: 'text',
+        description: 'SIRET',
+        default: '',
+        validate: validateSiret,
+        options: {
+            pattern: "\\d{14}",
+            placeholder: '12345678901234',
+            maxlength: '14'
+        }
+    },
+    {
+        name: 'address',
+        type: 'text',
+        description: 'Adresse',
+        default: '',
+        options: {
+            placeholder: 'Numéro et rue'
+        }
+    },
+    {
+        name: 'postalcode',
+        type: 'text',
+        description: 'Code postal',
+        default: '',
+        options: {
+            pattern: "\\d{5}",
+            placeholder: '75001',
+            maxlength: '5'
+        }
+    },
+    {
+        name: 'city',
+        type: 'text',
+        description: 'Ville',
+        default: '',
+        options: {
+            pattern: "[a-zA-ZÀ-ÿ '-]{2,50}",
+            placeholder: 'Paris'
+        }
+    },
+    {
+        name: 'phone',
+        type: 'tel',
+        description: 'Téléphone',
+        default: '',
+        validate: validatePhone,
+        options: {
+            pattern: "0[1-9][0-9]{8}",
+            placeholder: '0123456789'
+        }
+    },
+    {
+        name: 'email',
+        type: 'email',
+        description: 'Email',
+        default: '',
+        validate: validateEmail,
+        options: {
+            placeholder: 'contact@societe.fr'
+        }
+    }
+]
+
+export const ClientComputePropertySet = []
+
+// ==========================================
+// PROPERTYSET : CONTACT
+// ==========================================
+
+export const ContactPropertySet = [
+    {
+        name: 'firstname',
+        type: 'text',
+        description: 'Prénom',
+        default: '',
+        validate: validateMinLength(2),
+        options: {
+            pattern: "[a-zA-ZÀ-ÿ '-]{2,50}",
+            placeholder: 'Saisir le prénom'
+        }
+    },
+    {
+        name: 'lastname',
+        type: 'text',
+        description: 'Nom',
+        default: '',
+        validate: validateMinLength(2),
+        options: {
+            pattern: "[a-zA-ZÀ-ÿ '-]{2,50}",
+            placeholder: 'Saisir le nom'
+        }
+    },
+    {
+        name: 'email',
+        type: 'email',
+        description: 'Email',
+        default: '',
+        validate: validateEmail,
+        options: {
+            placeholder: 'contact@example.com'
+        }
+    },
+    {
+        name: 'phone',
+        type: 'tel',
+        description: 'Téléphone',
+        default: '',
+        validate: validatePhone,
+        options: {
+            pattern: "0[1-9][0-9]{8}",
+            placeholder: '0612345678'
+        }
+    },
+    {
+        name: 'position',
+        type: 'text',
+        description: 'Poste',
+        default: '',
+        options: {
+            placeholder: 'Directeur commercial'
+        }
+    },
+    {
+        name: 'service',
+        type: 'text',
+        description: 'Service',
+        default: '',
+        options: {
+            placeholder: 'Commercial / Administration / Comptabilité'
+        }
+    }
+]
+
+export const ContactComputePropertySet = []
+
 ```
 
 
