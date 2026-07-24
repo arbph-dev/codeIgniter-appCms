@@ -759,86 +759,6 @@ const section = new SectionPanels(
 )
 ```
 
-
-
-
----
-
-#### 🔧 Changer de template dynamiquement
-
-##### Méthode 1 : Avec `setTemplateType()`
-
-```javascript
-// Dans votre section
-const section = new SectionPanels(tab, 'Contacts', data, ContactPropertySet)
-
-// Changer le template
-section.setTemplateType('card')      // Type carte
-section.setTemplateType('detailed')  // Type détaillé
-section.setTemplateType('compact')   // Type compact
-```
-
-##### Méthode 2 : Avec `setCustomTemplate()`
-
-```javascript
-// Définir un nouveau template custom
-section.setCustomTemplate((item, factory) => {
-    return `🎉 ${item.firstname} - ${factory.formatEmail(item.email)}`
-})
-```
-
-##### Exemple : Bouton pour changer de vue
-
-```javascript
-// Ajouter un bouton dans votre UI
-const btnChangeView = document.createElement('button')
-btnChangeView.textContent = 'Changer vue'
-btnChangeView.addEventListener('click', () => {
-    // Cycle entre les types
-    const types = ['default', 'compact', 'detailed', 'card']
-    const currentIndex = types.indexOf(section.templateType)
-    const nextIndex = (currentIndex + 1) % types.length
-    
-    section.setTemplateType(types[nextIndex])
-    btnChangeView.textContent = `Vue: ${types[nextIndex]}`
-})
-```
-
-
-## Formatage automatique
-
-**Types supportés :**
-- `date` → "29/10/2025"
-- `datetime` → "29/10/2025 14:30"
-- `number` → "1 234 567"
-- `currency` → "1 250,00 €"
-- `email` → Lien cliquable
-- `tel`/`phone` → "06 12 34 56 78"
-- `url` → Lien externe
-- `boolean` → "✅ Oui" / "❌ Non"
-
-
-
-### Méthodes utilitaires
-La `TemplateFactory` fournit ces méthodes dans less templates :
-
-| Méthode                    | Description             | Exemple                                                        |
-| -------------------------- | ----------------------- | -------------------------------------------------------------- |
-| `formatValue(value, type)` | Formate selon le type   | `factory.formatValue(item.price, 'currency')`                  |
-| `formatDate(date)`         | Formate une date        | `factory.formatDate(item.birthdate)`                           |
-| `formatDateTime(date)`     | Date + heure            | `factory.formatDateTime(item.created_at)`                      |
-| `formatNumber(num)`        | Nombre avec séparateurs | `factory.formatNumber(1234567)` → `1 234 567`                  |
-| `formatCurrency(num)`      | Monétaire               | `factory.formatCurrency(99.99)` → `99,99 €`                    |
-| `formatEmail(email)`       | Lien email              | `factory.formatEmail('test@ex.com')` → `<a href="mailto:...">` |
-| `formatPhone(phone)`       | Téléphone formaté       | `factory.formatPhone('0612345678')` → `06 12 34 56 78`         |
-| `formatUrl(url)`           | Lien URL                | `factory.formatUrl('https://...')` → `<a href="...">`          |
-| `formatBoolean(bool)`      | Oui/Non                 | `factory.formatBoolean(true)` → `✅ Oui`                        |
-| `formatPercent(num)`       | Pourcentage             | `factory.formatPercent(75)` → `75%`                            |
-| `escapeHtml(text)`         | Échappe HTML            | `factory.escapeHtml('<script>')` → sécurisé                    |
-| `getIcon(item, prop)`      | Icône automatique       | `factory.getIcon(item, prop)` → `📧`                           |
-
----
-
 #### 💡 Exemples avancés
 
 ##### Template conditionnel
@@ -929,4 +849,139 @@ function personWithAgeTemplate(item, factory) {
     `
 }
 ```
+
+
+
+
+---
+
+#### 🔧 Changer de template dynamiquement
+
+##### Méthode 1 : Avec `setTemplateType()`
+
+```javascript
+// Dans votre section
+const section = new SectionPanels(tab, 'Contacts', data, ContactPropertySet)
+
+// Changer le template
+section.setTemplateType('card')      // Type carte
+section.setTemplateType('detailed')  // Type détaillé
+section.setTemplateType('compact')   // Type compact
+```
+
+##### Méthode 2 : Avec `setCustomTemplate()`
+
+```javascript
+// Définir un nouveau template custom
+section.setCustomTemplate((item, factory) => {
+    return `🎉 ${item.firstname} - ${factory.formatEmail(item.email)}`
+})
+```
+
+##### Exemple : Bouton pour changer de vue
+
+```javascript
+// Ajouter un bouton dans votre UI
+const btnChangeView = document.createElement('button')
+btnChangeView.textContent = 'Changer vue'
+btnChangeView.addEventListener('click', () => {
+    // Cycle entre les types
+    const types = ['default', 'compact', 'detailed', 'card']
+    const currentIndex = types.indexOf(section.templateType)
+    const nextIndex = (currentIndex + 1) % types.length
+    
+    section.setTemplateType(types[nextIndex])
+    btnChangeView.textContent = `Vue: ${types[nextIndex]}`
+})
+```
+
+
+## Formatage automatique
+
+**Types supportés :**
+- `date` → "29/10/2025"
+- `datetime` → "29/10/2025 14:30"
+- `number` → "1 234 567"
+- `currency` → "1 250,00 €"
+- `email` → Lien cliquable
+- `tel`/`phone` → "06 12 34 56 78"
+- `url` → Lien externe
+- `boolean` → "✅ Oui" / "❌ Non"
+
+
+
+### Méthodes utilitaires
+La `TemplateFactory` fournit ces méthodes dans less templates :
+
+| Méthode                    | Description             | Exemple                                                        |
+| -------------------------- | ----------------------- | -------------------------------------------------------------- |
+| `formatValue(value, type)` | Formate selon le type   | `factory.formatValue(item.price, 'currency')`                  |
+| `formatDate(date)`         | Formate une date        | `factory.formatDate(item.birthdate)`                           |
+| `formatDateTime(date)`     | Date + heure            | `factory.formatDateTime(item.created_at)`                      |
+| `formatNumber(num)`        | Nombre avec séparateurs | `factory.formatNumber(1234567)` → `1 234 567`                  |
+| `formatCurrency(num)`      | Monétaire               | `factory.formatCurrency(99.99)` → `99,99 €`                    |
+| `formatEmail(email)`       | Lien email              | `factory.formatEmail('test@ex.com')` → `<a href="mailto:...">` |
+| `formatPhone(phone)`       | Téléphone formaté       | `factory.formatPhone('0612345678')` → `06 12 34 56 78`         |
+| `formatUrl(url)`           | Lien URL                | `factory.formatUrl('https://...')` → `<a href="...">`          |
+| `formatBoolean(bool)`      | Oui/Non                 | `factory.formatBoolean(true)` → `✅ Oui`                        |
+| `formatPercent(num)`       | Pourcentage             | `factory.formatPercent(75)` → `75%`                            |
+| `escapeHtml(text)`         | Échappe HTML            | `factory.escapeHtml('<script>')` → sécurisé                    |
+| `getIcon(item, prop)`      | Icône automatique       | `factory.getIcon(item, prop)` → `📧`                           |
+
+---
+
+#### Formatage
+
+```js
+// ==========================================
+// UTILITAIRES DE FORMATAGE
+// ==========================================
+
+/**
+ * Formate une date en français
+ */
+export function formatDate(date) {
+    if (!date) return ''
+    return new Intl.DateTimeFormat('fr-FR').format(new Date(date))
+}
+
+/**
+ * Formate une date et heure en français
+ */
+export function formatDateTime(date) {
+    if (!date) return ''
+    return new Intl.DateTimeFormat('fr-FR', {
+        dateStyle: 'short',
+        timeStyle: 'short'
+    }).format(new Date(date))
+}
+
+/**
+ * Parse une date string
+ */
+export function parseDate(dateString) {
+    if (!dateString) return null
+    const [year, month, day] = dateString.split('-').map(Number)
+    return new Date(year, month - 1, day)
+}
+
+/**
+ * Formate un numéro de téléphone français
+ */
+export function formatPhone(phone) {
+    if (!phone) return ''
+    // 0612345678 -> 06 12 34 56 78
+    return phone.replace(/(\d{2})(?=\d)/g, '$1 ')
+}
+
+/**
+ * Formate un SIRET
+ */
+export function formatSiret(siret) {
+    if (!siret) return ''
+    // 12345678901234 -> 123 456 789 01234
+    return siret.replace(/(\d{3})(\d{3})(\d{3})(\d{5})/, '$1 $2 $3 $4')
+}
+```
+
 
