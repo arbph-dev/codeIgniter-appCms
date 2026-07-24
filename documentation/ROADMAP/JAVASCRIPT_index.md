@@ -100,3 +100,42 @@ function fromLocal( itemName ) {
 
 
 ```
+
+
+## UI
+
+### Pagination
+js\ihm\sections\SectionPicGallery.js
+
+```js
+// Ajouter après constructor
+renderPaginationControls() {
+    const info = this.collection.getPaginationInfo()
+    const controls = document.createElement('div')
+    controls.className = 'pagination-controls'
+    controls.innerHTML = `
+        <button data-action="prev" ${!this.collection.hasPrev() ? 'disabled' : ''}>◀ Précédent</button>
+        <span>Page ${this.collection.currentPage}/${this.collection.lastPage} (${info})</span>
+        <button data-action="next" ${!this.collection.hasNext() ? 'disabled' : ''}>Suivant ▶</button>
+    `
+    
+    controls.querySelector('[data-action="prev"]').onclick = () => this.prevPage()
+    controls.querySelector('[data-action="next"]').onclick = () => this.nextPage()
+    
+    return controls
+}
+
+// Dans loadPicsData après RefreshList
+loadPicsData() {
+    // ... existing code
+    this.RefreshList()
+    this.updatePaginationUI()
+}
+
+updatePaginationUI() {
+    let existing = this.divContent.querySelector('.pagination-controls')
+    if (existing) existing.remove()
+    
+    this.divContent.appendChild(this.renderPaginationControls())
+}
+```
