@@ -405,6 +405,47 @@ const section = new SectionPanels(
 ```
 ---
 
+#### 🔧 Changer de template dynamiquement
+
+##### Méthode 1 : Avec `setTemplateType()`
+
+```javascript
+// Dans votre section
+const section = new SectionPanels(tab, 'Contacts', data, ContactPropertySet)
+
+// Changer le template
+section.setTemplateType('card')      // Type carte
+section.setTemplateType('detailed')  // Type détaillé
+section.setTemplateType('compact')   // Type compact
+```
+
+##### Méthode 2 : Avec `setCustomTemplate()`
+
+```javascript
+// Définir un nouveau template custom
+section.setCustomTemplate((item, factory) => {
+    return `🎉 ${item.firstname} - ${factory.formatEmail(item.email)}`
+})
+```
+
+##### Exemple : Bouton pour changer de vue
+
+```javascript
+// Ajouter un bouton dans votre UI
+const btnChangeView = document.createElement('button')
+btnChangeView.textContent = 'Changer vue'
+btnChangeView.addEventListener('click', () => {
+    // Cycle entre les types
+    const types = ['default', 'compact', 'detailed', 'card']
+    const currentIndex = types.indexOf(section.templateType)
+    const nextIndex = (currentIndex + 1) % types.length
+    
+    section.setTemplateType(types[nextIndex])
+    btnChangeView.textContent = `Vue: ${types[nextIndex]}`
+})
+```
+
+
 ### Formatage automatique
 
 **Types supportés :**
