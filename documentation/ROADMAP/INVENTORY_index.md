@@ -191,6 +191,220 @@ export const InvoicePropertySet = [
 | `withIcons` | Avec emojis automatiques       | Visuel       |
 | `custom`    | Votre fonction                 | Personnalisé |
 
+---
+
+#### 1. **default** (par défaut)
+Affiche les 3 premiers champs du PropertySet
+
+```javascript
+// Exemple de rendu
+"Prénom: Jean | Nom: Dupont | Email: jean@example.com"
+```
+
+**Utilisation :**
+```javascript
+const section = new SectionPanels(tab, 'Contacts', data, ContactPropertySet)
+// Pas besoin de configuration, c'est le défaut
+```
+
+---
+
+#### 2. **compact**
+Affiche uniquement le nom/titre principal
+
+```javascript
+// Exemple de rendu
+"Jean Dupont"
+```
+
+**Utilisation :**
+```javascript
+const section = new SectionPanels(
+    tab, 
+    'Contacts', 
+    data, 
+    ContactPropertySet,
+    [],
+    { type: 'compact' }  // ✅ Configuration
+)
+```
+
+---
+
+#### 3. **detailed**
+Affiche tous les champs avec leurs labels
+
+```javascript
+// Exemple de rendu (HTML)
+<strong>Prénom:</strong> Jean<br>
+<strong>Nom:</strong> Dupont<br>
+<strong>Email:</strong> <a href="mailto:jean@example.com">jean@example.com</a><br>
+<strong>Téléphone:</strong> 06 12 34 56 78
+```
+
+**Utilisation :**
+```javascript
+const section = new SectionPanels(
+    tab, 
+    'Contacts', 
+    data, 
+    ContactPropertySet,
+    [],
+    { type: 'detailed' }
+)
+```
+
+---
+
+#### 4. **card**
+Affichage type carte avec titre, sous-titre et détails
+
+```javascript
+// Exemple de rendu (HTML)
+<div class="template-card">
+    <div class="card-title">Jean Dupont</div>
+    <div class="card-subtitle">jean@example.com</div>
+    <div class="card-details">06 12 34 56 78 • Directeur</div>
+</div>
+```
+
+**Utilisation :**
+```javascript
+const section = new SectionPanels(
+    tab, 
+    'Contacts', 
+    data, 
+    ContactPropertySet,
+    [],
+    { type: 'card' }
+)
+```
+
+**CSS suggéré :**
+```css
+.template-card {
+    padding: 8px;
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.card-subtitle {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.card-details {
+    margin-top: 4px;
+    font-size: 0.85em;
+    color: #888;
+}
+```
+
+---
+
+#### 5. **badge**
+Affichage compact avec badge (statut, compteur)
+
+```javascript
+// Exemple de rendu (HTML)
+<span class="template-badge-main">Jean Dupont</span>
+<span class="template-badge">Actif</span>
+```
+
+**Utilisation :**
+```javascript
+const section = new SectionPanels(
+    tab, 
+    'Contacts', 
+    data, 
+    ContactPropertySet,
+    [],
+    { type: 'badge' }
+)
+```
+
+---
+
+#### 6. **tableRow**
+Format ligne de tableau (5 premiers champs)
+
+```javascript
+// Exemple de rendu (HTML)
+<span class="table-cell">Jean</span>
+<span class="table-cell">Dupont</span>
+<span class="table-cell">jean@example.com</span>
+<span class="table-cell">06 12 34 56 78</span>
+<span class="table-cell">Directeur</span>
+```
+
+**Utilisation :**
+```javascript
+const section = new SectionPanels(
+    tab, 
+    'Contacts', 
+    data, 
+    ContactPropertySet,
+    [],
+    { type: 'tableRow' }
+)
+```
+
+---
+
+#### 7. **withIcons**
+Affichage avec icônes/emojis automatiques
+
+```javascript
+// Exemple de rendu
+"👤 Jean Dupont • 📧 jean@example.com • 📞 06 12 34 56 78 • 💼 Directeur"
+```
+
+**Utilisation :**
+```javascript
+const section = new SectionPanels(
+    tab, 
+    'Contacts', 
+    data, 
+    ContactPropertySet,
+    [],
+    { type: 'withIcons' }
+)
+```
+
+---
+
+#### 8. **custom**
+Template personnalisé avec votre fonction
+
+**Utilisation :**
+```javascript
+const section = new SectionPanels(
+    tab, 
+    'Contacts', 
+    data, 
+    ContactPropertySet,
+    [],
+    {
+        type: 'custom',
+        custom: (item, factory) => {
+            // Votre logique personnalisée
+            return `
+                <div class="my-template">
+                    <img src="${item.avatar || 'default.png'}" alt="Avatar">
+                    <strong>${item.firstname} ${item.lastname}</strong>
+                    <br>
+                    <small>${factory.formatEmail(item.email)}</small>
+                </div>
+            `
+        }
+    }
+)
+```
+---
+
 ### Formatage automatique
 
 **Types supportés :**
@@ -202,9 +416,3 @@ export const InvoicePropertySet = [
 - `tel`/`phone` → "06 12 34 56 78"
 - `url` → Lien externe
 - `boolean` → "✅ Oui" / "❌ Non"
-
-
-
-
-
-
