@@ -1,4 +1,4 @@
-## récursivité
+## Récursivité
 tag : récursive, récursivité, récursif
 
 ```js
@@ -30,5 +30,54 @@ const rootPages = pages
 let treeText = "";
 for (const root of rootPages) {
     treeText += renderNode(root.cmp_LBL);
+}
+```
+---
+
+## Dates
+
+
+```js
+new Intl.DateTimeFormat().format( arg.birthdate )
+
+
+/**
+ * Calcule l'âge d'une personne
+ */
+export function computeAge(person) {
+    if (!person.birthdate) return null
+    
+    const today = new Date()
+    const birthDate = new Date(person.birthdate)
+    let age = today.getFullYear() - birthDate.getFullYear()
+    const monthDiff = today.getMonth() - birthDate.getMonth()
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--
+    }
+    
+    return age
+}
+
+/**
+ * Calcule les jours jusqu'au prochain anniversaire
+ */
+export function daysUntilBirthday(person) {
+    if (!person.birthdate) return null
+    
+    const today = new Date()
+    const birthDate = new Date(person.birthdate)
+    const nextBirthday = new Date(
+        today.getFullYear(),
+        birthDate.getMonth(),
+        birthDate.getDate()
+    )
+    
+    if (nextBirthday < today) {
+        nextBirthday.setFullYear(today.getFullYear() + 1)
+    }
+    
+    const diffTime = nextBirthday - today
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 }
 ```
