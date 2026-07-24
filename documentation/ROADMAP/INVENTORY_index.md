@@ -403,6 +403,164 @@ const section = new SectionPanels(
     }
 )
 ```
+
+
+### 🎨 Templates version 2
+
+Le module `templates.js` fournit des templates prêts à l'emploi :
+
+##### 1. personTemplate (Contacts/Personnes)
+
+```javascript
+import { personTemplate } from '../utils/templates.js'
+
+const section = new SectionPanels(
+    tab, 
+    'Contacts', 
+    data, 
+    ContactPropertySet,
+    [],
+    {
+        type: 'custom',
+        custom: personTemplate
+    }
+)
+```
+
+**Rendu :**
+```html
+<div class="person-template">
+    <strong>👤 Jean Dupont</strong>
+    <br><small>📧 jean@example.com • 📞 06 12 34 56 78</small>
+</div>
+```
+
+---
+
+##### 2. companyTemplate (Entreprises/Clients)
+
+```javascript
+import { companyTemplate } from '../utils/templates.js'
+
+const section = new SectionPanels(
+    tab, 
+    'Clients', 
+    data, 
+    ClientPropertySet,
+    [],
+    {
+        type: 'custom',
+        custom: companyTemplate
+    }
+)
+```
+
+**Rendu :**
+```html
+<div class="company-template">
+    <strong>🏢 ACME Corp</strong> - Paris
+    <br><small>📞 01 23 45 67 89</small>
+</div>
+```
+
+---
+
+##### 3. documentTemplate (Factures/Documents)
+
+```javascript
+import { documentTemplate } from '../utils/templates.js'
+
+const section = new SectionPanels(
+    tab, 
+    'Factures', 
+    data, 
+    InvoicePropertySet,
+    [],
+    {
+        type: 'custom',
+        custom: documentTemplate
+    }
+)
+```
+
+**Rendu :**
+```html
+<div class="document-template">
+    <strong>📄 INV-2025-0001</strong> - 29/10/2025 - 1 250,00 €
+</div>
+```
+
+---
+
+##### 4. productTemplate (Produits)
+
+```javascript
+import { productTemplate } from '../utils/templates.js'
+
+const section = new SectionPanels(
+    tab, 
+    'Produits', 
+    data, 
+    ProductPropertySet,
+    [],
+    {
+        type: 'custom',
+        custom: productTemplate
+    }
+)
+```
+
+**Rendu :**
+```html
+<div class="product-template">
+    <strong>🛒 Ordinateur portable</strong> - 899,00 €
+    <br><small>Stock: 12</small>
+</div>
+```
+
+---
+
+#### 🛠️ Créer votre propre template
+
+##### Structure de base
+
+```javascript
+function myCustomTemplate(item, factory) {
+    // item = objet de données
+    // factory = instance TemplateFactory avec méthodes utilitaires
+    
+    // Utiliser factory pour formater les valeurs
+    const name = factory.escapeHtml(item.name)
+    const email = factory.formatEmail(item.email)
+    const date = factory.formatDate(item.created_at)
+    
+    // Retourner le HTML
+    return `
+        <div class="my-custom">
+            <h4>${name}</h4>
+            <p>${email}</p>
+            <small>${date}</small>
+        </div>
+    `
+}
+
+// Utiliser
+const section = new SectionPanels(
+    tab, 
+    'MySection', 
+    data, 
+    MyPropertySet,
+    [],
+    {
+        type: 'custom',
+        custom: myCustomTemplate
+    }
+)
+```
+
+
+
+
 ---
 
 #### 🔧 Changer de template dynamiquement
