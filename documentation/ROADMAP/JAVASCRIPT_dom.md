@@ -23,6 +23,33 @@ exampleSafe,
 exampleTemplate
 
 
+## sélecteurs du DOM
+- qs
+- qsa
+- byId
+
+```js
+export function qs(sel, root = document) {
+	return root.querySelector(sel)
+}
+```
+
+```js
+export function qsa(sel, root = document) {
+	return [...root.querySelectorAll(sel)]
+}
+```js
+
+```js
+export function byId(id) {
+	return document.getElementById(id)
+}
+```
+
+
+
+
+
 ### createLI(id, htmlContent)
 ```js
 // ./js/ihm/utils/dom-helpers.js
