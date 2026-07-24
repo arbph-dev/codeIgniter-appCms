@@ -109,3 +109,41 @@ Ce qu’il faut faire évoluer :
 - Passer d’un contrôleur monolithique à un AdminController de base + Services
 - Créer un Workbench Base côté JS qui absorbe domRef et une partie de domHelper
 - Uniformiser le design system (classes adm-xxx → wb-xxx ou ui-xxx)
+
+---
+
+# Script 
+
+## autocomplete
+```javascript
+import { autocomplete } from '/assets/js/core/domhelper.js'
+
+// Dans DOMContentLoaded (les panels doivent exister dans le DOM)
+document.addEventListener('DOMContentLoaded', () => {
+    // ... inits existants ...
+
+    // ── Test autocomplete ────────────────────────────────────────────────
+    const acField = document.getElementById('acTestField')
+    if (acField) {
+        const ac = autocomplete({
+            id          : 'acMot',
+            name        : 'mot_id',
+            placeholder : 'Rechercher un mot…',
+            busRequest  : 'mot:ui:like',
+            busResponse : 'mot:ui:response',
+            labelKey    : 'mot_lbl',
+            valueKey    : 'mot_id',
+            onSelect    : (item) => {
+                document.getElementById('acTestValue').textContent = item.mot_lbl
+                document.getElementById('acTestId').textContent    = item.mot_id
+            }
+        })
+        acField.appendChild(ac.wrapper)
+    }
+})
+```
+
+
+
+
+
