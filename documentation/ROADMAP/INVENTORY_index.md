@@ -174,6 +174,37 @@ export const InvoicePropertySet = [
     }
 ]
 ```
+---
+
+## 🎨 Templates
+
+### Templates prédéfinis (8 types)
+
+| Type        | Usage                          | Niveau       |
+| ----------- | ------------------------------ | ------------ |
+| `default`   | Général, 3 premiers champs     | Basique      |
+| `compact`   | Liste dense, nom seulement     | Basique      |
+| `detailed`  | Tous les champs avec labels    | Détaillé     |
+| `card`      | Type carte, visuellement riche | Moderne      |
+| `badge`     | Avec badge status/compteur     | Moderne      |
+| `tableRow`  | Format tableau, 5 champs       | Structuré    |
+| `withIcons` | Avec emojis automatiques       | Visuel       |
+| `custom`    | Votre fonction                 | Personnalisé |
+
+### Formatage automatique
+
+**Types supportés :**
+- `date` → "29/10/2025"
+- `datetime` → "29/10/2025 14:30"
+- `number` → "1 234 567"
+- `currency` → "1 250,00 €"
+- `email` → Lien cliquable
+- `tel`/`phone` → "06 12 34 56 78"
+- `url` → Lien externe
+- `boolean` → "✅ Oui" / "❌ Non"
+
+
+
 
 
 
