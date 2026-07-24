@@ -9,6 +9,14 @@
 
 ## Panel CRUD
 
+doit permettre CRUD complet et Liste filtrée avec pagination
+
+- **Create** : Bouton "Create" → Formulaire → POST
+- **Read** : Bouton "Read" → Vue détaillée
+- **Update** : Sélection + "Update" → Formulaire pré-rempli → PUT
+- **Delete** : Sélection + "Delete" → DELETE
+
+
 ### Version 1
 
 **Pps** est un objet PropertySet
