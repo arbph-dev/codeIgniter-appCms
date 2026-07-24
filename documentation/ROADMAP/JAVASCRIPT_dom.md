@@ -77,7 +77,7 @@ export function createDIV(id, htmlContent) {
 }
 ```
 
-### createElement(tagName, id, htmlContent, attributes = {})
+### createElement
 
 ```js
 /**
@@ -101,6 +101,36 @@ export function createElement(tagName, id, htmlContent, attributes = {}) {
     return element
 }
 ```
+
+avec callback 
+```js
+    createElement(tag, attrs = {}, callbacks = {}) {
+        let el = document.createElement(tag);
+
+        // Attributs standards
+        for (let [key, val] of Object.entries(attrs)) {
+            if (key === "text") {
+                el.textContent = val;
+            } else {
+                el.setAttribute(key, val);
+            }
+        }
+
+        // Callbacks (évènements)
+        for (let [evt, fn] of Object.entries(callbacks)) {
+            if (fn && typeof fn === "function") {
+                el.addEventListener(evt, fn);
+            } else {
+                el.addEventListener(evt, () => console.log(`${tag} event: ${evt}`));
+            }
+        }
+
+        return el;
+    },
+```
+
+
+
 
 ### sanitizeHTML(html)
 
