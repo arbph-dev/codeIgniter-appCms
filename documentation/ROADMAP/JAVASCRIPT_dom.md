@@ -1,11 +1,518 @@
 # dom helpers
 
+- createElement
 
 - createSelect(id, options, attributes) - Créer un select
+
 - createCheckboxList(baseId, items, options) - Liste de checkboxes
-- createRadioGroup(name, items, options) - Groupe de radios
 - getCheckboxValues(name) - Récupérer valeurs checkboxes
+  
+- createRadioGroup(name, items, options) - Groupe de radios
 - getRadioValue(name) - Récupérer valeur radio
+
+createLI,
+createDIV,
+sanitizeHTML,
+createFromTemplate,
+SafeListItem,
+parseHTMLSafe,
+createSelect, // V0.4.6.5 ✅ AJOUT
+// Exemples    
+exampleSimple,
+exampleSafe,
+exampleTemplate
+
+
+### createLI(id, htmlContent)
+```js
+// ./js/ihm/utils/dom-helpers.js
+// Helpers pour manipulation DOM sécurisée
+
+/** 
+ * Crée un élément LI avec contenu HTML
+ * @param {string} id - ID de l'élément
+ * @param {string} htmlContent - Contenu HTML à insérer
+ * @returns {HTMLLIElement}
+ export function createLI(id, htmlContent) {
+    const li = document.createElement('li')
+    li.id = id
+    li.innerHTML = sanitizeHTML(htmlContent)
+    return li
+}
+
+*/
+/** ✅ Version Dual render
+ * Crée un élément LI avec contenu HTML
+ * @param {string} id - ID de l'élément
+ * @param {string} htmlContent - Contenu DOM direct ou String sanitizé
+ * @returns {HTMLLIElement}
+*/
+export function createLI(id, htmlContent) {
+    const li = document.createElement('li')
+    li.id = id
+    
+    if (htmlContent instanceof HTMLElement) {
+        li.appendChild(htmlContent)  
+    } else {
+        li.innerHTML = sanitizeHTML(htmlContent)  
+    }
+    return li
+}
+```
+
+### createDIV(id, htmlContent)
+
+```js
+/**
+ * Crée un élément DIV avec contenu HTML
+ * @param {string} id - ID de l'élément
+ * @param {string} htmlContent - Contenu HTML à insérer
+ * @returns {HTMLDivElement}
+ */
+export function createDIV(id, htmlContent) {
+    const div = document.createElement('div')
+    div.id = id
+    div.innerHTML = sanitizeHTML(htmlContent)
+    return div
+}
+```
+
+### createElement(tagName, id, htmlContent, attributes = {})
+
+```js
+/**
+ * Crée un élément avec contenu HTML
+ * @param {string} tagName - Nom du tag (div, span, p, etc.)
+ * @param {string} id - ID de l'élément
+ * @param {string} htmlContent - Contenu HTML
+ * @param {Object} attributes - Attributs additionnels
+ * @returns {HTMLElement}
+ */
+export function createElement(tagName, id, htmlContent, attributes = {}) {
+    const element = document.createElement(tagName)
+    element.id = id
+    element.innerHTML = sanitizeHTML(htmlContent)
+    
+    // Ajouter les attributs
+    Object.entries(attributes).forEach(([key, value]) => {
+        element.setAttribute(key, value)
+    })
+    
+    return element
+}
+```
+
+### sanitizeHTML(html)
+
+```js
+/**
+ * Sanitize HTML basique pour éviter XSS
+ * Permet : <strong>, <em>, <b>, <i>, <u>, <br>, <span>
+ * Bloque : <script>, <iframe>, événements onclick, etc.
+ * @param {string} html - Chaîne HTML à nettoyer
+ * @returns {string}
+ */
+export function sanitizeHTML(html) {
+    // Créer un élément temporaire
+    const temp = document.createElement('div')
+    temp.textContent = html // D'abord échapper tout
+    
+    let sanitized = temp.innerHTML
+    
+    // Liste blanche des balises autorisées
+    const allowedTags = [ 'img', 'div', 'strong', 'b', 'em', 'i', 'u', 'br', 'span', 'small', 'mark', 'del', 'ins', 'sub', 'sup', 'code' ]
+    
+    // Ré-autoriser les balises de la liste blanche
+    allowedTags.forEach(tag => {
+        const openRegex = new RegExp(`&lt;${tag}&gt;`, 'gi')
+        const closeRegex = new RegExp(`&lt;/${tag}&gt;`, 'gi')
+        sanitized = sanitized.replace(openRegex, `<${tag}>`)
+        sanitized = sanitized.replace(closeRegex, `</${tag}>`)
+    })
+    
+    // Autoriser les attributs basiques sur span
+    sanitized = sanitized.replace(
+        /&lt;span class=&quot;([^&]+)&quot;&gt;/gi,
+        '<span class="$1">'
+    )
+    
+    return sanitized
+}
+```
+
+### createFromTemplate(template)
+
+```js
+/**
+ * Version plus stricte : crée des éléments DOM au lieu de HTML strings
+ * Recommandé pour sécurité maximale
+ * @param {Object} template - Template structuré
+ * @returns {HTMLElement}
+ */
+export function createFromTemplate(template) {
+    const container = document.createElement(template.tag || 'div')
+    
+    if (template.id) container.id = template.id
+    if (template.className) container.className = template.className
+    
+    // Ajouter les enfants
+    if (template.children) {
+        template.children.forEach(child => {
+            if (typeof child === 'string') {
+                // Texte brut
+                container.appendChild(document.createTextNode(child))
+            } else if (child.tag) {
+                // Élément DOM récursif
+                container.appendChild(createFromTemplate(child))
+            }
+        })
+    } else if (template.text) {
+        // Texte simple
+        container.textContent = template.text
+    }
+    
+    return container
+}
+```
+
+### class SafeListItem
+
+```js
+/**
+ * Helper pour créer un template de liste sécurisé
+ * Exemple d'usage pour éviter innerHTML
+ */
+export class SafeListItem {
+    constructor(id) {
+        this.li = document.createElement('li')
+        this.li.id = id
+        this.parts = []
+    }
+    
+    addText(text) {
+        this.parts.push({ type: 'text', content: text })
+        return this
+    }
+    
+    addStrong(text) {
+        this.parts.push({ type: 'strong', content: text })
+        return this
+    }
+    
+    addEm(text) {
+        this.parts.push({ type: 'em', content: text })
+        return this
+    }
+    
+    addIcon(emoji) {
+        this.parts.push({ type: 'text', content: emoji })
+        return this
+    }
+    
+    build() {
+        this.parts.forEach(part => {
+            let element
+            
+            switch(part.type) {
+                case 'text':
+                    element = document.createTextNode(part.content)
+                    break
+                case 'strong':
+                    element = document.createElement('strong')
+                    element.textContent = part.content
+                    break
+                case 'em':
+                    element = document.createElement('em')
+                    element.textContent = part.content
+                    break
+            }
+            
+            this.li.appendChild(element)
+        })
+        
+        return this.li
+    }
+}
+```
+
+### parseHTMLSafe(htmlString)
+
+```js
+/**
+ * Convertit un template HTML string en éléments DOM sécurisés
+ * @param {string} htmlString - Template HTML
+ * @returns {DocumentFragment}
+ */
+export function parseHTMLSafe(htmlString) {
+    const template = document.createElement('template')
+    template.innerHTML = sanitizeHTML(htmlString)
+    return template.content
+}
+
+```
+
+### exampleSimple()
+
+```js
+// ==========================================
+// EXEMPLES D'UTILISATION
+// ==========================================
+
+/**
+ * Exemple 1 : Version simple avec innerHTML sanitizé
+ */
+export function exampleSimple() {
+    const li = createLI('item-1', '👤 <strong>John Doe</strong> - john@example.com')
+    return li
+}
+
+```
+
+### createSelect(id, options = [], attributes = {})
+
+```js
+/**
+ * Crée un élément SELECT avec options
+ * @param {string} id - ID du select
+ * @param {Array} options - [{value, text, selected?}]
+ * @param {Object} attributes - Attributs additionnels
+ * @returns {HTMLSelectElement}
+ * 
+ * Exemple:
+ * createSelect('user-select', [
+ *   {value: '1', text: 'User 1', selected: true},
+ *   {value: '2', text: 'User 2'}
+ * ], {class: 'form-select'})
+ */
+export function createSelect(id, options = [], attributes = {}) {
+    const select = document.createElement('select')
+    select.id = id
+    
+    // Ajouter les attributs
+    Object.entries(attributes).forEach(([key, value]) => {
+        if (key === 'class') {
+            select.className = value
+        } else {
+            select.setAttribute(key, value)
+        }
+    })
+    
+    // Ajouter les options
+    options.forEach(opt => {
+        const option = document.createElement('option')
+        option.value = opt.value
+        option.textContent = opt.text || opt.value
+        
+        if (opt.selected) {
+            option.selected = true
+        }
+        
+        if (opt.disabled) {
+            option.disabled = true
+        }
+        
+        select.appendChild(option)
+    })
+    
+    return select
+}
+
+```
+
+### createCheckboxList(baseId, items = [], options = {})
+
+```js
+/**
+ * Crée une liste de checkboxes
+ * @param {string} baseId - ID de base (sera suffixé par l'index)
+ * @param {Array} items - [{value, label, checked?, name?}]
+ * @param {Object} options - {wrapper: 'div'|'ul', class: '...'}
+ * @returns {HTMLElement}
+ * 
+ * Exemple:
+ * createCheckboxList('filter', [
+ *   {value: 'active', label: 'Actifs', checked: true},
+ *   {value: 'inactive', label: 'Inactifs'}
+ * ], {wrapper: 'div', class: 'checkbox-group'})
+ */
+export function createCheckboxList(baseId, items = [], options = {}) {
+    const wrapperTag = options.wrapper || 'div'
+    const container = document.createElement(wrapperTag)
+    container.id = baseId + '-container'
+    
+    if (options.class) {
+        container.className = options.class
+    }
+    
+    items.forEach((item, index) => {
+        // Conteneur pour chaque checkbox
+        const itemWrapper = document.createElement(wrapperTag === 'ul' ? 'li' : 'div')
+        itemWrapper.className = 'checkbox-item'
+        
+        // Checkbox
+        const checkbox = document.createElement('input')
+        checkbox.type = 'checkbox'
+        checkbox.id = `${baseId}-${index}`
+        checkbox.value = item.value
+        checkbox.name = item.name || baseId
+        
+        if (item.checked) {
+            checkbox.checked = true
+        }
+        
+        if (item.disabled) {
+            checkbox.disabled = true
+        }
+        
+        // Label
+        const label = document.createElement('label')
+        label.htmlFor = checkbox.id
+        label.textContent = item.label || item.value
+        
+        // Assembler
+        itemWrapper.appendChild(checkbox)
+        itemWrapper.appendChild(label)
+        container.appendChild(itemWrapper)
+    })
+    
+    return container
+}
+
+/**
+ * Crée un groupe radio buttons
+ * @param {string} name - Nom du groupe (partagé)
+ * @param {Array} items - [{value, label, checked?}]
+ * @param {Object} options - {wrapper: 'div'|'ul', class: '...'}
+ * @returns {HTMLElement}
+ * 
+ * Exemple:
+ * createRadioGroup('status', [
+ *   {value: 'active', label: 'Actif', checked: true},
+ *   {value: 'inactive', label: 'Inactif'}
+ * ])
+ */
+export function createRadioGroup(name, items = [], options = {}) {
+    const wrapperTag = options.wrapper || 'div'
+    const container = document.createElement(wrapperTag)
+    container.id = name + '-radio-container'
+    
+    if (options.class) {
+        container.className = options.class
+    }
+    
+    items.forEach((item, index) => {
+        const itemWrapper = document.createElement(wrapperTag === 'ul' ? 'li' : 'div')
+        itemWrapper.className = 'radio-item'
+        
+        // Radio
+        const radio = document.createElement('input')
+        radio.type = 'radio'
+        radio.id = `${name}-${index}`
+        radio.value = item.value
+        radio.name = name
+        
+        if (item.checked) {
+            radio.checked = true
+        }
+        
+        if (item.disabled) {
+            radio.disabled = true
+        }
+        
+        // Label
+        const label = document.createElement('label')
+        label.htmlFor = radio.id
+        label.textContent = item.label || item.value
+        
+        itemWrapper.appendChild(radio)
+        itemWrapper.appendChild(label)
+        container.appendChild(itemWrapper)
+    })
+    
+    return container
+}
+
+/**
+ * Récupère les valeurs sélectionnées d'une checkbox list
+ * @param {string} name - Nom du groupe
+ * @returns {Array<string>}
+ */
+export function getCheckboxValues(name) {
+    const checkboxes = document.querySelectorAll(`input[name="${name}"]:checked`)
+    return Array.from(checkboxes).map(cb => cb.value)
+}
+
+/**
+ * Récupère la valeur sélectionnée d'un radio group
+ * @param {string} name - Nom du groupe
+ * @returns {string|null}
+ */
+export function getRadioValue(name) {
+    const radio = document.querySelector(`input[name="${name}"]:checked`)
+    return radio ? radio.value : null
+}
+
+
+/**
+ * Exemple 2 : Version sécurisée maximale avec DOM
+ */
+export function exampleSafe() {
+    const builder = new SafeListItem('item-2')
+    builder
+        .addIcon('👤 ')
+        .addStrong('John Doe')
+        .addText(' - ')
+        .addText('john@example.com')
+    
+    return builder.build()
+}
+
+/**
+ * Exemple 3 : Template structuré
+ */
+export function exampleTemplate() {
+    return createFromTemplate({
+        tag: 'li',
+        id: 'item-3',
+        children: [
+            { tag: 'span', text: '👤 ' },
+            { tag: 'strong', text: 'John Doe' },
+            ' - ',
+            { tag: 'em', text: 'john@example.com' }
+        ]
+    })
+}
+
+// ==========================================
+// EXPORT PAR DÉFAUT
+// ==========================================
+
+export default {
+    createLI,
+    createDIV,
+    createElement,
+    sanitizeHTML,
+    createFromTemplate,
+    SafeListItem,
+    parseHTMLSafe,
+    createSelect, // V0.4.6.5 ✅ AJOUT
+    createCheckboxList, // V0.4.6.5 ✅ AJOUT
+    createRadioGroup, // V0.4.6.5 ✅ AJOUT
+    getCheckboxValues,// V0.4.6.5 ✅ AJOUT
+    getRadioValue, // V0.4.6.5 ✅ AJOUT
+    // Exemples    
+    exampleSimple,
+    exampleSafe,
+    exampleTemplate
+}
+```
+
+
+
+
+
+
+
 
 ## Panel CRUD
 
