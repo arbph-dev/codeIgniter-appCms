@@ -610,9 +610,39 @@ const section = new SectionPanels(
 
 Le module `templates.js` fournit des templates prêts à l'emploi :
 
+```js
+// ==========================================
+// TEMPLATES DE LISTE
+
+/**
+ * Template pour afficher un client dans une liste
+ */
+export function client_TemplateLi(client) {
+    return `🏢 ${client.name} - ${client.city || 'Ville non renseignée'} - ${client.phone || 'Pas de téléphone'}`
+}
+
+/**
+ * Template pour afficher un contact dans une liste
+ */
+export function contact_TemplateLi(contact) {
+    return `📧 ${contact.firstname} ${contact.lastname} - ${contact.position || 'Poste non renseigné'} - ${contact.email || 'Pas d\'email'}`
+}
+
+```
 ##### 1. personTemplate (Contacts/Personnes)
 
 ```javascript
+/**
+ * Template pour afficher une personne dans une liste
+ */
+export function person_TemplateLi(person) {
+    const birthdate = person.birthdate 
+        ? new Intl.DateTimeFormat('fr-FR').format(new Date(person.birthdate))
+        : 'Non renseignée'
+    
+    return `👤 ${person.firstname} ${person.lastname} - Né(e) le ${birthdate}`
+}
+
 import { personTemplate } from '../utils/templates.js'
 
 const section = new SectionPanels(
@@ -696,6 +726,23 @@ const section = new SectionPanels(
 ##### 4. productTemplate (Produits)
 
 ```javascript
+
+/** '../utils/templates.js' - Template pour produits */
+export function productTemplate(item, factory) {
+    const name = item.name || 'Sans nom'
+    const price = item.price ? factory.formatCurrency(item.price) : ''
+    const stock = item.stock !== undefined ? `Stock: ${item.stock}` : ''
+    
+    return `
+        <div class="product-template">
+            <strong>🛒 ${factory.escapeHtml(name)}</strong>
+            ${price ? ` - ${price}` : ''}
+            ${stock ? `<br><small>${stock}</small>` : ''}
+        </div>
+    `
+}
+
+
 import { productTemplate } from '../utils/templates.js'
 
 const section = new SectionPanels(
