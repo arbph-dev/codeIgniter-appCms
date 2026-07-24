@@ -145,6 +145,10 @@ document.addEventListener('DOMContentLoaded', () => {
 ---
 
 ## PropertySet
+On définit 2 objets pour gérer les formulaires en création , validation et calculs après validation
+- PersonPropertySet
+- PersonComputePropertySet
+
 
 ```javascript
 // Dans metadata.js
@@ -174,6 +178,203 @@ export const InvoicePropertySet = [
     }
 ]
 ```
+
+
+```js
+import { PersonPropertySet , PersonComputePropertySet } from 'https://elfennel.fr/public/js/mods/metadata.js'
+
+export const PersonPropertySet = [
+    { 
+        name: 'firstname' ,
+        type: 'text' ,
+        description: 'Prénom' ,
+        default : '' ,
+        validate: function(value) { console.log(this) ;return validateMail(value) },
+        options : { placeholder : 'saisir un nom mail ;)'}
+    },
+    { 
+        name: 'lastname',
+        type: 'text',
+        description: 'Nom' ,
+        default : '',
+        validate: (value) => validateTest(value), // test
+        options : { pattern : "[a-z]{4,8}" ,  placeholder : 'saisir un nom'}
+    },
+    { 
+        name: 'birthdate',
+        type: 'date',
+        description: 'Date de naissance',
+        default : '',
+        validate: (value) => validateDateInput(value), // test
+        options : { pattern : "^\d{2}/\d{2}/\d{4}$" ,  placeholder : 'saisir une  date'}     
+    }
+  ];
+  
+  
+
+// PropertySet pour les risques chimiques (depuis vos notes)
+export const ChemicalRiskCategory_PropertySet = [
+    { name: 'id', type: 'number', description: 'identifiant pour db', default: -1 },
+    { name: 'logo', type: 'text', description: 'logo selon norme ou nomenclature', default: '' },
+    { name: 'nom', type: 'text', description: 'Nom courant', default: '' },
+    { name: 'puce', type: 'text', description: 'symbole pour les listes', default: '⚠️' },
+    { name: 'risque', type: 'text', description: 'risque caractèristique', default: '' },
+    { name: 'uind', type: 'text', description: 'identifiant selon norme ou nomenclature', default: '' }
+];  
+```
+
+
+```js
+export const PersonComputePropertySet = [
+    { 
+        name: 'age',
+        type: 'number', 
+        description: 'age de la personne',
+        calculate :  (objZt) => { return computeAge( objZt ) } 
+    },
+
+    { 
+        name: 'daystobirthday',
+        type: 'number', 
+        description: 'jours restant avant anniversaire',
+        calculate : ( objZt ) => { return daysUntilBirthday( objZt ) }
+    }
+
+  ]; 
+```
+
+
+```js
+/**
+ * Valide  la propriete si la property a une propriete validate
+ * //	on verifie les contraintes de saisie
+ *          on valide la saisie si validate est défini pour cette Property du PropertySet	
+                echec de validation les fonctions validate renvoie true ou une chaine error 
+                la saisie doit etre différente de la valuer par défaut (si pattern de saisie non défini)
+            si validate n'est pas défini on force pour pouvoir vérifier pattern
+        // resultat la validation par pattern a reussie ? la fonction validate de Property a reussie ?
+        //return ( vOK && propValidation ) // on valide pour continuer
+
+ * @param {*} proP property de PropertySet
+ * @param {*} refIn input.value, valeur de champ de formulaire
+ * @returns 
+ */
+
+    checkPropertySetValue( proP , refIn , refobjData  ) {
+        let vsucceed = false
+        let vErrorPM = false 
+        let vOK = false
+        let propValidation = false
+        let refError = ''
+        	
+        vsucceed  = refIn.validity.valid
+        vErrorPM  = refIn.validity.patternMismatch
+
+        if( !vsucceed && !vErrorPM  ) { refError += `Champ ${proP.name} : ${refIn.validationMessage} `}
+        if( !vsucceed && vErrorPM  ) { refError += `Champ ${proP.name} pattern invalide : ${refIn.validationMessage} `}
+        if ( vsucceed && !vErrorPM ) { vOK = true }
+
+            if (proP.validate) {
+                const result = proP.validate( refIn.value );
+
+                if( (result != true) || refIn.value === proP.default ) {
+                    refError += result 
+                    propValidation = false 
+                }
+                else{
+                    propValidation = true // validation succeed
+                }    
+            }
+        else{
+            propValidation = true
+        }
+
+        if (vOK && propValidation ) {           
+            return { success: true, errors : 'none' }
+        }	
+        else { return { success: false, errors : refError } }
+    }
+
+```
+
+
+```js
+/**
+ * gere la vlaidation des input selon le PS
+ * des essais a prévoir 
+ *  sur switch bValid = false et return  suite modif
+ * @returns 
+this.errorMessage = ''
+on va modifier checkPropertySetValue poure renvoie objet { success: false, errors : 'none' } , { success: true, errors : 'none' }
+a = checkPropertySetValue if (a.success === true)
+    // conversion casting selon le type 
+    // TODO améliorer int, float
+    // la property et le type de champ form correpsonde mais ne sont pas géré ->  la configuration du PropertySet est incorrecte
+ */
+    extractFields( ){
+        let refInput
+        let zt = {}
+        let bValid = true
+        let a 
+        this.errorMessage = '' //reset error N007
+
+        this.PropertySet.forEach( property => {
+
+            if (bValid != true ){ return } // sortie boucle for            
+            
+            refInput = this.getformInput( property )              
+            let ipn_type = refInput.type
+
+            switch(ipn_type){
+
+                case 'number' : 
+                    a = this.checkPropertySetValue( property , refInput , null )
+                    if( a.success === true ){ zt[ property.name]  = parseInt( refInput.value ) }
+                    bValid = a.success
+                    break
+
+                case 'text' :
+                    a = this.checkPropertySetValue( property , refInput , null )
+                    if( a.success === true ){ zt[ property.name ] = refInput.value ; } 
+                    bValid = a.success
+                    break
+
+                case 'date' :
+                    a = this.checkPropertySetValue( property , refInput , zt )
+                    if( a.success === true ){
+                        const [ year , month , day ] = refInput.value.split('-').map( Number )
+                        zt[ property.name ] = new Date( year , month - 1 , day );      
+                    }
+                    bValid = a.success
+                    break
+
+                default: 
+                    console.error('type property unknow :: extractFields conversion objet ' + property.name)
+                    bValid = false 
+                    return //break;     
+            } //fin switch
+
+        }) // 
+
+        if (bValid != true ){  
+            this.errorMessage = a.errors ;
+            return // renvoie null
+        } 
+        else{ 
+
+            this.ComputePropertySet.forEach( property => {
+
+                if (property.calculate) { //calculate : (o) => computeAge(o)
+                        const result = property.calculate( zt  );// on passe obejt construit
+                        zt[property.name] = result
+                }
+            })
+            return zt 
+        }
+    }
+```
+
+
 ---
 
 ## 🎨 Templates
