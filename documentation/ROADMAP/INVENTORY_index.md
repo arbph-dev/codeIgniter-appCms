@@ -604,7 +604,7 @@ btnChangeView.addEventListener('click', () => {
 ```
 
 
-### Formatage automatique
+## Formatage automatique
 
 **Types supportés :**
 - `date` → "29/10/2025"
@@ -615,3 +615,117 @@ btnChangeView.addEventListener('click', () => {
 - `tel`/`phone` → "06 12 34 56 78"
 - `url` → Lien externe
 - `boolean` → "✅ Oui" / "❌ Non"
+
+
+
+### Méthodes utilitaires
+La `TemplateFactory` fournit ces méthodes dans less templates :
+
+| Méthode                    | Description             | Exemple                                                        |
+| -------------------------- | ----------------------- | -------------------------------------------------------------- |
+| `formatValue(value, type)` | Formate selon le type   | `factory.formatValue(item.price, 'currency')`                  |
+| `formatDate(date)`         | Formate une date        | `factory.formatDate(item.birthdate)`                           |
+| `formatDateTime(date)`     | Date + heure            | `factory.formatDateTime(item.created_at)`                      |
+| `formatNumber(num)`        | Nombre avec séparateurs | `factory.formatNumber(1234567)` → `1 234 567`                  |
+| `formatCurrency(num)`      | Monétaire               | `factory.formatCurrency(99.99)` → `99,99 €`                    |
+| `formatEmail(email)`       | Lien email              | `factory.formatEmail('test@ex.com')` → `<a href="mailto:...">` |
+| `formatPhone(phone)`       | Téléphone formaté       | `factory.formatPhone('0612345678')` → `06 12 34 56 78`         |
+| `formatUrl(url)`           | Lien URL                | `factory.formatUrl('https://...')` → `<a href="...">`          |
+| `formatBoolean(bool)`      | Oui/Non                 | `factory.formatBoolean(true)` → `✅ Oui`                        |
+| `formatPercent(num)`       | Pourcentage             | `factory.formatPercent(75)` → `75%`                            |
+| `escapeHtml(text)`         | Échappe HTML            | `factory.escapeHtml('<script>')` → sécurisé                    |
+| `getIcon(item, prop)`      | Icône automatique       | `factory.getIcon(item, prop)` → `📧`                           |
+
+---
+
+#### 💡 Exemples avancés
+
+##### Template conditionnel
+
+```javascript
+function statusTemplate(item, factory) {
+    const statusColors = {
+        'active': '#28a745',
+        'pending': '#ffc107',
+        'inactive': '#dc3545'
+    }
+    
+    const color = statusColors[item.status] || '#6c757d'
+    
+    return `
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="
+                width: 10px; 
+                height: 10px; 
+                border-radius: 50%; 
+                background: ${color};
+            "></span>
+            <strong>${factory.escapeHtml(item.name)}</strong>
+            <small style="color: #666;">${item.status}</small>
+        </div>
+    `
+}
+```
+
+##### Template avec avatar
+
+```javascript
+function avatarTemplate(item, factory) {
+    const initials = item.firstname && item.lastname
+        ? `${item.firstname[0]}${item.lastname[0]}`.toUpperCase()
+        : '??'
+    
+    const avatarUrl = item.avatar || null
+    
+    return `
+        <div style="display: flex; align-items: center; gap: 12px;">
+            ${avatarUrl 
+                ? `<img src="${avatarUrl}" alt="Avatar" style="
+                    width: 40px; 
+                    height: 40px; 
+                    border-radius: 50%;
+                    object-fit: cover;
+                  ">`
+                : `<div style="
+                    width: 40px; 
+                    height: 40px; 
+                    border-radius: 50%; 
+                    background: #007bff; 
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                  ">${initials}</div>`
+            }
+            <div>
+                <strong>${item.firstname} ${item.lastname}</strong>
+                <br>
+                <small>${factory.formatEmail(item.email)}</small>
+            </div>
+        </div>
+    `
+}
+```
+
+##### Template avec données calculées
+
+```javascript
+function personWithAgeTemplate(item, factory) {
+    // Utiliser ComputePropertySet si disponible
+    const age = item.age || 'N/A'
+    const daysToB birthday = item.daystobirthday || null
+    
+    return `
+        <div>
+            <strong>👤 ${item.firstname} ${item.lastname}</strong>
+            <br>
+            <small>
+                🎂 ${age} ans
+                ${daysTobirthday ? ` • 🎉 Anniversaire dans ${daysTobirthday} jours` : ''}
+            </small>
+        </div>
+    `
+}
+```
+
