@@ -142,8 +142,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })
 ```
+---
 
+## PropertySet
 
+```javascript
+// Dans metadata.js
+export const InvoicePropertySet = [
+    {
+        name: 'number',
+        type: 'text',
+        description: 'Numéro de facture',
+        default: '',
+        validate: (value) => /^INV-\d{4}-\d{4}$/.test(value) || 'Format invalide',
+        options: {
+            pattern: "INV-\\d{4}-\\d{4}",
+            placeholder: 'INV-2025-0001'
+        }
+    },
+    {
+        name: 'amount',
+        type: 'number',
+        description: 'Montant HT',
+        default: 0,
+        validate: (value) => value > 0 || 'Montant invalide',
+        options: {
+            min: '0',
+            step: '0.01',
+            placeholder: '0.00'
+        }
+    }
+]
+```
 
 
 
