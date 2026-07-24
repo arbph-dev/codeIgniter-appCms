@@ -81,3 +81,22 @@ export function daysUntilBirthday(person) {
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 }
 ```
+
+## PERSISTENCE
+```js
+//-----------------------------------------------------------------------------------------------------------
+//
+//                                              PERSISTENCE
+//
+function toLocal( itemName , itemValue ) {
+	const itemJson = JSON.stringify( itemValue )
+	localStorage.setItem( itemName , itemJson )
+}
+
+function fromLocal( itemName ) {
+	const itemValue = localStorage.getItem(itemName)
+	return JSON.parse(itemValue )
+}
+
+
+```
