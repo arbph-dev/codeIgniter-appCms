@@ -985,3 +985,83 @@ export function formatSiret(siret) {
 ```
 
 
+## Validation
+
+```js
+// ==========================================
+// FONCTIONS DE VALIDATION
+// ==========================================
+
+/**
+ * Validation email
+ */
+export function validateEmail(value) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!regex.test(value)) {
+        return 'Email invalide'
+    }
+    return true
+}
+
+/**
+ * Validation téléphone français
+ */
+export function validatePhone(value) {
+    const regex = /^0[1-9][0-9]{8}$/
+    if (!regex.test(value)) {
+        return 'Téléphone invalide (format: 0612345678)'
+    }
+    return true
+}
+
+/**
+ * Validation SIRET
+ */
+export function validateSiret(value) {
+    if (!/^\d{14}$/.test(value)) {
+        return 'SIRET invalide (14 chiffres requis)'
+    }
+    return true
+}
+
+/**
+ * Validation date
+ */
+export function validateDate(value) {
+    if (!value) return 'Date requise'
+    
+    const date = new Date(value)
+    if (isNaN(date.getTime())) {
+        return 'Date invalide'
+    }
+    
+    return true
+}
+
+/**
+ * Validation longueur minimale
+ */
+export function validateMinLength(min) {
+    return (value) => {
+        if (value.length < min) {
+            return `Minimum ${min} caractères requis`
+        }
+        return true
+    }
+}
+
+/**
+ * Validation longueur maximale
+ */
+export function validateMaxLength(max) {
+    return (value) => {
+        if (value.length > max) {
+            return `Maximum ${max} caractères autorisés`
+        }
+        return true
+    }
+}
+```
+
+
+
