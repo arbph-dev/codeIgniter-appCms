@@ -87,6 +87,29 @@ export function initGlobalRefs() {
 }
 ```
 
+## domCreat_H1( Id, Title, attrs = {}, callbacks = {})
+```js
+    domCreat_H1( Id, Title, attrs = {}, callbacks = {}) {
+        if (Id === null){
+            return DOM.domCreat_Element("h1", { text : Title, ...attrs }, callbacks);
+        }
+        else{
+            return DOM.domCreat_Element("h1", { id : Id, name : Id , text : Title, ...attrs }, callbacks);
+        }
+        
+    }
+```
+
+## domCreat_Img(src, alt = "", attrs = {}, callbacks = {})
+```js
+    domCreat_Img(src, alt = "", attrs = {}, callbacks = {}) {
+        return DOM.domCreat_Element("img", { src, alt, ...attrs }, callbacks);
+    }
+```
+
+
+
+
 
 ## createLI(id, htmlContent)
 ```js
@@ -621,7 +644,23 @@ export default {
 }
 ```
 
-### table( { id = null,  data = [],  columns = null, attrs = {}, onRowClick = null,  onCellClick = null } = {})
+## table( { id = null,  data = [],  columns = null, attrs = {}, onRowClick = null,  onCellClick = null } = {})
+```js
+
+        let table = DOM.domCreat_Table(
+            "myTable",
+            [ { id: 1, nom: "Alice", sexe : "f" }, { id: 2, nom: "Bob" ,  sexe : "h" } ] ,
+            ["id", "nom" ,"sexe"]
+        );
+        DOM.ARTICLE_LIST.appendChild(table)
+      
+        let table = DOM.domCreat_Table(
+            "myTable",
+            [ { id: 1, nom: "Alice", sexe : "f" }, { id: 2, nom: "Bob" ,  sexe : "h" } ] ,
+            [ {key:'id', label:'ID'} , {key:'nom', label:'NOM'}, {key:'sexe', label:'SEXE'} ]              
+        );
+```
+
 ```js
 /**
  * 
