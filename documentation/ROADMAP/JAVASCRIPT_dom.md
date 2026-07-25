@@ -1297,4 +1297,67 @@ export function btn({
 }
 ```
 
+## vue detail
+a adapter pour les données json 
+```js
+    panels.detail.appendChild(detail([
+        { label: 'ID',  value: selected.mot_id  },
+        { label: 'Mot', value: selected.mot_lbl },
+    ]))
+```
 
+```js
+/*
+  detail()
+  ─────────────────────────────────────────────────────────────────────────────
+  Construit une <dl class="cp_detail"> depuis un tableau de { label, value }.
+
+  Exemple :
+    panels.detail.appendChild(detail([
+        { label: 'ID',  value: selected.mot_id  },
+        { label: 'Mot', value: selected.mot_lbl },
+    ]))
+*/
+export function detail(fields = []) {
+    const dl = create('dl', { class: 'cp_detail' })
+
+    fields.forEach(({ label, value }) => {
+        const dt = create('dt', { text: label })
+        const dd = create('dd', { text: value ?? '—' })
+        dl.append(dt, dd)
+    })
+
+    return dl
+}
+```
+## notice
+- doit employezr la fonction icone
+
+```js
+    clear(panels.table)
+    panels.table.appendChild(notice('loading'))
+    panels.table.appendChild(notice('error', 'HTTP 500'))
+    panels.table.appendChild(notice('empty'))
+```
+
+```js
+/*
+  notice()
+  ─────────────────────────────────────────────────────────────────────────────
+  Message inline simple (loading / erreur / vide).
+  type : 'loading' | 'error' | 'empty'
+
+*/
+const NOTICE_CFG = {
+    loading : { icon: '⏳', text: 'Chargement…',    css: 'cp_notice cp_notice--loading' },
+    error   : { icon: '❌', text: 'Erreur.',         css: 'cp_notice cp_notice--error'   },
+    empty   : { icon: '🔍', text: 'Aucun résultat.', css: 'cp_notice cp_notice--empty'   },
+}
+
+export function notice(type = 'empty', msg = '') {
+    const cfg = NOTICE_CFG[type] || NOTICE_CFG.empty
+    const el  = create('p', { class: cfg.css })
+    el.textContent = msg ? `${cfg.icon} ${msg}` : `${cfg.icon} ${cfg.text}`
+    return el
+}
+```
