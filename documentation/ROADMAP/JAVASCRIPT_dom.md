@@ -71,9 +71,24 @@ function getResult(id) { return qs('.result', getRoot(id)) }
 function getScript(id) { return qs('.scriptcode', getRoot(id)) }
 ```
 
+##  references DOM 
+```js
+const refs = new Map()
+
+export function setRef(key, el) { refs.set(key, el) }
+// setRef('ARTICLE_LIST', document.getElementById('dataList_article') )
+
+export function getRef(key) { return refs.get(key) }
+// getRef('ARTICLE_LIST')
+
+// initialisation des reference sglobales
+export function initGlobalRefs() {
+    setRef('ARTICLE_LIST', document.getElementById('dataList_article') )
+}
+```
 
 
-### createLI(id, htmlContent)
+## createLI(id, htmlContent)
 ```js
 // ./js/ihm/utils/dom-helpers.js
 // Helpers pour manipulation DOM sécurisée
