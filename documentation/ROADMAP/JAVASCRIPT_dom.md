@@ -23,6 +23,21 @@ exampleSafe,
 exampleTemplate
 
 
+## utilitaires DOM 
+```js
+export function clear(el) {
+    while (el.firstChild) {
+        el.removeChild(el.firstChild)
+    }
+}
+```
+
+```js
+export function toggle(el, state) {
+    el.style.display = state ? 'block' : 'none'
+}
+```
+
 ## sélecteurs du DOM
 - qs
 - qsa
