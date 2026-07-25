@@ -38,7 +38,7 @@ export function qs(sel, root = document) {
 export function qsa(sel, root = document) {
 	return [...root.querySelectorAll(sel)]
 }
-```js
+```
 
 ```js
 export function byId(id) {
@@ -46,7 +46,15 @@ export function byId(id) {
 }
 ```
 
-
+**exemple**
+Un composant dispose d'elements rendus en html, il les référence en utilsant les selecteurs
+```js
+/*partie DOM ----   */
+function getRoot(id) { return byId(`CODEVAL_${id}`) }
+function getTextarea(id) { return qs('textarea', getRoot(id)) }
+function getResult(id) { return qs('.result', getRoot(id)) }
+function getScript(id) { return qs('.scriptcode', getRoot(id)) }
+```
 
 
 
@@ -156,6 +164,25 @@ avec callback
     },
 ```
 
+gere le type de contenu
+```
+export function create(tag, attrs = {}, events = {}) {
+    const el = document.createElement(tag)
+
+    Object.entries(attrs).forEach(([k, v]) => {
+        if (k === 'text') el.textContent = v
+        else if (k === 'html') el.innerHTML = v
+        else el.setAttribute(k, v)
+    })
+
+    Object.entries(events).forEach(([evt, fn]) => {
+        el.addEventListener(evt, fn)
+    })
+
+    return el
+}
+
+```
 
 
 
