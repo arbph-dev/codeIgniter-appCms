@@ -369,4 +369,137 @@ export function getIconForArticle(articleId, title) {
 }
 ```
 
+### Navigation
+
+#### buildGlobalNav()
+```js
+// ─── Nav globale sidebar ──────────────────────────────────────────────────────
+
+/**
+ * Structure injectée dans #sidebar pour chaque article :
+ *
+ *  <div class="nav-article" data-article-id="tab1">
+ *    <div class="nav-header-row">
+ *      <a class="nav-title">  <- switche l'onglet ET closeNav()
+ *        <i class="fa ..."></i> Titre
+ *      </a>
+ *      <button class="nav-toggle">  <- accordeon seul, nav reste ouverte
+ *    </div>
+ *    <ul class="nav-toc">...</ul>
+ *  </div>
+ *
+ * Mobile : accordion via .open sur .nav-article, clic titre = closeNav
+ * PC     : dropdown au :hover CSS, accordion ignoré
+ */
+export function buildGlobalNav() {
+    const nav      = document.getElementById('sidebar')
+    const articles = document.querySelectorAll('main article')
+
+    articles.forEach(article => {
+        const articleId = article.id
+        const title     = article.querySelector('h1')?.textContent?.trim() || articleId
+        const icon      = getIconForArticle(articleId, title)
+
+        const container = document.createElement('div')
+        container.classList.add('nav-article')
+        // Marquer actif si l'article est visible au chargement (style="display:block")
+        //if (article.style.display === 'block') { container.classList.add('active') }        
+        container.dataset.articleId = articleId
+
+
+        // Ligne de header : [lien-titre] [chevron]
+        const headerRow = document.createElement('div')
+        headerRow.classList.add('nav-header-row')
+        // Marquer actif si l'article est visible au chargement (style="display:block")
+        //if (article.style.display === 'block') { headerRow.classList.add('active') }
+        // Lien titre : switche l'onglet (closeNav viendra de switchTab)
+        const titleLink = document.createElement('a')
+        titleLink.href = 'javascript:void(0)'
+        titleLink.classList.add('nav-title')
+        // Marquer actif si l'article est visible au chargement (style="display:block")
+        if (article.style.display === 'block') { titleLink.classList.add('active') }        
+        titleLink.innerHTML = `<i class="fa fa-fw ${icon}"></i> ${title}`
+        titleLink.addEventListener('click', () => {
+            window.openPage(articleId, titleLink)
+        })
+
+
+        // Bouton chevron : accordion uniquement, ne ferme PAS la nav
+        const toggle = document.createElement('button')
+        toggle.classList.add('nav-toggle')
+        toggle.setAttribute('aria-label', 'Développer')
+        toggle.setAttribute('aria-expanded', 'false')
+        toggle.textContent = '>'
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation()
+            const isOpen = container.classList.toggle('open')
+            toggle.setAttribute('aria-expanded', String(isOpen))
+        })
+
+        headerRow.appendChild(titleLink)
+        headerRow.appendChild(toggle)
+
+        // TOC avec la classe ciblée par le CSS
+        const toc = buildTOC(article, articleId)
+        toc.classList.add('nav-toc')
+
+        container.appendChild(headerRow)
+        container.appendChild(toc)
+        nav.appendChild(container)
+    })
+}
+```
+
+#### generateId
+
+```js
+function generateId(text) {
+    return text.toLowerCase().trim()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]/g, '')
+}
+```
+
+#### buildTOC()
+
+Construction du TOC
+```js
+function buildTOC(article, articleId) {
+    const headers = article.querySelectorAll('h2, h3, h4')
+    const root    = document.createElement('ul')
+    const stack   = [{ level: 1, element: root }]
+
+    headers.forEach(h => {
+        const level = parseInt(h.tagName.substring(1))
+        if (!h.id) {
+            h.id = articleId + '--' + generateId(h.textContent)
+        }
+
+        const li = document.createElement('li')
+        const a  = document.createElement('a')
+        a.textContent      = h.textContent
+        a.href             = 'javascript:void(0)'
+        a.dataset.targetId = h.id
+
+        a.addEventListener('click', (e) => {
+            e.preventDefault()
+            bus.publish('nav:goto', { articleId, targetId: h.id })
+        })
+
+        li.appendChild(a)
+
+        while (stack.length && stack[stack.length - 1].level >= level) {
+            stack.pop()
+        }
+        stack[stack.length - 1].element.appendChild(li)
+
+        const ul = document.createElement('ul')
+        li.appendChild(ul)
+        stack.push({ level, element: ul })
+    })
+
+    return root
+}
+```
+
 
