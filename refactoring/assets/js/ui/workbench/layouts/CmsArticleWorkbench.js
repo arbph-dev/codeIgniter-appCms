@@ -1,5 +1,6 @@
 // assets/js/ui/workbench/layouts/CmsArticleWorkbench.js
-import WorkbenchBase from '../WorkbenchBase.js';
+import WorkbenchBase from '/assets/js/ui/workbench/layouts/WorkbenchBase.js';
+import { initCms } from '/assets/js/cms/bootstrap.js';   // ← Import important
 
 export class CmsArticleWorkbench extends WorkbenchBase {
     constructor(config = {}) {
@@ -20,10 +21,12 @@ export class CmsArticleWorkbench extends WorkbenchBase {
         `;
     }
 
-    // Charge directement les variables PHP ($article + $content)
     loadFromPHP(article, content) {
         this.renderHeader(article);
         this.renderContent(content);
+        
+        // Initialisation des composants après rendu du HTML
+        this.initComponents();
     }
 
     renderHeader(article) {
@@ -31,7 +34,7 @@ export class CmsArticleWorkbench extends WorkbenchBase {
         if (!header || !article) return;
 
         header.innerHTML = `
-            <h1>${article.title ?? 'Sans titre'}</h1>
+            <h1>${article.title || 'Sans titre'}</h1>
             ${article.description ? `<p>${article.description}</p>` : ''}
             ${article.published_at ? `
                 <p class="cms_article_meta">
@@ -45,6 +48,16 @@ export class CmsArticleWorkbench extends WorkbenchBase {
         const content = this.getElement('#wb-content');
         if (content) {
             content.innerHTML = contentHtml || '<p>Aucun contenu disponible.</p>';
+        }
+    }
+
+    initComponents() {
+        console.log('[CmsArticleWorkbench] → Initialisation des composants CMS');
+        
+        try {
+            initCms();           // Appel direct après import
+        } catch (e) {
+            console.error('[CmsArticleWorkbench] Erreur lors de initCms()', e);
         }
     }
 }
