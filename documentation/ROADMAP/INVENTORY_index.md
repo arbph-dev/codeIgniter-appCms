@@ -142,6 +142,155 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })
 ```
+
+
+
+```js
+/*
+  autocomplete()
+  ─────────────────────────────────────────────────────────────────────────────
+  Crée un <input> + <ul> de suggestions piloté par le bus.
+
+  Options :
+    id           {string}   id de l'input (= sourceId transmis au contrôleur)
+    name         {string}   attribut name du champ
+    placeholder  {string}
+    busRequest   {string}   event bus à publier quand l'user tape
+    busResponse  {string}   event bus à écouter pour recevoir les suggestions
+    labelKey     {string}   clé du label dans les items     (défaut : 'label')
+    valueKey     {string}   clé de la valeur dans les items (défaut : 'id')
+    minLength    {number}   nb de chars min avant requête   (défaut : 2)
+    debounce     {number}   délai ms                        (défaut : 250)
+    onSelect     {Function} callback(item) quand l'user choisit
+    attrs        {object}   attributs HTML additionnels sur l'input
+
+  Retourne :
+    { wrapper, input, hidden }   — le wrapper est à appender dans le DOM
+    Le champ <hidden> porte la valeur (id) de l'item sélectionné.
+
+  Exemple :
+    const ac = autocomplete({
+        id          : 'acMot',
+        name        : 'mot_id',
+        placeholder : 'Rechercher un mot…',
+        busRequest  : 'mot:ui:like',
+        busResponse : 'mot:ui:response',
+        labelKey    : 'mot_lbl',
+        valueKey    : 'mot_id',
+        onSelect    : (item) => console.log('sélectionné', item)
+    })
+    someForm.appendChild(ac.wrapper)
+*/
+export function autocomplete({
+    id          = 'ac_' + Math.random().toString(36).slice(2),
+    name        = 'value',
+    placeholder = 'Rechercher…',
+    busRequest  = 'ui:like',
+    busResponse = 'ui:response',
+    labelKey    = 'label',
+    valueKey    = 'id',
+    minLength   = 2,
+    debounce    = 250,
+    onSelect    = null,
+    attrs       = {},
+} = {}) {
+
+    const wrapper = create('div', { class: 'cp_ac_wrapper', style: 'position:relative' })
+    const input   = create('input', {
+        type        : 'text',
+        id,
+        autocomplete: 'off',
+        placeholder,
+        ...attrs
+    })
+    const hidden  = create('input', { type: 'hidden', name })
+    const list    = create('ul', { class: 'cp_ac_list', role: 'listbox' })
+    list.style.display = 'none'
+
+    wrapper.append(input, hidden, list)
+
+    // ── Debounce ──────────────────────────────────────────────────────────────
+    let timer = null
+    input.addEventListener('input', () => {
+        const q = input.value.trim()
+        hidden.value = ''                  // reset valeur sélectionnée
+        list.innerHTML = ''
+        list.style.display = 'none'
+
+        if (q.length < minLength) return
+
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            bus.publish(busRequest, { q, len: 10, sourceId: id })
+        }, debounce)
+    })
+
+    // ── Réception suggestions ────────────────────────────────────────────────
+    bus.subscribe(busResponse, ({ sourceId, items }) => {
+        if (sourceId !== id) return          // pas pour cet input
+
+        list.innerHTML = ''
+        if (!items || !items.length) {
+            list.style.display = 'none'
+            return
+        }
+
+        items.forEach(item => {
+            const li = create('li', {
+                class : 'cp_ac_item',
+                role  : 'option',
+                text  : item[labelKey] ?? ''
+            })
+            li.addEventListener('mousedown', (e) => {
+                e.preventDefault()           // évite blur avant click
+                input.value  = item[labelKey]
+                hidden.value = item[valueKey]
+                list.style.display = 'none'
+                if (onSelect) onSelect(item)
+            })
+            list.appendChild(li)
+        })
+
+        list.style.display = 'block'
+    })
+
+    // Fermer si clic ailleurs
+    input.addEventListener('blur', () => {
+        setTimeout(() => { list.style.display = 'none' }, 150)
+    })
+    input.addEventListener('focus', () => {
+        if (list.children.length) list.style.display = 'block'
+    })
+
+    // Navigation clavier
+    input.addEventListener('keydown', (e) => {
+        const items = [...list.querySelectorAll('.cp_ac_item')]
+        const active = list.querySelector('.cp_ac_item--focus')
+        let idx = items.indexOf(active)
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault()
+            if (active) active.classList.remove('cp_ac_item--focus')
+            idx = (idx + 1) % items.length
+            items[idx]?.classList.add('cp_ac_item--focus')
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault()
+            if (active) active.classList.remove('cp_ac_item--focus')
+            idx = (idx - 1 + items.length) % items.length
+            items[idx]?.classList.add('cp_ac_item--focus')
+        } else if (e.key === 'Enter') {
+            if (active) {
+                e.preventDefault()
+                active.dispatchEvent(new MouseEvent('mousedown'))
+            }
+        } else if (e.key === 'Escape') {
+            list.style.display = 'none'
+        }
+    })
+
+    return { wrapper, input, hidden }
+}
+```
 ---
 
 ## PropertySet
