@@ -1230,6 +1230,71 @@ document.addEventListener('DOMContentLoaded', () => {
 ```
 
 
+## Factory bouton 
+pour les bouton de panel CRUD.
+```js
+    panels.buttons.append(
+        btn({ label: 'Nouveau',  icon: 'fa-plus',    variant: 'primary', busEvent: 'mot:mode', busArg: 'form' }),
+        btn({ label: 'Modifier', icon: 'fa-pencil',  busEvent: 'mot:mode', busArg: 'form', disabled: !selected }),
+        btn({ label: 'Suppr.',   icon: 'fa-trash',   variant: 'danger',  busEvent: 'mot:mode', busArg: 'delete', disabled: !selected }),
+    )
+```
 
+```js
+/*
+  btn()
+  ─────────────────────────────────────────────────────────────────────────────
+  Factory bouton rapide pour les panels de boutons.
+
+  Options :
+    label    {string}   Texte affiché
+    icon     {string}   Classe FA  ex: 'fa-search'
+    variant  {string}   '' | 'primary' | 'danger'
+    disabled {boolean}
+    onClick  {Function} handler click (priorité sur busEvent)
+    busEvent {string}   event bus à publier
+    busArg   {*}        argument du bus
+    attrs    {object}   attributs HTML additionnels
+
+  Exemple :
+    panels.buttons.append(
+        btn({ label: 'Nouveau',  icon: 'fa-plus',    variant: 'primary', busEvent: 'mot:mode', busArg: 'form' }),
+        btn({ label: 'Modifier', icon: 'fa-pencil',  busEvent: 'mot:mode', busArg: 'form', disabled: !selected }),
+        btn({ label: 'Suppr.',   icon: 'fa-trash',   variant: 'danger',  busEvent: 'mot:mode', busArg: 'delete', disabled: !selected }),
+    )
+*/
+export function btn({
+    label    = '',
+    icon     = '',
+    variant  = '',
+    disabled = false,
+    onClick  = null,
+    busEvent = null,
+    busArg   = null,
+    attrs    = {},
+} = {}) {
+
+    const cssClass = ['cp_btn', variant ? `cp_btn--${variant}` : '']
+        .filter(Boolean).join(' ')
+
+    const el = create('button', { type: 'button', class: cssClass, ...attrs })
+    if (disabled) el.setAttribute('disabled', '')
+
+    if (icon) {
+        el.appendChild(create('i', { class: `fa fa-fw ${icon}`, 'aria-hidden': 'true' }))
+        el.appendChild(document.createTextNode(` ${label}`))
+    } else {
+        el.textContent = label
+    }
+
+    if (onClick) {
+        el.addEventListener('click', onClick)
+    } else if (busEvent) {
+        el.addEventListener('click', () => bus.publish(busEvent, busArg))
+    }
+
+    return el
+}
+```
 
 
