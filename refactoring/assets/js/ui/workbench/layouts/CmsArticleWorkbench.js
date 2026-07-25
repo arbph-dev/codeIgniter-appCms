@@ -1,5 +1,5 @@
 // assets/js/ui/workbench/layouts/CmsArticleWorkbench.js
-import WorkbenchBase from '/assets/js/ui/workbench/layouts/WorkbenchBase.js';
+import WorkbenchBase from '/assets/js/ui/workbench/WorkbenchBase.js';
 import { initCms } from '/assets/js/cms/bootstrap.js';   // ← Import important
 
 export class CmsArticleWorkbench extends WorkbenchBase {
