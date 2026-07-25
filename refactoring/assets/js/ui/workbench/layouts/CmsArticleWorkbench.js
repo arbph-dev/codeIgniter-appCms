@@ -1,5 +1,5 @@
 // assets/js/ui/workbench/layouts/CmsArticleWorkbench.js
-import WorkbenchBase from '/assets/js/ui/workbench/WorkbenchBase.js';
+import WorkbenchBase from '/assets/js/ui/workbench//WorkbenchBase.js';
 import { initCms } from '/assets/js/cms/bootstrap.js';   // ← Import important
 
 export class CmsArticleWorkbench extends WorkbenchBase {
@@ -22,6 +22,9 @@ export class CmsArticleWorkbench extends WorkbenchBase {
     }
 
     loadFromPHP(article, content) {
+
+        this.showDebug(article, content);   // ← Debug temporaire
+        
         this.renderHeader(article);
         this.renderContent(content);
         
@@ -60,6 +63,38 @@ export class CmsArticleWorkbench extends WorkbenchBase {
             console.error('[CmsArticleWorkbench] Erreur lors de initCms()', e);
         }
     }
+
+
+
+    // Debug : visualise les variables reçues
+    showDebug(article, content) {
+        const debugDiv = document.createElement('div');
+        debugDiv.style.cssText = `
+            background: #1a2a4a; 
+            color: #eee236; 
+            padding: 15px; 
+            margin: 15px 0; 
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            max-height: 300px;
+            overflow: auto;
+        `;
+
+        debugDiv.innerHTML = `
+            <strong>Debug — Article Data</strong><br>
+            <pre>${JSON.stringify(article, null, 2)}</pre>
+            <hr>
+            <strong>Content Length:</strong> ${content ? content.length : 0} caractères
+        `;
+
+        const contentArea = this.getElement('#wb-content');
+        if (contentArea) {
+            contentArea.prepend(debugDiv);
+        }
+    }
+
+
 }
 
 // Helper
