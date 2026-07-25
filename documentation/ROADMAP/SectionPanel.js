@@ -1,4 +1,3 @@
-```
 // ==========================================
 // spanel.js - SectionPanels COMPLET Phase 3
 // Version : 0.4.5.8 (Templates + Délégation + Lifecycle)
@@ -1427,4 +1426,3 @@ export class SectionPanels extends SectionNode {
 
 export default SectionPanels
 
-```
