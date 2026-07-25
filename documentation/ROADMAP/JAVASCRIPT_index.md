@@ -101,6 +101,32 @@ function fromLocal( itemName ) {
 
 ```
 
+## Component Registry
+Utilisation
+- le composant importe register
+```js
+	import {register } from '/assets/js/core/componentRegistry.js'
+```
+- le composant s'enregistre avec register dans DomDocumentloaded
+```js
+    register('codeval', initCodeVal)
+```
+- dans window.load on appelle boot
+
+
+```js
+// /assets/js/core/componentRegistry.js
+const registry = []
+
+export function register(name, init) {
+    registry.push({ name, init })
+}
+
+export function boot() {
+    registry.forEach(c => c.init())
+}
+```js
+
 
 ## UI
 
