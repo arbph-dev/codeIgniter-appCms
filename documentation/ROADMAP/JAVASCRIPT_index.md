@@ -326,8 +326,47 @@ window.TreeCmp_toggleAll = () => {
     btn.textContent = expand ? 'Tout replier' : 'Tout déplier';
     btn.dataset.state = expand ? 'expanded' : 'collapsed';
 }
-
 ```
 
+
+---
+
+### Icones
+```js
+// ─── Icônes Font Awesome ──────────────────────────────────────────────────────
+
+/**
+ * Correspondance id d'article => icône FA.
+ * Priorité : id exact > mot-clé dans id ou titre > défaut.
+ */
+const ICON_BY_ID = {
+    'tab1'    : 'fa-home',
+    'tab2'    : 'fa-newspaper-o',
+    'contact' : 'fa-envelope',
+    'about'   : 'fa-info-circle',
+    'info'    : 'fa-desktop',
+    'techno'  : 'fa-wrench',
+    'news'    : 'fa-rss',
+}
+
+const ICON_BY_KEYWORD = [
+    ['accueil', 'fa-home'],       ['home',    'fa-home'],
+    ['chimie',  'fa-flask'],      ['eau',     'fa-tint'],
+    ['vapeur',  'fa-fire'],       ['contact', 'fa-envelope'],
+    ['about',   'fa-info-circle'],['info',    'fa-desktop'],
+    ['techno',  'fa-wrench'],     ['news',    'fa-rss'],
+    ['article', 'fa-file-text-o'],
+]
+
+export function getIconForArticle(articleId, title) {
+    const id = (articleId || '').toLowerCase()
+    if (ICON_BY_ID[id]) return ICON_BY_ID[id]
+    const t = (title || '').toLowerCase()
+    for (const [kw, icon] of ICON_BY_KEYWORD) {
+        if (id.includes(kw) || t.includes(kw)) return icon
+    }
+    return 'fa-file-text-o'
+}
+```
 
 
