@@ -591,8 +591,71 @@ export default {
 }
 ```
 
+### table( { id = null,  data = [],  columns = null, attrs = {}, onRowClick = null,  onCellClick = null } = {})
+```js
+/**
+ * 
+ * columns = null, // [{key:'id', label:'ID'}]  
+ * 🔹 Colonnes auto si non fournies  
+ * 
+  */
+export function table( { id = null,  data = [],  columns = null, attrs = {}, onRowClick = null,  onCellClick = null } = {}) {  
+  
+    const table = create("table", { id, ...attrs  } )  
 
+    if (!data || data.length === 0) {  return table  }  
 
+    if (!columns) {      // 🔹 Colonnes auto si non fournies  
+        columns = Object.keys(data[0]).map(k => ({ key: k, label: k }))  
+    }  
+  
+    // 🔹 THEAD  
+    const thead = create("thead")  
+    const trHead = create("tr")  
+    
+    // columns = [ {key:'id', label:'ID'} ]  
+    columns.forEach(col => {  
+        const th = create("th")  
+        th.textContent = col.label  
+        trHead.appendChild(th)  
+    })  
+  
+    thead.appendChild(trHead)  
+    table.appendChild(thead)  
+  
+    // 🔹 TBODY  
+    const tbody = create("tbody")  
+  
+    data.forEach(row => {  
+  
+        const tr = create("tr")  
+        //gestion callback
+        if (onRowClick) {  
+            tr.addEventListener("click", () => onRowClick(row))  
+        }  
+  
+        columns.forEach(col => {  
+            const td = create("td")  
+            td.textContent = row[col.key]  
+  
+            if (onCellClick) {  
+                td.addEventListener("click", (e) => {  
+                    e.stopPropagation()  
+                    onCellClick(row, col.key)  
+                })  
+            }  
+  
+            tr.appendChild(td)  
+        })  
+  
+        tbody.appendChild(tr)  
+    })  
+  
+    table.appendChild(tbody)  
+  
+    return table  
+}
+```
 
 
 
