@@ -125,7 +125,7 @@ export function register(name, init) {
 export function boot() {
     registry.forEach(c => c.init())
 }
-```js
+```
 
 
 ## UI
