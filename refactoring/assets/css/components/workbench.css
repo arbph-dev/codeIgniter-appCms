@@ -360,3 +360,24 @@
     border-left: 3px solid #0f0;
     font-weight: 500;
 }
+
+
+.wb_tabs_nav        { 
+    display: flex; gap: 4px; border-bottom: 2px solid var(--wb-border); 
+}
+.wb_tab_btn         { 
+    padding: 6px 14px; background: none; border: none; cursor: pointer; 
+}
+.wb_tab_btn.active  { 
+    border-bottom: 2px solid var(--wb-accent); font-weight: bold; 
+}
+.wb_tab_pane        { 
+    padding: 12px 0; 
+}
+.wb_tab_badge       { 
+    margin-left: 6px; 
+    background: var(--wb-accent); 
+    border-radius: 10px;
+    padding: 1px 6px;
+    font-size: 0.75em; 
+}
