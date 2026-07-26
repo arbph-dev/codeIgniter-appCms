@@ -2,22 +2,12 @@
 // assets/js/ui/workbench/TabSystem.js
 // Système d'onglets générique pour Workbenches
 // ================================================
-// Iteration005 — nouveau fichier
-//
-// Usage minimal :
-//
-//   const tabs = new TabSystem({ busEvent: 'cms:section:change' });
-//
-//   tabs
-//     .addTab('contenu', 'Contenu',  () => monDivContenu)
-//     .addTab('plan',    'Plan',     () => monDivPlan,   (pane) => initToc(pane))
-//     .render(document.getElementById('wb-tabs'));
-//
-// Activation programmatique :
-//   tabs.activate('plan');
-//
-// Mise à jour dynamique :
-//   tabs.updateTabContent('plan', newHtmlOrElement);
+// Iteration005 — création
+// Iteration006
+// ~ activate() : tab.initialized = true positionné AVANT l'appel initFn
+//   (évite double-fetch si l'utilisateur clique rapidement avant la réponse)
+// ~ activate() : supporte les initFn async (fire-and-forget sécurisé)
+// + render()   : retourne this pour chaînage
 
 import { bus }    from '/assets/js/core/eventBus.js';
 import { create } from '/assets/js/core/domhelper.js';
@@ -35,9 +25,9 @@ export class TabSystem {
      * @param {string}  config.cssPane    — classe CSS de chaque pane
      */
     constructor(config = {}) {
-        this.tabs     = new Map();   // id → tab descriptor
+        this.tabs     = new Map();
         this.activeId = null;
-        this.el       = null;        // élément racine après render()
+        this.el       = null;
 
         this.busEvent = config.busEvent || null;
 
@@ -57,9 +47,10 @@ export class TabSystem {
      * Ajoute un onglet. Chaînable.
      *
      * @param {string}   id       — identifiant unique
-     * @param {string}   label    — libellé du bouton
-     * @param {Function} renderFn — () => HTMLElement | string  — contenu initial
-     * @param {Function} initFn   — (paneEl) => void  — appelé une seule fois à la première activation
+     * @param {string}   label    — libellé affiché sur le bouton
+     * @param {Function} renderFn — () => HTMLElement | string  — contenu initial du pane
+     * @param {Function} initFn   — (paneEl) => void | Promise  — lancé UNE SEULE FOIS
+     *                              à la première activation (peut être async)
      */
     addTab(id, label, renderFn = null, initFn = null) {
         this.tabs.set(id, {
@@ -68,8 +59,8 @@ export class TabSystem {
             renderFn,
             initFn,
             initialized : false,
-            el          : null,     // pane <div>
-            btnEl       : null,     // bouton <button>
+            el          : null,
+            btnEl       : null,
         });
         return this;
     }
@@ -78,7 +69,10 @@ export class TabSystem {
 
     /**
      * Active un onglet par son id.
-     * Déclenche initFn au premier affichage (init paresseuse).
+     *
+     * Iter006 : tab.initialized est positionné à true AVANT l'appel de initFn.
+     * Cela protège contre le double-appel si l'utilisateur clique rapidement
+     * pendant un fetch async en cours.
      */
     activate(id) {
         if (!this.tabs.has(id)) {
@@ -86,20 +80,34 @@ export class TabSystem {
             return;
         }
 
+        // ── Mise à jour visuelle (nav + panes) ───────────────────────────────
         for (const [tabId, tab] of this.tabs) {
             const isActive = tabId === id;
-
             if (tab.btnEl) tab.btnEl.classList.toggle(this.css.active, isActive);
             if (tab.el)    tab.el.style.display = isActive ? '' : 'none';
+        }
 
-            // Init paresseuse : une seule fois, au premier affichage
-            if (isActive && !tab.initialized && tab.initFn) {
-                try {
-                    tab.initFn(tab.el);
-                    tab.initialized = true;
-                } catch (e) {
-                    console.error(`[TabSystem] Erreur initFn onglet "${id}"`, e);
+        // ── Init paresseuse ───────────────────────────────────────────────────
+        const tab = this.tabs.get(id);
+
+        if (!tab.initialized && tab.initFn) {
+            // Marquer AVANT l'appel : protège le double-init sur clic rapide
+            tab.initialized = true;
+
+            try {
+                const result = tab.initFn(tab.el);
+
+                // Support async : log l'erreur sans crasher le système
+                if (result && typeof result.then === 'function') {
+                    result.catch(err => {
+                        console.error(`[TabSystem] initFn async onglet "${id}" →`, err);
+                        // Permettre une nouvelle tentative si besoin
+                        tab.initialized = false;
+                    });
                 }
+            } catch (err) {
+                console.error(`[TabSystem] initFn onglet "${id}" →`, err);
+                tab.initialized = false; // Permettre retry sur erreur sync
             }
         }
 
@@ -115,9 +123,11 @@ export class TabSystem {
     // ── Rendu ─────────────────────────────────────────────────────────────────
 
     /**
-     * Construit le système d'onglets dans container et active le premier.
-     * @param {HTMLElement} container
-     * @returns {HTMLElement} container
+     * Construit et rend le système d'onglets dans container.
+     * Active le premier onglet automatiquement.
+     *
+     * @param   {HTMLElement} container
+     * @returns {TabSystem}   this — chaînable
      */
     render(container) {
         this.el = container;
@@ -155,8 +165,8 @@ export class TabSystem {
                     } else if (typeof result === 'string') {
                         pane.innerHTML = result;
                     }
-                } catch (e) {
-                    console.error(`[TabSystem] Erreur renderFn onglet "${id}"`, e);
+                } catch (err) {
+                    console.error(`[TabSystem] renderFn onglet "${id}" →`, err);
                 }
             }
 
@@ -171,13 +181,13 @@ export class TabSystem {
         const firstId = this.tabs.keys().next().value;
         if (firstId) this.activate(firstId);
 
-        return container;
+        return this;
     }
 
     // ── Mise à jour dynamique ─────────────────────────────────────────────────
 
     /**
-     * Remplace le contenu d'un pane existant.
+     * Remplace le contenu d'un pane.
      * @param {string}               id
      * @param {HTMLElement|string}   content
      */
@@ -187,9 +197,7 @@ export class TabSystem {
             console.warn(`[TabSystem] updateTabContent : onglet "${id}" introuvable`);
             return;
         }
-
         tab.el.innerHTML = '';
-
         if (content instanceof HTMLElement) {
             tab.el.appendChild(content);
         } else if (typeof content === 'string') {
@@ -198,20 +206,19 @@ export class TabSystem {
     }
 
     /**
-     * Ajoute une étiquette/badge à un bouton nav (ex: compteur de sections).
+     * Ajoute ou met à jour un badge sur le bouton nav (ex: compteur de parts).
      * @param {string} id
-     * @param {string} badgeText
+     * @param {string} text
      */
-    setBadge(id, badgeText) {
+    setBadge(id, text) {
         const tab = this.tabs.get(id);
         if (!tab || !tab.btnEl) return;
-
         let badge = tab.btnEl.querySelector('.wb_tab_badge');
         if (!badge) {
             badge = create('span', { class: 'wb_tab_badge' });
             tab.btnEl.appendChild(badge);
         }
-        badge.textContent = badgeText;
+        badge.textContent = text;
     }
 
     // ── Nettoyage ─────────────────────────────────────────────────────────────
