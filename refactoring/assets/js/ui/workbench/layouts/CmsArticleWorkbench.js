@@ -1,6 +1,6 @@
 // assets/js/ui/workbench/layouts/CmsArticleWorkbench.js
-import WorkbenchBase from '/assets/js/ui/workbench//WorkbenchBase.js';
-import { initCms } from '/assets/js/cms/bootstrap.js';   // ← Import important
+import WorkbenchBase from '../WorkbenchBase.js';
+import { initCms } from '/assets/js/cms/bootstrap.js';
 
 export class CmsArticleWorkbench extends WorkbenchBase {
     constructor(config = {}) {
@@ -9,12 +9,17 @@ export class CmsArticleWorkbench extends WorkbenchBase {
             name: 'Cms Article Workbench',
             ...config
         });
+
+        this.debugEnabled = true;   // ← Change en false en production
     }
 
     renderStructure() {
         this.container.innerHTML = `
             <div class="cms_article_wrap">
                 <header class="cms_article_header" id="wb-header"></header>
+                
+                <div id="wb-debug" style="display:none;"></div>
+                
                 <main class="cms_article_body" id="wb-content"></main>
                 <footer class="wb-footer" id="wb-footer"></footer>
             </div>
@@ -22,14 +27,13 @@ export class CmsArticleWorkbench extends WorkbenchBase {
     }
 
     loadFromPHP(article, content) {
-
-        this.showDebug(article, content);   // ← Debug temporaire
-        
         this.renderHeader(article);
         this.renderContent(content);
-        
-        // Initialisation des composants après rendu du HTML
         this.initComponents();
+
+        if (this.debugEnabled) {
+            this.showDebug(article, content);
+        }
     }
 
     renderHeader(article) {
@@ -56,45 +60,33 @@ export class CmsArticleWorkbench extends WorkbenchBase {
 
     initComponents() {
         console.log('[CmsArticleWorkbench] → Initialisation des composants CMS');
-        
         try {
-            initCms();           // Appel direct après import
+            initCms();
         } catch (e) {
-            console.error('[CmsArticleWorkbench] Erreur lors de initCms()', e);
+            console.error('[CmsArticleWorkbench] Erreur initCms()', e);
         }
     }
 
-
-
-    // Debug : visualise les variables reçues
+    // === DEBUG VISUEL ===
     showDebug(article, content) {
-        const debugDiv = document.createElement('div');
-        debugDiv.style.cssText = `
-            background: #1a2a4a; 
-            color: #eee236; 
-            padding: 15px; 
-            margin: 15px 0; 
-            border-radius: 6px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            max-height: 300px;
-            overflow: auto;
-        `;
+        const debugPanel = this.getElement('#wb-debug');
+        if (!debugPanel) return;
 
-        debugDiv.innerHTML = `
-            <strong>Debug — Article Data</strong><br>
-            <pre>${JSON.stringify(article, null, 2)}</pre>
-            <hr>
-            <strong>Content Length:</strong> ${content ? content.length : 0} caractères
+        debugPanel.style.display = 'block';
+        debugPanel.innerHTML = `
+            <div style="background:#1a2a4a; color:#eee236; padding:12px; margin:10px 0; border-radius:6px; font-family:monospace; font-size:0.8rem;">
+                <strong>🐞 DEBUG — CmsArticleWorkbench</strong><br>
+                <button onclick="this.parentElement.style.display='none'" style="float:right; background:#c0392b; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">
+                    Fermer
+                </button>
+                <strong>Article :</strong><br>
+                <pre style="max-height:200px; overflow:auto;">${JSON.stringify(article, null, 2)}</pre>
+                <hr>
+                <strong>Content length :</strong> ${content ? content.length : 0} caractères<br>
+                <small>Composants initialisés via initCms()</small>
+            </div>
         `;
-
-        const contentArea = this.getElement('#wb-content');
-        if (contentArea) {
-            contentArea.prepend(debugDiv);
-        }
     }
-
-
 }
 
 // Helper
