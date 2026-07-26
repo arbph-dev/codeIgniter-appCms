@@ -4,8 +4,26 @@
    Thème dark cohérent avec article.css (#1a2a4a / #eee236 / #0057b8)
    ============================================================================= */
 
-
+/* Rendre les variables disponibles hors #modelworkbench */
+:root {
+    --wb-bg          : #0d1117;
+    --wb-panel       : #161b22;
+    --wb-border      : #30363d;
+    --wb-text        : #c9d1d9;
+    --wb-text-muted  : #8b949e;
+    --wb-accent      : #eee236;
+    --wb-blue        : #0057b8;
+    --wb-hover       : #21262d;
+    --wb-selected    : #1f3a5f;
+    --wb-mesh        : #2ecc71;
+    --wb-group       : #8b949e;
+    --wb-font        : system-ui, sans-serif;
+    --wb-radius      : 6px;
+}
 /* ── Variables ────────────────────────────────────────────────────────────── */
+
+
+
 
 #modelworkbench {
     --wb-bg          : #0d1117;
