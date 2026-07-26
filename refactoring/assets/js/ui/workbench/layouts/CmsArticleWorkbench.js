@@ -1,23 +1,21 @@
 // assets/js/ui/workbench/layouts/CmsArticleWorkbench.js
 //=============================================================================
 // Iteration005
-// - Suppression import bootstrap.js / initCms()
-// + Imports directs de chaque composant
-// + Bus via WorkbenchBase.publish() (plus de window.eventBusPublish)
-// + TabSystem importé et disponible via initTabSystem()
-// + setupComponentRegistry : un composant = un register()
-// + showDebug : liste les composants enregistrés
+//   - Suppression bootstrap.js, imports directs des composants
+//   - Bus via WorkbenchBase.publish()
+//   - setupComponentRegistry : un register() par composant
+//
+// Iteration006.1 — Navigation par sections
+//   + loadFromPHP : branchement tab-mode / flat-mode selon article.sections
+//   + loadSections(sections) : construit TabSystem, un onglet par section
+//   + fetchSection(id, paneEl) : charge le HTML depuis /cms/section/{id}
+//   ~ showDebug : affiche le nombre de sections et le mode de rendu
 
 import WorkbenchBase from '../WorkbenchBase.js';
 import { TabSystem }  from '../TabSystem.js';
 
-// ── Imports directs des composants (remplace bootstrap.js) ───────────────────
-// c'est les descendants qui importe les composants
-// WorkbenchBase fournit
-// - Registry des composants this.componentRegistry = new Map();
-// - register(componentName, initFunction)
-// - initRegisteredComponents()
-// Ordre respecté : apex avant codeval (codeval publie apex:render)
+// ── Imports directs des composants ───────────────────────────────────────────
+// Ordre : apex avant codeval (codeval publie des événements apex:render)
 import { initApex }    from '/assets/js/components/apex.js';
 import { initCallout } from '/assets/js/components/callout.js';
 import { initCodeVal } from '/assets/js/components/codeval.js';
@@ -37,6 +35,7 @@ export class CmsArticleWorkbench extends WorkbenchBase {
         this.debugEnabled = config.debug ?? true;   // false en production
         this.tabSystem    = null;
         this.article      = null;
+        this._renderMode  = 'flat';                 // 'tabs' | 'flat'
     }
 
     // ── Structure HTML ────────────────────────────────────────────────────────
@@ -54,27 +53,151 @@ export class CmsArticleWorkbench extends WorkbenchBase {
         `;
     }
 
-    // ── Chargement depuis PHP ─────────────────────────────────────────────────
+    // ── Point d'entrée principal ──────────────────────────────────────────────
 
+    /**
+     * Appelé depuis article2.php avec les données PHP.
+     *
+     * Iter006.1 : branchement automatique selon article.sections
+     *   → sections.length > 1  : mode onglets  (un fetch par section)
+     *   → sinon                : mode plat      (contenu HTML direct)
+     *
+     * @param {object} article  — données PHP de l'article (titre, slug, sections…)
+     * @param {string} content  — HTML complet rendu côté PHP (fallback mode plat)
+     */
     loadFromPHP(article, content) {
         this.article = article;
 
         this.renderHeader(article);
-        this.renderContent(content);
 
-        // Iter005 : enregistrement individuel des composants
+        const sections = Array.isArray(article.sections) ? article.sections : [];
+
+        if (sections.length > 1) {
+            this._renderMode = 'tabs';
+            this.loadSections(sections);
+        } else {
+            this._renderMode = 'flat';
+            this.renderContent(content);
+        }
+
+        // Enregistrement et init des composants
+        // Note : en mode tabs, l'init globale ici est quasi no-op
+        //        (le DOM de chaque section n'est pas encore chargé).
+        //        initRegisteredComponents() est rappelé dans fetchSection()
+        //        après injection de chaque section.
         this.setupComponentRegistry();
         this.initRegisteredComponents();
 
-        // Iter005 : publication bus après chargement (via façade WorkbenchBase)
-        this.publish('cms:article:loaded', { slug: article?.slug });
+        // Événement bus : article prêt
+        this.publish('cms:article:loaded', {
+            slug : article?.slug,
+            mode : this._renderMode,
+        });
 
         if (this.debugEnabled) {
-            this.showDebug(article, content);
+            this.showDebug(article, content, sections);
         }
     }
 
-    // ── Rendu header ──────────────────────────────────────────────────────────
+    // ── Mode onglets ──────────────────────────────────────────────────────────
+
+    /**
+     * Iter006.1 — construit le TabSystem, un onglet par section.
+     * Les sections sont triées par position (ou ordre, selon le modèle PHP).
+     *
+     * @param {Array} sections  — ex: [{ id: 1, title: 'Intro', position: 1 }, …]
+     */
+    loadSections(sections) {
+        const contentEl = this.getElement('#wb-content');
+        if (!contentEl) return;
+
+        // Conteneur dédié aux onglets (vide le contenu précédent)
+        const tabsEl = this.dom.create('div', { id: 'wb-tabs', class: 'wb_tabs' });
+        contentEl.innerHTML = '';
+        contentEl.appendChild(tabsEl);
+
+        // Construction du TabSystem
+        this.tabSystem = new TabSystem({
+            busEvent : 'cms:section:change',
+        });
+
+        [...sections]
+            .sort((a, b) => (a.position ?? a.ordre ?? 0) - (b.position ?? b.ordre ?? 0))
+            .forEach(section => {
+                const tabId = `section-${section.id}`;
+                const label = section.title ?? section.titre ?? `Section ${section.id}`;
+
+                this.tabSystem.addTab(
+                    tabId,
+                    label,
+                    // renderFn : pane vide, le contenu arrive via fetchSection
+                    () => this.dom.create('div', { class: 'wb_section_content' }),
+                    // initFn  : chargement lazy au premier affichage
+                    (paneEl) => this.fetchSection(section.id, paneEl)
+                );
+            });
+
+        // render() active automatiquement le premier onglet
+        // → fetchSection() est déclenché immédiatement pour la section 1
+        this.tabSystem.render(tabsEl);
+    }
+
+    /**
+     * Iter006.1 — charge le HTML d'une section via GET /cms/section/{id}.
+     * Après injection, relance initRegisteredComponents() pour initialiser
+     * les composants (apex, mermaid, leaflet…) présents dans la section.
+     *
+     * ⚠ Limitation connue (Iter007) : initRegisteredComponents() scanne tout
+     *   le document. Un composant déjà initialisé dans une section précédente
+     *   peut être affecté. Résolution : passer un root element aux init functions.
+     *
+     * @param {number}      sectionId
+     * @param {HTMLElement} paneEl     — pane cible du TabSystem
+     */
+    async fetchSection(sectionId, paneEl) {
+        // Indicateur de chargement
+        paneEl.innerHTML = '<p class="wb_section_loading">⏳ Chargement…</p>';
+
+        try {
+            const res = await fetch(`/cms/section/${sectionId}`);
+
+            if (!res.ok) {
+                throw new Error(`HTTP ${res.status} ${res.statusText}`);
+            }
+
+            // Injection du fragment HTML retourné par CmsController::section()
+            paneEl.innerHTML = await res.text();
+
+            // Re-init des composants présents dans cette section
+            this.initRegisteredComponents();
+
+            // Événement bus : section rendue
+            this.publish('cms:section:rendered', { sectionId });
+
+        } catch (err) {
+            paneEl.innerHTML = `
+                <p class="wb_section_error">
+                    ❌ Section ${sectionId} indisponible
+                    <small style="display:block;margin-top:4px;opacity:.65">${err.message}</small>
+                </p>`;
+            console.error(`[CmsArticleWorkbench] fetchSection(${sectionId}) →`, err);
+        }
+    }
+
+    // ── Mode plat (fallback) ──────────────────────────────────────────────────
+
+    /**
+     * Rendu direct du HTML PHP — utilisé quand l'article n'a pas de sections
+     * ou une seule section.
+     */
+    renderContent(contentHtml) {
+        const content = this.getElement('#wb-content');
+        if (content) {
+            content.innerHTML = contentHtml || '<p>Aucun contenu disponible.</p>';
+        }
+    }
+
+    // ── Header ────────────────────────────────────────────────────────────────
 
     renderHeader(article) {
         const header = this.getElement('#wb-header');
@@ -91,73 +214,65 @@ export class CmsArticleWorkbench extends WorkbenchBase {
         `;
     }
 
-    // ── Rendu contenu ─────────────────────────────────────────────────────────
-
-    renderContent(contentHtml) {
-        const content = this.getElement('#wb-content');
-        if (content) {
-            content.innerHTML = contentHtml || '<p>Aucun contenu disponible.</p>';
-        }
-    }
-
     // ── Registry des composants ───────────────────────────────────────────────
-    // Iter005 : un composant = un register(), sans passer par bootstrap.js
 
     setupComponentRegistry() {
-        // Dépendance : apex avant codeval
-        this.register('apex',    initApex);
-
-        // Indépendants
-        this.register('callout', initCallout);
+        this.register('apex',    initApex);     // ① dépendance de codeval
+        this.register('callout', initCallout);  // ② indépendants
         this.register('leaflet', initLeaflet);
         this.register('mermaid', initMermaid);
         this.register('three',   initThree);
-
-        // Consommateur d'events (en dernier)
-        this.register('codeval', initCodeVal);
+        this.register('codeval', initCodeVal);  // ③ consommateur d'events
     }
 
-    // ── TabSystem (optionnel) ─────────────────────────────────────────────────
-    // À activer pour un rendu par sections (Iter006+)
-    //
-    // Exemple d'usage :
-    //   const tabs = wb.initTabSystem('#wb-content');
-    //   tabs.addTab('section-1', 'Introduction', () => renderSection(1))
-    //       .addTab('section-2', 'Développement', () => renderSection(2))
-    //       .render(wb.getElement('#wb-content'));
+    // ── TabSystem (accès externe) ─────────────────────────────────────────────
 
-    initTabSystem() {
-        this.tabSystem = new TabSystem({
-            busEvent : 'cms:section:change',
-        });
+    /**
+     * Retourne le TabSystem actif, ou null en mode plat.
+     * Permet à un script externe d'activer un onglet programmatiquement.
+     *
+     * Exemple :
+     *   wb.getTabs()?.activate('section-3');
+     */
+    getTabs() {
         return this.tabSystem;
     }
 
     // ── Debug ──────────────────────────────────────────────────────────────────
 
-    showDebug(article, content) {
+    showDebug(article, content, sections = []) {
         const debugPanel = this.getElement('#wb-debug');
         if (!debugPanel) return;
 
-        const composants = [...this.componentRegistry.keys()]
+        const compList = [...this.componentRegistry.keys()]
             .map(k => `<span style="margin-left:6px;color:#7fff7f;">✓ ${k}</span>`)
             .join('');
+
+        const secList = sections.length
+            ? sections.map(s =>
+                `<li>#${s.id} — ${s.title ?? s.titre ?? '?'} (pos: ${s.position ?? s.ordre ?? '?'})</li>`
+              ).join('')
+            : '<li style="opacity:.5">aucune</li>';
 
         debugPanel.style.display = 'block';
         debugPanel.innerHTML = `
             <div style="background:#1a2a4a;color:#eee236;padding:12px;margin:10px 0;border-radius:6px;font-family:monospace;font-size:0.8rem;">
-                <strong>🐞 DEBUG — CmsArticleWorkbench (Iter005)</strong>
+                <strong>🐞 DEBUG — CmsArticleWorkbench (Iter006.1)</strong>
                 <button onclick="this.parentElement.parentElement.style.display='none'"
                         style="float:right;background:#c0392b;color:white;border:none;padding:4px 8px;border-radius:4px;cursor:pointer;">
                     Fermer
                 </button>
                 <br>
-                <strong>Composants :</strong>${composants}
+                <strong>Mode :</strong> <span style="color:#7db8f7;">${this._renderMode}</span>
+                &nbsp;|&nbsp;
+                <strong>Composants :</strong>${compList}
                 <br><br>
+                <strong>Sections (${sections.length}) :</strong>
+                <ul style="margin:4px 0 8px 12px;color:#eee;">${secList}</ul>
                 <strong>Article :</strong>
-                <pre style="max-height:200px;overflow:auto;color:#eee;">${JSON.stringify(article, null, 2)}</pre>
-                <hr style="border-color:#334">
-                <strong>Content length :</strong> ${content ? content.length : 0} caractères
+                <pre style="max-height:180px;overflow:auto;color:#eee;margin:4px 0;">${JSON.stringify(article, null, 2)}</pre>
+                <hr style="border-color:#334;margin:6px 0;">
+                <strong>Content length :</strong> ${content ? content.length : 0} car.
             </div>
         `;
     }
