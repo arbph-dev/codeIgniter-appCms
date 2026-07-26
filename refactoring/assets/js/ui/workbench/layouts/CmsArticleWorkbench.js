@@ -12,6 +12,11 @@ import WorkbenchBase from '../WorkbenchBase.js';
 import { TabSystem }  from '../TabSystem.js';
 
 // ── Imports directs des composants (remplace bootstrap.js) ───────────────────
+// c'est les descendants qui importe les composants
+// WorkbenchBase fournit
+// - Registry des composants this.componentRegistry = new Map();
+// - register(componentName, initFunction)
+// - initRegisteredComponents()
 // Ordre respecté : apex avant codeval (codeval publie apex:render)
 import { initApex }    from '/assets/js/components/apex.js';
 import { initCallout } from '/assets/js/components/callout.js';
