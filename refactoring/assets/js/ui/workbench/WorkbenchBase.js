@@ -2,55 +2,60 @@
 // assets/js/ui/workbench/WorkbenchBase.js
 // Base abstraite pour tous les Workbenches
 // ================================================
+// Iteration005
+// + Import bus depuis eventBus.js (suppression window.bus / config.eventBus)
+// + Import utilitaires DOM depuis domhelper.js (qs, qsa, byId, create, clear, toggle)
+// + this.dom : raccourcis DOM exposés aux classes filles
+// + publish(event, data) et subscribe(event, cb) : façade bus
+// ~ getElement() utilise qs importé (plus de this.domHelper externe)
+
+import { bus }                             from '/assets/js/core/eventBus.js';
+import { qs, qsa, byId, create, clear, toggle } from '/assets/js/core/domhelper.js';
 
 export class WorkbenchBase {
 
-
-
     constructor(config = {}) {
-        this.id = config.id || `wb-${Date.now()}`;
-        this.name = config.name || 'Unnamed Workbench';
-        this.container = null;           // Élément DOM principal
+        this.id        = config.id   || `wb-${Date.now()}`;
+        this.name      = config.name || 'Unnamed Workbench';
+        this.container = null;
 
-        // ── Références existantes (on réutilise le core actuel) ──
-        this.bus = config.eventBus || window.bus || null;           // eventBus global
-        this.registry = config.registry || null;
-        this.domHelper = config.domHelper || null;
+        // Iteration005 : bus importé directement, fini window.bus / config.eventBus
+        this.bus = bus;
 
-        // ── Instances locales (optionnelles) ──
-        this.localBus = config.localBus || null;     // EventBus local si besoin d'isolation
-        this.store = config.store || null;           // Store pour la feature (ex: motStore)
+        // Registry des composants (Iteration004)
+        this.componentRegistry = new Map();
 
-        // Configuration
+        // Iteration005 : utilitaires DOM exposés aux classes filles
+        this.dom = { qs, qsa, byId, create, clear, toggle };
+
+        // Instances optionnelles
+        this.localBus = config.localBus || null;
+        this.store    = config.store    || null;
+
         this.options = {
-            hasHeader: true,
-            hasNavbar: false,
-            hasSidebar: false,
-            hasFooter: false,
-            fullPage: true,
+            hasHeader  : true,
+            hasNavbar  : false,
+            hasSidebar : false,
+            hasFooter  : false,
+            fullPage   : true,
             ...config.options
         };
 
         this.state = {
-            isLoaded: false,
-            currentTab: null,
-            data: null
+            isLoaded   : false,
+            currentTab : null,
+            data       : null
         };
 
-        this.components = new Map();   // Pour stocker les sous-composants
+        this.components = new Map();
     }
 
+    // ── Initialisation ────────────────────────────────────────────────────────
 
-
-
-
-
-
-    // ── Initialisation ─────────────────────────────────────
     async init(containerSelector) {
         this.container = document.querySelector(containerSelector);
         if (!this.container) {
-            console.error(`[Workbench] Container ${containerSelector} non trouvé`);
+            console.error(`[Workbench] Container "${containerSelector}" non trouvé`);
             return false;
         }
 
@@ -59,16 +64,13 @@ export class WorkbenchBase {
         this.bootstrap();
 
         this.state.isLoaded = true;
-        console.log(`[Workbench] ${this.name} initialized`);
+        console.log(`[Workbench] ${this.name} initialisé`);
         return true;
     }
 
+    // ── Structure HTML (à surcharger) ─────────────────────────────────────────
 
-
-
-    // Méthode à surcharger par les classes enfants
     renderStructure() {
-        // À implémenter dans les classes filles
         this.container.innerHTML = `
             <div class="wb-header"></div>
             <div class="wb-body">
@@ -77,84 +79,75 @@ export class WorkbenchBase {
         `;
     }
 
+    // ── Bootstrap des sous-composants (à surcharger) ──────────────────────────
 
+    bootstrap() {}
 
-
-
-
-
-
-
-
-    // Bootstrap des sous-composants (à surcharger)
-    bootstrap() {
-        // Exemple : this.initHeader(); this.initContent(); etc.
-    }
-
-
-
-
-
-
+    // ── Événements ────────────────────────────────────────────────────────────
 
     attachEvents() {
-        // Gestion globale des événements
-        if (this.bus) {
-            this.bus.subscribe('wb:refresh', () => this.refresh());
-        }
+        this.bus.subscribe('wb:refresh', () => this.refresh());
     }
 
+    // ── Sélecteurs DOM ───────────────────────────────────────────────────────
 
-
-    // Méthodes utilitaires
     getElement(selector) {
-        return this.domHelper ? this.domHelper.qs(selector, this.container) : this.container.querySelector(selector);
+        return qs(selector, this.container);
     }
 
-
-
-
-
-
+    // ── Visibilité ────────────────────────────────────────────────────────────
 
     show() { if (this.container) this.container.style.display = ''; }
 
-    
-
-
-
-
-
-
-
     hide() { if (this.container) this.container.style.display = 'none'; }
 
-
-
-
-
-
-
-
+    // ── Rafraîchissement ─────────────────────────────────────────────────────
 
     refresh() {
-        console.log(`[Workbench] ${this.name} refreshed`);
-        // À surcharger
+        console.log(`[Workbench] ${this.name} rafraîchi`);
     }
 
-
-
-
-
+    // ── Nettoyage ────────────────────────────────────────────────────────────
 
     destroy() {
-        // Nettoyage
         this.components.clear();
-        console.log(`[Workbench] ${this.name} destroyed`);
+        console.log(`[Workbench] ${this.name} détruit`);
     }
 
+    // ── Registry des composants (Iteration004) ────────────────────────────────
 
+    register(componentName, initFunction) {
+        if (typeof initFunction === 'function') {
+            this.componentRegistry.set(componentName, initFunction);
+            console.log(`[Workbench] Composant enregistré : ${componentName}`);
+        } else {
+            console.warn(`[Workbench] register() : initFunction invalide pour "${componentName}"`);
+        }
+    }
 
+    initRegisteredComponents() {
+        console.log(`[Workbench] Initialisation de ${this.componentRegistry.size} composant(s)`);
+
+        for (const [name, initFn] of this.componentRegistry) {
+            try {
+                initFn();
+                console.log(`[Workbench] → ${name} initialisé`);
+            } catch (e) {
+                console.error(`[Workbench] Erreur init "${name}"`, e);
+            }
+        }
+    }
+
+    // ── Façade bus (Iteration005) ─────────────────────────────────────────────
+
+    publish(eventName, data = null) {
+        this.bus.publish(eventName, data);
+    }
+
+    subscribe(eventName, callback) {
+        this.bus.subscribe(eventName, callback);
+    }
 
 }
-export default WorkbenchBase;// Export pour utilisation
+
+export default WorkbenchBase;
