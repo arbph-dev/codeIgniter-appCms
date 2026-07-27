@@ -1,7 +1,7 @@
 
 # cmsparts
 
-
+- champ content supprimé
 
 ## Migration
 ```sql
@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS `cmsparts` (
 `section_id` BIGINT UNSIGNED NOT NULL,  
 `type_id` BIGINT UNSIGNED NOT NULL,  
 `title` VARCHAR(180) NOT NULL,  
-`content` LONGTEXT NULL,  
 `aside` LONGTEXT NULL,  
 `config` JSON NULL,  
 `position` INT UNSIGNED NOT NULL DEFAULT 1,  
@@ -52,7 +51,6 @@ COLLATE=utf8mb4_unicode_ci;
 | section_id   | bigint unsigned | NO   | MUL | _NULL_            |                             |
 | type_id      | bigint unsigned | NO   | MUL | _NULL_            |                             |
 | title        | varchar(180)    | NO   |     | _NULL_            |                             |
-| content      | longtext        | YES  |     | _NULL_            |                             |
 | aside        | longtext        | YES  |     | _NULL_            |                             |
 | config       | json            | YES  |     | _NULL_            |                             |
 | position     | int unsigned    | NO   |     | 1                 |                             |
