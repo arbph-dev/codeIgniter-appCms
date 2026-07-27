@@ -48,8 +48,10 @@ COLLATE=utf8mb4_unicode_ci;
 
 
 # Seeder
-## Resultat
-avant 
+
+## préparation 
+
+avec SELECT * FROM component_types
 
 | [id] | [name]  | [view]             | [description]                 | [is_active] | [created_at]        |
 | ---- | ------- | ------------------ | ----------------------------- | ----------- | ------------------- |
@@ -60,6 +62,8 @@ avant
 | 5    | callout | components/callout | Bloc callout                  | 1           | 2026-06-21 03:59:01 |
 | 6    | leaflet | components/leaflet | Carte Leaflet / OpenStreetMap | 1           | 2026-07-12 03:29:28 |
 | 7    | threejs | components/threejs | scene threejs                 | 1           | 2026-07-13 01:24:22 |
+
+Requete de vérification avant
 
 | article_slug | article_title | section_id | section_slug | section_title   | position | nb_parts |
 | ------------ | ------------- | ---------- | ------------ | --------------- | -------- | -------- |
@@ -239,3 +243,4 @@ ORDER BY s.position;
 
 ```
 
+## Resultat
