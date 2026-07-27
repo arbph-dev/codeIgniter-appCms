@@ -51,6 +51,15 @@ COLLATE=utf8mb4_unicode_ci;
 ## Resultat
 avant 
 
+| [id] | [name]  | [view]             | [description]                 | [is_active] | [created_at]        |
+| ---- | ------- | ------------------ | ----------------------------- | ----------- | ------------------- |
+| 1    | raw     | components/raw     | HTML brut                     | 1           | 2026-06-21 03:59:01 |
+| 2    | codeval | components/codeval | Bloc CodeVal                  | 1           | 2026-06-21 03:59:01 |
+| 3    | apex    | components/apex    | Graphique ApexCharts          | 1           | 2026-06-21 03:59:01 |
+| 4    | mermaid | components/mermaid | Diagramme Mermaid             | 1           | 2026-06-21 03:59:01 |
+| 5    | callout | components/callout | Bloc callout                  | 1           | 2026-06-21 03:59:01 |
+| 6    | leaflet | components/leaflet | Carte Leaflet / OpenStreetMap | 1           | 2026-07-12 03:29:28 |
+| 7    | threejs | components/threejs | scene threejs                 | 1           | 2026-07-13 01:24:22 |
 
 | article_slug | article_title | section_id | section_slug | section_title   | position | nb_parts |
 | ------------ | ------------- | ---------- | ------------ | --------------- | -------- | -------- |
