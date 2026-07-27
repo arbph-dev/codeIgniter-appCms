@@ -2,15 +2,13 @@
 // assets/js/ui/workbench/WorkbenchBase.js
 // Base abstraite pour tous les Workbenches
 // ================================================
-// Iteration005
-// + Import bus depuis eventBus.js (suppression window.bus / config.eventBus)
-// + Import utilitaires DOM depuis domhelper.js (qs, qsa, byId, create, clear, toggle)
-// + this.dom : raccourcis DOM exposés aux classes filles
-// + publish(event, data) et subscribe(event, cb) : façade bus
-// ~ getElement() utilise qs importé (plus de this.domHelper externe)
+// Iteration005 : import bus direct, domhelper, publish/subscribe
+// Iteration007
+//   + initRegisteredComponentsIn(rootElement) — init ciblée sur un pane
+//     Complète initRegisteredComponents() (scan global, conservé pour compat)
 
-import { bus }                             from '/assets/js/core/eventBus.js';
-import { qs, qsa, byId, create, clear, toggle } from '/assets/js/core/domhelper.js';
+import { bus }                                       from '/assets/js/core/eventBus.js';
+import { qs, qsa, byId, create, clear, toggle }      from '/assets/js/core/domhelper.js';
 
 export class WorkbenchBase {
 
@@ -19,16 +17,15 @@ export class WorkbenchBase {
         this.name      = config.name || 'Unnamed Workbench';
         this.container = null;
 
-        // Iteration005 : bus importé directement, fini window.bus / config.eventBus
+        // Bus importé directement (Iter005)
         this.bus = bus;
 
-        // Registry des composants (Iteration004)
+        // Registry des composants (Iter004)
         this.componentRegistry = new Map();
 
-        // Iteration005 : utilitaires DOM exposés aux classes filles
+        // Utilitaires DOM exposés aux classes filles (Iter005)
         this.dom = { qs, qsa, byId, create, clear, toggle };
 
-        // Instances optionnelles
         this.localBus = config.localBus || null;
         this.store    = config.store    || null;
 
@@ -58,17 +55,13 @@ export class WorkbenchBase {
             console.error(`[Workbench] Container "${containerSelector}" non trouvé`);
             return false;
         }
-
         this.renderStructure();
         this.attachEvents();
         this.bootstrap();
-
         this.state.isLoaded = true;
         console.log(`[Workbench] ${this.name} initialisé`);
         return true;
     }
-
-    // ── Structure HTML (à surcharger) ─────────────────────────────────────────
 
     renderStructure() {
         this.container.innerHTML = `
@@ -79,11 +72,7 @@ export class WorkbenchBase {
         `;
     }
 
-    // ── Bootstrap des sous-composants (à surcharger) ──────────────────────────
-
     bootstrap() {}
-
-    // ── Événements ────────────────────────────────────────────────────────────
 
     attachEvents() {
         this.bus.subscribe('wb:refresh', () => this.refresh());
@@ -98,23 +87,16 @@ export class WorkbenchBase {
     // ── Visibilité ────────────────────────────────────────────────────────────
 
     show() { if (this.container) this.container.style.display = ''; }
-
     hide() { if (this.container) this.container.style.display = 'none'; }
 
-    // ── Rafraîchissement ─────────────────────────────────────────────────────
-
-    refresh() {
-        console.log(`[Workbench] ${this.name} rafraîchi`);
-    }
-
-    // ── Nettoyage ────────────────────────────────────────────────────────────
+    refresh() { console.log(`[Workbench] ${this.name} rafraîchi`); }
 
     destroy() {
         this.components.clear();
         console.log(`[Workbench] ${this.name} détruit`);
     }
 
-    // ── Registry des composants (Iteration004) ────────────────────────────────
+    // ── Registry des composants ───────────────────────────────────────────────
 
     register(componentName, initFunction) {
         if (typeof initFunction === 'function') {
@@ -125,20 +107,52 @@ export class WorkbenchBase {
         }
     }
 
+    /**
+     * Init globale — scanne document entier.
+     * Utilisé à l'ouverture de la page (mode plat) ou en premier appel.
+     * Conservé pour compatibilité descendante.
+     */
     initRegisteredComponents() {
-        console.log(`[Workbench] Initialisation de ${this.componentRegistry.size} composant(s)`);
-
+        console.log(`[Workbench] Init globale — ${this.componentRegistry.size} composant(s)`);
         for (const [name, initFn] of this.componentRegistry) {
             try {
                 initFn();
-                console.log(`[Workbench] → ${name} initialisé`);
+                console.log(`[Workbench] → ${name} initialisé (global)`);
             } catch (e) {
                 console.error(`[Workbench] Erreur init "${name}"`, e);
             }
         }
     }
 
-    // ── Façade bus (Iteration005) ─────────────────────────────────────────────
+    /**
+     * Iter007 — Init ciblée sur un élément racine (pane TabSystem).
+     *
+     * Chaque initFn reçoit rootElement comme premier argument.
+     * Les composants refactorisés (initXxx(root = document)) scannent
+     * uniquement rootElement.querySelectorAll(…) au lieu de document.
+     *
+     * Avantage : un composant déjà rendu dans un pane précédent n'est
+     * pas ré-initialisé quand un nouveau pane est activé.
+     *
+     * @param {Element} rootElement — pane ou tout autre conteneur DOM
+     */
+    initRegisteredComponentsIn(rootElement) {
+        if (!rootElement) {
+            console.warn('[Workbench] initRegisteredComponentsIn : rootElement manquant');
+            return;
+        }
+        console.log(`[Workbench] Init ciblée (${this.componentRegistry.size} composant(s)) dans`, rootElement);
+        for (const [name, initFn] of this.componentRegistry) {
+            try {
+                initFn(rootElement);
+                console.log(`[Workbench] → ${name} initialisé dans pane`);
+            } catch (e) {
+                console.error(`[Workbench] Erreur init "${name}" dans pane`, e);
+            }
+        }
+    }
+
+    // ── Façade bus (Iter005) ──────────────────────────────────────────────────
 
     publish(eventName, data = null) {
         this.bus.publish(eventName, data);
