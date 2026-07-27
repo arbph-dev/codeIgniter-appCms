@@ -48,6 +48,17 @@ COLLATE=utf8mb4_unicode_ci;
 
 
 # Seeder
+## Resultat
+avant 
+
+
+| article_slug | article_title | section_id | section_slug | section_title   | position | nb_parts |
+| ------------ | ------------- | ---------- | ------------ | --------------- | -------- | -------- |
+| test-art     | testArt       | 999        | test-sec     | Section de test | 1        | 11       |
+
+
+## Code
+
 ```sql
 -- =============================================================================
 -- Seed Iter006.2.1 — Test TabSystem CmsArticleWorkbench
