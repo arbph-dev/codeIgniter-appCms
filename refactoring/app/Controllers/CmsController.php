@@ -44,7 +44,7 @@ class CmsController extends BaseController
         }
 
         return view(
-            'cms/article',
+            'cms/article2',
             [
                 'article' => $article,
                 'content' => $this->cms->renderArticle($slug)
