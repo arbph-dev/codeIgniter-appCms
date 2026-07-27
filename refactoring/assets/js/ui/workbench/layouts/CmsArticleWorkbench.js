@@ -1,21 +1,15 @@
 // assets/js/ui/workbench/layouts/CmsArticleWorkbench.js
 //=============================================================================
-// Iteration005
-//   - Suppression bootstrap.js, imports directs des composants
-//   - Bus via WorkbenchBase.publish()
-//   - setupComponentRegistry : un register() par composant
-//
-// Iteration006.1 — Navigation par sections
-//   + loadFromPHP : branchement tab-mode / flat-mode selon article.sections
-//   + loadSections(sections) : construit TabSystem, un onglet par section
-//   + fetchSection(id, paneEl) : charge le HTML depuis /cms/section/{id}
-//   ~ showDebug : affiche le nombre de sections et le mode de rendu
+// Iter005 : imports directs composants, bus via WorkbenchBase
+// Iter006.1 : loadSections(), fetchSection(), mode tabs/plat
+// Iter007
+//   ~ fetchSection() : initRegisteredComponents() → initRegisteredComponentsIn(paneEl)
+//     Chaque composant est initialisé uniquement dans le pane courant.
+//     Les panes déjà rendus ne sont pas affectés.
 
 import WorkbenchBase from '../WorkbenchBase.js';
 import { TabSystem }  from '../TabSystem.js';
 
-// ── Imports directs des composants ───────────────────────────────────────────
-// Ordre : apex avant codeval (codeval publie des événements apex:render)
 import { initApex }    from '/assets/js/components/apex.js';
 import { initCallout } from '/assets/js/components/callout.js';
 import { initCodeVal } from '/assets/js/components/codeval.js';
@@ -32,10 +26,10 @@ export class CmsArticleWorkbench extends WorkbenchBase {
             ...config
         });
 
-        this.debugEnabled = config.debug ?? true;   // false en production
+        this.debugEnabled = config.debug ?? true;
         this.tabSystem    = null;
         this.article      = null;
-        this._renderMode  = 'flat';                 // 'tabs' | 'flat'
+        this._renderMode  = 'flat';
     }
 
     // ── Structure HTML ────────────────────────────────────────────────────────
@@ -44,9 +38,7 @@ export class CmsArticleWorkbench extends WorkbenchBase {
         this.container.innerHTML = `
             <div class="cms_article_wrap">
                 <header class="cms_article_header" id="wb-header"></header>
-
                 <div id="wb-debug" style="display:none;"></div>
-
                 <main class="cms_article_body" id="wb-content"></main>
                 <footer class="wb-footer" id="wb-footer"></footer>
             </div>
@@ -55,19 +47,8 @@ export class CmsArticleWorkbench extends WorkbenchBase {
 
     // ── Point d'entrée principal ──────────────────────────────────────────────
 
-    /**
-     * Appelé depuis article2.php avec les données PHP.
-     *
-     * Iter006.1 : branchement automatique selon article.sections
-     *   → sections.length > 1  : mode onglets  (un fetch par section)
-     *   → sinon                : mode plat      (contenu HTML direct)
-     *
-     * @param {object} article  — données PHP de l'article (titre, slug, sections…)
-     * @param {string} content  — HTML complet rendu côté PHP (fallback mode plat)
-     */
     loadFromPHP(article, content) {
         this.article = article;
-
         this.renderHeader(article);
 
         const sections = Array.isArray(article.sections) ? article.sections : [];
@@ -80,15 +61,19 @@ export class CmsArticleWorkbench extends WorkbenchBase {
             this.renderContent(content);
         }
 
-        // Enregistrement et init des composants
-        // Note : en mode tabs, l'init globale ici est quasi no-op
-        //        (le DOM de chaque section n'est pas encore chargé).
-        //        initRegisteredComponents() est rappelé dans fetchSection()
-        //        après injection de chaque section.
+        // Enregistrement des composants
         this.setupComponentRegistry();
-        this.initRegisteredComponents();
 
-        // Événement bus : article prêt
+        // Iter007 : en mode plat → init globale (document)
+        //           en mode tabs → no-op ici, init ciblée dans fetchSection()
+        if (this._renderMode === 'flat') {
+            this.initRegisteredComponents();
+        } else {
+            // Premier appel sans root : setup des bus subscriptions (guard _initialized)
+            // sans scanner de DOM vide. Chaque composant sera init dans son pane.
+            this._bootstrapComponentBus();
+        }
+
         this.publish('cms:article:loaded', {
             slug : article?.slug,
             mode : this._renderMode,
@@ -99,30 +84,39 @@ export class CmsArticleWorkbench extends WorkbenchBase {
         }
     }
 
+    /**
+     * Iter007 — En mode tabs, déclenche une fois initXxx() sans root
+     * pour que chaque composant enregistre ses bus subscriptions (_initialized guard).
+     * Aucun élément DOM n'est scanné (les panes sont vides à ce stade).
+     */
+    _bootstrapComponentBus() {
+        console.log('[CmsArticleWorkbench] Bootstrap bus composants (mode tabs)');
+        for (const [name, initFn] of this.componentRegistry) {
+            try {
+                // Appel sans argument → root = document, mais les panes sont vides
+                // → aucun composant trouvé, seuls les bus subscriptions sont enregistrés
+                initFn();
+                console.log(`[CmsArticleWorkbench] → ${name} bus enregistré`);
+            } catch (e) {
+                console.error(`[CmsArticleWorkbench] Erreur bootstrap bus "${name}"`, e);
+            }
+        }
+    }
+
     // ── Mode onglets ──────────────────────────────────────────────────────────
 
-    /**
-     * Iter006.1 — construit le TabSystem, un onglet par section.
-     * Les sections sont triées par position (ou ordre, selon le modèle PHP).
-     *
-     * @param {Array} sections  — ex: [{ id: 1, title: 'Intro', position: 1 }, …]
-     */
     loadSections(sections) {
         const contentEl = this.getElement('#wb-content');
         if (!contentEl) return;
 
-        // Conteneur dédié aux onglets (vide le contenu précédent)
         const tabsEl = this.dom.create('div', { id: 'wb-tabs', class: 'wb_tabs' });
         contentEl.innerHTML = '';
         contentEl.appendChild(tabsEl);
 
-        // Construction du TabSystem
-        this.tabSystem = new TabSystem({
-            busEvent : 'cms:section:change',
-        });
+        this.tabSystem = new TabSystem({ busEvent: 'cms:section:change' });
 
         [...sections]
-            .sort((a, b) => (a.position ?? a.ordre ?? 0) - (b.position ?? b.ordre ?? 0))
+            .sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
             .forEach(section => {
                 const tabId = `section-${section.id}`;
                 const label = section.title ?? section.titre ?? `Section ${section.id}`;
@@ -130,48 +124,35 @@ export class CmsArticleWorkbench extends WorkbenchBase {
                 this.tabSystem.addTab(
                     tabId,
                     label,
-                    // renderFn : pane vide, le contenu arrive via fetchSection
                     () => this.dom.create('div', { class: 'wb_section_content' }),
-                    // initFn  : chargement lazy au premier affichage
                     (paneEl) => this.fetchSection(section.id, paneEl)
                 );
             });
 
-        // render() active automatiquement le premier onglet
-        // → fetchSection() est déclenché immédiatement pour la section 1
         this.tabSystem.render(tabsEl);
     }
 
     /**
-     * Iter006.1 — charge le HTML d'une section via GET /cms/section/{id}.
-     * Après injection, relance initRegisteredComponents() pour initialiser
-     * les composants (apex, mermaid, leaflet…) présents dans la section.
+     * Iter007 — Charge le HTML d'une section, puis init les composants
+     * UNIQUEMENT dans ce pane via initRegisteredComponentsIn(paneEl).
      *
-     * ⚠ Limitation connue (Iter007) : initRegisteredComponents() scanne tout
-     *   le document. Un composant déjà initialisé dans une section précédente
-     *   peut être affecté. Résolution : passer un root element aux init functions.
+     * Les panes déjà rendus ne sont pas affectés.
      *
      * @param {number}      sectionId
-     * @param {HTMLElement} paneEl     — pane cible du TabSystem
+     * @param {HTMLElement} paneEl
      */
     async fetchSection(sectionId, paneEl) {
-        // Indicateur de chargement
         paneEl.innerHTML = '<p class="wb_section_loading">⏳ Chargement…</p>';
 
         try {
             const res = await fetch(`/cms/section/${sectionId}`);
+            if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
 
-            if (!res.ok) {
-                throw new Error(`HTTP ${res.status} ${res.statusText}`);
-            }
-
-            // Injection du fragment HTML retourné par CmsController::section()
             paneEl.innerHTML = await res.text();
 
-            // Re-init des composants présents dans cette section
-            this.initRegisteredComponents();
+            // Iter007 : init ciblée — seul ce pane est scanné
+            this.initRegisteredComponentsIn(paneEl);
 
-            // Événement bus : section rendue
             this.publish('cms:section:rendered', { sectionId });
 
         } catch (err) {
@@ -186,10 +167,6 @@ export class CmsArticleWorkbench extends WorkbenchBase {
 
     // ── Mode plat (fallback) ──────────────────────────────────────────────────
 
-    /**
-     * Rendu direct du HTML PHP — utilisé quand l'article n'a pas de sections
-     * ou une seule section.
-     */
     renderContent(contentHtml) {
         const content = this.getElement('#wb-content');
         if (content) {
@@ -214,29 +191,20 @@ export class CmsArticleWorkbench extends WorkbenchBase {
         `;
     }
 
-    // ── Registry des composants ───────────────────────────────────────────────
+    // ── Registry ─────────────────────────────────────────────────────────────
 
     setupComponentRegistry() {
-        this.register('apex',    initApex);     // ① dépendance de codeval
-        this.register('callout', initCallout);  // ② indépendants
+        this.register('apex',    initApex);
+        this.register('callout', initCallout);
         this.register('leaflet', initLeaflet);
         this.register('mermaid', initMermaid);
         this.register('three',   initThree);
-        this.register('codeval', initCodeVal);  // ③ consommateur d'events
+        this.register('codeval', initCodeVal);
     }
 
     // ── TabSystem (accès externe) ─────────────────────────────────────────────
 
-    /**
-     * Retourne le TabSystem actif, ou null en mode plat.
-     * Permet à un script externe d'activer un onglet programmatiquement.
-     *
-     * Exemple :
-     *   wb.getTabs()?.activate('section-3');
-     */
-    getTabs() {
-        return this.tabSystem;
-    }
+    getTabs() { return this.tabSystem; }
 
     // ── Debug ──────────────────────────────────────────────────────────────────
 
@@ -250,20 +218,22 @@ export class CmsArticleWorkbench extends WorkbenchBase {
 
         const secList = sections.length
             ? sections.map(s =>
-                `<li>#${s.id} — ${s.title ?? s.titre ?? '?'} (pos: ${s.position ?? s.ordre ?? '?'})</li>`
+                `<li>#${s.id} — ${s.title ?? '?'} (pos: ${s.position ?? '?'})</li>`
               ).join('')
             : '<li style="opacity:.5">aucune</li>';
 
         debugPanel.style.display = 'block';
         debugPanel.innerHTML = `
             <div style="background:#1a2a4a;color:#eee236;padding:12px;margin:10px 0;border-radius:6px;font-family:monospace;font-size:0.8rem;">
-                <strong>🐞 DEBUG — CmsArticleWorkbench (Iter006.1)</strong>
+                <strong>🐞 DEBUG — CmsArticleWorkbench (Iter007)</strong>
                 <button onclick="this.parentElement.parentElement.style.display='none'"
                         style="float:right;background:#c0392b;color:white;border:none;padding:4px 8px;border-radius:4px;cursor:pointer;">
                     Fermer
                 </button>
                 <br>
                 <strong>Mode :</strong> <span style="color:#7db8f7;">${this._renderMode}</span>
+                &nbsp;|&nbsp;
+                <strong>Init :</strong> <span style="color:#7db8f7;">${this._renderMode === 'tabs' ? 'ciblée par pane' : 'globale (document)'}</span>
                 &nbsp;|&nbsp;
                 <strong>Composants :</strong>${compList}
                 <br><br>
