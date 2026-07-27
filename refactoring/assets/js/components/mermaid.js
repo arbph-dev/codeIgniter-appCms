@@ -1,6 +1,5 @@
 /*
-
-/assets/js/components/mermaid.js 
+/assets/js/components/mermaid.js
 
 ===============================================================================
  COMPONENT : MERMAID
@@ -9,6 +8,20 @@
     2. REGISTRY → définitions pré-câblées
     3. RENDERER → rendu DOM
     4. INDEX    → bus + bootstrap
+===============================================================================
+ Iter007
+    + scanAndRender(root)  — noyau DRY : scan sur n'importe quel élément racine
+    ~ bootstrapDom()       → bootstrapDom(root = document) — utilise scanAndRender
+    ~ runInArticle(id)     — utilise scanAndRender (plus de duplication)
+    ~ initMermaid()        → initMermaid(root = document)
+      + guard _initialized : mermaid.initialize() et bus souscrits une seule fois
+      + appel scanAndRender(root) : ciblé sur le pane ou global selon l'appelant
+
+ Compatibilité descendante :
+    initMermaid()           → comportement identique à avant (scan document)
+    bus 'nav:goto'          → portal : runInArticle(articleId)  inchangé
+    bus 'tabs:switch'       → portal legacy                     inchangé
+    window.mermaid_Run(id)  → API inline PHP                    inchangée
 ===============================================================================
 */
 
@@ -56,51 +69,62 @@ const DIAGRAMS = {
    3. RENDERER
    ========================================================================= */
 
-const rendered = new Set()
+const rendered = new Set()   // ids déjà rendus — persiste entre les appels
 
 /**
- * Rendu initial : tous les .mermaid présents dans le DOM au chargement.
- * Appelé une seule fois dans initMermaid().
- * Compat future onglets : les éléments déjà rendus sont dans `rendered`,
- * runInArticle() les ignorera automatiquement.
+ * Iter007 — Noyau DRY partagé par toutes les voies d'init.
+ *
+ * Scanne root à la recherche de .mermaid non encore rendus,
+ * les ajoute à `rendered` et lance mermaid.run().
+ *
+ * @param {Element|Document} root — conteneur cible (pane, article, document…)
  */
-function bootstrapDom()
+function scanAndRender(root = document)
 {
-    const nodes = [...document.querySelectorAll('.mermaid')]
+    const nodes = [...root.querySelectorAll('.mermaid')]
         .filter(el => el.id && !rendered.has(el.id))
- 
+
     if (!nodes.length) { return }
- 
+
     nodes.forEach(el => rendered.add(el.id))
     mermaid.run({ nodes })
-    console.log(`[mermaid] bootstrap: ${nodes.length} diagramme(s) rendus`)
+    console.log(`[mermaid] ${nodes.length} diagramme(s) rendus`)
 }
- 
+
 /**
- * Rendu différé : déclenché par tabs:switch ou nav:goto.
- * Seuls les éléments DANS le conteneur articleId et pas encore rendus
- * sont traités — évite les doubles rendus au changement d'onglet.
+ * Init globale au chargement (ou sur un root fourni).
+ * Iter007 : délègue à scanAndRender.
+ *
+ * @param {Element|Document} root
  */
-function runInArticle(articleId) 
+function bootstrapDom(root = document)
 {
-    const article = byId(articleId)
-    if (!article) return
-
-    const nodes = [...article.querySelectorAll('.mermaid')]
-        .filter(el => el.id && !rendered.has(el.id))
-
-    if (!nodes.length) return
-
-    nodes.forEach(el => rendered.add(el.id))
-    mermaid.run({ nodes })
-    console.log(`[mermaid] ${nodes.length} diagramme(s) rendu(s) dans #${articleId}`)
+    scanAndRender(root)
 }
 
-function reRender(id) 
+/**
+ * Rendu différé déclenché par bus 'nav:goto' ou 'tabs:switch'.
+ * Compatibilité portal : prend un id string, résout en élément, délègue.
+ *
+ * @param {string} articleId — id HTML de l'article ou de la section
+ */
+function runInArticle(articleId)
+{
+    const el = byId(articleId)
+    if (!el) { return }
+    scanAndRender(el)
+}
+
+/**
+ * Re-render forcé d'un diagramme déjà rendu (reset du Set).
+ *
+ * @param {string} id
+ */
+function reRender(id)
 {
     const el = byId(id)
     if (!el) {
-        console.warn(`Mermaid: #${id} introuvable`)
+        console.warn(`[mermaid] reRender : #${id} introuvable`)
         return
     }
     rendered.delete(id)
@@ -108,11 +132,17 @@ function reRender(id)
     mermaid.run({ nodes: [el] })
 }
 
-async function setAndRender(id, definition) 
+/**
+ * Injection dynamique d'une définition puis rendu (ex: depuis codeval).
+ *
+ * @param {string} id
+ * @param {string} definition
+ */
+async function setAndRender(id, definition)
 {
     const el = byId(id)
     if (!el) {
-        console.warn(`Mermaid: #${id} introuvable`)
+        console.warn(`[mermaid] setAndRender : #${id} introuvable`)
         return
     }
     el.textContent = definition
@@ -121,7 +151,7 @@ async function setAndRender(id, definition)
         await mermaid.run({ nodes: [el] })
         rendered.add(id)
     } catch (err) {
-        console.error(`Mermaid: erreur rendu #${id}`, err)
+        console.error(`[mermaid] erreur rendu #${id}`, err)
         el.textContent = `Erreur : ${err.message}`
     }
 }
@@ -131,32 +161,49 @@ async function setAndRender(id, definition)
    4. INDEX
    ========================================================================= */
 
-export function initMermaid() {
+let _initialized = false   // guard : initialize() et bus — une seule fois
 
-    mermaid.initialize(CONFIG)
+/**
+ * Iter007 — initMermaid(root = document)
+ *
+ * Première appel (root = document ou absent) :
+ *   → mermaid.initialize() + bus subscriptions + scanAndRender(document)
+ *
+ * Appels suivants (root = pane TabSystem) :
+ *   → scanAndRender(pane) uniquement
+ *   Le Set `rendered` garantit qu'aucun diagramme déjà rendu n'est relancé.
+ *
+ * @param {Element|Document} root — document (défaut) ou pane ciblé
+ */
+export function initMermaid(root = document)
+{
+    if (!_initialized)
+    {
+        mermaid.initialize(CONFIG)
 
-    // Rendu différé : un article devient visible
-    bus.subscribe('tabs:switch', ({ name }) => runInArticle(name))
-    bus.subscribe('nav:goto',    ({ articleId }) => runInArticle(articleId))
+        // ── Bus : portal nav (par id) ──────────────────────────────────────
+        bus.subscribe('tabs:switch',    ({ name })      => runInArticle(name))
+        bus.subscribe('nav:goto',       ({ articleId }) => runInArticle(articleId))
 
-    // Re-rendu d'un diagramme existant
-    bus.subscribe('mermaid:render', ({ id }) => reRender(id))
+        // ── Bus : API mermaid ──────────────────────────────────────────────
+        bus.subscribe('mermaid:render', ({ id })              => reRender(id))
+        bus.subscribe('mermaid:set',    ({ id, definition })  => setAndRender(id, definition))
+        bus.subscribe('mermaid:preset', ({ id, type })        =>
+        {
+            const builder = DIAGRAMS[type]
+            if (!builder) {
+                console.warn(`[mermaid] preset inconnu "${type}"`)
+                return
+            }
+            setAndRender(id, builder())
+        })
 
-    // Injection dynamique (depuis codeval par exemple)
-    bus.subscribe('mermaid:set', ({ id, definition }) => setAndRender(id, definition))
+        _initialized = true
+        console.log('[mermaid] initialisé')
+    }
 
-    // Chargement depuis le REGISTRY
-    bus.subscribe('mermaid:preset', ({ id, type }) => {
-        const builder = DIAGRAMS[type]
-        if (!builder) {
-            console.warn(`Mermaid: preset inconnu "${type}"`)
-            return
-        }
-        setAndRender(id, builder())
-    })
-
-    // --- Rendu initial de tous les éléments déjà dans le DOM
-    bootstrapDom()
+    // Scan ciblé : document au premier appel global, pane aux appels suivants
+    bootstrapDom(root)
 }
 
 
