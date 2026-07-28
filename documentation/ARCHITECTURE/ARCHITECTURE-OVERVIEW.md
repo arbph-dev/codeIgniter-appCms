@@ -67,6 +67,7 @@ voir non utilisé par
 
 ---
 # DescriptorDefinition
+[DescriptorDefinition](/documentation/ARCHITECTURE/DescriptorDefinition.md) - Obsolete à mettre a jour avec ces infos content n'existe plus et ComposantDefifintion n'existe pas
 
 Il faut aborder DescriptorDefinition sans penser à PHP.
 Ce n'est pas un DTO. Ce n'est pas un modèle. Ce n'est pas un ViewModel.
