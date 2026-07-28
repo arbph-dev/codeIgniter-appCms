@@ -3,6 +3,15 @@
 
 
 
+| Fichier | Domaine | Statut | Documentation | Action |
+|---------|---------|--------|---------------|--------| 
+| app/Controllers/CmsController.php | Backend | Stable | À mettre à jour | Documenter | 
+| app/Services/CmsService.php | Backend | Stable | Partielle | Compléter | 
+| app/Controllers/TestController.php | Backend | Prototype ? | Aucune | Vérifier | 
+| app/Views/components/apex.php | Vue | Obsolète ? | Aucune | Vérifier suppression | 
+| documentation/CmsService.md | Documentation | Ancienne | Oui | Réécrire |
+
+
 
 
 
