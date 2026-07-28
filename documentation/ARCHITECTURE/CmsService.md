@@ -1,90 +1,125 @@
-Le service CmsService est l'élément central de la gestion du CMS
-Il permet de décharger les controleurs tout en centralisant les opérations sur les données
+# CmsService
 
-le code source : [app/Services/CmsService.php](/refactoring/app/Services/CmsService.php)
+Le service **CmsService** est la façade du backend du CMS.
 
-Les méthodes se répartissent selon les élments définis : 
-- categories
-- articles
-- sections
-- parts
-- composants
+Il centralise les opérations sur les données, la construction des objets du CMS, le rendu des composants et certains services d'administration.
 
-## categories
-- ‎CmsService.getCategory
-- ‎CmsService.getFullCategory
-- CmsService.renderCategory
-‎
-## articles
-‎- CmsService.getArticle‎
-‎- ‎CmsService.getArticlesByCategory‎
-‎- ‎CmsService.getPublishedArticle
-‎- ‎CmsService.getArticleTree‎
-‎- ‎CmsService.getFullArticle *
-‎- ‎CmsService.renderArticle‎
+**Code source :**
 
-## sections
-‎- CmsService.getSection‎
-‎- CmsService.getAllSections‎
-‎- ‎CmsService.getSectionsByArticle
-‎- ‎CmsService.getPublishedSection
-‎- CmsService.renderSection‎
-‎- ‎CmsService.renderSectionBySlug‎
-‎
-## parts
-‎- CmsService.getPart
-‎- CmsService.getParts‎
-‎- CmsService.getAllParts‎
-‎- ‎CmsService.getPartsBySection
-‎- CmsService.renderPart‎
-‎- ‎CmsService.renderPartEditor‎
-‎- ‎CmsService.enrichPart‎ * 
-‎‎- ‎CmsService.newPart
-‎- ‎CmsService.insertPart‎
-‎- ‎CmsService.createPart
-‎‎- CmsService.updatePart
-‎‎- CmsService.deletePart‎
-‎- ‎CmsService.swapPosition‎
-‎- ‎CmsService.movePartUp‎
-  -> CmsService.swapPosition‎
-‎- ‎CmsService.movePartDown‎
--> CmsService.swapPosition‎
-‎
-## Composants et utilitaires
-- CmsService.loadDescriptors 
-‎- ‎CmsService.getComponentTypes
-‎- ‎CmsService.adminLinks‎
-‎- ‎CmsService.getCmsTree
+- [app/Services/CmsService.php](/refactoring/app/Services/CmsService.php)
 
+---
 
+# Responsabilités
 
+Le service assure quatre fonctions principales :
 
+- accès aux données (Models)
+- construction des structures du CMS
+- rendu des composants
+- services d'administration
 
+---
 
+# Dépendances
 
-use App\Models\CmsCategoryModel;
-use App\Models\CmsArticleModel;
-use App\Models\CmsSectionModel;
-use App\Models\CmsPartModel;
+## Models
 
-use App\Libraries\Components\DescriptorMapper;
-use App\Libraries\Components\ComponentRenderer;
-use App\Libraries\Components\AdminComponentRenderer;
+- [app/Models/CmsCategoryModel.php](/refactoring/app/Models/CmsCategoryModel.php)
+- [app/Models/CmsArticleModel.php](/refactoring/app/Models/CmsArticleModel.php)
+- [app/Models/CmsSectionModel.php](/refactoring/app/Models/CmsSectionModel.php)
+- [app/Models/CmsPartModel.php](/refactoring/app/Models/CmsPartModel.php)
 
+## Components
 
-        // $service  = new \App\Services\CmsService();
+- [app/Libraries/Components/DescriptorMapper.php](/refactoring/app/Libraries/Components/DescriptorMapper.php)
+- [app/Libraries/Components/ComponentRenderer.php](/refactoring/app/Libraries/Components/ComponentRenderer.php)
+- [app/Libraries/Components/AdminComponentRenderer.php](/refactoring/app/Libraries/Components/AdminComponentRenderer.php)
 
-    //$service = new CmsService();   // use App\Services\CmsService
-  
-        // $category = $service->getCategory('test-cat');  
-        // print_r( $service->getArticlesByCategory( $category['id'] ) );        
-        
-        // $article = $service->getArticle('test-art');
-        // print_r( $service->getSectionsByArticle( $article['id'] ) );
+---
 
-        // $section = $service->getSection('test-sec');
-        // print_r( $service->getPartsBySection( $section['id'] ) );        
+# Utilisateurs
 
-        //print_r( $service->getFullArticle('test-art') );
+Le service est utilisé par :
 
-        //return $service->renderArticle('test-art');
+- [app/Controllers/CmsController.php](/refactoring/app/Controllers/CmsController.php)
+- [app/Controllers/Admin/CmsPart.php](/refactoring/app/Controllers/Admin/CmsPart.php)
+- [app/Controllers/Admin/CmsTree.php](/refactoring/app/Controllers/Admin/CmsTree.php)
+
+---
+
+# Organisation des méthodes
+
+## Categories
+
+- getCategory()
+- getFullCategory()
+- renderCategory()
+
+## Articles
+
+- getArticle()
+- getArticlesByCategory()
+- getPublishedArticle()
+- getArticleTree()
+- getFullArticle()
+- renderArticle()
+
+## Sections
+
+- getSection()
+- getAllSections()
+- getSectionsByArticle()
+- getPublishedSection()
+- renderSection()
+- renderSectionBySlug()
+
+## Parts
+
+- getPart()
+- getParts()
+- getAllParts()
+- getPartsBySection()
+- renderPart()
+- renderPartEditor()
+- enrichPart()
+- newPart()
+- insertPart()
+- createPart()
+- updatePart()
+- deletePart()
+- swapPosition()
+- movePartUp()
+- movePartDown()
+
+## Composants
+
+- loadDescriptors()
+- getComponentTypes()
+
+## Administration
+
+- adminLinks()
+- getCmsTree()
+
+---
+
+# Flux principal
+
+```mermaid
+flowchart TD
+
+Controller
+    --> CmsService
+    --> Models
+    --> DescriptorMapper
+    --> ComponentRenderer
+    --> View
+    --> Browser
+```
+
+Voir également :
+
+- [CmsController](/documentation/ARCHITECTURE/CmsController.md)
+- [DescriptorMapper](/documentation/ARCHITECTURE/DescriptorMapper.md)
+- [ComponentRenderer](/documentation/ARCHITECTURE/ComponentRenderer.md)
