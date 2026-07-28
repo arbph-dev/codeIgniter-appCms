@@ -13,7 +13,7 @@
 
 |Fichier|Domaine|Statut code|Documentation|Doc|Action|Priorité|
 |---|---|---|---|---|---|---|
-|`app/Config/Routes.php`|Backend / Configuration|✅ Stable|✅ Stable|[/documentation/ARCHITECTURE/Routes.md](/documentation/ARCHITECTURE/Routes.md)|Documenter|P1|
+|`app/Config/Routes.php`|Backend / Configuration|✅ Stable|🟡 À documenter|[/documentation/ARCHITECTURE/Routes.md](/documentation/ARCHITECTURE/Routes.md)|Vérifier|P1|
 |`app/Controllers/CmsController.php`|Backend / Controller|✅ Stable|🟡 À mettre à jour|`documentation/ARCHITECTURE/CmsController.md`|Documenter|P1|
 |`app/Services/CmsService.php`|Backend / Service|✅ Stable|🟡 À mettre à jour|`documentation/ARCHITECTURE/CmsService.md`|Compléter|P1|
 |`app/Views/components/apex.php`|Frontend / View|❌ Obsolète ?|⚪|—|Vérifier suppression|P2|
