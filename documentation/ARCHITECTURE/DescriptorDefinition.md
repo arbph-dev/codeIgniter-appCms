@@ -1,4 +1,8 @@
 
+
+---
+# OBSOLETE
+
 ## Objectif
 
 Un DescriptorDefinition décrit une instance de composant.
