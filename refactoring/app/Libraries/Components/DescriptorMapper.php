@@ -10,7 +10,9 @@ class DescriptorMapper
         2 => 'codeval',
         3 => 'apex',
         4 => 'mermaid',
-        5 => 'callout'
+        5 => 'callout',
+        6 => 'leaflet',
+        7 => 'threejs',
     ];
 
     public function map(array $part): DescriptorDefinition
