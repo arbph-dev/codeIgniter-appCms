@@ -1,47 +1,18 @@
-# Phase 0 - Stabilisation
-
-## Objectif
-
-Arrêter les nouvelles features.
-
-## Actions
-
-- gel du périmètre
-- inventaire des composants
-- inventaire des features
-- inventaire des API
-- inventaire des modèles
-
-## Livrables
-
-- architecture.md
-- composants.md
-- features.md
-- api.md
-
----
+# Phase 0 - Inventiare
 
 
 
 
 
 
-3 choses importantes
 
-j'ai oublier de me ménager des aires de repos
-- J'adore Threejs j'ai d'énormes projets mais suis bloqué sur des architectures pour intégré Threejs
-- l'extraction d'entités depuis le contenu m'intéressent mais il faut déjà les entités
 
-J'ai compliqué ce qui ne doit pas l'être en mélangeant la production de la conception
-Python ou Open refine vont  géré la data science au mieux, pour les api tierces on va gérer les sources brutes via python et préparer les tables dans sqlite pour les exporter
 
-Plus important j'ai négligé la documentation trop abondantes et diluées qui vous éloignent de vos objectifs
 
-on finit l'audit il peut influer sur les besoins backend (quiz, pièce de théatre)
+---------
+# OBSOLETE
 
-on va attaquer les stubs et documenter 
-- EntityApiInterface
-- EntityRegistry
+
 - Relation
 - FieldDefinition
 - EntityDefinition
