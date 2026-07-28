@@ -66,7 +66,24 @@ voir non utilisé par
 
 
 ---
-DescriptorDefinition
+# DescriptorDefinition
+
+Il faut aborder DescriptorDefinition sans penser à PHP.
+Ce n'est pas un DTO. Ce n'est pas un modèle. Ce n'est pas un ViewModel.
+```
+DescriptorDefinition { type , config }
+```
+Le Descriptor indique tout ce qu'il faut pour créer un runtime. C'est un contrat d'exécution.
+
+Le runtime pouvant être :
+- Mermaid
+- Apex
+- Leaflet
+- Three
+- (demain un SceneWorkbench)
+
+
+
 attention double implémentation
     app\Libraries\Cms\DescriptorDefinition.php
         namespace App\Libraries\Cms
