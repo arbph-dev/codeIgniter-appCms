@@ -88,7 +88,7 @@ flowchart TD
 Route
     --> CmsController
     --> CmsService
-    --> renderSection()
+    --> renderSection
     --> section["section.php"]
 ```
 
