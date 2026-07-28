@@ -1,15 +1,24 @@
 # Phase 0 - Inventiare
 
+|Statut|Signification|
+|---|---|
+|✅ Stable|Implémenté, utilisé en production|
+|🟡 À documenter|Utilisé mais sans documentation|
+|🔵 En développement|Fonctionnel mais évolutif|
+|🟣 Prototype|Expérimentation conservée|
+|⚪ Projet|Conception future uniquement|
+|❌ À supprimer|Plus utilisé|
 
 
 
-| Fichier | Domaine | Statut | Documentation | Action |
-|---------|---------|--------|---------------|--------| 
-| app/Controllers/CmsController.php | Backend | Stable | À mettre à jour | Documenter | 
-| app/Services/CmsService.php | Backend | Stable | Partielle | Compléter | 
-| app/Controllers/TestController.php | Backend | Prototype ? | Aucune | Vérifier | 
-| app/Views/components/apex.php | Vue | Obsolète ? | Aucune | Vérifier suppression | 
-| documentation/CmsService.md | Documentation | Ancienne | Oui | Réécrire |
+|Fichier|Domaine|Statut code|Documentation|Doc|Action|Priorité|
+|---|---|---|---|---|---|---|
+|`app/Config/Routes.php`|Backend / Configuration|✅ Stable|🔵 À créer|`documentation/ARCHITECTURE/Routes.md`|Documenter|P1|
+|`app/Controllers/CmsController.php`|Backend / Controller|✅ Stable|🟡 À mettre à jour|`documentation/ARCHITECTURE/CmsController.md`|Documenter|P1|
+|`app/Services/CmsService.php`|Backend / Service|✅ Stable|🟡 À mettre à jour|`documentation/ARCHITECTURE/CmsService.md`|Compléter|P1|
+|`app/Views/components/apex.php`|Frontend / View|❌ Obsolète ?|⚪|—|Vérifier suppression|P2|
+|`app/Controllers/TestController.php`|Backend / Controller|🟣 Prototype|❌|—|Vérifier|P2|
+
 
 
 
