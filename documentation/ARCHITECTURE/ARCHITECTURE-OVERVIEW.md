@@ -123,9 +123,10 @@ DescriptorFactory
 
 
 - fichier :
-    app\Libraries\Components\DescriptorMapper.php
+    [app\Libraries\Components\DescriptorMapper.php](/refactoring/app/Libraries/Components/DescriptorMapper.php)
+    
 - dependances
-    app\Libraries\Components\DescriptorDefinition.php
+     [app\Libraries\Components\DescriptorDefinition.php](/refactoring/app/Libraries/Components/DescriptorDefinition.php)
 
 - A FAIRE
     Vérifier la dépendance 
