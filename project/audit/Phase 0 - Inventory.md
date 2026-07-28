@@ -1,4 +1,4 @@
-# Phase 0 - Inventiare
+# Phase 0 - Inventaire
 
 |Statut|Signification|
 |---|---|
