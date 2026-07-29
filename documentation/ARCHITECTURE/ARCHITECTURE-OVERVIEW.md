@@ -246,6 +246,23 @@ Les principaux diagrammes sont :
 - Rendu d'un composant
 - Administration (CmsTree)
 
+
+01-Rendering/
+    Article-Rendering.md
+    Section-Rendering.md
+    Part-Rendering.md
+
+02-Administration/
+    Admin-CmsTree.md
+    Admin-Part-CRUD.md
+    Admin-Part-Rendering.md
+    Admin-Workbench.md
+
+03-Architecture/
+    Architecture-Overview.md
+    Data-Flows.md
+    Call-Flows.md
+
 ---
 
 # Évolutions
