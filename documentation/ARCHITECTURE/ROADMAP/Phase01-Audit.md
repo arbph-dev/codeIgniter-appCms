@@ -1,5 +1,3 @@
-# documentation/ARCHITECTURE/ROADMAP/Phase01-Audit.md
-
 # Phase 01 — Audit de l'architecture CMS
 
 ## Objectif
