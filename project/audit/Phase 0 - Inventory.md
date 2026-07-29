@@ -11,13 +11,17 @@
 
 
 
-|Fichier|Domaine|Statut code|Documentation|Doc|Action|Priorité|
-|---|---|---|---|---|---|---|
-|[app/Config/Routes.php](/refactoring/app/Config/Routes.php)|Backend / Configuration|✅ Stable|✅ Stable|[/documentation/ARCHITECTURE/Routes.md](/documentation/ARCHITECTURE/Routes.md)|Vérifier|P1|
-|[app/Controllers/CmsController.php](/refactoring/app/Controllers/CmsController.php)|Backend / Controller|🔵 En développement|✅ Stable |[/documentation/ARCHITECTURE/CmsController.md](/documentation/ARCHITECTURE/CmsController.md)|Documenter|P1|
-|[app/Services/CmsService.php](/refactoring/app/Services/CmsService.php)|Backend / Service|✅ Stable|✅ Stable|[/documentation/ARCHITECTURE/CmsService.md](/documentation/ARCHITECTURE/CmsService.md)|Compléter|P1|
-|`app/Views/components/apex.php`|Frontend / View|❌ Obsolète ?|⚪|—|Vérifier suppression|P2|
-|`app/Controllers/TestController.php`|Backend / Controller|🟣 Prototype|❌|—|Vérifier|P2|
+
+| Fichier                                                                                                             | Domaine                 | Statut code         | Documentation | Doc                                                                                                        | Action               | Priorité |
+| ------------------------------------------------------------------------------------------------------------------- | ----------------------- | ------------------- | ------------- | ---------------------------------------------------------------------------------------------------------- | -------------------- | -------- |
+| [app/Config/Routes.php](/refactoring/app/Config/Routes.php)                                                         | Backend / Configuration | ✅ Stable            | ✅ Stable      | [/documentation/ARCHITECTURE/Routes.md](/documentation/ARCHITECTURE/Routes.md)                             | Vérifier             | P1       |
+| [app/Controllers/CmsController.php](/refactoring/app/Controllers/CmsController.php)                                 | Backend / Controller    | 🔵 En développement | ✅ Stable      | [/documentation/ARCHITECTURE/CmsController.md](/documentation/ARCHITECTURE/CmsController.md)               | Documenter           | P1       |
+| [app/Services/CmsService.php](/refactoring/app/Services/CmsService.php)                                             | Backend / Service       | ✅ Stable            | ✅ Stable      | [/documentation/ARCHITECTURE/CmsService.md](/documentation/ARCHITECTURE/CmsService.md)                     | Compléter            | P1       |
+| `app/Views/components/apex.php`                                                                                     | Frontend / View         | ❌ Obsolète ?        | ⚪             | —                                                                                                          | Vérifier suppression | P2       |
+| `app/Controllers/TestController.php`                                                                                | Backend / Controller    | 🟣 Prototype        | ❌             | —                                                                                                          | Vérifier             | P2       |
+| [app/Libraries/Components/DescriptorDefinition.php](/refactoring/app/Libraries/Components/DescriptorDefinition.php) |                         |                     |               | [/documentation/ARCHITECTURE/DescriptorDefinition.md](/documentation/ARCHITECTURE/DescriptorDefinition.md) |                      |          |
+| [app/Libraries/Components/DescriptorMapper.php](/refactoring/app/Libraries/Components/DescriptorMapper.php)         |                         |                     |               | [/documentation/ARCHITECTURE/DescriptorMapper.md](/documentation/ARCHITECTURE/DescriptorMapper.md)         |                      |          |
+
 
 
 
