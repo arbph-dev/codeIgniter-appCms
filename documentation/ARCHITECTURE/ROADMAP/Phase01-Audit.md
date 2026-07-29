@@ -107,23 +107,40 @@ Travaux :
 
 # Axe 6 — Préparation des CRUD
 
-Identifier les travaux nécessaires pour chaque modèle.
+Objectif : disposer d'un CRUD complet pour chaque modèle du CMS avant l'intégration des Workbench.
 
-Modèles concernés :
+Les interfaces d'administration seront réalisées en deux étapes :
 
-* CmsCategoryModel
-* CmsArticleModel
-* CmsSectionModel
-* CmsPartModel
-* ComponentTypeModel
+1. vues HTML simples permettant de valider les modèles et les flux backend ;
+2. remplacement progressif par les Workbench spécialisés.
 
-Pour chacun :
+| Modèle | Create | Read | Update | Delete | Admin | Workbench | Statut | Évolution prévue |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|---|---|
+| CmsCategoryModel | ✅ | ✅ | ⚪ | ⚪ | ⚪ | ❌ | En cours | Arborescence des catégories |
+| CmsArticleModel | ✅ | ✅ | ⚪ | ⚪ | ⚪ | ❌ | En cours | ArticleWorkbench |
+| CmsSectionModel | ⚪ | ✅ | ⚪ | ⚪ | ⚪ | ❌ | En cours | SectionWorkbench |
+| CmsPartModel | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | Stable | PartWorkbench |
+| ComponentTypeModel | ⚪ | ✅ | ⚪ | ⚪ | ⚪ | N/A | Stable | Référentiel uniquement |
 
-* modèle ;
-* service ;
-* contrôleur ;
-* vues ;
-* tests.
+## Principes
+
+- Valider d'abord le modèle et les flux backend.
+- Réaliser un CRUD minimal avec des vues CodeIgniter.
+- Vérifier les routes, contrôleurs et services.
+- Ajouter les tests fonctionnels.
+- Remplacer ensuite l'interface par un Workbench dédié.
+- Les Workbench réutiliseront les API existantes et les composants du CMS.
+
+## Dépendances
+
+Le développement des CRUD dépend des travaux réalisés dans les axes précédents :
+
+- audit de l'architecture ;
+- documentation des flux ;
+- stabilisation des modèles ;
+- stabilisation des services.
+
+Les Workbench constitueront la dernière étape d'intégration de chaque module.
 
 ---
 
