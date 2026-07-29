@@ -5,6 +5,9 @@ namespace App\Controllers;
 use App\Models\ComponentTypeModel;
 use CodeIgniter\Controller;
 
+use App\Libraries\Components\ComponentCatalog;
+use App\Libraries\Components\ComponentDefinition;
+
 class ComponentTypeTest extends Controller
 {
     public function index()
