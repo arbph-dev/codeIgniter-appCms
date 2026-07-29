@@ -1,324 +1,112 @@
+# DescriptorDefinition
 
+Le **DescriptorDefinition** est le contrat d'exécution des composants du CMS.
 
----
-# OBSOLETE
+Il décrit **quoi exécuter**, indépendamment du langage, du moteur de rendu ou du framework.
 
-## Objectif
+Il ne représente ni un modèle métier, ni une vue, ni un DTO.
 
-Un DescriptorDefinition décrit une instance de composant.
+Le code source :
 
-Il représente les données nécessaires à la construction et à la configuration d'un composant.
-
-Le descripteur est indépendant du moteur de rendu.
-
-Il peut être produit :
-- par un contrôleur PHP
-- par une API
-- par une base de données
-- par un fichier JSON
-- par un système expert
+- [app/Libraries/Components/DescriptorDefinition.php](/refactoring/app/Libraries/Components/DescriptorDefinition.php)
 
 ---
 
-## Règle Zealot n°1
+# Principe
 
-Un DescriptorDefinition décrit exactement un composant.
-
-Un composant ne contient jamais directement un autre composant.
-
-Les assemblages sont réalisés par des composants composites enregistrés dans le ComponentRegistry.
-
----
-
-## Règle Zealot n°2
-
-Le descripteur constitue le contrat de données unique entre :
+Le Descriptor contient uniquement les informations nécessaires à la création d'un runtime.
 
 ```text
-Base de données
-        ↓
-Contrôleur / API
-        ↓
-DescriptorDefinition
-        ↓
-ComponentRegistry
-        ↓
-ComponentDefinition
-        ↓
-Renderer PHP ou SPA
+Descriptor
+    │
+    ├── type
+    └── config
 ```
 
-Le même descripteur doit pouvoir être utilisé :
-- côté PHP   
-- côté API
-- côté SPA
+Le runtime peut être :
 
-sans modification de structure.
+- Mermaid
+- ApexCharts
+- Leaflet
+- Three.js
+- demain un SceneWorkbench
+- tout autre composant enregistré
+
+Le Descriptor est donc un **contrat d'exécution**.
 
 ---
 
-## Structure minimale
-
-Exemple :
+# Structure minimale
 
 ```php
 [
-    'type'   => 'codeval',
-    'id'     => 'CVG5',
-
-    'config' => [
-        'title'  => 'Volume normal ISO 2533',
-        'rows'   => 12,
-        'script' => '...'
-    ]
+    'type'   => 'three',
+    'config' => [ ... ]
 ]
 ```
 
----
-
-## Structure recommandée
-
-```php
-[
-    'type'   => 'apex',
-    'id'     => 'APEX_1',
-
-    'config' => [
-        'chart'  => 'moteurCouple',
-        'height' => 350,
-        'payload' => []
-    ]
-]
-```
+Le contenu de `config` dépend uniquement du type du composant.
 
 ---
 
-## Propriétés standard
+# Cycle d'utilisation
 
-### type
+```mermaid
+flowchart LR
 
-Type logique du composant.
-
-```php
-'type' => 'apex'
+Part
+    --> DescriptorMapper
+    --> DescriptorDefinition
+    --> ComponentRenderer
+    --> Renderer
+    --> HTML
 ```
 
-Correspond à une définition enregistrée dans le ComponentRegistry.
+Le Descriptor ne réalise aucun rendu.
+
+Il est uniquement transmis entre les différentes couches de l'architecture.
 
 ---
 
-### id
+# Règles
 
-Identifiant unique de l'instance.
+Le Descriptor :
 
-```php
-'id' => 'APEX_1'
-```
+- ne contient aucune logique métier ;
+- ne contient aucun code HTML ;
+- ne contient aucun code JavaScript ;
+- ne contient aucune référence DOM ;
+- ne dépend d'aucun moteur de rendu.
 
-Utilisable pour :
-
-- le DOM
-    
-- les événements
-    
-- le débogage
-    
-- la persistance d'état
-    
+Son rôle est uniquement de décrire un runtime.
 
 ---
 
-### config
+# Dépendances
 
-Contient tous les paramètres métier du composant.
+Aucune.
 
-```php
-'config' => [
-    'height' => 350
-]
-```
-
-Le contenu dépend du type de composant.
+Le Descriptor est volontairement indépendant des Renderers et des composants.
 
 ---
 
-## Types de valeurs
+# Utilisateurs
 
-Les propriétés d'un descripteur peuvent être :
+Le Descriptor est utilisé par :
 
-### Scalaire
+- [app/Libraries/Components/DescriptorMapper.php](/refactoring/app/Libraries/Components/DescriptorMapper.php)
+- [app/Libraries/Components/ComponentRenderer.php](/refactoring/app/Libraries/Components/ComponentRenderer.php)
+- [app/Libraries/Components/AdminComponentRenderer.php](/refactoring/app/Libraries/Components/AdminComponentRenderer.php)
 
-```php
-'title' => 'Courbe moteur'
-```
-
-### Tableau
-
-```php
-'columns' => [
-    'id',
-    'nom',
-    'email'
-]
-```
-
-### Objet
-
-```php
-'chart' => [
-    'title' => 'Couple moteur',
-    'height' => 350
-]
-```
-
-### Objet métier
-
-```php
-'organisation' => [
-    'id' => 12,
-    'raison_sociale' => 'Zealot'
-]
-```
-
-### Collection d'objets
-
-```php
-'series' => [
-    [
-        'name' => 'Couple',
-        'data' => []
-    ]
-]
-```
+ainsi que par l'ensemble des Renderers spécialisés.
 
 ---
 
-## Descriptor simple
+# Remarque
 
-Exemple Apex :
+Le dépôt contient actuellement deux implémentations :
 
-```php
-[
-    'type' => 'apex',
-    'id'   => 'APEX_1',
+- [app/Libraries/Components/DescriptorDefinition.php](/refactoring/app/Libraries/Components/DescriptorDefinition.php)
+- [app/Libraries/Cms/DescriptorDefinition.php](/refactoring/app/Libraries/Cms/DescriptorDefinition.php)
 
-    'config' => [
-        'chart' => 'moteurCouple'
-    ]
-]
-```
-
----
-
-## Descriptor composite
-
-Exemple ArticleList :
-
-```php
-[
-    'type' => 'articleList',
-    'id'   => 'ARTICLES_1',
-
-    'config' => [
-        'categoryId' => 5,
-        'mode'       => 'tree'
-    ]
-]
-```
-
-Le descripteur reste unique.
-
-C'est le composant composite qui décide quels sous-composants construire.
-
----
-
-## Content et Aside
-
-Part.content et Part.aside peuvent recevoir :
-
-- du texte
-    
-- du HTML
-    
-- un DescriptorDefinition
-    
-- une collection de DescriptorDefinition
-    
-
-Exemple :
-
-```php
-[
-    'content' => [
-        [
-            'type' => 'apex',
-            'id'   => 'APEX_1'
-        ],
-
-        [
-            'type' => 'codeval',
-            'id'   => 'CVG5'
-        ]
-    ]
-]
-```
-
----
-
-## Sources possibles
-
-Un DescriptorDefinition peut être :
-
-- stocké en base
-    
-- généré dynamiquement
-    
-- produit par une API
-    
-- produit par un système expert
-    
-- chargé depuis un fichier JSON
-    
-
----
-
-## Relation avec ComponentDefinition
-
-Le DescriptorDefinition décrit une instance.
-
-Le ComponentDefinition décrit un type.
-
-Exemple :
-
-```text
-DescriptorDefinition
-        ↓
-type = apex
-        ↓
-ComponentRegistry
-        ↓
-ApexComponentDefinition
-        ↓
-Rendu
-```
-
-Plusieurs descriptors peuvent utiliser la même définition de composant.
-
----
-
-## Principe fondamental
-
-Le DescriptorDefinition contient uniquement des données.
-
-Il ne contient :
-
-- aucun code de rendu
-    
-- aucune référence DOM
-    
-- aucune dépendance Javascript
-    
-- aucune logique d'affichage
-    
-
-Toute logique de rendu appartient au composant enregistré dans le ComponentRegistry.
+Cette situation devra être vérifiée durant l'audit afin de conserver une implémentation unique.
