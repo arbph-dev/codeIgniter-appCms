@@ -1,3 +1,30 @@
+ApiDefinition.md ne doit plus documenter les endpoints.
+
+Il doit documenter le contrat commun :
+- GET
+- POST
+- PUT
+- DELETE
+
+et aussi
+- pagination
+- errors
+- links
+- metadata
+
+Autrement dit :
+```
+API Definition
+        ↓
+Organisation API
+Entreprise API
+Image API
+...
+```
+
+
+---
+# OBSOLETE
 
 ## Objectif
 
