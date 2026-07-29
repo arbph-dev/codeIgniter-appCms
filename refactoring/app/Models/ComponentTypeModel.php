@@ -1,5 +1,4 @@
 <?php
-// app/Models/ComponentTypeModel.php
 
 namespace App\Models;
 
@@ -14,9 +13,32 @@ class ComponentTypeModel extends Model
     protected $allowedFields = [
         'name',
         'view',
-        'description'
+        'description',
+        'is_active',
     ];
 
+    /**
+     * Retourne tous les types actifs.
+     */
+    public function findActive(): array
+    {
+        return $this->where('is_active', 1)
+                    ->orderBy('name', 'ASC')
+                    ->findAll();
+    }
+
+    /**
+     * Retourne un type à partir de son nom.
+     */
+    public function findByName(string $name): ?array
+    {
+        return $this->where('name', $name)
+                    ->first();
+    }
+
+    /**
+     * Retourne la correspondance id => name.
+     */
     public function getTypeMap(): array
     {
         $map = [];
