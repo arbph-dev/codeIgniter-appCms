@@ -42,7 +42,7 @@ Ces fichiers constituent le socle du système de rendu des composants. Ils sont 
 | [app/Libraries/Components/ComponentRenderer.php](/refactoring/app/Libraries/Components/ComponentRenderer.php) | Backend / Architecture | ✅ Stable | 🟡 À documenter | — | Documenter | P1 |
 | [app/Libraries/Components/AdminComponentRenderer.php](/refactoring/app/Libraries/Components/AdminComponentRenderer.php) | Backend / Architecture | ✅ Stable | 🟡 À documenter | — | Documenter | P1 |
 | [app/Libraries/Components/Renderers/ComponentRendererInterface.php](/refactoring/app/Libraries/Components/Renderers/ComponentRendererInterface.php) | Backend / Contrat | ✅ Stable | 🟡 À documenter | — | Documenter | P1 |
-| [app/Libraries/Cms/ComponentRegistry.php](/refactoring/app/Libraries/Cms/ComponentRegistry.php) | Backend / Registry | 🟣 Prototype | ⚪ | — | Vérifier son maintien | P2 |
+| [app/Libraries/Cms/ComponentRegistry.php](/refactoring/app/Libraries/Cms/ComponentRegistry.php) | Backend / Registry | 🟣 Prototype | ⚪ | — | ❌ À supprimer | P2 |
 | [app/Libraries/Components/ComponentRegistry.php](/refactoring/app/Libraries/Components/ComponentRegistry.php) | Backend / Registry | ✅ Stable |  ✅ Stable | [/documentation/ARCHITECTURE/ComponentRegistry.md](/documentation/ARCHITECTURE/ComponentRegistry.md) | - | P2 |
 | [app/Libraries/Components/AdminComponentRegistry.php](/refactoring/app/Libraries/Components/AdminComponentRegistry.php) | Backend / Registry | ✅ Stable |  ✅ Stable | [/documentation/ARCHITECTURE/AdminComponentRegistry.md](/documentation/ARCHITECTURE/AdminComponentRegistry.md) | - | P2 |
 
