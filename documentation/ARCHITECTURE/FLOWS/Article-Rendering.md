@@ -56,6 +56,35 @@ qui devient responsable de :
 - communication via EventBus.
 
 
+```mermaid
+flowchart LR
+HTML["HTML Article"]
+WB["CmsArticleWorkbench"]
+TS["TabSystem"]
+BUS["EventBus"]
+REG["Component Registry"]
+A["Apex"]
+MER["Mermaid"]
+TH["Three"]
+LEAF["Leaflet"]
+CODE["CodeVal"]
+V["View
+cms/article2.php"]
+HTML --> WB
+WB --> TS
+WB --> REG
+REG --> A
+REG --> MER
+REG --> TH
+REG --> LEAF
+REG --> CODE
+WB --> BUS
+TS -->|"fetch /cms/section/{id}"| HTML
+V --> HTML
+```
+
+
+
 ---
 
 ### Le Workbench orchestre les composants
