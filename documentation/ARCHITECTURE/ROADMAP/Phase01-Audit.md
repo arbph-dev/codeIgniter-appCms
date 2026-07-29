@@ -145,8 +145,8 @@ Mettre à jour :
 * [/documentation/composants.md](/documentation/composants.md)
 * [/documentation/ARCHITECTURE/ARCHITECTURE-OVERVIEW.md](/documentation/ARCHITECTURE/ARCHITECTURE-OVERVIEW.md)
 * [/documentation/ARCHITECTURE/AdminComponentRegistry.md](/documentation/ARCHITECTURE/AdminComponentRegistry.md)
-✅ Conserver /refactoring/app/Libraries/Components/AdminComponentRegistry.php
-❌ Supprimer /refactoring/app/Libraries/Components/AdminRenderers/AdminComponentRegistry.php
+    - ✅ Conserver /refactoring/app/Libraries/Components/AdminComponentRegistry.php
+    - ❌ Supprimer /refactoring/app/Libraries/Components/AdminRenderers/AdminComponentRegistry.php
 * [/documentation/ARCHITECTURE/AdminComponentRenderer.md](/documentation/ARCHITECTURE/AdminComponentRenderer.md)
 * [/documentation/ARCHITECTURE/ComponentRegistry.md](/documentation/ARCHITECTURE/ComponentRegistry.md)
 * [/documentation/ARCHITECTURE/ComponentRenderer.md](/documentation/ARCHITECTURE/ComponentRenderer.md)
