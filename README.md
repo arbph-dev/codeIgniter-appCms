@@ -131,7 +131,7 @@ https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Config
 ## 00 - Vision & Objectifs/
 
 ### Consolidation (en cours)
-- Inventaire complet
+- Inventaire complet **en cours**
 - Nettoyage des doublons
 - Documentation des flux critiques
 - Figer la structure de dossiers
@@ -155,32 +155,17 @@ Outils de génération de CRUD
 Documentation développeur
 Tests automatisés sur les parties critiques
 
-
+---
 ## Inventaire complet
-1. Ce qui marche (fichier : Ce-qui-marche-bien.md)
-Authentification
-Système de composants (ComponentRegistry + Renderers)
-ModelWorkbench (même s’il est lourd)
-API par domaine
-Gestion CMS de base (articles, sections, parts)
-etc.
 
-2. Ce qui est à analyser pour réemploi (Elements-a-reutiliser.md)Quels contrôleurs / services sont propres ?
-Quels renderers sont matures ?
-Quelles parties du ModelWorkbench sont réutilisables ?
-Helpers / Traits utiles
-
-3. Structure des dossiers (Structure-dossiers-decision.md)Décision finale sur l’organisation de app/ (Controllers, Services, Libraries, Models, Components, etc.)
-Figer cette structure avant de continuer.
+[files.md](/files.md) : fichiers a gérer
 
 
 
 
-├── 01 - Phase 0 - Consolidation & Nettoyage/
-├── 02 - Phase 1 - Architecture/
-├── 03 - Phase 2 - Refactoring Core/
-├── 04 - Phase 3 - Améliorations & Features/
-├── Archives/
-├── Templates/
-└── Roadmap.md
+
+
+
+
+
 
