@@ -160,10 +160,11 @@ Tests automatisés sur les parties critiques
 
 [files.md](/files.md) : fichiers a gérer
 
+[daily/2026-07-28.md](/project/daily/2026-07-28.md) note journaliere
 
+[daily/guide-composants.md](/project/daily/guide-composants.md)
 
-
-
+[project/audit/Phase 0 - Inventory.md](/project/audit/Phase 0 - Inventory.md)
 
 
 
