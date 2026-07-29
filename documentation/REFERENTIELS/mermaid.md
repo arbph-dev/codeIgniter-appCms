@@ -32,6 +32,7 @@ bleu,stroke-width:2px Fonctionnel mais évolutif
 violet,stroke-width:1px  Expérimentation conservée
 blanc,stroke-width:1px,stroke-dasharray: 5 5   Conception future uniquement
 rouge,stroke-width:2px,stroke-dasharray: 5 5   Plus utilisé
+
 ---
 
 une évolution : ajouter, dans tous les diagrammes internes, une distinction entre flux d'appels et flux de données. Par exemple :
