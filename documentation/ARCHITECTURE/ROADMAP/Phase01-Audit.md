@@ -29,9 +29,94 @@ Pour chaque fichier :
 * utilisateurs ;
 * action à réaliser.
 
-Livrable :
+---
 
-* tableau d'inventaire des fichiers.
+## Fichiers d'architecture
+
+Ces fichiers constituent le socle du système de rendu des composants. Ils sont documentés individuellement et doivent faire l'objet d'un audit avant toute évolution.
+
+| Fichier | Domaine | Statut code | Documentation | Doc | Action | Priorité |
+|---|---|---|---|---|---|---|
+| [app/Libraries/Components/DescriptorDefinition.php](/refactoring/app/Libraries/Components/DescriptorDefinition.php) | Backend / Architecture | ✅ Stable | ✅ Stable | [/documentation/ARCHITECTURE/DescriptorDefinition.md](/documentation/ARCHITECTURE/DescriptorDefinition.md) | Vérifier la double implémentation | P1 |
+| [app/Libraries/Components/DescriptorMapper.php](/refactoring/app/Libraries/Components/DescriptorMapper.php) | Backend / Architecture | 🔵 En développement | ✅ Stable | [/documentation/ARCHITECTURE/DescriptorMapper.md](/documentation/ARCHITECTURE/DescriptorMapper.md) | Vérifier l'utilisation de ComponentTypeModel | P1 |
+| [app/Libraries/Components/ComponentRenderer.php](/refactoring/app/Libraries/Components/ComponentRenderer.php) | Backend / Architecture | ✅ Stable | 🟡 À documenter | — | Documenter | P1 |
+| [app/Libraries/Components/AdminComponentRenderer.php](/refactoring/app/Libraries/Components/AdminComponentRenderer.php) | Backend / Architecture | ✅ Stable | 🟡 À documenter | — | Documenter | P1 |
+| [app/Libraries/Components/Renderers/ComponentRendererInterface.php](/refactoring/app/Libraries/Components/Renderers/ComponentRendererInterface.php) | Backend / Contrat | ✅ Stable | 🟡 À documenter | — | Documenter | P1 |
+| [app/Libraries/Cms/ComponentRegistry.php](/refactoring/app/Libraries/Cms/ComponentRegistry.php) | Backend / Registry | 🟣 Prototype | ⚪ | — | Vérifier son maintien | P2 |
+
+
+
+## Implémentations des Renderers
+
+Tous les Renderers exploitent un `DescriptorDefinition` et implémentent le contrat défini par `ComponentRendererInterface`.
+
+### Renderers
+
+| Classe | Statut | Documentation |
+|---|---|---|
+| [ApexRenderer](/refactoring/app/Libraries/Components/Renderers/ApexRenderer.php) | ✅ | À créer |
+| [CalloutRenderer](/refactoring/app/Libraries/Components/Renderers/CalloutRenderer.php) | ✅ | À créer |
+| [CodeValRenderer](/refactoring/app/Libraries/Components/Renderers/CodeValRenderer.php) | ✅ | À créer |
+| [LeafletRenderer](/refactoring/app/Libraries/Components/Renderers/LeafletRenderer.php) | ✅ | À créer |
+| [MermaidRenderer](/refactoring/app/Libraries/Components/Renderers/MermaidRenderer.php) | ✅ | À créer |
+| [RawRenderer](/refactoring/app/Libraries/Components/Renderers/RawRenderer.php) | ✅ | À créer |
+| [ThreeRenderer](/refactoring/app/Libraries/Components/Renderers/ThreeRenderer.php) | 🔵 | À créer |
+
+### AdminRenderers
+
+| Classe | Statut | Documentation |
+|---|---|---|
+| [ApexAdminRenderer](/refactoring/app/Libraries/Components/AdminRenderers/ApexAdminRenderer.php) | ✅ | À créer |
+| [CalloutAdminRenderer](/refactoring/app/Libraries/Components/AdminRenderers/CalloutAdminRenderer.php) | ✅ | À créer |
+| [CodeValAdminRenderer](/refactoring/app/Libraries/Components/AdminRenderers/CodeValAdminRenderer.php) | ✅ | À créer |
+| [LeafletAdminRenderer](/refactoring/app/Libraries/Components/AdminRenderers/LeafletAdminRenderer.php) | 🔵 | À créer |
+| [MermaidAdminRenderer](/refactoring/app/Libraries/Components/AdminRenderers/MermaidAdminRenderer.php) | ✅ | À créer |
+| [RawAdminRenderer](/refactoring/app/Libraries/Components/AdminRenderers/RawAdminRenderer.php) | ✅ | À créer |
+| [ThreeAdminRenderer](/refactoring/app/Libraries/Components/AdminRenderers/ThreeAdminRenderer.php) | 🔵 | À créer |
+
+---
+
+## Dépendances principales
+
+### DescriptorDefinition
+
+Utilisé par :
+
+- tous les Renderers ;
+- tous les AdminRenderers ;
+- `ComponentRenderer` ;
+- `AdminComponentRenderer`.
+
+### ComponentRendererInterface
+
+Implémenté par :
+
+- ApexRenderer
+- CalloutRenderer
+- CodeValRenderer
+- LeafletRenderer
+- MermaidRenderer
+- RawRenderer
+- ThreeRenderer
+
+---
+
+## Points d'audit
+
+- Vérifier la coexistence de deux `DescriptorDefinition` :
+    - `/app/Libraries/Components/DescriptorDefinition.php`
+    - `/app/Libraries/Cms/DescriptorDefinition.php`
+
+- Vérifier la coexistence de deux `ComponentRegistry`.
+
+- Vérifier si `DescriptorMapper` doit utiliser directement `ComponentTypeModel` ou passer systématiquement par `CmsService::getComponentTypes()`.
+
+- Vérifier les composants historiques encore présents (`TestController`, anciennes vues de composants, etc.).
+
+- Identifier les fichiers devenus obsolètes avant le début des Workbench.
+
+
+
 
 ---
 
