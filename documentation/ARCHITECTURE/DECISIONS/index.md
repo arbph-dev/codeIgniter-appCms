@@ -96,3 +96,8 @@ D003-DescriptorDefinition.md
 ```
 
 Chaque décision doit rester courte, stable et indépendante des itérations de développement.
+
+
+les Décisions (Dxxx) deviennent des références stables de l'architecture.
+
+Les roadmaps, audits et documents techniques devront les citer plutôt que de réexpliquer les choix. Cela permettra de conserver une documentation plus concise et d'avoir une source unique de vérité pour les décisions structurantes.
