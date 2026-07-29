@@ -1,5 +1,3 @@
-# documentation/ARCHITECTURE/ROADMAP/index.md
-
 # Roadmap d'architecture
 
 Cette roadmap décrit les grandes phases d'évolution de Zealot.
