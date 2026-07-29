@@ -158,7 +158,7 @@ Tests automatisés sur les parties critiques
 ---
 ## Inventaire complet
 
-[files.md](/files.md) : fichiers a gérer
+
 
 [daily/2026-07-28.md](/project/daily/2026-07-28.md) note journaliere
 
@@ -166,7 +166,7 @@ Tests automatisés sur les parties critiques
 
 [project/audit/Phase 0 - Inventory.md](/project/audit/Phase%200%20-%20Inventory.md)
 
+[documentation/REFERENTIELS/shell.md](documentation/REFERENTIELS/shell.md)
 
-
-
+[files.md](/files.md) : fichiers a gérer
 
