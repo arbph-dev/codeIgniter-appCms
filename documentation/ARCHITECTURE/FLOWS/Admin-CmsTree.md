@@ -85,6 +85,35 @@ Catégorie
 
 Chaque niveau est obtenu à partir de son modèle dédié.
 
+### Flux de données
+
+```mermaid
+flowchart TD
+
+Categories["CmsCategoryModel"]:::model
+Articles["CmsArticleModel"]:::model
+Sections["CmsSectionModel"]:::model
+Parts["CmsPartModel"]:::model
+
+Tree["CmsService::getCmsTree()"]:::service
+
+Result["Arbre CMS"]:::descriptor
+
+View["CmsTreeView"]:::view
+
+Categories --> Tree
+Articles --> Tree
+Sections --> Tree
+Parts --> Tree
+
+Tree --> Result
+Result --> View
+
+classDef service fill:#ffd699,stroke:#ff8800,stroke-width:4px;
+classDef model fill:#fff2a8,stroke:#c7a600,stroke-width:4px;
+classDef descriptor fill:#e8d5ff,stroke:#7a3db8,stroke-width:4px;
+classDef view fill:#e6e6e6,stroke:#666666,stroke-width:4px;
+```
 ---
 
 ## 4. Enrichissement des composants
