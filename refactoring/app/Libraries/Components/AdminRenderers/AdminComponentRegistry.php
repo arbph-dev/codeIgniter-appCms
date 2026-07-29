@@ -1,3 +1,7 @@
+/* 
+    OBSOLETE
+    a supprimer
+*/
 <?php
 // app/Libraries/Components/AdminComponentRegistry.php
 
