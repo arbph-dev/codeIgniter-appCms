@@ -14,6 +14,7 @@ Les comptes-rendus de conception, les recherches et les feuilles de route sont d
 
 * [[D001-CmsService]]
 * [[D002-Controllers]]
+* [D005-ComponentRegistry](/documentation/ARCHITECTURE/DECISIONS/D005-ComponentRegistry.md)
 
 ## Composants
 
