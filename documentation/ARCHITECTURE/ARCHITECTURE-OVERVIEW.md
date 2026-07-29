@@ -80,6 +80,12 @@ classDef renderer fill:#ffd6d6,stroke:#1565c0,stroke-width:2px;
 classDef view fill:#eeeeee,stroke:#2e7d32,stroke-width:4px;
 ```
 
+La couleur identifie la couche de l'architecture.
+- Bleu = Routes ; Vert =  Controllers ; Orange = Services ; Jaune = Models ; Violet = Descriptor ; Rouge =  Renderers ; Gris = Views
+
+
+Le contour représente l'état d'avancement:
+- Vert épais  Stable ; Bleu    Fonctionnel mais évolutif ; Jaune   Utilisé mais peu documenté ; Violet fin  Prototype conservé ; Blanc pointillé Conception ; Rouge pointillé Obsolète
 ---
 
 # Les couches
