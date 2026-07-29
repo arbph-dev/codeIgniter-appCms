@@ -21,10 +21,23 @@
 
 
 
+Observation
 
+Le DescriptorMapper dépend actuellement d'une correspondance entre type_id et le nom logique du composant (three, apex, mermaid, ...).
 
+La gestion de ce catalogue est aujourd'hui répartie entre ComponentTypeModel, CmsService et certains traitements internes (enrichPart()).
 
+Cette responsabilité pourrait être factorisée dans un futur service dédié : le catalogue des composants.
 
+```
+CmsService <-> ComponentCatalog
+			↓
+	ComponentTypeModel
+```
+
+```
+DescriptorMapper <-> ComponentCatalog
+```
 
 
 ---------
