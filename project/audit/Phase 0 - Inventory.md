@@ -25,7 +25,7 @@
 
 
 
-Observation
+# Observation
 
 Le DescriptorMapper dépend actuellement d'une correspondance entre type_id et le nom logique du composant (three, apex, mermaid, ...).
 
