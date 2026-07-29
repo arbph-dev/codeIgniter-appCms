@@ -1,8 +1,10 @@
+<?php
+
 /* 
     OBSOLETE
     a supprimer
 
-<?php
+
 // app/Libraries/Components/AdminComponentRegistry.php
 
 namespace App\Libraries\Components;
