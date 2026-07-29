@@ -43,7 +43,7 @@ Ces fichiers constituent le socle du système de rendu des composants. Ils sont 
 | [app/Libraries/Components/AdminComponentRenderer.php](/refactoring/app/Libraries/Components/AdminComponentRenderer.php) | Backend / Architecture | ✅ Stable | 🟡 À documenter | — | Documenter | P1 |
 | [app/Libraries/Components/Renderers/ComponentRendererInterface.php](/refactoring/app/Libraries/Components/Renderers/ComponentRendererInterface.php) | Backend / Contrat | ✅ Stable | 🟡 À documenter | — | Documenter | P1 |
 | [app/Libraries/Cms/ComponentRegistry.php](/refactoring/app/Libraries/Cms/ComponentRegistry.php) | Backend / Registry | 🟣 Prototype | ⚪ | — | Vérifier son maintien | P2 |
-
+| [app/Libraries/Components/ComponentRegistry.php](/refactoring/app/Libraries/Components/ComponentRegistry.php) | Backend / Registry | ✅ Stable | 🟡 À documenter | [/documentation/ARCHITECTURE/ComponentRegistry.md](/documentation/ARCHITECTURE/ComponentRegistry.md) | Vérifier son maintien | P2 |
 
 
 ## Implémentations des Renderers
