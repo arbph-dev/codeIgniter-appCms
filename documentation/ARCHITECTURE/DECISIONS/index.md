@@ -15,9 +15,9 @@ Les comptes-rendus de conception, les recherches et les feuilles de route sont d
 * [[D001-CmsService]]
 * [[D002-Controllers]]
 * [D005-ComponentRegistry](/documentation/ARCHITECTURE/DECISIONS/D005-ComponentRegistry.md)
-* D006-ComponentRenderer
-* D007-AdminComponentRenderer
-
+* [D006-ComponentRenderer](/documentation/ARCHITECTURE/DECISIONS/D006-ComponentRenderer.md)
+* D007-AdminComponentRenderer *décision similaire à D006
+* [D008-Séparation_FrontOffice_Administration](/documentation/ARCHITECTURE/DECISIONS/D008-Séparation_FrontOffice_Administration.md)
 ## Composants
 
 * [[D010-DescriptorDefinition]]
