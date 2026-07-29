@@ -23,20 +23,5 @@ Langages
 
 ---
 
-# Shell
 
-## recherche de fichiers
-
-- recherche de fichiers php dans un dossier
-
-```sh
-find app/Controllers/ -name "*.php" | sort
-```
-
-## recherche dans les fichiers
-- recherche du terme ApexRenderer dans les fichiers de type php et js dans un dossier app/
-
-```sh
-grep -rn --include="*.php" --include="*.js" "ApexRenderer" app/
-```
 
