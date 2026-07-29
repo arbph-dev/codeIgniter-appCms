@@ -247,18 +247,25 @@ Les principaux diagrammes sont :
 - Administration (CmsTree)
 
 
-01-Rendering/
+
+
+
+
+## 01-Rendering/
     Article-Rendering.md
     Section-Rendering.md
     Part-Rendering.md
 
-02-Administration/
-    Admin-CmsTree.md
-    Admin-Part-CRUD.md
-    Admin-Part-Rendering.md
-    Admin-Workbench.md
+## 02-Administration/
+- Admin-CmsTree
+    [Admin-CmsTree.md](/documentation/ARCHITECTURE/FLOWS/Admin-CmsTree.md)
+    [Admin-CmsTree-Internal.md](/documentation/ARCHITECTURE/FLOWS/Admin-CmsTree-Internal.md)    
+- Admin-Part
+    [Admin-Part-CRUD.md](/documentation/ARCHITECTURE/FLOWS/Admin-Part-CRUD.md)
+    [Admin-Part-Rendering.md](/documentation/ARCHITECTURE/FLOWS/Admin-Part-Rendering.md)
+- [Admin-Workbench.md](/documentation/ARCHITECTURE/FLOWS/Admin-Workbench.md)
 
-03-Architecture/
+## 03-Architecture/
     Architecture-Overview.md
     Data-Flows.md
     Call-Flows.md
