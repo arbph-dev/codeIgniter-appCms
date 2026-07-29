@@ -155,7 +155,15 @@ Mettre à jour :
 
 
 
+## /documentation/ARCHITECTURE/FUTURE
 
+Ce dossier rassemble les concepts d'architecture validés dans leur principe mais non encore implémentés ou stabilisés.
+
+Ces documents servent de support de conception.
+
+Ils ne décrivent pas le fonctionnement actuel du dépôt.
+
+Une fois une architecture implémentée et auditée, sa documentation est déplacée vers `documentation/ARCHITECTURE/`.
 
 
 ---
