@@ -145,10 +145,10 @@ Mettre à jour :
 * [/documentation/composants.md](/documentation/composants.md)
 * [/documentation/ARCHITECTURE/ARCHITECTURE-OVERVIEW.md](/documentation/ARCHITECTURE/ARCHITECTURE-OVERVIEW.md)
 * [/documentation/ARCHITECTURE/AdminComponentRegistry.md](/documentation/ARCHITECTURE/AdminComponentRegistry.md)
-* [/documentation/ARCHITECTURE/AdminComponentRenderer.md](documentation/ARCHITECTURE/AdminComponentRenderer.md)
+* [/documentation/ARCHITECTURE/AdminComponentRenderer.md](/documentation/ARCHITECTURE/AdminComponentRenderer.md)
 * [/documentation/ARCHITECTURE/ComponentRegistry.md](/documentation/ARCHITECTURE/ComponentRegistry.md)
-* [/documentation/ARCHITECTURE/ComponentRenderer.md](documentation/ARCHITECTURE/ComponentRenderer.md)
-* [/documentation/ARCHITECTURE/ComponentRendererInterface.md](documentation/ARCHITECTURE/ComponentRendererInterface.md)
+* [/documentation/ARCHITECTURE/ComponentRenderer.md](/documentation/ARCHITECTURE/ComponentRenderer.md)
+* [/documentation/ARCHITECTURE/ComponentRendererInterface.md](/documentation/ARCHITECTURE/ComponentRendererInterface.md)
 * [/documentation/ARCHITECTURE/DescriptorDefinition.md](/documentation/ARCHITECTURE/DescriptorDefinition.md)
 
 
