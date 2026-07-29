@@ -150,11 +150,18 @@ Définir les futurs remplacements des interfaces HTML.
 
 Workbench prévus :
 
-* CategoryWorkbench
-* ArticleWorkbench
-* SceneWorkbench
-* ModelWorkbench
-* ImageWorkbench
+| Workbench             | Objet                       | Source principale |
+| --------------------- | --------------------------- | ----------------- |
+| CategoryWorkbench     | Arborescence des catégories | CmsCategoryModel  |
+| ArticleWorkbench      | Édition des articles        | CmsArticleModel   |
+| SectionWorkbench      | Édition des sections        | CmsSectionModel   |
+| PartWorkbench         | Édition des composants      | CmsPartModel      |
+| ModelWorkbench        | Ressources Three.js         | API + fichiers    |
+| SceneWorkbench        | Assemblage de scènes        | SceneDescriptor   |
+| LightWorkbench        | Éclairage                   | LightDescriptor   |
+| OrganizationWorkbench | API Entreprise/Organisation | API métier        |
+
+
 
 Les Workbench remplaceront progressivement les formulaires d'administration tout en conservant les mêmes services backend.
 
