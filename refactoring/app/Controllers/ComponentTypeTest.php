@@ -130,7 +130,51 @@ class ComponentTypeTest extends Controller
             $log[] = '❌ ' . $e->getMessage();
 
         }
-
+        // -------------------------------------------------
+        // Étape 5 : ComponentCatalog
+        // -------------------------------------------------
+        
+        $log[] = '<h3>📚 Étape 5 : ComponentCatalog</h3>';
+        
+        try {
+        
+            $catalog = new ComponentCatalog();
+        
+            $catalog->register(
+                new ComponentDefinition(
+                    type: 'test',
+                    description: 'Composant de test',
+                    descriptorClass: '',
+                    rendererClass: '',
+                    adminRendererClass: ''
+                )
+            );
+        
+            $log[] = $catalog->has('test')
+                ? '✅ has("test")'
+                : '❌ has("test")';
+        
+            $definition = $catalog->get('test');
+        
+            if ($definition !== null) {
+        
+                $log[] = '<pre>';
+                $log[] = print_r($definition, true);
+                $log[] = '</pre>';
+        
+            } else {
+        
+                $log[] = '❌ get("test")';
+        
+            }
+        
+            $log[] = 'Nombre de définitions : ' . count($catalog->all());
+        
+        } catch (\Throwable $e) {
+        
+            $log[] = '❌ ' . $e->getMessage();
+        
+        }
         return $this->renderLog($log);
     }
 
