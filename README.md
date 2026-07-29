@@ -164,7 +164,7 @@ Tests automatisés sur les parties critiques
 
 [daily/guide-composants.md](/project/daily/guide-composants.md)
 
-[project/audit/Phase 0 - Inventory.md](/project/audit/Phase 0 - Inventory.md)
+[project/audit/Phase 0 - Inventory.md](/project/audit/Phase%200%20-%20Inventory.md)
 
 
 
