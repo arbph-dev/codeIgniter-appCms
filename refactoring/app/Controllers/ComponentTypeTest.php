@@ -178,6 +178,33 @@ class ComponentTypeTest extends Controller
             $log[] = '❌ ' . $e->getMessage();
         
         }
+
+        // -------------------------------------------------
+        // Étape 6 : DescriptorMapper
+        // -------------------------------------------------
+
+        $log[] = '<h3>🧩 Étape 6 : DescriptorMapper</h3>';
+
+        try {
+
+            $mapper = new \App\Libraries\Components\DescriptorMapper();
+
+            $descriptor = $mapper->map([
+                'type_id' => 3,
+                'config'  => '{"title":"Mon graphique"}',
+            ]);
+
+            $log[] = '<pre>';
+            $log[] = print_r($descriptor, true);
+            $log[] = '</pre>';
+
+        } catch (\Throwable $e) {
+
+            $log[] = '❌ ' . $e->getMessage();
+
+        }
+
+        
         return $this->renderLog($log);
     }
 
