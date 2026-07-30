@@ -1,24 +1,25 @@
 <?php
 // app/Libraries/Components/DescriptorMapper.php
+
 namespace App\Libraries\Components;
+
+use App\Models\ComponentTypeModel;
 
 class DescriptorMapper
 {
-    protected array $types =
-    [
-        1 => 'raw',
-        2 => 'codeval',
-        3 => 'apex',
-        4 => 'mermaid',
-        5 => 'callout',
-        6 => 'leaflet',
-        7 => 'threejs',
-    ];
+    protected ComponentTypeModel $componentTypes;
+
+    public function __construct()
+    {
+        $this->componentTypes = new ComponentTypeModel();
+    }
 
     public function map(array $part): DescriptorDefinition
     {
+        $type = $this->componentTypes->find($part['type_id']);
+
         return DescriptorDefinition::fromArray([
-            'type'   => $this->types[$part['type_id']] ?? 'raw',
+            'type' => $type['name'] ?? 'raw',
             'config' => json_decode(
                 $part['config'] ?? '{}',
                 true
