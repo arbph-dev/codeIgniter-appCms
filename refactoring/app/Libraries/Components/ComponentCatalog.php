@@ -14,25 +14,15 @@ final class ComponentCatalog
     }
 
     /**
-     * Retourne la définition d'un composant.
+     * Retourne la définition d'un composant à partir de son nom.
      */
     public function get(string $type): ?ComponentDefinition
     {
         $row = $this->componentTypes->findByName($type);
 
-        if ($row === null) {
-            return null;
-        }
-
-        return new ComponentDefinition(
-            type: $row['name'],
-            description: $row['description'] ?? '',
-            descriptorClass: '',
-            rendererClass: '',
-            adminRendererClass: ''
-        );
+        return $row ? $this->createDefinition($row) : null;
     }
-    
+
     /**
      * Retourne la définition d'un composant à partir de son identifiant.
      */
@@ -42,7 +32,7 @@ final class ComponentCatalog
 
         return $row ? $this->createDefinition($row) : null;
     }
-    
+
     /**
      * Indique si un composant existe.
      */
@@ -60,14 +50,9 @@ final class ComponentCatalog
     {
         $definitions = [];
 
-        foreach ($this->componentTypes->findActive() as $row) {
-            $definitions[] = new ComponentDefinition(
-                type: $row['name'],
-                description: $row['description'] ?? '',
-                descriptorClass: '',
-                rendererClass: '',
-                adminRendererClass: ''
-            );
+        foreach ($this->componentTypes->findActive() as $row)
+        {
+            $definitions[] = $this->createDefinition($row);
         }
 
         return $definitions;
@@ -78,9 +63,20 @@ final class ComponentCatalog
      */
     public function register(ComponentDefinition $definition): self
     {
-        // Temporairement inutilisé.
-        // Conservé pour les tests unitaires et les futurs composants non persistés.
-
         return $this;
+    }
+
+    /**
+     * Construit une définition à partir d'une ligne SQL.
+     */
+    protected function createDefinition(array $row): ComponentDefinition
+    {
+        return new ComponentDefinition(
+            type: $row['name'],
+            description: $row['description'] ?? '',
+            descriptorClass: '',
+            rendererClass: '',
+            adminRendererClass: ''
+        );
     }
 }
