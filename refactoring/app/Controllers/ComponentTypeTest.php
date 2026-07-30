@@ -141,42 +141,58 @@ class ComponentTypeTest extends Controller
         
         try {
         
-            $catalog = new ComponentCatalog();
+            $catalog = new \App\Libraries\Components\ComponentCatalog();
         
-            $catalog->register(
-                new ComponentDefinition(
-                    type: 'test',
-                    description: 'Composant de test',
-                    descriptorClass: '',
-                    rendererClass: '',
-                    adminRendererClass: ''
-                )
-            );
+            // ---- has()
         
-            $log[] = $catalog->has('test')
-                ? '✅ has("test")'
-                : '❌ has("test")';
+            $log[] = $catalog->has('apex')
+                ? '✅ has("apex")'
+                : '❌ has("apex")';
         
-            $definition = $catalog->get('test');
+            $log[] = $catalog->has('unknown')
+                ? '❌ has("unknown")'
+                : '✅ has("unknown") = false';
         
-            if ($definition !== null) {
+            // ---- get()
         
+            $definition = $catalog->get('apex');
+        
+            if ($definition !== null)
+            {
+                $log[] = '<h4>get("apex")</h4>';
                 $log[] = '<pre>';
                 $log[] = print_r($definition, true);
                 $log[] = '</pre>';
-        
-            } else {
-        
-                $log[] = '❌ get("test")';
-        
+            }
+            else
+            {
+                $log[] = '❌ get("apex")';
             }
         
-            $log[] = 'Nombre de définitions : ' . count($catalog->all());
+            // ---- all()
         
-        } catch (\Throwable $e) {
+            $definitions = $catalog->all();
         
+            $log[] = '<h4>all()</h4>';
+            $log[] = 'Nombre de composants : ' . count($definitions);
+        
+            $log[] = '<pre>';
+        
+            foreach ($definitions as $definition)
+            {
+                $log[] = sprintf(
+                    "%-10s | %s",
+                    $definition->type,
+                    $definition->description
+                );
+            }
+        
+            $log[] = '</pre>';
+        
+        }
+        catch (\Throwable $e)
+        {
             $log[] = '❌ ' . $e->getMessage();
-        
         }
 
         // -------------------------------------------------
