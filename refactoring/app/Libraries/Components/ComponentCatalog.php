@@ -32,7 +32,17 @@ final class ComponentCatalog
             adminRendererClass: ''
         );
     }
+    
+    /**
+     * Retourne la définition d'un composant à partir de son identifiant.
+     */
+    public function getById(int $id): ?ComponentDefinition
+    {
+        $row = $this->componentTypes->find($id);
 
+        return $row ? $this->createDefinition($row) : null;
+    }
+    
     /**
      * Indique si un composant existe.
      */
