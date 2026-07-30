@@ -1,151 +1,74 @@
+# Commit : Introduction de ComponentCatalog (D014)
 
+## Objectif
 
-# Phase 1 — Création de `ComponentCatalog`
+Introduire `ComponentCatalog` comme point d'entrée unique des métadonnées des composants et supprimer les premiers mappings codés en dur.
 
-## Objectifs
+## Réalisations
 
-- Introduire `ComponentCatalog` sans casser l'architecture existante.
-- Aucune modification fonctionnelle.
-- Aucune régression.
-- Les composants existants (`raw`, `codeval`, `apex`, `mermaid`, `three`, puis `carousel`) doivent continuer à fonctionner.
+### ComponentTypeModel
 
-Cette première étape consiste uniquement à **centraliser les métadonnées**, sans modifier les consommateurs.
+- ajout de `is_active` dans `allowedFields`
+- ajout de `findActive()`
+- ajout de `findByName()`
 
----
+### ComponentDefinition
 
-## Étape 1 — Créer les nouvelles classes
-
-Proposition de structure :
-
-```
-app/
-└── Libraries/
-    └── Components/
-        ├── Catalog/
-        │   ├── ComponentCatalog.php
-        │   ├── ComponentDefinition.php
-        │   └── ComponentCatalogInterface.php   (optionnel)
-        │
-        └── ...
-```
-
-Responsabilités :
-
-### `ComponentDefinition`
-
-Objet métier décrivant un composant.
-
-Aucune logique CMS.
-
-Aucune logique SQL.
-
-Uniquement des métadonnées.
-
----
-
-### `ComponentCatalog`
-
-Responsabilités :
-
-- enregistrer les composants ;
-- retrouver une définition par type logique ;
-- retrouver une définition par type SQL ;
-- fournir la liste des composants disponibles ;
-- préparer les futures extensions (Workbench, Features, Connectors).
-
-À ce stade, le catalogue peut être alimenté statiquement. Une évolution ultérieure pourra le rendre déclaratif (configuration, découverte automatique, etc.).
-
----
-
-## Étape 2 — Alimenter le catalogue
-
-Créer une définition pour chacun des composants existants :
+Création de :
 
 ```
-raw
-codeval
-apex
-mermaid
-three
+app/Libraries/Components/ComponentDefinition.php
 ```
 
-Le composant `carousel` sera ajouté une fois son implémentation démarrée.
+Objet de transport des métadonnées d'un composant.
 
----
+### ComponentCatalog
 
-## Étape 3 — Aucun consommateur modifié
-
-À la fin de cette première étape :
+Création de :
 
 ```
-ComponentCatalog
+app/Libraries/Components/ComponentCatalog.php
 ```
 
-existe,
+Fonctionnalités :
 
-mais
+- `get()`
+- `getById()`
+- `has()`
+- `all()`
 
-```
-DescriptorMapper
-CmsService
-ComponentRenderer
-```
+Le catalogue utilise désormais `ComponentTypeModel`.
 
-continuent d'utiliser leur fonctionnement actuel.
+### DescriptorMapper
 
-Cette approche permet de valider le catalogue indépendamment du reste.
+Suppression du tableau interne :
 
----
-
-# Phase 2 — Refactorisation de `DescriptorMapper`
-
-Objectif :
-
-Le mapper ne connaît plus les classes concrètes.
-
-Au lieu de cela :
-
-```
-type
-    │
-ComponentCatalog
-    │
-ComponentDefinition
-    │
-Descriptor
+```php
+protected array $types = [...]
 ```
 
-Le `DescriptorMapper` devient un simple consommateur du catalogue.
+Le mapping utilise désormais `ComponentTypeModel`.
 
----
+### CmsService
 
-# Phase 3 — Refactorisation de `CmsService::enrichPart()`
+`CmsService::enrichPart()` utilise maintenant `ComponentCatalog::getById()`.
 
-Une fois le `DescriptorMapper` indépendant, `CmsService` ne doit plus connaître les types de composants.
+La dépendance directe à `ComponentTypeModel` est supprimée.
 
-Le flux devient :
+## Tests réalisés
 
-```
-Part
-   │
-ComponentCatalog
-   │
-ComponentDefinition
-   │
-DescriptorMapper
-   │
-Descriptor
-```
+- ✅ ComponentTypeModel
+- ✅ ComponentCatalog
+- ✅ DescriptorMapper
+- ✅ CmsService::enrichPart()
+- ✅ `/admin/cmstree`
 
-`CmsService` orchestre le processus sans contenir de logique spécifique aux composants.
+Aucune régression constatée.
 
----
+## État
 
-# Critère de validation
+Le `switch` de `CmsService::enrichPart()` est conservé provisoirement.
 
-À l'issue de cette troisième phase, l'ajout d'un nouveau composant ne doit plus nécessiter de modification de :
+Il sera supprimé lors de la migration des métadonnées (`label`, `icon`, `cssClass`) vers `ComponentDefinition`.
 
-- `CmsService`
-- `DescriptorMapper`
-
-Ces deux classes deviennent stables et respectent le principe d'ouverture/fermeture (Open/Closed Principle).
+Référence : **D014**
