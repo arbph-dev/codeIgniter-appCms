@@ -134,73 +134,66 @@ class CmsService
     }
 
 
-    // ----------------------------------------------------
+// ----------------------------------------------------
     protected function enrichPart(array $part): array
     {
-        static $types = null;
-
-        // Chargement du catalogue une seule fois
-        if ($types === null)
+        static $catalog = null;
+    
+        if ($catalog === null)
         {
-            $types = [];
-
-            foreach ((new \App\Models\ComponentTypeModel())->findAll() as $type)
-            {
-                $types[$type['id']] = $type;
-            }
+            $catalog = new \App\Libraries\Components\ComponentCatalog();
         }
-
-        $type = $types[$part['type_id']] ?? null;
-
-        if (!$type)
+    
+        $definition = $catalog->getById((int) $part['type_id']);
+    
+        if ($definition === null)
         {
             $part['type_name']  = 'unknown';
             $part['type_label'] = 'Inconnu';
             $part['type_icon']  = '❓';
             $part['type_class'] = 'unknown';
-
+    
             return $part;
         }
-
-        $part['type_name']  = $type['name'];
-
-        switch ($type['name'])
+    
+        $part['type_name'] = $definition->type;
+    
+        switch ($definition->type)
         {
             case 'raw':
                 $part['type_label'] = 'Texte';
                 $part['type_icon']  = '📝';
                 break;
-
+    
             case 'callout':
                 $part['type_label'] = 'Callout';
                 $part['type_icon']  = '📢';
                 break;
-
+    
             case 'codeval':
                 $part['type_label'] = 'CodeVal';
                 $part['type_icon']  = '💻';
                 break;
-
+    
             case 'apex':
                 $part['type_label'] = 'Apex';
                 $part['type_icon']  = '📈';
                 break;
-
+    
             case 'mermaid':
                 $part['type_label'] = 'Mermaid';
                 $part['type_icon']  = '🧭';
                 break;
-
+    
             default:
-                $part['type_label'] = ucfirst($type['name']);
+                $part['type_label'] = ucfirst($definition->type);
                 $part['type_icon']  = '🧩';
         }
-
-        $part['type_class'] = 'component-' . $type['name'];
-
+    
+        $part['type_class'] = 'component-' . $definition->type;
+    
         return $part;
     }
-
     // ----------------------------------------------------
     // CRUD PART
     // ----------------------------------------------------
