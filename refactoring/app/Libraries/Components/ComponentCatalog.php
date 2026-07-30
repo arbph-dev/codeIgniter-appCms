@@ -2,44 +2,75 @@
 
 namespace App\Libraries\Components;
 
-/**
- * Registre des définitions de composants.
- *
- * Décision : D014
- */
+use App\Models\ComponentTypeModel;
+
 final class ComponentCatalog
 {
-    /**
-     * @var array<string, ComponentDefinition>
-     */
-    private array $definitions = [];
+    protected ComponentTypeModel $componentTypes;
 
     public function __construct()
     {
-    }
-
-    public function register(ComponentDefinition $definition): self
-    {
-        $this->definitions[$definition->type] = $definition;
-
-        return $this;
-    }
-
-    public function has(string $type): bool
-    {
-        return isset($this->definitions[$type]);
-    }
-
-    public function get(string $type): ?ComponentDefinition
-    {
-        return $this->definitions[$type] ?? null;
+        $this->componentTypes = new ComponentTypeModel();
     }
 
     /**
-     * @return array<string, ComponentDefinition>
+     * Retourne la définition d'un composant.
+     */
+    public function get(string $type): ?ComponentDefinition
+    {
+        $row = $this->componentTypes->findByName($type);
+
+        if ($row === null) {
+            return null;
+        }
+
+        return new ComponentDefinition(
+            type: $row['name'],
+            description: $row['description'] ?? '',
+            descriptorClass: '',
+            rendererClass: '',
+            adminRendererClass: ''
+        );
+    }
+
+    /**
+     * Indique si un composant existe.
+     */
+    public function has(string $type): bool
+    {
+        return $this->componentTypes->findByName($type) !== null;
+    }
+
+    /**
+     * Retourne toutes les définitions.
+     *
+     * @return ComponentDefinition[]
      */
     public function all(): array
     {
-        return $this->definitions;
+        $definitions = [];
+
+        foreach ($this->componentTypes->findActive() as $row) {
+            $definitions[] = new ComponentDefinition(
+                type: $row['name'],
+                description: $row['description'] ?? '',
+                descriptorClass: '',
+                rendererClass: '',
+                adminRendererClass: ''
+            );
+        }
+
+        return $definitions;
+    }
+
+    /**
+     * Enregistrement manuel (tests).
+     */
+    public function register(ComponentDefinition $definition): self
+    {
+        // Temporairement inutilisé.
+        // Conservé pour les tests unitaires et les futurs composants non persistés.
+
+        return $this;
     }
 }
