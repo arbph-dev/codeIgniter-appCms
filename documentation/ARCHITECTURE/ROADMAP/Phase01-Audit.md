@@ -283,7 +283,7 @@ Pour le CRUD de ComponentTypeModel modifier les fichiers nécessaires :
         - [ComponentTypeModel.php](/refactoring/app/Models/ComponentTypeModel.php)
     - Views/
         - admin/
-            - component_types/
+            - component_types/ **Les vues utilisent un template/default, on peut le supprimer lui et la section**
                 - [index.php](/refactoring/app/Views/admin/component_types/index.php)
                 - [create.php](/refactoring/app/Views/admin/component_types/create.php)
                 - [edit.php](/refactoring/app/Views/admin/component_types/edit.php)
