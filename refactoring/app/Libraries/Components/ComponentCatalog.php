@@ -71,12 +71,48 @@ final class ComponentCatalog
      */
     protected function createDefinition(array $row): ComponentDefinition
     {
+        $label = ucfirst($row['name']);
+        $icon = '🧩';
+
+        switch ($row['name'])
+        {
+            case 'raw':
+                $label = 'Texte';
+                $icon = '📝';
+                break;
+
+            case 'callout':
+                $label = 'Callout';
+                $icon = '📢';
+                break;
+
+            case 'codeval':
+                $label = 'CodeVal';
+                $icon = '💻';
+                break;
+
+            case 'apex':
+                $label = 'Apex';
+                $icon = '📈';
+                break;
+
+            case 'mermaid':
+                $label = 'Mermaid';
+                $icon = '🧭';
+                break;
+        }
+
         return new ComponentDefinition(
             type: $row['name'],
             description: $row['description'] ?? '',
+
+            label: $label,
+            icon: $icon,
+            cssClass: 'component-' . $row['name'],
+
             descriptorClass: '',
             rendererClass: '',
-            adminRendererClass: ''
+            adminRendererClass: '',
         );
     }
 }
