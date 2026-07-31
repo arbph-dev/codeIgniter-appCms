@@ -97,4 +97,16 @@ class ComponentTypeController extends BaseController
 
         return redirect()->to("/admin/component-types/edit/{$id}");
     }
+    /**
+     * Suppression.
+     *
+     * TODO D014
+     * Vérifier les dépendances (cms_parts.type_id, etc.)
+     * avant toute suppression physique.
+     */
+    public function delete(int $id)
+    {
+        // TODO
+        return redirect()->to('/admin/component-types');
+    }    
 }
