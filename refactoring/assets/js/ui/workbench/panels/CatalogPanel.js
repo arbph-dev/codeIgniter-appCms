@@ -1,126 +1,174 @@
-// ============================================================
-// assets/js/ui/workbench/panels/CatalogPanel.js
-// ============================================================
+// assets/js/ui/workbench/views/CatalogPanel.js
 
 import { create, clear } from '/assets/js/core/domhelper.js';
 
 export class CatalogPanel
 {
-    /**
-     * @param {HTMLElement} container
-     */
-    constructor(container)
+    constructor({
+        catalog = null,
+        onSelect = null,
+    } = {})
     {
-        this.container = container;
+        this.catalog  = catalog;
+        this.onSelect = onSelect;
 
-        this.onSelect = null;
+        this.filter = '';
+        this.sortBy = 'title';
 
-        this.selectedType = null;
+        this.element = null;
+        this.listEl  = null;
+        this.infoEl  = null;
     }
 
-    //------------------------------------------------------------------
-    // rendu
-    //------------------------------------------------------------------
-
-    /**
-     * @param {ComponentDefinition[]} definitions
-     */
-    render(definitions = [])
+    render()
     {
-        clear(this.container);
-
-        const root = create('div', {
-            class: 'wb_catalog_panel'
+        this.element = create('div', {
+            class : 'wb_catalog'
         });
 
-        definitions.forEach(definition =>
-        {
-            root.appendChild(
-                this.createItem(definition)
-            );
+        //──────────────────────────────────────────────────────────────
+        // Toolbar
+        //──────────────────────────────────────────────────────────────
+
+        const toolbar = create('div', {
+            class : 'wb_catalog_toolbar'
         });
 
-        this.container.appendChild(root);
+        const search = create('input', {
+            class       : 'wb_catalog_search',
+            type        : 'search',
+            placeholder : 'Rechercher...'
+        });
+
+        search.addEventListener('input', () => {
+            this.filter = search.value.toLowerCase();
+            this.refresh();
+        });
+
+        const sort = create('select', {
+            class : 'wb_catalog_sort'
+        });
+
+        [
+            ['title',    'Nom'],
+            ['category', 'Catégorie'],
+            ['type',     'Type']
+        ].forEach(([value,label]) => {
+
+            const option = create('option', {
+                value,
+                text : label
+            });
+
+            sort.appendChild(option);
+
+        });
+
+        sort.addEventListener('change', () => {
+
+            this.sortBy = sort.value;
+            this.refresh();
+
+        });
+
+        toolbar.append(search, sort);
+
+        //──────────────────────────────────────────────────────────────
+        // Liste
+        //──────────────────────────────────────────────────────────────
+
+        this.listEl = create('div', {
+            class : 'wb_catalog_list'
+        });
+
+        //──────────────────────────────────────────────────────────────
+        // Footer
+        //──────────────────────────────────────────────────────────────
+
+        this.infoEl = create('div', {
+            class : 'wb_catalog_footer'
+        });
+
+        this.element.append(
+            toolbar,
+            this.listEl,
+            this.infoEl
+        );
+
+        this.refresh();
+
+        return this.element;
     }
 
-    //------------------------------------------------------------------
-
-    createItem(definition)
+    refresh()
     {
-        const item = create('div', {
-            class: 'wb_catalog_item'
-        });
+        clear(this.listEl);
 
-        item.dataset.type = definition.type;
-
-        //------------------------------------------------------
-
-        const icon = create('i', {
-            class: `fa ${definition.icon}`
-        });
-
-        const label = create('span', {
-            class : 'wb_catalog_label',
-            text  : definition.label
-        });
-
-        item.append(icon);
-        item.append(label);
-
-        //------------------------------------------------------
-
-        item.addEventListener('click', () =>
-        {
-            this.select(definition.type);
-
-            if (this.onSelect)
-            {
-                this.onSelect(definition);
-            }
-        });
-
-        //------------------------------------------------------
-
-        if (definition.type === this.selectedType)
-        {
-            item.classList.add('selected');
+        if (!this.catalog) {
+            return;
         }
 
-        return item;
-    }
+        let items = this.catalog.list();
 
-    //------------------------------------------------------------------
+        //----------------------------------------------------------
+        // filtre
+        //----------------------------------------------------------
 
-    select(type)
-    {
-        this.selectedType = type;
+        if (this.filter.length) {
 
-        this.container
-            .querySelectorAll('.wb_catalog_item')
-            .forEach(el =>
-            {
-                el.classList.toggle(
-                    'selected',
-                    el.dataset.type === type
+            items = items.filter(def => {
+
+                return (
+                    def.type.toLowerCase().includes(this.filter)
+                    || def.title.toLowerCase().includes(this.filter)
+                    || (def.category ?? '').toLowerCase().includes(this.filter)
                 );
+
             });
-    }
 
-    //------------------------------------------------------------------
+        }
 
-    clear()
-    {
-        clear(this.container);
-    }
+        //----------------------------------------------------------
+        // tri
+        //----------------------------------------------------------
 
-    //------------------------------------------------------------------
+        items.sort((a,b)=>{
 
-    destroy()
-    {
-        this.clear();
+            const av = (a[this.sortBy] ?? '').toLowerCase();
+            const bv = (b[this.sortBy] ?? '').toLowerCase();
 
-        this.onSelect = null;
+            return av.localeCompare(bv);
+
+        });
+
+        //----------------------------------------------------------
+        // rendu
+        //----------------------------------------------------------
+
+        for (const def of items)
+        {
+            const row = create('div', {
+                class : 'wb_catalog_item'
+            });
+
+            row.innerHTML = `
+                <div class="wb_catalog_item_title">${def.title}</div>
+                <div class="wb_catalog_item_type">${def.type}</div>
+                <div class="wb_catalog_item_category">${def.category ?? ''}</div>
+            `;
+
+            row.addEventListener('click', () => {
+
+                if (this.onSelect) {
+                    this.onSelect(def);
+                }
+
+            });
+
+            this.listEl.appendChild(row);
+        }
+
+        this.infoEl.textContent =
+            `${items.length} composant(s)`;
     }
 }
-
-export default CatalogPanel;
