@@ -1,4 +1,4 @@
-# Commit : Introduction de ComponentCatalog (D014)
+# Backend - PHP
 
 ## Objectif
 
@@ -72,3 +72,22 @@ Le `switch` de `CmsService::enrichPart()` est conservé provisoirement.
 Il sera supprimé lors de la migration des métadonnées (`label`, `icon`, `cssClass`) vers `ComponentDefinition`.
 
 Référence : **D014**
+
+---
+---
+
+# Frontend - Javascript
+
+## ComponentCatalog
+
+[assets/js/core/ComponentCatalog.js](/refactoring/assets/js/core/ComponentCatalog.js)
+
+
+
+
+
+
+
+
+
+
