@@ -24,8 +24,8 @@ Les comptes-rendus de conception, les recherches et les feuilles de route sont d
 * [[D011-DescriptorMapper]]
 * [[D012-ComponentRenderer]]
 * [[D013-ComponentRegistry]]
-* D014-ComponentDefinition
-   - Un composant est décrit par une ComponentDefinition enregistrée dans le ComponentCatalog. Toutes les autres couches (CMS, rendu, administration, Workbench, Features et Connectors) doivent s'appuyer exclusivement sur cette définition et ne jamais maintenir leurs propres correspondances de types.
+* [D014-ComponentDefinition](/documentation/ARCHITECTURE/DECISIONS/D014-ComponentDefinition.md)
+   - Un composant est décrit par sa ComponentDefinition enregistrée dans le ComponentCatalog. Toutes les couches doivent s'appuyer sur ces définitions.
 
 ## Frontend
 
