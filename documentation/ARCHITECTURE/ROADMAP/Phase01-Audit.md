@@ -250,6 +250,34 @@ Les Workbench constitueront la dernière étape d'intégration de chaque module.
 
 ---
 
+## Models
+
+### ComponentTypeModel
+Pour le CRUD de ComponentTypeModel modifier les fichiers nécessaires :
+```
+app/
+├── Config
+│   └── Routes.php
+├── Controllers/
+│   └── Admin/
+│       └── ComponentTypeController.php
+│
+├── Models/
+│   └── ComponentTypeModel.php   (compléments éventuels uniquement)
+│
+└── Views/
+    └── admin/
+        └── component_types/
+            ├── index.php
+            ├── create.php
+            ├── edit.php
+            └── form.php
+```
+
+
+
+---
+
 # Axe 7 — Préparation des Workbench
 
 Définir les futurs remplacements des interfaces HTML.
