@@ -134,7 +134,7 @@ class CmsService
     }
 
 
-// ----------------------------------------------------
+    // ----------------------------------------------------
     protected function enrichPart(array $part): array
     {
         static $catalog = null;
@@ -156,41 +156,10 @@ class CmsService
             return $part;
         }
     
-        $part['type_name'] = $definition->type;
-    
-        switch ($definition->type)
-        {
-            case 'raw':
-                $part['type_label'] = 'Texte';
-                $part['type_icon']  = '📝';
-                break;
-    
-            case 'callout':
-                $part['type_label'] = 'Callout';
-                $part['type_icon']  = '📢';
-                break;
-    
-            case 'codeval':
-                $part['type_label'] = 'CodeVal';
-                $part['type_icon']  = '💻';
-                break;
-    
-            case 'apex':
-                $part['type_label'] = 'Apex';
-                $part['type_icon']  = '📈';
-                break;
-    
-            case 'mermaid':
-                $part['type_label'] = 'Mermaid';
-                $part['type_icon']  = '🧭';
-                break;
-    
-            default:
-                $part['type_label'] = ucfirst($definition->type);
-                $part['type_icon']  = '🧩';
-        }
-    
-        $part['type_class'] = 'component-' . $definition->type;
+        $part['type_name']  = $definition->type;
+        $part['type_label'] = $definition->label;
+        $part['type_icon']  = $definition->icon;
+        $part['type_class'] = $definition->cssClass;
     
         return $part;
     }
