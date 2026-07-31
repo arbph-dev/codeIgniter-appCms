@@ -106,27 +106,10 @@ Permettre au CMS et au Registry de connaître les capacités d'un composant sans
 
 
 # Frontend - Javascript
-[assets/js/core/ComponentCatalog.js](/refactoring/assets/js/core/ComponentCatalog.js)
-
-
-
-
 
 [assets/js/core/ComponentDefinition.js](/refactoring/assets/js/core/ComponentDefinition.js)  
 
-## ComponentDefinitionRegistry
 
-[assets/js/core/ComponentDefinitionRegistry.js](/refactoring/assets/js/core/ComponentDefinitionRegistry.js) Registre des ComponentDefinition. 
-Ne contient AUCUNE logique métier.
-Le ComponentCatalog constitue la façade publique.
-
-
-### Responsabilités :
-- enregistrer une définition
-- récupérer une définition
-- lister les définitions
-- supprimer une définition
-- vider le registre
 
 
 
