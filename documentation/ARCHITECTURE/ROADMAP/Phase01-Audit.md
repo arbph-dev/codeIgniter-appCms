@@ -255,52 +255,39 @@ Les Workbench constitueront la dernière étape d'intégration de chaque module.
 ### ComponentTypeModel
 Pour le CRUD de ComponentTypeModel modifier les fichiers nécessaires :
 
-app/
-├── Config
-│   └── Routes.php
-
-```php
-// -----------------------------------------------------------------------------
-// Administration - Types de composants
-// -----------------------------------------------------------------------------
-
-$routes->group('admin/component-types', static function ($routes)
-{
-    $routes->get('/', 'Admin\ComponentTypeController::index');
-
-    $routes->get('create', 'Admin\ComponentTypeController::create');
-    $routes->post('insert', 'Admin\ComponentTypeController::insert');
-
-    $routes->get('edit/(:num)', 'Admin\ComponentTypeController::edit/$1');
-    $routes->post('update/(:num)', 'Admin\ComponentTypeController::update/$1');
-
-    $routes->get('delete/(:num)', 'Admin\ComponentTypeController::delete/$1');
-});
-```
-
-├── Controllers/
-│   └── Admin/
-│       └── [ComponentTypeController.php](/refactoring/app/Controllers/Admin/ComponentTypeController.php)
-│
-├── Models/
-│   └── [ComponentTypeModel.php](/refactoring/app/Models/ComponentTypeModel.php)
-│
-└── Views/
-    └── admin/
-        └── component_types/
-            ├── [index.php](/refactoring/app/Views/admin/component_types/index.php)
-            ├── [create.php](/refactoring/app/Views/admin/component_types/create.php)
-            ├── [edit.php](/refactoring/app/Views/admin/component_types/edit.php)
-            └── [form.php](/refactoring/app/Views/admin/component_types/form.php)
-
-
-
-
-
-
-[app/Views/admin/component_types/form.php](/refactoring/app/Views/admin/component_types/form.php)
-
-
+- app/
+    - Config
+        - Routes.php
+            ```php
+            // -----------------------------------------------------------------------------
+            // Administration - Types de composants
+            // -----------------------------------------------------------------------------
+            
+            $routes->group('admin/component-types', static function ($routes)
+            {
+                $routes->get('/', 'Admin\ComponentTypeController::index');
+            
+                $routes->get('create', 'Admin\ComponentTypeController::create');
+                $routes->post('insert', 'Admin\ComponentTypeController::insert');
+            
+                $routes->get('edit/(:num)', 'Admin\ComponentTypeController::edit/$1');
+                $routes->post('update/(:num)', 'Admin\ComponentTypeController::update/$1');
+            
+                $routes->get('delete/(:num)', 'Admin\ComponentTypeController::delete/$1');
+            });
+            ```
+    - Controllers/
+        - Admin/
+            - [ComponentTypeController.php](/refactoring/app/Controllers/Admin/ComponentTypeController.php)
+    - Models/
+        - [ComponentTypeModel.php](/refactoring/app/Models/ComponentTypeModel.php)
+    - Views/
+        - admin/
+            - component_types/
+                - [index.php](/refactoring/app/Views/admin/component_types/index.php)
+                - [create.php](/refactoring/app/Views/admin/component_types/create.php)
+                - [edit.php](/refactoring/app/Views/admin/component_types/edit.php)
+                - [form.php](/refactoring/app/Views/admin/component_types/form.php)
 ---
 
 # Axe 7 — Préparation des Workbench
