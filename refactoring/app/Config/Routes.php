@@ -36,6 +36,17 @@ $routes->group('admin/cmspart', static function($routes)
 	$routes->get('down/(:num)',    'Admin\CmsPart::down/$1');    
 });
 
+
+$routes->group('admin/component-types', static function ($routes)
+{
+    $routes->get('/', 'Admin\ComponentTypeController::index');
+    $routes->get('create', 'Admin\ComponentTypeController::create');
+    $routes->post('insert', 'Admin\ComponentTypeController::insert');
+    $routes->get('edit/(:num)', 'Admin\ComponentTypeController::edit/$1');
+    $routes->post('update/(:num)', 'Admin\ComponentTypeController::update/$1');
+    $routes->get('delete/(:num)', 'Admin\ComponentTypeController::delete/$1');
+});
+
 $routes->get( 'admin/cmstree', 'Admin\CmsTree::index' );
 
 
