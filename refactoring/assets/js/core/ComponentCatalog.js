@@ -1,118 +1,141 @@
-// ============================================================
+// ============================================================================
 // assets/js/core/ComponentCatalog.js
-//
-// Catalogue public des composants.
-//
-// Responsabilités :
-//   • façade sur ComponentDefinitionRegistry
-//   • API unique utilisée par les Workbench
-//   • aucune logique UI
-// ============================================================
+// ============================================================================
 
-import { ComponentDefinitionRegistry } from './ComponentDefinitionRegistry.js';
+import ComponentDefinitionRegistry from './ComponentDefinitionRegistry.js';
 
 export class ComponentCatalog
 {
-    /**
-     * Enregistre une définition.
-     *
-     * @param {ComponentDefinition} definition
-     */
-    static register(definition)
+    constructor()
     {
-        ComponentDefinitionRegistry.register(definition);
+        this.registry = ComponentDefinitionRegistry;
     }
 
     /**
-     * Désenregistre un composant.
-     *
-     * @param {string} type
+     * Charge les définitions par défaut.
+     * Cette méthode sera enrichie au fur et à mesure des composants.
      */
-	static unregister(type)
-	{
-	    ComponentDefinitionRegistry.unregister(type);
-	}
-	/**
-	 * Retourne une définition.
-	 * @param {string} type
-	 * @returns {ComponentDefinition|null}
-	 */
-	static get(type) { return ComponentDefinitionRegistry.get(type); }
+    loadDefaults()
+    {
+        // TODO
+        // registerRaw();
+        // registerMermaid();
+        // registerApex();
+        // registerLeaflet();
+        // registerThree();
+    }
 
     /**
-     * Liste complète.
+     * Nombre de composants.
+     */
+    count()
+    {
+        return this.registry.count();
+    }
+
+    /**
+     * Toutes les définitions.
      *
      * @returns {ComponentDefinition[]}
      */
-    static list()
+    list()
     {
-        return ComponentDefinitionRegistry.list();
+        return this.registry.list();
+    }
+
+    /**
+     * Définition par type.
+     *
+     * @param {string} type
+     * @returns {ComponentDefinition|null}
+     */
+    get(type)
+    {
+        return this.registry.get(type);
     }
 
     /**
      * Vérifie l'existence.
-     *
-     * @param {string} type
-     * @returns {boolean}
      */
-	static has(type)
-	{
-	    return ComponentDefinitionRegistry.has(type);
-	}
-
-    /**
-     * Retourne les catégories connues.
-     *
-     * @returns {string[]}
-     */
-    static categories()
+    has(type)
     {
-        const categories = new Set();
-
-        this.list().forEach(def =>
-        {
-            categories.add(def.category ?? 'general');
-        });
-
-        return [...categories].sort();
+        return this.registry.has(type);
     }
 
     /**
-     * Filtre par catégorie.
-     *
-     * @param {string} category
-     * @returns {ComponentDefinition[]}
+     * Liste filtrée.
      */
-    static listByCategory(category)
+    filter(predicate)
     {
-        return this.list().filter(
-            def => def.category === category
+        return this.list().filter(predicate);
+    }
+
+    /**
+     * Recherche texte.
+     */
+    search(text = '')
+    {
+        const q = text.toLowerCase();
+
+        return this.filter(def =>
+
+            def.type.toLowerCase().includes(q)
+            || def.title.toLowerCase().includes(q)
+            || (def.category ?? '').toLowerCase().includes(q)
+            || (def.description ?? '').toLowerCase().includes(q)
+
         );
     }
 
     /**
-     * Filtre selon une capacité.
-     *
-     * Exemple :
-     *   listByCapability('editor')
-     *   listByCapability('preview')
-     *
-     * @param {string} capability
-     * @returns {ComponentDefinition[]}
+     * Retourne toutes les catégories.
      */
-    static listByCapability(capability)
+    categories()
     {
-        return this.list().filter(
-            def => def.supports(capability)
+        return [...new Set(
+            this.list()
+                .map(d => d.category)
+                .filter(Boolean)
+        )].sort();
+    }
+
+    /**
+     * Composants d'une catégorie.
+     */
+    byCategory(category)
+    {
+        return this.filter(d => d.category === category);
+    }
+
+    /**
+     * Composants possédant un tag.
+     */
+    byTag(tag)
+    {
+        return this.filter(d =>
+            Array.isArray(d.tags)
+            && d.tags.includes(tag)
         );
     }
 
     /**
-     * Vide complètement le catalogue.
+     * Génère un descriptor.
      */
-    static clear()
+    createDescriptor(type)
     {
-        ComponentDefinitionRegistry.clear();
+        const definition = this.get(type);
+
+        return definition
+            ? definition.createDefaultDescriptor()
+            : null;
+    }
+
+    /**
+     * Vide le registre.
+     */
+    clear()
+    {
+        this.registry.clear();
     }
 }
 
