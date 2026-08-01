@@ -1,101 +1,151 @@
-// ============================================================
+// ============================================================================
 // assets/js/core/ComponentDefinition.js
-// Définition d'un composant CMS
-// ============================================================
+//
+// Contrat décrivant un composant du catalogue.
+//
+// Une ComponentDefinition contient uniquement des métadonnées.
+// Elle ne crée jamais d'instance de composant.
+//
+// Stage 1
+// ============================================================================
 
 export class ComponentDefinition
 {
     constructor({
-        id = '',
-        type = '',
-        label = '',
-        category = 'general',
+        type          = '',
+        title         = '',
+        description   = '',
+        category      = 'General',
 
-        renderer = null,
-        adminRenderer = null,
+        version       = '1.0.0',
+        author        = '',
+        icon          = 'fa-cube',
 
-        descriptor = null,
+        tags          = [],
 
-        icon = 'fa-cube',
-        version = '1.0.0',
-        description = '',
+        capabilities  = {},
 
-        capabilities = {},
+        descriptor    = {},
 
-        metadata = {}
+        defaults      = {},
+
+        renderer      = null,
+        controller    = null,
+        workbench     = null,
     } = {})
     {
-        this.id             = id;
-        this.type           = type;
-        this.label          = label;
-        this.category       = category;
+        if (!type) {
+            throw new Error('ComponentDefinition : type obligatoire.');
+        }
 
-        this.renderer       = renderer;
-        this.adminRenderer  = adminRenderer;
+        this.type        = type;
+        this.title       = title || type;
+        this.description = description;
+        this.category    = category;
 
-        this.descriptor     = descriptor;
+        this.version     = version;
+        this.author      = author;
+        this.icon        = icon;
 
-        this.icon           = icon;
-        this.version        = version;
-        this.description    = description;
+        this.tags = [...tags];
 
-        this.capabilities = {
-            preview : true,
-            editor  : false,
-            provider: false,
-            api     : false,
+        this.capabilities =
+        {
+            cms        : true,
+            preview    : true,
+            workbench  : true,
+            export     : false,
+            import     : false,
+
             ...capabilities
         };
 
-        this.metadata = metadata;
+        // Définition du descriptor supporté
+        this.descriptor =
+        {
+            properties : [],
+            required   : [],
+
+            ...descriptor
+        };
+
+        // Valeurs par défaut du descriptor
+        this.defaults =
+        {
+            ...defaults
+        };
+
+        // Références techniques
+        this.renderer   = renderer;
+        this.controller = controller;
+        this.workbench  = workbench;
     }
 
-    //-----------------------------------------------------------------
-    // helpers
-    //-----------------------------------------------------------------
+    //----------------------------------------------------------------------
+    // Capabilities
+    //----------------------------------------------------------------------
 
-    hasRenderer()
+    hasCapability(name)
     {
-        return this.renderer !== null;
+        return Boolean(this.capabilities[name]);
     }
 
-    hasAdminRenderer()
+    //----------------------------------------------------------------------
+    // Tags
+    //----------------------------------------------------------------------
+
+    hasTag(tag)
     {
-        return this.adminRenderer !== null;
+        return this.tags.includes(tag);
     }
 
-    hasDescriptor()
+    addTag(tag)
     {
-        return this.descriptor !== null;
+        if (!this.hasTag(tag)) {
+            this.tags.push(tag);
+        }
+
+        return this;
     }
 
-    supports(feature)
+    //----------------------------------------------------------------------
+    // Descriptor
+    //----------------------------------------------------------------------
+
+    getDefaultDescriptor()
     {
-        return this.capabilities[feature] === true;
+        return structuredClone(this.defaults);
     }
 
-    //-----------------------------------------------------------------
-    // export
-    //-----------------------------------------------------------------
+    //----------------------------------------------------------------------
+    // Export
+    //----------------------------------------------------------------------
 
     toJSON()
     {
         return {
-            id            : this.id,
-            type          : this.type,
-            label         : this.label,
-            category      : this.category,
+            type         : this.type,
+            title        : this.title,
+            description  : this.description,
+            category     : this.category,
 
-            renderer      : this.renderer?.name ?? null,
-            adminRenderer : this.adminRenderer?.name ?? null,
-            descriptor    : this.descriptor?.name ?? null,
+            version      : this.version,
+            author       : this.author,
+            icon         : this.icon,
 
-            icon          : this.icon,
-            version       : this.version,
-            description   : this.description,
+            tags         : [...this.tags],
 
-            capabilities  : this.capabilities,
-            metadata      : this.metadata
+            capabilities : {
+                ...this.capabilities
+            },
+
+            descriptor : {
+                ...this.descriptor
+            },
+
+            defaults : {
+                ...this.defaults
+            }
         };
     }
 }
