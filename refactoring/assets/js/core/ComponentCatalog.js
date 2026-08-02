@@ -1,7 +1,12 @@
 // ============================================================================
 // assets/js/core/ComponentCatalog.js
+// 2026-08-02-001 : Stage 1
+//
+// Chargement du catalogue depuis l'API PHP.
+//
 // ============================================================================
 
+import ComponentDefinition from './ComponentDefinition.js';
 import ComponentDefinitionRegistry from './ComponentDefinitionRegistry.js';
 
 export class ComponentCatalog
@@ -12,17 +17,49 @@ export class ComponentCatalog
     }
 
     /**
-     * Charge les définitions par défaut.
-     * Cette méthode sera enrichie au fur et à mesure des composants.
+     * Charge le catalogue depuis l'API.
+     *
+     * @returns {Promise<ComponentCatalog>}
      */
-    loadDefaults()
+    async load()
     {
-        // TODO
-        // registerRaw();
-        // registerMermaid();
-        // registerApex();
-        // registerLeaflet();
-        // registerThree();
+        const response = await fetch('/api/component-catalog');
+
+        if (!response.ok)
+        {
+            throw new Error(
+                `Impossible de charger le catalogue (${response.status})`
+            );
+        }
+
+        const definitions = await response.json();
+
+        this.registry.clear();
+
+        for (const data of definitions)
+        {
+            this.registry.register(
+
+                new ComponentDefinition({
+
+                    type        : data.type,
+
+                    title       : data.label,
+                    description : data.description,
+
+                    icon        : data.icon,
+
+                    renderer    : data.rendererClass,
+                    workbench   : data.workbenchClass,
+
+                    ...data.metadata,
+
+                })
+
+            );
+        }
+
+        return this;
     }
 
     /**
@@ -51,7 +88,7 @@ export class ComponentCatalog
      */
     get(type)
     {
-        return this.registry.get(type);
+        return this.registry.get({ type });
     }
 
     /**
@@ -59,7 +96,7 @@ export class ComponentCatalog
      */
     has(type)
     {
-        return this.registry.has(type);
+        return this.registry.has({ type });
     }
 
     /**
@@ -126,7 +163,7 @@ export class ComponentCatalog
         const definition = this.get(type);
 
         return definition
-            ? definition.createDefaultDescriptor()
+            ? definition.getDefaultDescriptor()
             : null;
     }
 
