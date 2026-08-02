@@ -138,7 +138,7 @@ class Filters extends BaseFilters
                 'api/auth/me',
                 'api/auth/logout',
                 'api/comptespcg*',
-                'api/mot*',
+                // 'api/mot*',      // ← OFF — workbench test (remettre après intégration auth)
             ],
         ],
 
