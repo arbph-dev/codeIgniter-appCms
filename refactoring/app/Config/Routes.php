@@ -16,10 +16,28 @@ $routes->options('(:any)', static function () {
 
 service('auth')->routes($routes);
 $routes->get('/', 'Cms::index');
+$routes->get('/index2', 'Cms::index2');
 $routes->get('/user', 'User::index');
 $routes->get('/admin', 'Admin::index');
 $routes->get( 'admin/modelworkbench', 'Admin\ModelWorkbench::index' );
 
+
+
+$routes->group('admin/component-types', static function ($routes)
+{
+    $routes->get('/', 'Admin\ComponentTypeController::index');
+    $routes->get('create', 'Admin\ComponentTypeController::create');
+    $routes->post('insert', 'Admin\ComponentTypeController::insert');
+    $routes->get('edit/(:num)', 'Admin\ComponentTypeController::edit/$1');
+    $routes->post('update/(:num)', 'Admin\ComponentTypeController::update/$1');
+    $routes->get('delete/(:num)', 'Admin\ComponentTypeController::delete/$1');
+});
+
+$routes->group('workbench', ['namespace' => 'App\Controllers'], static function ($routes)
+{
+    $routes->get('component-catalog'    ,   'WorkbenchController::componentCatalog' );
+    $routes->get('mot'                  ,   'WorkbenchController::mot'              );    
+});
 
 $routes->group('admin/cmspart', static function($routes)
 {
@@ -36,17 +54,6 @@ $routes->group('admin/cmspart', static function($routes)
 	$routes->get('down/(:num)',    'Admin\CmsPart::down/$1');    
 });
 
-
-$routes->group('admin/component-types', static function ($routes)
-{
-    $routes->get('/', 'Admin\ComponentTypeController::index');
-    $routes->get('create', 'Admin\ComponentTypeController::create');
-    $routes->post('insert', 'Admin\ComponentTypeController::insert');
-    $routes->get('edit/(:num)', 'Admin\ComponentTypeController::edit/$1');
-    $routes->post('update/(:num)', 'Admin\ComponentTypeController::update/$1');
-    $routes->get('delete/(:num)', 'Admin\ComponentTypeController::delete/$1');
-});
-
 $routes->get( 'admin/cmstree', 'Admin\CmsTree::index' );
 
 
@@ -54,10 +61,10 @@ $routes->get( 'admin/cmstree', 'Admin\CmsTree::index' );
 
 //$routes->get( 'cms/tree', 'CmsController::cmstree' );
 
-$routes->get( 'cms/category/(:segment)' , 'CmsController::category/$1'  );
-$routes->get( 'cms/article/(:segment)'  , 'CmsController::article/$1'   );  
-$routes->get( 'cms/section/(:num)'      , 'CmsController::section/$1'   );
-$routes->get( 'cms/part/(:num)'         , 'CmsController::part/$1'      );
+$routes->get( 'cms/category/(:segment)' , 'CmsController::category/$1'              );
+$routes->get( 'cms/article/(:segment)'  , 'CmsController::article/$1'               );  
+$routes->get( 'cms/section/(:num)'      , 'CmsController::section/$1'               );
+$routes->get( 'cms/part/(:num)'         , 'CmsController::part/$1'                  );
 
 //$routes->get( 'test/parts', 'TestController::parts' );
 $routes->get( 'test/components', 'TestController::components' );
@@ -82,9 +89,8 @@ $routes->get('technologies/(:segment)', 'Technologies::rubrique/$1');
 $routes->get('technologies/(:segment)/(:segment)', 'Technologies::show/$1/$2');
 
 
+$routes->get('cmptest', 'ComponentTypeTest::index');
 
-$routes->get('sendtestmail', 'Sendtestmail::index');
-$routes->get('dbtest', 'Dbtest::index');
 // 1  grouper sous `/api/auth/`
 //── Auth ────────────────────────────────────────────────────────────────────
 $routes->group('api/auth', ['namespace' => 'App\Controllers\Api'], function($routes) {
@@ -102,10 +108,10 @@ $routes->group('api/auth', ['namespace' => 'App\Controllers\Api'], function($rou
 
 // ── API métier (session OU token) ────────────────────────────────────────────
 $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) {
-	
-	//component-catalog
-	$routes->get('component-catalog', 'ComponentCatalogController::index');
-	
+
+    // component-catalog
+    $routes->get('component-catalog', 'ComponentCatalogController::index');
+
     // Mot
     $routes->get('mot/like', 'Mot::like');// Doit être AVANT la route ressource générique
     //$routes->resource('mot'); // a tester en lieu et place des 4 linges ci dessous
