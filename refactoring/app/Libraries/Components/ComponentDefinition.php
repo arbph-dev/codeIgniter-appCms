@@ -11,6 +11,8 @@ namespace App\Libraries\Components;
  */
 final class ComponentDefinition
 {
+
+    // {} => promotion des propriétés du constructeur introduite en PHP 8.
     public function __construct(
         public string  $type,
         public string  $description,
@@ -31,4 +33,33 @@ final class ComponentDefinition
         
         public array   $metadata = [],
     ) {}
+
+    /**
+     * Exporte la définition sous forme de tableau.
+     */
+    public function toArray(): array
+    {
+        return [
+            'type'               => $this->type,
+            'description'        => $this->description,
+
+            'label'              => $this->label,
+            'icon'               => $this->icon,
+            'cssClass'           => $this->cssClass,
+
+            'descriptorClass'    => $this->descriptorClass,
+            'rendererClass'      => $this->rendererClass,
+            'adminRendererClass' => $this->adminRendererClass,
+
+            'resources'          => $this->resources,
+            'features'           => $this->features,
+            'connectors'         => $this->connectors,
+
+            'workbenchClass'     => $this->workbenchClass,
+
+            'metadata'           => $this->metadata,
+        ];
+    }
+
+
 }
