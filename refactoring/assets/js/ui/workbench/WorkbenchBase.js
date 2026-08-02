@@ -72,7 +72,7 @@ export class WorkbenchBase {
         `;
     }
 
-    bootstrap() {}
+    async bootstrap() {}//essai
 
     attachEvents() {
         this.bus.subscribe('wb:refresh', () => this.refresh());
