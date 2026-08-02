@@ -102,7 +102,10 @@ $routes->group('api/auth', ['namespace' => 'App\Controllers\Api'], function($rou
 
 // ── API métier (session OU token) ────────────────────────────────────────────
 $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) {
-
+	
+	//component-catalog
+	$routes->get('component-catalog', 'ComponentCatalogController::index');
+	
     // Mot
     $routes->get('mot/like', 'Mot::like');// Doit être AVANT la route ressource générique
     //$routes->resource('mot'); // a tester en lieu et place des 4 linges ci dessous
