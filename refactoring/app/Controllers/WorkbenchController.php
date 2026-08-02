@@ -14,4 +14,15 @@ class WorkbenchController extends BaseController
     {
         return view('workbench/component_catalog');
     }
+
+
+    /**
+     * Workbench de test — feature Mot.
+     *
+     * URL : /workbench/mot
+     */
+    public function mot()
+    {
+        return view('workbench/mot');
+    }    
 }
