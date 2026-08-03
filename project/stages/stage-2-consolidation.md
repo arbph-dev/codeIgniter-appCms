@@ -24,12 +24,15 @@ Services structurés (mot.service.js mentionné avec une dépendance à corriger
 ### fichiers
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/core/domhelper.js resssource
 
-
 - [/assets/js/ui/workbench/views/DescriptorPanel.js](/refactoring/assets/js/ui/workbench/views/DescriptorPanel.js)
+
 - [/assets/js/ui/workbench/views/JsonPanel.js](refactoring/assets/js/ui/workbench/views/JsonPanel.js)
+
 - [/assets/js/ui/workbench/views/CatalogPanel.js](/refactoring/assets/js/ui/workbench/views/CatalogPanel.js)
-- [assets/js/ui/workbench/views/DefinitionPanel.js](/refactoring/assets/js/ui/workbench/views/DefinitionPanel.js)
+
 - [/assets/js/ui/workbench/mot/MotListPanel.js](/refactoring/assets/js/ui/workbench/mot/MotListPanel.js)
+
+---
 
 - [/assets/js/features/mot/mot.service.js](/refactoring/assets/js/features/mot/mot.service.js)
   - correction du bug : fetchMot sans q omet page / per_page.
@@ -51,6 +54,7 @@ Après le fix :
 Note : le défaut dans le service est perPage = 10, le workbench force 20 — c’est volontaire et correct.
 
 ---
+
 /assets/js/ui/workbench/WorkbenchBase.js
 ajout await pur this bootsrap [WorkbenchBase.js#L60](https://github.com/arbph-dev/codeIgniter-appCms/blob/25f1ed5eefe1c7043e835110303167869c4a11ae/refactoring/assets/js/ui/workbench/WorkbenchBase.js#L60)
 ```
@@ -68,11 +72,15 @@ async init(containerSelector) {
     return true;
 }
 ```
-ComponentCatalogWorkbench utilise deja async, pour MotWorkbench.js
+
+---
+
+ComponentCatalogWorkbench utilise deja async
+pour MotWorkbench.js
 ```
 async bootstrap() {....}
 ```
-
+---
 
 Côté appelants (vues / scripts d’entrée)Tout code qui démarre un workbench doit attendre init :js
 ```
@@ -111,11 +119,32 @@ Polish MotDetailPanel (config = {}, this.element au lieu de this.el)
 
 
 ---  
-a finir
 - refactoring/assets/js/ui/workbench/catalog/ComponentCatalogWorkbench.js
+
+
+Les trois console.log (count / list / get) et le commentaire //this.catalog.load(); disparaissent de bootstrap.
+
+un cycle « état → refresh » aligné roadmap, tu peux ajouter une methode refresh (fait)
+
+
+---
+Aucun appelant à modifier : MotWorkbench utilise uniquement render(), show(), clear(), destroy() — pas panel.el.
+
 - refactoring/assets/js/ui/workbench/mot/MotWorkbench.js
+---
+- [assets/js/ui/workbench/views/DefinitionPanel.js](/refactoring/assets/js/ui/workbench/views/DefinitionPanel.js)
 
+Changements
 
+|Point|Détail|
+|---|---|
+|destroy()|element, bodyEl, definition → null|
+|constructor(config = {})|aligné contrat|
+|_showEmpty()|extrait de show(null)|
+|wb_empty → wb-empty|convention CSS|
+|garde if (!this.bodyEl)|dans show|
+
+ComponentCatalogWorkbench.destroy() appelle déjà this.definitionPanel?.destroy?.() — rien à changer côté workbench.Même traitement à faire sur DescriptorPanel si destroy() y manque. Tu veux qu’on le vérifie / patch aussi
 
 ## Créer un service template — structure standard pour les services API
 
@@ -127,3 +156,14 @@ voir [workbench--css-patterns--conventions](/project/daily/2026-08-02-003.md#wor
 
 
 ## Tester les workbenches existants — valider qu'ils fonctionnent ensemble
+### upload 
+- assets/css/components/workbench.css
+- assets/js/ui/workbench/views/CatalogPanel.js
+- assets/js/ui/workbench/views/DefinitionPanel.js
+- [/assets/js/ui/workbench/views/DescriptorPanel.js](/refactoring/assets/js/ui/workbench/views/DescriptorPanel.js)
+- assets/js/ui/workbench/views/JsonPanel.js
+- [/assets/js/features/mot/mot.service.js](/refactoring/assets/js/features/mot/mot.service.js)
+- assets/js/ui/workbench/WorkbenchBase.js
+- assets/js/ui/workbench/mot/MotWorkbench.js
+- /assets/js/ui/workbench/mot/MotDetailPanel.js
+- /assets/js/ui/workbench/catalog/ComponentCatalogWorkbench.js
