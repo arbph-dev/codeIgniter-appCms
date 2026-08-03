@@ -22,6 +22,9 @@ Services structurés (mot.service.js mentionné avec une dépendance à corriger
   - onXxx(callback) → void (pour callbacks)
 
 ### fichiers
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/core/domhelper.js resssource
+
+
 - [/assets/js/ui/workbench/views/DescriptorPanel.js](/refactoring/assets/js/ui/workbench/views/DescriptorPanel.js)
 - [/assets/js/ui/workbench/views/JsonPanel.js](refactoring/assets/js/ui/workbench/views/JsonPanel.js)
 - [/assets/js/ui/workbench/views/CatalogPanel.js](/refactoring/assets/js/ui/workbench/views/CatalogPanel.js)
@@ -65,10 +68,50 @@ async init(containerSelector) {
     return true;
 }
 ```
-  
-a finir
+ComponentCatalogWorkbench utilise deja async, pour MotWorkbench.js
+```
+async bootstrap() {....}
+```
+
+
+Côté appelants (vues / scripts d’entrée)Tout code qui démarre un workbench doit attendre init :js
+```
+// OK
+await workbench.init('#motWorkbench');
+```
+
+```
+// ou
+workbench.init('#motWorkbench').then(() => {
+    // prêt : données chargées
+});
+```
+
+À vérifier typiquement dans :
+- la vue workbench/mot.php (ou le script inline / module associé)
+
+- la vue catalog
+  - refactoring/app/Views/workbench/component_catalog.php
+- tout autre new MotWorkbench() / new ComponentCatalogWorkbench()
+
+Si l’appel est déjà dans un async IIFE ou un module top-level, un simple await suffit.
+
+---
+Polish MotDetailPanel (config = {}, this.element au lieu de this.el)
+
+|Avant|Après|
+|---|---|
+|constructor()|constructor(config = {})|
+|this.el|this.element (comme les autres panels)|
+|class: 'wb_empty'|class: 'wb-empty' (convention CSS)|
+|peu de JSDoc|JSDoc sur render / clear / destroy|
+|show sans garde|if (!this.bodyEl) return|
 
 - refactoring/assets/js/ui/workbench/mot/MotDetailPanel.js
+
+
+---  
+a finir
 - refactoring/assets/js/ui/workbench/catalog/ComponentCatalogWorkbench.js
 - refactoring/assets/js/ui/workbench/mot/MotWorkbench.js
 
