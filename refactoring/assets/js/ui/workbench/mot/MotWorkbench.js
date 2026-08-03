@@ -35,12 +35,12 @@ export class MotWorkbench extends WorkbenchBase
     // Initialisation
     //--------------------------------------------------------------------------
 
-    bootstrap()
+    async bootstrap()
     {
         this.createLayout()
         this.createPanels()
         this.bindEvents()
-        this.load()     // chargement initial : tous les mots, page 1
+        await this.load()
     }
 
     //--------------------------------------------------------------------------
