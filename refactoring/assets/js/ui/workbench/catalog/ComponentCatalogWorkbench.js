@@ -46,13 +46,8 @@ export class ComponentCatalogWorkbench extends WorkbenchBase
         this.createPanels();
         this.bindEvents();
 
-        //this.catalog.load();
         await this.catalog.load();
-        console.log(this.catalog.count());
-        console.log(this.catalog.list());
-        console.log(this.catalog.get('apex'));
         this.refreshCatalog();
-
     }
 
     //--------------------------------------------------------------------------
@@ -115,7 +110,17 @@ export class ComponentCatalogWorkbench extends WorkbenchBase
             this.selectComponent(def.type);
         });
     }
-
+    
+    // cycle « état → refresh » aligné roadmap
+    refresh()
+    {
+        this.refreshCatalog();
+        if (this.selection.get())
+        {
+            this.refreshSelection();
+        }
+    }
+    
     //--------------------------------------------------------------------------
     // Catalogue
     //--------------------------------------------------------------------------
