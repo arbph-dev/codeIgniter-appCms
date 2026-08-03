@@ -57,7 +57,7 @@ export class WorkbenchBase {
         }
         this.renderStructure();
         this.attachEvents();
-        this.bootstrap();
+        await this.bootstrap();        // ← attend la fin (load API, etc.)
         this.state.isLoaded = true;
         console.log(`[Workbench] ${this.name} initialisé`);
         return true;
