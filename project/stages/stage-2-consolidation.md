@@ -21,6 +21,14 @@ Services structurés (mot.service.js mentionné avec une dépendance à corriger
   - destroy() → void
   - onXxx(callback) → void (pour callbacks)
 
+### fichiers
+- [/assets/js/ui/workbench/views/DescriptorPanel.js](/refactoring/assets/js/ui/workbench/views/DescriptorPanel.js)
+- refactoring/assets/js/ui/workbench/views/JsonPanel.js
+refactoring/assets/js/ui/workbench/views/CatalogPanel.js
+refactoring/assets/js/ui/workbench/views/DefinitionPanel.js
+
+
+
 ## Créer un service template — structure standard pour les services API
 
 ## Centraliser apiFetch()
