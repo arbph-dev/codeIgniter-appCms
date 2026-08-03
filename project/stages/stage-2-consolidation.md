@@ -28,7 +28,7 @@ Services structurés (mot.service.js mentionné avec une dépendance à corriger
 - [assets/js/ui/workbench/views/DefinitionPanel.js](/refactoring/assets/js/ui/workbench/views/DefinitionPanel.js)
 - [/assets/js/ui/workbench/mot/MotListPanel.js](/refactoring/assets/js/ui/workbench/mot/MotListPanel.js)
 
-- [/assets/js/features/mot/mot.service.js](refactoring/assets/js/features/mot/mot.service.js)
+- [/assets/js/features/mot/mot.service.js](/refactoring/assets/js/features/mot/mot.service.js)
   - correction du bug : fetchMot sans q omet page / per_page.
   
 a finir
