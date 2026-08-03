@@ -24,8 +24,14 @@ Services structurés (mot.service.js mentionné avec une dépendance à corriger
 ### fichiers
 - [/assets/js/ui/workbench/views/DescriptorPanel.js](/refactoring/assets/js/ui/workbench/views/DescriptorPanel.js)
 - refactoring/assets/js/ui/workbench/views/JsonPanel.js
-refactoring/assets/js/ui/workbench/views/CatalogPanel.js
-refactoring/assets/js/ui/workbench/views/DefinitionPanel.js
+- refactoring/assets/js/ui/workbench/views/CatalogPanel.js
+- refactoring/assets/js/ui/workbench/views/DefinitionPanel.js
+- refactoring/assets/js/ui/workbench/mot/MotListPanel.js
+
+a finir
+- refactoring/assets/js/ui/workbench/mot/MotDetailPanel.js
+- refactoring/assets/js/ui/workbench/catalog/ComponentCatalogWorkbench.js
+- refactoring/assets/js/ui/workbench/mot/MotWorkbench.js
 
 
 
