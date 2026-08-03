@@ -41,5 +41,7 @@ a finir
 Normaliser les réponses { status, data, pager }
 
 ## CSS unifiée — style workbench + panels
+voir [workbench--css-patterns--conventions](/project/daily/2026-08-02-003.md#workbench--css-patterns--conventions)
+
 
 ## Tester les workbenches existants — valider qu'ils fonctionnent ensemble
