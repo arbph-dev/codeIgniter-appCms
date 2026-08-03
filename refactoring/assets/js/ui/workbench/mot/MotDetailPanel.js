@@ -9,8 +9,8 @@
 //           + MotRelationsPanel (synonymes, catégories, …)
 //
 // Contrat Panel :
-//   constructor()
-//   render()      → Node racine
+//   constructor(config = {})
+//   render()      → HTMLElement
 //   show(mot)     → affiche {mot_id, mot_lbl, …}
 //   clear()       → empty state
 //   destroy()
@@ -20,28 +20,32 @@ import { create, clear, detail } from '/assets/js/core/domhelper.js'
 
 export class MotDetailPanel
 {
-    constructor()
+    constructor(config = {})
     {
-        this.el     = null
-        this.bodyEl = null
+        this.element = null
+        this.bodyEl  = null
     }
 
     // ── API publique ──────────────────────────────────────────────────────────
 
+    /**
+     * Crée et retourne l'élément racine du Panel.
+     * @returns {HTMLElement}
+     */
     render()
     {
-        this.el = create('section', { class: 'wb_mot_detail_panel' })
+        this.element = create('section', { class: 'wb_mot_detail_panel' })
 
         const header = create('header', { class: 'wb_panel_header' })
         header.appendChild(create('h2', { text: 'Détail' }))
 
         this.bodyEl = create('div', { class: 'wb_panel_body' })
 
-        this.el.append(header, this.bodyEl)
+        this.element.append(header, this.bodyEl)
 
         this.clear()
 
-        return this.el
+        return this.element
     }
 
     /**
@@ -54,6 +58,8 @@ export class MotDetailPanel
      */
     show(mot)
     {
+        if (!this.bodyEl) return
+
         clear(this.bodyEl)
 
         if (!mot)
@@ -77,26 +83,36 @@ export class MotDetailPanel
         // Step 2 : actions CRUD à insérer ici (panel boutons ou inline)
     }
 
+    /**
+     * Revient à l'état vide.
+     */
     clear()
     {
         if (!this.bodyEl) return
         this._showEmpty()
     }
 
+    /**
+     * Libère toutes les références.
+     */
     destroy()
     {
-        this.el     = null
-        this.bodyEl = null
+        this.element = null
+        this.bodyEl  = null
     }
 
     // ── Privées ───────────────────────────────────────────────────────────────
 
+    /**
+     * Affiche le message d'état vide.
+     * @private
+     */
     _showEmpty()
     {
         clear(this.bodyEl)
         this.bodyEl.appendChild(
             create('p', {
-                class : 'wb_empty',
+                class : 'wb-empty',
                 text  : 'Sélectionnez un mot dans la liste.',
             })
         )
