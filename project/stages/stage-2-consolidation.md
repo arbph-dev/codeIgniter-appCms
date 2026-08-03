@@ -30,9 +30,26 @@ Services structurés (mot.service.js mentionné avec une dépendance à corriger
 
 - [/assets/js/features/mot/mot.service.js](/refactoring/assets/js/features/mot/mot.service.js)
   - correction du bug : fetchMot sans q omet page / per_page.
-
+MotWorkbenchDans le workbench tu appelles déjà :js
 [MotWorkbench.js#L128](https://github.com/arbph-dev/codeIgniter-appCms/blob/3b358381bc3778cb22995a99e1697df4b0d0fe5d/refactoring/assets/js/ui/workbench/mot/MotWorkbench.js#L128)
-![/assets/js/features/mot/mot.service.js](/refactoring/assets/js/features/mot/mot.service.js)
+```js
+await fetchMot({
+    q       : this._q || undefined,
+    page    : this._page,
+    perPage : 20,
+})
+```
+Après le fix :
+- liste initiale → /api/mot?page=1&per_page=20
+- recherche → /api/mot?q=foo&page=1&per_page=20
+- pagination → /api/mot?page=3&per_page=20 (avec ou sans q)
+- détail (step 3) → /api/mot?id=42
+
+Note : le défaut dans le service est perPage = 10, le workbench force 20 — c’est volontaire et correct.
+
+
+
+
   
 a finir
 
