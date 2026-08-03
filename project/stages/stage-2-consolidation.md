@@ -47,9 +47,24 @@ Après le fix :
 
 Note : le défaut dans le service est perPage = 10, le workbench force 20 — c’est volontaire et correct.
 
-
-
-
+---
+/assets/js/ui/workbench/WorkbenchBase.js
+ajout await pur this bootsrap [WorkbenchBase.js#L60](https://github.com/arbph-dev/codeIgniter-appCms/blob/25f1ed5eefe1c7043e835110303167869c4a11ae/refactoring/assets/js/ui/workbench/WorkbenchBase.js#L60)
+```
+async init(containerSelector) {
+    this.container = document.querySelector(containerSelector);
+    if (!this.container) {
+        console.error(`[Workbench] Container "${containerSelector}" non trouvé`);
+        return false;
+    }
+    this.renderStructure();
+    this.attachEvents();
+    await this.bootstrap();        // ← attend la fin (load API, etc.)
+    this.state.isLoaded = true;
+    console.log(`[Workbench] ${this.name} initialisé`);
+    return true;
+}
+```
   
 a finir
 
