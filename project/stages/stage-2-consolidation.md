@@ -30,6 +30,9 @@ Services structurés (mot.service.js mentionné avec une dépendance à corriger
 
 - [/assets/js/features/mot/mot.service.js](/refactoring/assets/js/features/mot/mot.service.js)
   - correction du bug : fetchMot sans q omet page / per_page.
+
+![MotWorkbench.js#L128](https://github.com/arbph-dev/codeIgniter-appCms/blob/3b358381bc3778cb22995a99e1697df4b0d0fe5d/refactoring/assets/js/ui/workbench/mot/MotWorkbench.js#L128)
+
   
 a finir
 
