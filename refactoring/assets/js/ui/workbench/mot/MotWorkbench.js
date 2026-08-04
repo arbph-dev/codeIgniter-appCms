@@ -1,21 +1,10 @@
-// ============================================================================
 // assets/js/ui/workbench/mot/MotWorkbench.js
-// ============================================================================
-// Assemblage uniquement — aucune logique d'affichage dans le Workbench.
-// Auth     : transparente via apiFetch (aucun token ici)
-// Données  : fetchMot() direct — pas de détour par le bus global
-// Bus      : souscription à 'wb:mot:page' uniquement (namespaced)
-//
-// ⚠ Dépendance connue — mot.service.fetchMot :
-//   Sans `q` ni `id`, l'URL construite (/api/mot?) n'inclut pas page/per_page.
-//   Conséquence : la pagination de la liste initiale est toujours page 1.
-//   Fix suggéré dans mot.service.js (voir commentaire dans load()).
-// ============================================================================
 
 import WorkbenchBase  from '/assets/js/ui/workbench/WorkbenchBase.js'
 import MotListPanel   from './MotListPanel.js'
 import MotDetailPanel from './MotDetailPanel.js'
-import { fetchMot }   from '/assets/js/features/mot/mot.service.js'
+import { fetchMot, saveMot, deleteMot }
+    from '/assets/js/features/mot/mot.service.js'
 
 export class MotWorkbench extends WorkbenchBase
 {
@@ -23,35 +12,29 @@ export class MotWorkbench extends WorkbenchBase
     {
         super({ name: 'Mot Workbench', ...config })
 
-        // État de navigation local — pas de store partagé
-        this._q    = ''
-        this._page = 1
+        this._q        = ''
+        this._page     = 1
+        this._onPageFn = null   // stocké pour unsubscribe propre
 
         this.listPanel   = null
         this.detailPanel = null
     }
 
-    //--------------------------------------------------------------------------
-    // Initialisation
-    //--------------------------------------------------------------------------
+    // ── Initialisation ────────────────────────────────────────────────────────
 
     async bootstrap()
     {
         this.createLayout()
         this.createPanels()
         this.bindEvents()
-        await this.load()
+        this.load()
     }
 
-    //--------------------------------------------------------------------------
-    // Layout
-    //--------------------------------------------------------------------------
+    // ── Layout ────────────────────────────────────────────────────────────────
 
     createLayout()
     {
-        const body = this.getElement('.wb-content')
-
-        body.innerHTML = `
+        this.getElement('.wb-content').innerHTML = `
             <div class="wb_mot_layout">
                 <div class="wb_mot_left"></div>
                 <div class="wb_mot_right"></div>
@@ -59,30 +42,22 @@ export class MotWorkbench extends WorkbenchBase
         `
     }
 
-    //--------------------------------------------------------------------------
-    // Panels
-    // Seul endroit qui instancie, appelle render() et insère dans le DOM.
-    //--------------------------------------------------------------------------
+    // ── Panels ────────────────────────────────────────────────────────────────
 
     createPanels()
     {
         this.listPanel   = new MotListPanel()
         this.detailPanel = new MotDetailPanel()
 
-        this.getElement('.wb_mot_left')
-            .appendChild(this.listPanel.render())
-
-        this.getElement('.wb_mot_right')
-            .appendChild(this.detailPanel.render())
+        this.getElement('.wb_mot_left').appendChild(this.listPanel.render())
+        this.getElement('.wb_mot_right').appendChild(this.detailPanel.render())
     }
 
-    //--------------------------------------------------------------------------
-    // Événements
-    //--------------------------------------------------------------------------
+    // ── Événements ────────────────────────────────────────────────────────────
 
     bindEvents()
     {
-        // Recherche — reset page + vide le détail
+        // Recherche
         this.listPanel.onSearch(q =>
         {
             this._q    = q
@@ -91,44 +66,83 @@ export class MotWorkbench extends WorkbenchBase
             this.load()
         })
 
-        // Sélection — affichage direct depuis la row (step 1)
-        // Step 3 : remplacer par fetchMot({ id: mot.mot_id }) + detailPanel.show(result)
+        // Sélection ligne → affichage direct (step 1)
+        // Step 3 : remplacer par fetchMot({ id }) pour l'objet enrichi
         this.listPanel.onSelect(mot =>
         {
             this.detailPanel.show(mot)
         })
 
-        // Pagination — la factory pagination() publie sur le bus (namespaced)
-        this.bus.subscribe('wb:mot:page', (page) =>
+        // Nouveau mot
+        this.listPanel.onNew(() =>
+        {
+            this.detailPanel.showNew()
+        })
+
+        // Sauvegarde (create + update)
+        this.detailPanel.onSave(async (id, lbl) =>
+        {
+            this.detailPanel.lock()
+            try
+            {
+                const result = await saveMot({ id, lbl })
+
+                if (!id) this._page = 1     // création → retour page 1
+
+                await this.load()
+
+                // result.data : { mot_id, mot_lbl } retourné par l'API
+                const saved = result.data ?? (id ? { mot_id: id, mot_lbl: lbl } : null)
+                if (saved) this.detailPanel.show(saved)
+            }
+            catch (err)
+            {
+                const msg = err.message.includes('422')
+                    ? 'Ce mot existe déjà.'
+                    : err.message
+                this.detailPanel.showFeedback('error', msg)
+            }
+            finally
+            {
+                this.detailPanel.unlock()
+            }
+        })
+
+        // Suppression
+        this.detailPanel.onDelete(async (id) =>
+        {
+            this.detailPanel.lock()
+            try
+            {
+                await deleteMot(id)
+                this.detailPanel.clear()
+                this._page = 1              // évite une page désormais vide
+                await this.load()
+            }
+            catch (err)
+            {
+                this.detailPanel.showFeedback('error', err.message)
+            }
+            finally
+            {
+                this.detailPanel.unlock()
+            }
+        })
+
+        // Pagination — callback stocké pour pouvoir se désabonner
+        this._onPageFn = (page) =>
         {
             this._page = page
             this.load()
-        })
+        }
+        this.bus.subscribe('wb:mot:page', this._onPageFn)
     }
 
-    //--------------------------------------------------------------------------
-    // Chargement
-    //
-    // ⚠ Fix suggéré dans mot.service.js — fetchMot sans q :
-    //
-    //   Actuel  : url = '/api/mot?'  → page et per_page absents de l'URL
-    //   Corrigé :
-    //     const params = new URLSearchParams()
-    //     if (id)  { params.set('id', id) }
-    //     else {
-    //         if (q) params.set('q', q)
-    //         params.set('page',     page)
-    //         params.set('per_page', perPage)
-    //     }
-    //     const response = await apiFetch(`/api/mot?${params}`)
-    //
-    //   Avec ce fix, la liste initiale paginée fonctionnera correctement.
-    //--------------------------------------------------------------------------
+    // ── Chargement ────────────────────────────────────────────────────────────
 
     async load()
     {
         this.listPanel.showLoading()
-
         try
         {
             const result = await fetchMot({
@@ -137,8 +151,6 @@ export class MotWorkbench extends WorkbenchBase
                 perPage : 20,
             })
 
-            // Réponse uniforme : { status, data: [...], pager: {...} }
-            // Cas id unique possible (data = objet) — normalisé en tableau
             const items = Array.isArray(result.data)
                 ? result.data
                 : (result.data ? [result.data] : [])
@@ -152,15 +164,14 @@ export class MotWorkbench extends WorkbenchBase
         }
     }
 
-    //--------------------------------------------------------------------------
-    // Nettoyage
-    //--------------------------------------------------------------------------
+    // ── Nettoyage ─────────────────────────────────────────────────────────────
 
     destroy()
     {
-        this.bus.unsubscribe?.('wb:mot:page')   // si le bus le supporte
-        this.listPanel?.destroy?.()
-        this.detailPanel?.destroy?.()
+        this.bus.unsubscribe('wb:mot:page', this._onPageFn)
+        this._onPageFn = null
+        this.listPanel?.destroy()
+        this.detailPanel?.destroy()
         super.destroy()
     }
 }
