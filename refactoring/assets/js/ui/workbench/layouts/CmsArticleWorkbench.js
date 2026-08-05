@@ -7,7 +7,7 @@
 //     Chaque composant est initialisé uniquement dans le pane courant.
 //     Les panes déjà rendus ne sont pas affectés.
 
-import WorkbenchBase from '../WorkbenchBase.js';
+import WorkbenchBase  from '/assets/js/ui/workbench/core/WorkbenchBase0.js'
 import { TabSystem }  from '../TabSystem.js';
 
 import { initApex }    from '/assets/js/components/apex.js';
