@@ -1,11 +1,13 @@
 // assets/js/ui/workbench/mot/MotDetailPanel.js
-
+import PanelBase from '/assets/js/ui/workbench/core/PanelBase.js' // <- ajout
 import { create, clear, detail } from '/assets/js/core/domhelper.js'
 
-export class MotDetailPanel
+export class MotDetailPanel extends PanelBase // <- ajout
 {
     constructor(config = {})
     {
+        super() // <- ajout
+
         this.element     = null
         this.bodyEl      = null
         this._feedbackEl = null
