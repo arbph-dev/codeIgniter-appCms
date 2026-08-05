@@ -1,12 +1,14 @@
 // assets/js/ui/workbench/mot/MotListPanel.js
 
-import { create, clear, table, pagination, notice }
-    from '/assets/js/core/domhelper.js'
+import PanelBase from '/assets/js/ui/workbench/core/PanelBase.js' // <- ajout
+import { create, clear, table, pagination, notice } from '/assets/js/core/domhelper.js'
 
-export class MotListPanel
+
+export class MotListPanel extends PanelBase // <- ajout
 {
     constructor()
     {
+        super() // <- ajout
         this._onSelectFn = null
         this._onSearchFn = null
         this._onNewFn    = null
