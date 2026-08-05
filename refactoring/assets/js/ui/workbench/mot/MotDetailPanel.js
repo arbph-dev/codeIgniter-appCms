@@ -130,7 +130,12 @@ export class MotDetailPanel extends PanelBase // <- ajout
 
     destroy()
     {
+        
+        this._form?.destroy()
+        this._form = null
+        
         this.element     = null
+        
         this.bodyEl      = null
         this._feedbackEl = null
         this._currentMot = null
