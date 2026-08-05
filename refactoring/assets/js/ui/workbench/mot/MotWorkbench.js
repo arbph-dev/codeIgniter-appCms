@@ -3,8 +3,17 @@
 import WorkbenchBase  from '/assets/js/ui/workbench/core/WorkbenchBase.js'
 import MotListPanel   from './MotListPanel.js'
 import MotDetailPanel from './MotDetailPanel.js'
-import { fetchMot, saveMot, deleteMot }
-    from '/assets/js/features/mot/mot.service.js'
+import { fetchMot, saveMot, deleteMot } from '/assets/js/features/mot/mot.service.js'
+import { WorkbenchView }    from '/assets/js/ui/workbench/core/WorkbenchView.js'
+import { createDescriptor } from '/assets/js/ui/workbench/core/LayoutDescriptor.js'
+
+const LAYOUT = createDescriptor({
+    css   : 'wb_mot_layout',
+    zones : [
+        { name: 'left',  css: 'wb_mot_left'  },
+        { name: 'right', css: 'wb_mot_right' },
+    ],
+})
 
 export class MotWorkbench extends WorkbenchBase
 {
@@ -15,7 +24,7 @@ export class MotWorkbench extends WorkbenchBase
         this._q        = ''
         this._page     = 1
         this._onPageFn = null   // stocké pour unsubscribe propre
-
+        this._view     = null
         this.listPanel   = null
         this.detailPanel = null
     }
@@ -24,23 +33,13 @@ export class MotWorkbench extends WorkbenchBase
 
     async bootstrap()
     {
-        this.createLayout()
+        this._view = new WorkbenchView(LAYOUT, this.getElement('.wb-content'))
+        this._view.build()
         this.createPanels()
         this.bindEvents()
         this.load()
     }
 
-    // ── Layout ────────────────────────────────────────────────────────────────
-
-    createLayout()
-    {
-        this.getElement('.wb-content').innerHTML = `
-            <div class="wb_mot_layout">
-                <div class="wb_mot_left"></div>
-                <div class="wb_mot_right"></div>
-            </div>
-        `
-    }
 
     // ── Panels ────────────────────────────────────────────────────────────────
 
@@ -49,8 +48,10 @@ export class MotWorkbench extends WorkbenchBase
         this.listPanel   = new MotListPanel()
         this.detailPanel = new MotDetailPanel()
 
-        this.getElement('.wb_mot_left').appendChild(this.listPanel.render())
-        this.getElement('.wb_mot_right').appendChild(this.detailPanel.render())
+        this._view.mountPanels({
+            left  : this.listPanel,
+            right : this.detailPanel,
+        })
     }
 
     // ── Événements ────────────────────────────────────────────────────────────
@@ -172,6 +173,9 @@ export class MotWorkbench extends WorkbenchBase
         this._onPageFn = null
         this.listPanel?.destroy()
         this.detailPanel?.destroy()
+        this._view.unmountPanels()
+        this._view.destroy()
+        this._view = null        
         super.destroy()
     }
 }
