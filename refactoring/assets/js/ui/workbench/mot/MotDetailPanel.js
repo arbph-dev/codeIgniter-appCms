@@ -1,6 +1,7 @@
 // assets/js/ui/workbench/mot/MotDetailPanel.js
 import PanelBase from '/assets/js/ui/workbench/core/PanelBase.js' // <- ajout
 import { create, clear, detail } from '/assets/js/core/domhelper.js'
+import { toolbar } from '/assets/js/ui/shared/templates/toolbar.template.js'
 
 export class MotDetailPanel extends PanelBase // <- ajout
 {
@@ -25,8 +26,7 @@ export class MotDetailPanel extends PanelBase // <- ajout
     {
         this.element = create('section', { class: 'wb_mot_detail_panel' })
 
-        const header = create('header', { class: 'wb_panel_header' })
-        header.appendChild(create('h2', { text: 'Détail' }))
+        const header = toolbar({ title: 'Détail' })
 
         // Zone feedback : persiste au-dessus du body, indépendante de son contenu
         this._feedbackEl = create('div', {
