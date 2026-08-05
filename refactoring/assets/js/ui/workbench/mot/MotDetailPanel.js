@@ -1,7 +1,12 @@
 // assets/js/ui/workbench/mot/MotDetailPanel.js
 import PanelBase from '/assets/js/ui/workbench/core/PanelBase.js' // <- ajout
 import { create, clear, detail } from '/assets/js/core/domhelper.js'
+
 import { toolbar } from '/assets/js/ui/shared/templates/toolbar.template.js'
+
+import { Form } from '/assets/js/ui/shared/Form.js'
+import { MotPropertySet, MotComputePropertySet } from '/assets/js/features/mot/mot.properties.js'
+
 
 export class MotDetailPanel extends PanelBase // <- ajout
 {
@@ -154,75 +159,36 @@ export class MotDetailPanel extends PanelBase // <- ajout
         )
     }
 
-    /**
-     * Formulaire partagé create / edit.
-     * @param {{ mot_id: number|null, mot_lbl: string }} mot
-     * @private
-     */
-    _showForm(mot)
-    {
-        const isNew = !mot.mot_id
-
-        const form = create('div', { class: 'wb_detail_form' })
-
-        // ID en lecture seule si édition
-        if (!isNew)
-        {
-            form.appendChild(detail([{ label: 'ID', value: mot.mot_id }]))
-        }
-
-        form.appendChild(
-            create('label', {
-                class : 'wb_detail_label',
-                text  : isNew ? 'Nouveau mot' : 'Libellé',
-            })
-        )
-
-        const input = create('input', {
-            type        : 'text',
-            class       : 'wb_detail_input',
-            placeholder : 'Libellé du mot…',
-        })
-        input.value = mot.mot_lbl ?? ''
-
-        const btnRow   = create('div', { class: 'wb_detail_btn_row' })
-        const saveBtn  = create('button', {
-            type  : 'button',
-            class : 'wb-btn wb-btn--active',
-            text  : isNew ? 'Créer' : 'Enregistrer',
-        })
-        const cancelBtn = create('button', {
-            type  : 'button',
-            class : 'wb-btn',
-            text  : 'Annuler',
-        })
-
-        saveBtn.addEventListener('click', () =>
-        {
-            if (this._working) return
-            const lbl = input.value.trim()
-            if (!lbl) { input.focus(); return }
-            this._onSaveFn?.(mot.mot_id ?? null, lbl)
-        })
-
-        cancelBtn.addEventListener('click', () =>
-        {
-            if (this._working) return
-            this._currentMot ? this.show(this._currentMot) : this.clear()
-        })
-
-        input.addEventListener('keydown', (e) =>
-        {
-            if (e.key === 'Enter')  saveBtn.click()
-            if (e.key === 'Escape') cancelBtn.click()
-        })
-
-        btnRow.append(saveBtn, cancelBtn)
-        form.append(input, btnRow)
-        this.bodyEl.appendChild(form)
-        input.focus()
-        if (mot.mot_lbl) input.select()
-    }
+     _showForm(mot)
+     {
+         const isNew = !mot.mot_id
+    
+         // L'ID en lecture seule reste affiché par le Panel, pas par le Form
+         if (!isNew)
+         {
+             this.bodyEl.appendChild(detail([{ label: 'ID', value: mot.mot_id }]))
+         }
+    
+         this._form = new Form({
+             propertySet        : MotPropertySet,
+             computePropertySet : MotComputePropertySet,
+             labels  : { submit: isNew ? 'Créer' : 'Enregistrer' },
+             onSubmit: (data) =>
+             {
+                 if (this._working) return
+                 this._onSaveFn?.(mot.mot_id ?? null, data.mot_lbl)
+             },
+             onCancel: () =>
+             {
+                 if (this._working) return
+                 this._currentMot ? this.show(this._currentMot) : this.clear()
+             },
+         })
+    
+         this.bodyEl.appendChild(this._form.render())
+    
+         isNew ? this._form.reset() : this._form.fill(mot)
+     }
 
     /** Passe en mode formulaire d'édition. */
     _showEditForm(mot)
