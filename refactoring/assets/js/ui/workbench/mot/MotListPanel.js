@@ -11,7 +11,7 @@ export class MotListPanel
         this._onSearchFn = null
         this._onNewFn    = null
 
-        this.element      = null
+        this.element  = null
         this.inputEl = null
         this.tableEl = null
         this.pagerEl = null
@@ -25,31 +25,19 @@ export class MotListPanel
 
         // Header + bouton Nouveau
         const header = create('header', { class: 'wb_panel_header' })
-        header.appendChild(create('h2', { text: 'Mots' }))
+        header.appendChild(
+            create('h2', { text: 'Mots' })
+        )
 
-        const newBtn = create('button', {
-            type  : 'button',
-            class : 'wb-btn wb_mot_new_btn',
-            text  : '+ Nouveau',
-        })
+        const newBtn = create('button', { type  : 'button', class : 'wb-btn wb_mot_new_btn', text  : '+ Nouveau',} )
         newBtn.addEventListener('click', () => this._onNewFn?.())
         header.appendChild(newBtn)
 
         // Barre de recherche
         const searchBar = create('div', { class: 'wb_mot_search' })
+        this.inputEl = create('input', { type : 'search', class : 'wb_mot_search_input', placeholder : 'Rechercher un mot…', })
 
-        this.inputEl = create('input', {
-            type        : 'search',
-            class       : 'wb_mot_search_input',
-            placeholder : 'Rechercher un mot…',
-        })
-
-        const searchBtn = create('button', {
-            type  : 'button',
-            class : 'wb_mot_search_btn',
-            text  : 'Rechercher',
-        })
-
+        const searchBtn = create('button', { type  : 'button', class : 'wb_mot_search_btn', text  : 'Rechercher',})
         searchBtn.addEventListener('click', () => this._triggerSearch())
         this.inputEl.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') this._triggerSearch()
