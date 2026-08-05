@@ -1,6 +1,6 @@
 // assets/js/ui/workbench/mot/MotWorkbench.js
 
-import WorkbenchBase  from '/assets/js/ui/workbench/WorkbenchBase.js'
+import WorkbenchBase  from '/assets/js/ui/workbench/core/WorkbenchBase.js'
 import MotListPanel   from './MotListPanel.js'
 import MotDetailPanel from './MotDetailPanel.js'
 import { fetchMot, saveMot, deleteMot }
