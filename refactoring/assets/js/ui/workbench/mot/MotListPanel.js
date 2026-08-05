@@ -2,7 +2,7 @@
 
 import PanelBase from '/assets/js/ui/workbench/core/PanelBase.js' // <- ajout
 import { create, clear, table, pagination, notice } from '/assets/js/core/domhelper.js'
-
+import { toolbar } from '/assets/js/ui/shared/templates/toolbar.template.js'
 
 export class MotListPanel extends PanelBase // <- ajout
 {
@@ -25,15 +25,14 @@ export class MotListPanel extends PanelBase // <- ajout
     {
         this.element = create('section', { class: 'wb_mot_list_panel' })
 
-        // Header + bouton Nouveau
-        const header = create('header', { class: 'wb_panel_header' })
-        header.appendChild(
-            create('h2', { text: 'Mots' })
-        )
-
-        const newBtn = create('button', { type  : 'button', class : 'wb-btn wb_mot_new_btn', text  : '+ Nouveau',} )
-        newBtn.addEventListener('click', () => this._onNewFn?.())
-        header.appendChild(newBtn)
+        const header = toolbar({
+         title  : 'Mots',
+         action : {
+             label   : ' Nouveau',
+             css     : 'wb-btn wb_mot_new_btn',
+             onClick : () => this._onNewFn?.(),
+         },
+        })
 
         // Barre de recherche
         const searchBar = create('div', { class: 'wb_mot_search' })
