@@ -1,0 +1,81 @@
+/* =============================================================================
+   THEME ONE — /assets/css/workbench/theme_one.css
+   Palette : article.css (navy / yellow / blue / fond clair)
+   Plein écran — aucun max-width sur le layout
+   ============================================================================= */
+
+:root {
+
+    /* ── Palette ─────────────────────────────────────────────────────────────── */
+    --wb-navy:      #1a2a4a;
+    --wb-yellow:    #eee236;
+    --wb-blue:      #0057b8;
+    --wb-bg:        #f4f7fb;
+    --wb-white:     #ffffff;
+    --wb-text:      #1a2a4a;
+    --wb-muted:     #6b7280;
+    --wb-border:    #d8dce5;
+    --wb-danger:    #dc2626;
+    --wb-success:   #16a34a;
+
+    /* ── Espacements ─────────────────────────────────────────────────────────── */
+    --wb-gap:        1rem;
+    --wb-padding:    1rem;
+    --wb-radius:     8px;
+    --wb-shadow:     0 2px 12px rgba(0,0,0,.08);
+
+    /* ── Panel ───────────────────────────────────────────────────────────────── */
+    --wb-panel-bg:          var(--wb-white);
+    --wb-panel-header-bg:   var(--wb-navy);
+    --wb-panel-header-fg:   var(--wb-yellow);
+    --wb-panel-header-pad:  .875rem 1rem;
+    --wb-panel-body-pad:    1rem;
+    --wb-left-width:        360px;
+
+    /* ── Boutons ─────────────────────────────────────────────────────────────── */
+    --wb-btn-bg:             #f0f2f5;
+    --wb-btn-fg:             var(--wb-navy);
+    --wb-btn-border:         var(--wb-border);
+    --wb-btn-hover-bg:       #e2e6ec;
+    --wb-btn-active-bg:      var(--wb-blue);
+    --wb-btn-active-fg:      #fff;
+    --wb-btn-danger-bg:      var(--wb-danger);
+    --wb-btn-danger-fg:      #fff;
+
+    /* ── Inputs ──────────────────────────────────────────────────────────────── */
+    --wb-input-bg:           var(--wb-white);
+    --wb-input-border:       var(--wb-border);
+    --wb-input-focus:        var(--wb-blue);
+    --wb-input-focus-ring:   rgba(0, 87, 184, .18);
+
+    /* ── Table ───────────────────────────────────────────────────────────────── */
+    --wb-table-header-bg:    #f8f9fc;
+    --wb-table-row-hover:    #f0f4ff;
+
+    /* ── Feedback ────────────────────────────────────────────────────────────── */
+    --wb-feedback-error-bg:      #fef2f2;
+    --wb-feedback-error-fg:      var(--wb-danger);
+    --wb-feedback-success-bg:    #f0fdf4;
+    --wb-feedback-success-fg:    var(--wb-success);
+
+}
+
+/* ── Page ─────────────────────────────────────────────────────────────────────
+   Le workbench occupe toute la largeur disponible.
+   Pas de max-width — contrairement à .cms_article_wrap (820px).
+   ─────────────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    background: var(--wb-bg);
+    color: var(--wb-text);
+    padding: var(--wb-padding);
+}
