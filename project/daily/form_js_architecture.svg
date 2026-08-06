@@ -1,4 +1,4 @@
-<svg width="100%" viewBox="0 0 680 480" role="img" style="" xmlns="http://www.w3.org/2000/svg">
+<svg width="1080px" viewBox="0 0 680 480" role="img" style="" xmlns="http://www.w3.org/2000/svg">
 <title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Form.js — architecture et flux de données</title>
 <desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Trois entrées (PropertySet, ComputePropertySet, Config) alimentent la classe Form dont l'API publique produit un DOM structuré à gauche et un flux de validation extract() à droite.</desc>
 <defs>
