@@ -1,6 +1,9 @@
 
+
+
+
 |Responsabilité|Mot|ComponentCatalog|Model|CMS|Destination|
-|---|:-:|:-:|:-:|:-:|---|
+|---|---|---|---|---|---|
 |Layout|✓|✓|✓|✓|`WorkbenchView`|
 |Panels|✓|✓|✓|✓|`PanelBase` + `ui/panels`|
 |Formulaires|✓|✓|✓|✓|`shared/Form.js`|
@@ -8,3 +11,5 @@
 |Validation|✓|△|△|✓|`shared/validation`|
 |Composants (Three, Carousel, Apex...)|✗|✓|✓|✓|`ui/widgets` + `components/`|
 |Bus / callbacks|✓|✓|✓|✓|Architecture cible|
+
+
