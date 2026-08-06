@@ -1,0 +1,433 @@
+/* =============================================================================
+   WORKBENCH — /assets/css/workbench/workbench.css
+   Structure pure : layouts, panels, boutons, formulaires, table, pagination.
+   Aucune couleur codée en dur — tout passe par var(--wb-*).
+   Charger theme_one.css (ou tout autre thème) avant ce fichier.
+   ============================================================================= */
+
+
+/* =============================================================================
+   Layout
+   ============================================================================= */
+
+.wb-content {
+    width: 100%;
+}
+
+.wb_mot_layout {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--wb-gap);
+    width: 100%;
+    min-height: calc(100vh - 2 * var(--wb-padding));
+}
+
+.wb_mot_left {
+    flex: 0 0 var(--wb-left-width);
+    min-width: 0;
+}
+
+.wb_mot_right {
+    flex: 1;
+    min-width: 0;
+}
+
+
+/* =============================================================================
+   Panels
+   ============================================================================= */
+
+.wb_mot_list_panel,
+.wb_mot_detail_panel {
+    background: var(--wb-panel-bg);
+    border-radius: var(--wb-radius);
+    box-shadow: var(--wb-shadow);
+    overflow: hidden;
+}
+
+/* ── Header ── */
+.wb_panel_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--wb-panel-header-pad);
+    background: var(--wb-panel-header-bg);
+}
+
+.wb_panel_header h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--wb-panel-header-fg);
+    margin: 0;
+}
+
+/* ── Body ── */
+.wb_panel_body {
+    padding: var(--wb-panel-body-pad);
+}
+
+
+/* =============================================================================
+   Boutons
+   ============================================================================= */
+
+.wb-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .4rem .85rem;
+    font-size: .875rem;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.4;
+    border: 1px solid var(--wb-btn-border);
+    border-radius: 4px;
+    background: var(--wb-btn-bg);
+    color: var(--wb-btn-fg);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s, border-color .15s, filter .15s;
+}
+
+.wb-btn:hover {
+    background: var(--wb-btn-hover-bg);
+}
+
+.wb-btn:focus-visible {
+    outline: 2px solid var(--wb-input-focus);
+    outline-offset: 2px;
+}
+
+.wb-btn--active {
+    background: var(--wb-btn-active-bg);
+    color: var(--wb-btn-active-fg);
+    border-color: var(--wb-btn-active-bg);
+}
+
+.wb-btn--active:hover {
+    filter: brightness(1.1);
+    background: var(--wb-btn-active-bg);
+}
+
+.wb-btn--danger {
+    background: var(--wb-btn-danger-bg);
+    color: var(--wb-btn-danger-fg);
+    border-color: var(--wb-btn-danger-bg);
+}
+
+.wb-btn--danger:hover {
+    filter: brightness(1.1);
+    background: var(--wb-btn-danger-bg);
+}
+
+
+/* =============================================================================
+   Recherche (ListPanel)
+   ============================================================================= */
+
+.wb_mot_search {
+    display: flex;
+    gap: .5rem;
+    padding: .75rem var(--wb-panel-body-pad);
+    border-bottom: 1px solid var(--wb-border);
+}
+
+.wb_mot_search_input {
+    flex: 1;
+    min-width: 0;
+    padding: .4rem .75rem;
+    font-size: .875rem;
+    font-family: inherit;
+    border: 1px solid var(--wb-input-border);
+    border-radius: 4px;
+    background: var(--wb-input-bg);
+    color: var(--wb-text);
+    transition: border-color .15s, box-shadow .15s;
+}
+
+.wb_mot_search_input:focus {
+    outline: none;
+    border-color: var(--wb-input-focus);
+    box-shadow: 0 0 0 3px var(--wb-input-focus-ring);
+}
+
+.wb_mot_new_btn {
+    font-size: .8rem;
+    padding: .3rem .7rem;
+}
+
+/* ── Zones table + pager ── */
+.wb_mot_table {
+    padding: .25rem 0;
+}
+
+.wb_mot_pager {
+    padding: .6rem var(--wb-panel-body-pad);
+    border-top: 1px solid var(--wb-border);
+}
+
+
+/* =============================================================================
+   Table
+   ============================================================================= */
+
+.cp_table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .875rem;
+}
+
+.cp_table th {
+    padding: .45rem .75rem;
+    text-align: left;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--wb-muted);
+    background: var(--wb-table-header-bg);
+    border-bottom: 2px solid var(--wb-border);
+}
+
+.cp_table td {
+    padding: .55rem .75rem;
+    border-bottom: 1px solid var(--wb-border);
+    color: var(--wb-text);
+}
+
+.cp_table tbody tr {
+    cursor: pointer;
+    transition: background .1s;
+}
+
+.cp_table tbody tr:hover {
+    background: var(--wb-table-row-hover);
+}
+
+.cp_table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =============================================================================
+   Pagination
+   ============================================================================= */
+
+.cp_pagination {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    flex-wrap: wrap;
+}
+
+.cp_page_btn {
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 .5rem;
+    font-size: .8rem;
+    font-family: inherit;
+    border: 1px solid var(--wb-border);
+    border-radius: 4px;
+    background: var(--wb-btn-bg);
+    color: var(--wb-text);
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+}
+
+.cp_page_btn:hover:not(:disabled) {
+    background: var(--wb-btn-hover-bg);
+    border-color: var(--wb-input-focus);
+}
+
+.cp_page_btn.active {
+    background: var(--wb-btn-active-bg);
+    color: var(--wb-btn-active-fg);
+    border-color: var(--wb-btn-active-bg);
+    font-weight: 600;
+}
+
+.cp_page_btn:disabled {
+    opacity: .4;
+    cursor: default;
+}
+
+.cp_pagination_info {
+    font-size: .8rem;
+    color: var(--wb-muted);
+    padding: 0 .25rem;
+}
+
+.cp_pagination_ellipsis {
+    padding: 0 .2rem;
+    color: var(--wb-muted);
+    font-size: .85rem;
+}
+
+
+/* =============================================================================
+   Notices (loading / error / empty)
+   ============================================================================= */
+
+.cp_notice {
+    display: block;
+    padding: 1.75rem 1rem;
+    text-align: center;
+    font-size: .875rem;
+    color: var(--wb-muted);
+}
+
+.cp_notice--error {
+    color: var(--wb-danger);
+}
+
+/* état vide dans le panel */
+.wb-empty {
+    display: block;
+    padding: 2rem 1rem;
+    text-align: center;
+    font-size: .875rem;
+    color: var(--wb-muted);
+}
+
+
+/* =============================================================================
+   Detail — vue lecture (dl)
+   ============================================================================= */
+
+.cp_detail {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: .75rem;
+    row-gap: .3rem;
+    font-size: .875rem;
+    margin-bottom: 1rem;
+}
+
+.cp_detail dt {
+    font-weight: 600;
+    color: var(--wb-muted);
+    white-space: nowrap;
+}
+
+.cp_detail dd {
+    color: var(--wb-text);
+}
+
+
+/* =============================================================================
+   Detail panel — feedback, actions, confirm
+   ============================================================================= */
+
+.wb_detail_feedback {
+    padding: .6rem 1rem;
+    font-size: .875rem;
+    border-left: 3px solid transparent;
+}
+
+.wb_detail_feedback--hidden  { display: none; }
+
+.wb_detail_feedback--error {
+    background: var(--wb-feedback-error-bg);
+    color: var(--wb-feedback-error-fg);
+    border-left-color: var(--wb-danger);
+}
+
+.wb_detail_feedback--success {
+    background: var(--wb-feedback-success-bg);
+    color: var(--wb-feedback-success-fg);
+    border-left-color: var(--wb-success);
+}
+
+.wb_detail_actions,
+.wb_detail_btn_row {
+    display: flex;
+    gap: .5rem;
+    margin-top: .75rem;
+    flex-wrap: wrap;
+}
+
+.wb_detail_confirm {
+    padding: .25rem 0;
+}
+
+.wb_detail_confirm_msg {
+    font-size: .95rem;
+    margin-bottom: .75rem;
+    color: var(--wb-text);
+}
+
+
+/* =============================================================================
+   Form (Form.js)
+   ============================================================================= */
+
+.wb_form {
+    padding: .25rem 0;
+}
+
+.wb_form_field {
+    margin-bottom: .85rem;
+}
+
+/* Label — partagé avec .wb_detail_label */
+.wb_detail_label,
+.wb_form_field label {
+    display: block;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--wb-muted);
+    margin-bottom: .3rem;
+}
+
+/* Input — partagé avec .wb_detail_input */
+.wb_detail_input,
+.wb_form_field input {
+    display: block;
+    width: 100%;
+    padding: .45rem .75rem;
+    font-size: .9rem;
+    font-family: inherit;
+    border: 1px solid var(--wb-input-border);
+    border-radius: 4px;
+    background: var(--wb-input-bg);
+    color: var(--wb-text);
+    transition: border-color .15s, box-shadow .15s;
+}
+
+.wb_detail_input:focus,
+.wb_form_field input:focus {
+    outline: none;
+    border-color: var(--wb-input-focus);
+    box-shadow: 0 0 0 3px var(--wb-input-focus-ring);
+}
+
+/* Erreur inline */
+.wb_form_error {
+    display: block;
+    font-size: .78rem;
+    color: var(--wb-danger);
+    margin-top: .25rem;
+}
+
+.wb_form_error--hidden {
+    display: none;
+}
+
+
+/* =============================================================================
+   Responsive
+   ============================================================================= */
+
+@media (max-width: 768px)
+{
+    .wb_mot_layout {
+        flex-direction: column;
+    }
+
+    .wb_mot_left {
+        flex: none;
+        width: 100%;
+    }
+}
