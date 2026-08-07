@@ -24,5 +24,11 @@ class WorkbenchController extends BaseController
     public function mot()
     {
         return view('workbench/mot');
-    }    
+    }
+
+    /** Workbench de test — feature Image ; URL : /workbench/image     */    
+    public function image() { return view('workbench/image'); }    
+    
+    /** Workbench de test — feature Adresse  ; URL : /workbench/image     */    
+    public function adresse() { return view('workbench/adresse'); }      
 }
