@@ -1,7 +1,7 @@
 <?php
-// app/Views/workbench/mot.php
-// Banc de test — MotWorkbench
-// URL : /workbench/mot
+// app/Views/workbench/image.php
+// Banc de test — ImageWorkbench
+// URL : /workbench/image
 ?>
 <!DOCTYPE html>
 <html lang="fr">
