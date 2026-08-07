@@ -36,7 +36,9 @@ $routes->group('admin/component-types', static function ($routes)
 $routes->group('workbench', ['namespace' => 'App\Controllers'], static function ($routes)
 {
     $routes->get('component-catalog'    ,   'WorkbenchController::componentCatalog' );
-    $routes->get('mot'                  ,   'WorkbenchController::mot'              );    
+    $routes->get('mot'                  ,   'WorkbenchController::mot'              );
+    $routes->get('image'                ,   'WorkbenchController::image'            );
+    $routes->get('adresse'              ,   'WorkbenchController::adresse'          );	
 });
 
 $routes->group('admin/cmspart', static function($routes)
