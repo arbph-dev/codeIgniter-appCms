@@ -40,3 +40,264 @@ Je ne mettrais plus `ModelWorkbench` dans Runtime.
 |Validation|✓|△|△|✓|`shared/validation`|
 |Composants (Three, Carousel, Apex...)|✗|✓|✓|✓|`ui/widgets` + `components/`|
 |Bus / callbacks|✓|✓|✓|✓|Architecture cible|
+
+
+
+---
+
+
+## Ordre de développement recommandé
+
+Je suivrais cet ordre, qui limite les refactorings :
+
+Phase	Objectif	Priorité
+A	Génération du formulaire	✅ Terminée
+B	Validation (rules + validator)	✅ Terminée
+C	Extraction de FieldFactory	⭐ Très haute
+D	Extraction de ValueCaster	⭐ Très haute
+E	Extraction de FormBinder	Haute
+F	Extraction de ComputeEngine	Haute
+G	Gestion d'état (FormState)	Moyenne
+H	API événementielle	Moyenne
+I	Nouveaux types de champs	Progressive
+
+
+
+
+---
+
+# FieldFactory
+
+L'objectif est que Form ne sache plus construire un champ. Il saura uniquement demander un champ.
+La création du DOM quitte complètement Form.
+L'objectif est que cette étape soit strictement mécanique : déplacer uniquement la construction des champs, sans modifier le comportement. 
+Ainsi, les tests existants continueront de passer, et les étapes suivantes (ValueCaster, FormBinder) pourront être réalisées indépendamment.
+
+Aujourd'hui :
+```
+Form
+ ├── render()
+ ├── _createField()
+ └── ...
+```
+
+```
+Form
+ ├── render()
+ └── ...
+FieldFactory
+ └── create(property)
+```
+
+
+## Étape 1 — Nouveau fichier
+assets/js/ui/shared/form/FieldFactory.js
+
+Responsabilité unique :
+- Construire un champ à partir d'un PropertySet.
+- Aucune validation.
+- Aucune extraction.
+- Aucune logique métier.
+
+Uniquement du DOM.
+
+## Étape 2 — API
+
+une API simple.
+```js
+FieldFactory.create(property)
+```
+retourne
+```
+{
+    wrapper,
+    input,
+    error
+}
+```
+
+## Étape 3 — Contrat
+
+Le contrat devient :
+```js
+const field = FieldFactory.create(prop)
+
+field.wrapper
+field.input
+field.error
+
+```
+
+
+## Étape 4 — Déplacement du code
+
+la méthode _createField(prop) sera déplacée quasiment à l'identique dans FieldFactory.
+
+## Étape 5 — Form.render()
+
+Il deviendra beaucoup plus simple.
+
+```js
+for (const prop of this._ps)
+{
+    const field = FieldFactory.create(prop);
+
+    this._inputs.set(prop.name, field.input);
+    this._errorEls.set(prop.name, field.error);
+
+    this.element.appendChild(field.wrapper);
+}
+```
+
+Toute la connaissance HTML disparaît de Form.
+
+## Étape 6 — Préparer les futurs types
+
+```js
+switch(prop.type)
+{
+    case 'textarea':
+    case 'checkbox':
+    case 'select':
+    case 'color':
+    case 'file':
+}
+```
+
+
+## Étape 7 — Arborescence
+
+```
+shared/
+    form/
+        FieldFactory.js
+```
+
+
+Plus tard :
+```
+shared/
+    form/
+        FieldFactory.js
+        fields/
+            TextField.js
+            NumberField.js
+            DateField.js
+            SelectField.js
+            CheckboxField.js
+```
+
+Pas besoin de créer les classes maintenant.Quand il dépassera une centaine de lignes, on découpera.
+Le Factory pourra déjà utiliser un switch.
+
+---
+
+# ValueCaster
+
+ValueCaster n'a a que trois types (text, number, date), mais dans un éditeur de ressources il faudra gérer des boolean, enum, json, color, file, etc.
+
+Je partirais sur un composant complètement indépendant du DOM.
+
+## Responsabilité
+Le formulaire ne saura plus comment convertir les valeurs ; il se contentera de déléguer.
+Une seule responsabilité : convertir une valeur brute provenant d'un champ HTML vers une valeur JavaScript.
+
+Il ne fait :
+- aucune validation ;
+- aucune manipulation du DOM ;
+- aucun accès au formulaire ;
+- aucun calcul métier.
+
+## Nouveau fichier
+assets/js/ui/shared/form/ValueCaster.js
+
+
+## API
+Une API minimale suffit.
+ValueCaster.cast(value, type)
+
+Exemple :
+```
+ValueCaster.cast("42", "number")
+// → 42
+ValueCaster.cast("2026-08-07", "date")
+// → Date(...)
+ValueCaster.cast("bonjour", "text")
+// → "bonjour"
+```
+
+
+## Contrat
+
+Le caster retourne **toujours** une valeur JavaScript.
+Jamais :
+- un objet.
+- un booléen de validation.
+
+## Implémentation
+
+Au début, seulement les types déjà présents dans Form.
+```
+switch(type)
+{
+    case 'number':
+    case 'date':
+    default:
+}
+```
+C'est exactement ce que fait actuellement _castValue().
+
+## Évolution prévue
+
+Le switch pourrait grandir progressivement : text , number , float , date , datetime , time , checkbox , boolean , select , textarea , email , url , json ,color ,file
+
+
+## Extension
+
+### API complète proposée
+```
+ValueCaster
+├── cast(value, type)
+├── has(type)
+├── register(type, caster)
+└── unregister(type)
+```
+
+Prévoir dès le départ :
+- ValueCaster.register(type, fn)
+
+Ainsi un Workbench pourra faire :
+```js
+ValueCaster.register( 'vector3', value => new Vector3(...) )
+ValueCaster.register('uuid', value => UUID.fromString(value) )
+```
+
+Utilisation dans Form
+```js
+data[prop.name] = ValueCaster.cast( input.value, prop.type );
+```
+
+C'est un bon investissement architectural : Form orchestre, Validator valide, FieldFactory construit le DOM, et ValueCaster devient l'unique point de conversion entre les valeurs HTML et les objets JavaScript.
+
+
+Il faut éviter le switch et construire une table de conversion.
+
+```js
+const CASTERS =
+{
+    text    : value => value,
+    number  : value => parseInt(value,10),
+    date    : value =>
+    {
+        const [y,m,d] = value.split('-').map(Number);
+        return new Date(y,m-1,d);
+    }
+}
+```
+Puis
+```
+cast(value,type)
+{
+    return (CASTERS[type] ?? CASTERS.text)(value);
+}
+```
