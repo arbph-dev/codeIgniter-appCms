@@ -309,7 +309,7 @@ cast(value,type)
 Nous allons faire fonctionner une relation réelle dans Adresse, avec :
 - CodePostal
 - autocomplete
-- <dialog>
+- dialog
 - liste + filtre
 - sélection
 - retour dans le formulaire
