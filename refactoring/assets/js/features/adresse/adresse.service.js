@@ -1,12 +1,17 @@
 // assets/js/features/adresse/adresse.service.js
 // ─────────────────────────────────────────────────────────────────────────────
-// Adapté depuis old/adresse.service.js :
-//   • apiFetch importé depuis le chemin architecture new
-//   • id renommé adr_id (cohérence mot_id / img_id)
-//   • fetchAdresse : paramètres séparés (q, page, perPage) — id retiré,
-//     fetchAdresseById couvre ce cas
-//   • saveAdresse : JSON pur (pas de FormData — aucun champ file)
-//   • gestion d'erreur alignée sur image.service.js
+// Service API des adresses.
+//
+// Contrat aligné sur AdresseModel.php :
+//   • PK : id
+//   • Champs métier : voienom, voienumero, voierpt, voietype_id,
+//     voiecharniere, complement, infodistribution, codepostal_id,
+//     acheminement
+//   • Coordonnées : latitude / longitude
+//   • Données dénormalisées en lecture : voietype_nom, cp_codepostal,
+//     cp_commune
+//
+// saveAdresse() utilise un JSON pur : aucun champ file dans Adresse.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { apiFetch } from '/assets/js/core/apiFetch.js'
@@ -23,12 +28,16 @@ import { apiFetch } from '/assets/js/core/apiFetch.js'
 export async function fetchAdresse({ q, page = 1, perPage = 20 } = {})
 {
     const params = new URLSearchParams()
+
     if (q)       params.set('q',        q)
     if (page)    params.set('page',     page)
     if (perPage) params.set('per_page', perPage)
 
     const res = await apiFetch(`/api/adresse?${params}`)
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
+    if (!res.ok)
+        throw new Error(`HTTP ${res.status}`)
+
     return res.json()
 }
 
@@ -41,7 +50,10 @@ export async function fetchAdresse({ q, page = 1, perPage = 20 } = {})
 export async function fetchAdresseById(id)
 {
     const res = await apiFetch(`/api/adresse/${id}`)
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
+    if (!res.ok)
+        throw new Error(`HTTP ${res.status}`)
+
     return res.json()
 }
 
@@ -51,17 +63,19 @@ export async function fetchAdresseById(id)
  * @param {object} params
  * @param {string} params.q
  * @param {number} [params.len]
- * @returns {Promise<object[]>}  tableau d'items (jamais throw)
+ * @returns {Promise<object[]>} tableau d'items (jamais throw)
  */
 export async function fetchAdresseLike({ q = '', len = 10 } = {})
 {
-    if (!q || q.length < 2) return []
+    if (!q || q.length < 2)
+        return []
 
     try
     {
         const params = new URLSearchParams({ q, len })
         const res    = await apiFetch(`/api/adresse/like?${params}`)
         const json   = await res.json()
+
         return json.data ?? []
     }
     catch
@@ -72,21 +86,16 @@ export async function fetchAdresseLike({ q = '', len = 10 } = {})
 
 /**
  * Crée (POST) ou met à jour (PUT) une adresse.
- * JSON pur — aucun champ file dans Adresse.
  *
  * @param {object}      params
- * @param {number|null} [params.adr_id]
- * @param {string}      [params.adr_rue]
- * @param {string}      [params.adr_complement]
- * @param {string}      [params.adr_cp]
- * @param {string}      [params.adr_ville]
- * @param {string}      [params.adr_pays]
+ * @param {number|null} [params.id]
+ * @param {object}      fields Champs de l'adresse
  * @returns {Promise<{ data: object }>}
  */
-export async function saveAdresse({ adr_id = null, ...fields } = {})
+export async function saveAdresse({ id = null, ...fields } = {})
 {
-    const method = adr_id ? 'PUT' : 'POST'
-    const url    = adr_id ? `/api/adresse/${adr_id}` : '/api/adresse'
+    const method = id ? 'PUT' : 'POST'
+    const url    = id ? `/api/adresse/${id}` : '/api/adresse'
 
     const res = await apiFetch(url, {
         method,
@@ -110,7 +119,12 @@ export async function saveAdresse({ adr_id = null, ...fields } = {})
  */
 export async function deleteAdresse(id)
 {
-    const res = await apiFetch(`/api/adresse/${id}`, { method: 'DELETE' })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const res = await apiFetch(`/api/adresse/${id}`, {
+        method: 'DELETE',
+    })
+
+    if (!res.ok)
+        throw new Error(`HTTP ${res.status}`)
+
     return res.json()
 }
