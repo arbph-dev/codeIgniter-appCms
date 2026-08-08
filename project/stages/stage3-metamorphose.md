@@ -392,7 +392,186 @@ Form
               └── sélection
 ```
 
+---
 
+## Pièces à construire 
+
+
+1. DialogManager.js          
+— infrastructure singleton, programmatic (pas de scan DOM)
+
+register(id, el) / show / close / select → dialog:select
+
+2. RelationPickerDialog.js
+— dialog générique paramétré
+{ id, title, fetchFn, columns, labelKey, valueKey }
+crée le <dialog>, gère recherche + table + sélection
+
+3. Form.js v3
+ — nouveau type 'relation'
+ [input readonly display] + [input hidden value] + [btn 🔍]
+displayFn(data) dans options → fill() mode edit
+_busHandlers[] → cleanup au destroy()
+
+4. codepostal.service.js
+ — adaptation minime de l'old
+
+5. typevoie.service.js
+— adaptation minime de l'old
+
+6. adresse.properties.js
+ — codepostal_id + voietype_id → type: 'relation'
+
+7. AdresseWorkbench.js
+— bootstrap() crée les deux dialogs via RelationPickerDialog
+
+8. dialog.css
+— styles <dialog> natif
+
+
+## Décisions architecturales clés
+
+type: 'relation' dans le PropertySet :
+
+```js
+{
+    name       : 'codepostal_id',
+    type       : 'relation',
+    description: 'Code postal',
+    options    : {
+        dialogId   : 'dialog_cp',
+        valueKey   : 'id',          // FK stockée
+        labelKey   : 'label',       // clé retournée par le dialog
+        displayFn  : (data) =>      // reconstruction du label en mode edit (fill)
+            `${data.cp_codepostal ?? ''} ${data.cp_commune ?? ''}`.trim(),
+        placeholder: 'Code postal…',
+        required   : '',
+    },
+}
+```
+
+
+Le champ relation souscrit lui-même à dialog:select filtré sur dialogId 
+— le Form reste propriétaire, le bus n'est qu'un tuyau.
+Les handlers sont stockés dans _busHandlers[] et désabonnés au destroy().
+
+RelationPickerDialog est générique 
+— fetchFn reçoit la requête, renvoie items[]. 
+columns définit la table. 
+
+À l'issue des deux implémentations (cp + tv), le contrat pour FieldFactory sera lisible directement depuis ces deux usages.
+
+Ce qui ne change pas : WorkbenchView, PanelBase, les Panels existants. 
+Seul AdresseWorkbench.bootstrap() est modifié pour créer les deux dialogs.
+
+assets/js/ui/shared/DialogManager.js
+
+```
+// assets/js/ui/shared/DialogManager.js
+// ─────────────────────────────────────────────────────────────────────────────
+// Infrastructure IHM pour les <dialog> natifs.
+//
+// Différences vs old/dialog.js :
+//   • Pas de scan DOM à l'init — les dialogs sont créés programmatiquement
+//     et enregistrés via register()
+//   • select() publie dialog:select ET ferme — les champs relation n'ont
+//     pas à connaître le DialogManager
+//   • Pas de verrou activeDialog — plusieurs dialogs peuvent exister,
+//     le navigateur gère la modale native
+//   • Les <dialog> sont insérés dans document.body pour éviter les
+//     problèmes de stacking context (overflow:hidden sur les parents)
+//
+// Export : dialogManager (singleton)
+// Bus events entrants  : dialog:show (id), dialog:close (id)
+// Bus events sortants  : dialog:select { sourceId, item }
+// ─────────────────────────────────────────────────────────────────────────────
+
+import { bus } from '/assets/js/core/eventBus.js'
+
+class DialogManager
+{
+    constructor()
+    {
+        /** @type {Map<string, HTMLDialogElement>} */
+        this._map = new Map()
+
+        // Bus entrant — compatibilité avec les onclick inline éventuels
+        bus.subscribe('dialog:show',  (id) => this.show(id))
+        bus.subscribe('dialog:close', (id) => this.close(id))
+    }
+
+    // ── API publique ──────────────────────────────────────────────────────────
+
+    /**
+     * Enregistre un <dialog> déjà construit et l'insère dans document.body.
+     * Appelé par RelationPickerDialog.render().
+     *
+     * @param {string}             id
+     * @param {HTMLDialogElement}  el
+     */
+    register(id, el)
+    {
+        this._map.set(id, el)
+        document.body.appendChild(el)
+    }
+
+    /**
+     * Désenregistre et retire le <dialog> du DOM.
+     * Appelé par RelationPickerDialog.destroy().
+     *
+     * @param {string} id
+     */
+    unregister(id)
+    {
+        const el = this._map.get(id)
+        if (el)
+        {
+            if (el.open) el.close()
+            el.remove()
+            this._map.delete(id)
+        }
+    }
+
+    /**
+     * Ouvre le dialog en mode modal (showModal).
+     * @param {string} id
+     */
+    show(id)
+    {
+        const el = this._map.get(id)
+        if (!el) {
+            console.warn(`[DialogManager] Dialog introuvable : "${id}"`)
+            return
+        }
+        el.showModal()
+    }
+
+    /**
+     * Ferme le dialog.
+     * @param {string} id
+     */
+    close(id)
+    {
+        const el = this._map.get(id)
+        if (el?.open) el.close()
+    }
+
+    /**
+     * Publie dialog:select puis ferme.
+     * Appelé par RelationPickerDialog quand l'utilisateur sélectionne un item.
+     *
+     * @param {string} id    — dialog source
+     * @param {object} item  — item sélectionné (données brutes)
+     */
+    select(id, item)
+    {
+        bus.publish('dialog:select', { sourceId: id, item })
+        this.close(id)
+    }
+}
+
+export const dialogManager = new DialogManager()
+```
 
 
 
