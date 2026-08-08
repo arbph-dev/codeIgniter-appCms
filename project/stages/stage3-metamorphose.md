@@ -301,3 +301,98 @@ cast(value,type)
     return (CASTERS[type] ?? CASTERS.text)(value);
 }
 ```
+
+---
+
+# Priorité
+
+Nous allons faire fonctionner une relation réelle dans Adresse, avec :
+- CodePostal
+- autocomplete
+- <dialog>
+- liste + filtre
+- sélection
+- retour dans le formulaire
+
+le même travail est à réalisé pour TypeVoie.
+
+À l'issue de ces deux implémentations, nous aurons plus de matière pour extraire le contrat générique de FieldFactory.
+
+
+
+## API
+
+Le portail historique contient déjà les briques. Il faut maintenant les extraire et les confronter à l'architecture actuelle.
+
+Le portail chargeait explicitement les trois features concernées : typevoie, codepostal et adresse, chacune avec son controller, renderer et form.
+
+les API ont été testée et validé depuis le portail actuel
+
+la vue principale propose les librairies et les scripts dont "autocomplete"
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/app/Views/cms/index.php
+
+le document est structuré depuis le contrôleur
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/app/Controllers/Cms.php
+
+les apis en relation avec adresse ont chacune un features, structuré avec controller, form, renderer, service et store
+Les services historiques et les "API de relation" possèdent déjà deux niveaux d'accès :
+
+TypeVoie (CRUD complet) : 
+- recherche paginée fetchTv()
+- recherche fetchTvLike() pour autocomplete
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/public/assets/js/features/typevoie/typevoie.service.js
+
+CodePostal (read only car référentiel)
+- recherche paginée avec q, codepostal, codeinsee
+- fetchCpLike() pour autocomplete.
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/public/assets/js/features/codepostal/codepostal.service.js
+
+
+bien qu'obsolete la gestion des formulaires et dialog du portail actuel peut comporter des éléments a considérer
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/public/assets/js/ihm/formsManager.js
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/public/assets/js/ihm/dialog.js
+
+
+
+
+## Dialog
+
+Le portail historique est particulièrement intéressant pour dialog. Le vieux dialog.js est rudimentaire, mais il contient déjà une idée architecturale intéressante :
+```
+DialogManager
+    ├── registre des <dialog>
+    ├── getById()
+    ├── show()
+    └── close()
+```
+
+Les dialogues sont enregistrés depuis le DOM et stockés dans une Map. Le bus sert ensuite à demander dialog:show et dialog:close.
+- Le dialogue comme une infrastructure IHM indépendante du formulaire.
+- Le scénario Adresse → sélection CodePostal correspond parfaitement à cette infrastructure.
+
+Il y a aussi un détail très intéressant dans formsManager
+
+L'ancien gestionnaire détectait explicitement si un <form> était contenu dans un <dialog> :
+
+FORM
+ └── parentElement
+       └── DIALOG
+
+et distinguait alors le contexte formulaire normal du contexte formulaire dans dialogue. Mais le formulaire reste le propriétaire de la valeur finale.
+Cela signifie que Form et Dialog ne doivent probablement pas être deux mondes indépendants.
+```
+Form
+ ├── champ simple
+ ├── champ autocomplete
+ └── champ relation
+       ├── saisie/autocomplete
+       └── ouverture Dialog
+              ├── recherche
+              ├── liste
+              └── sélection
+```
+
+
+
+
+
