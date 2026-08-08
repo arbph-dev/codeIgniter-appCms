@@ -13,7 +13,7 @@
     <!-- Styles applicatifs existants -->
     <link rel="stylesheet" href="/assets/css/workbench/theme_one.css">
     <link rel="stylesheet" href="/assets/css/workbench/workbench.css">
-    
+    <link rel="stylesheet" href="/assets/css/workbench/adresse.css">
     <!-- Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
