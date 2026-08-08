@@ -1,7 +1,14 @@
 // assets/js/ui/workbench/adresse/AdresseListPanel.js
 
 import PanelBase from '/assets/js/ui/workbench/core/PanelBase.js'
-import { create, clear, table, pagination, notice } from '/assets/js/core/domhelper.js'
+import {
+    create,
+    clear,
+    table,
+    pagination,
+    notice,
+} from '/assets/js/core/domhelper.js'
+
 import { toolbar } from '/assets/js/ui/shared/templates/toolbar.template.js'
 
 export class AdresseListPanel extends PanelBase
@@ -9,6 +16,7 @@ export class AdresseListPanel extends PanelBase
     constructor()
     {
         super()
+
         this._onSelectFn = null
         this._onSearchFn = null
         this._onNewFn    = null
@@ -21,7 +29,9 @@ export class AdresseListPanel extends PanelBase
 
     render()
     {
-        this.element = create('section', { class: 'wb_mot_list_panel' })
+        this.element = create('section', {
+            class: 'wb_mot_list_panel',
+        })
 
         const header = toolbar({
             title  : 'Adresses',
@@ -32,30 +42,55 @@ export class AdresseListPanel extends PanelBase
             },
         })
 
-        const searchBar = create('div', { class: 'wb_mot_search' })
+        const searchBar = create('div', {
+            class: 'wb_mot_search',
+        })
+
         this.inputEl = create('input', {
             type        : 'search',
             class       : 'wb_mot_search_input',
             placeholder : 'Ville, rue, code postal…',
         })
+
         const searchBtn = create('button', {
             type  : 'button',
             class : 'wb_mot_search_btn',
             text  : 'Rechercher',
         })
-        searchBtn.addEventListener('click', () => this._triggerSearch())
+
+        searchBtn.addEventListener(
+            'click',
+            () => this._triggerSearch()
+        )
+
         this.inputEl.addEventListener('keydown', e =>
         {
-            if (e.key === 'Enter') this._triggerSearch()
+            if (e.key === 'Enter')
+                this._triggerSearch()
         })
-        searchBar.append(this.inputEl, searchBtn)
 
-        this.tableEl = create('div', { class: 'wb_mot_table' })
-        this.pagerEl = create('div', { class: 'wb_mot_pager' })
+        searchBar.append(
+            this.inputEl,
+            searchBtn
+        )
 
-        this.element.append(header, searchBar, this.tableEl, this.pagerEl)
+        this.tableEl = create('div', {
+            class: 'wb_mot_table',
+        })
+
+        this.pagerEl = create('div', {
+            class: 'wb_mot_pager',
+        })
+
+        this.element.append(
+            header,
+            searchBar,
+            this.tableEl,
+            this.pagerEl
+        )
 
         this.clear()
+
         return this.element
     }
 
@@ -66,21 +101,39 @@ export class AdresseListPanel extends PanelBase
 
         if (!items?.length)
         {
-            this.tableEl.appendChild(notice('empty'))
+            this.tableEl.appendChild(
+                notice('empty')
+            )
+
             return
         }
 
         this.tableEl.appendChild(
             table({
-                id      : 'wbAdresseTable',
-                data    : items,
+                id   : 'wbAdresseTable',
+                data : items,
+
                 columns : [
-                    { key: 'adr_id',    label: 'ID'   },
-                    { key: 'adr_ville', label: 'Ville' },
-                    { key: 'adr_cp',    label: 'CP'    },
+                    {
+                        key   : 'id',
+                        label : 'ID',
+                    },
+                    {
+                        key   : 'cp_commune',
+                        label : 'Ville',
+                    },
+                    {
+                        key   : 'cp_codepostal',
+                        label : 'CP',
+                    },
                 ],
-                attrs      : { class: 'cp_table' },
-                onRowClick : (row) => this._onSelectFn?.(row),
+
+                attrs : {
+                    class: 'cp_table',
+                },
+
+                onRowClick : row =>
+                    this._onSelectFn?.(row),
             })
         )
 
@@ -99,26 +152,41 @@ export class AdresseListPanel extends PanelBase
 
     clear()
     {
-        if (!this.tableEl) return
+        if (!this.tableEl)
+            return
+
         clear(this.tableEl)
         clear(this.pagerEl)
-        this.tableEl.appendChild(notice('empty'))
+
+        this.tableEl.appendChild(
+            notice('empty')
+        )
     }
 
     showLoading()
     {
-        if (!this.tableEl) return
+        if (!this.tableEl)
+            return
+
         clear(this.tableEl)
         clear(this.pagerEl)
-        this.tableEl.appendChild(notice('loading'))
+
+        this.tableEl.appendChild(
+            notice('loading')
+        )
     }
 
     showError(msg)
     {
-        if (!this.tableEl) return
+        if (!this.tableEl)
+            return
+
         clear(this.tableEl)
         clear(this.pagerEl)
-        this.tableEl.appendChild(notice('error', msg))
+
+        this.tableEl.appendChild(
+            notice('error', msg)
+        )
     }
 
     destroy()
@@ -126,19 +194,33 @@ export class AdresseListPanel extends PanelBase
         this._onSelectFn = null
         this._onSearchFn = null
         this._onNewFn    = null
-        this.element     = null
-        this.inputEl     = null
-        this.tableEl     = null
-        this.pagerEl     = null
+
+        this.element = null
+        this.inputEl = null
+        this.tableEl = null
+        this.pagerEl = null
     }
 
-    onSearch(fn) { this._onSearchFn = fn }
-    onSelect(fn) { this._onSelectFn = fn }
-    onNew(fn)    { this._onNewFn    = fn }
+    onSearch(fn)
+    {
+        this._onSearchFn = fn
+    }
+
+    onSelect(fn)
+    {
+        this._onSelectFn = fn
+    }
+
+    onNew(fn)
+    {
+        this._onNewFn = fn
+    }
 
     _triggerSearch()
     {
-        this._onSearchFn?.(this.inputEl?.value.trim() ?? '')
+        this._onSearchFn?.(
+            this.inputEl?.value.trim() ?? ''
+        )
     }
 }
 
