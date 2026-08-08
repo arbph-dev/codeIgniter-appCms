@@ -6,12 +6,12 @@
 //   • initLeaflet() appelé en bootstrap() — enregistre les bus subscriptions
 //     une seule fois (guard _initialized dans leaflet.js)
 //   • mapPanel synchronisé sur chaque sélection + après chaque save
-//   • saveAdresse reçoit { adr_id, ...data } — JSON pur, pas de FormData
+//   • saveAdresse reçoit { id, ...data } — JSON pur
 // ─────────────────────────────────────────────────────────────────────────────
 
 import WorkbenchBase       from '/assets/js/ui/workbench/core/WorkbenchBase.js'
 import { WorkbenchView }   from '/assets/js/ui/workbench/core/WorkbenchView.js'
-import { createDescriptor} from '/assets/js/ui/workbench/core/LayoutDescriptor.js'
+import { createDescriptor } from '/assets/js/ui/workbench/core/LayoutDescriptor.js'
 
 import AdresseListPanel    from './AdresseListPanel.js'
 import AdresseDetailPanel  from './AdresseDetailPanel.js'
@@ -30,7 +30,7 @@ import {
 const LAYOUT = createDescriptor({
     css   : 'wb_adresse_layout',
     zones : [
-        { name: 'left',   css: 'wb_adresse_left'   },
+        { name: 'left',   css: 'wb_adresse_left'    },
         { name: 'center', css: 'wb_adresse_center'  },
         { name: 'right',  css: 'wb_adresse_right'   },
     ],
@@ -48,10 +48,10 @@ export class AdresseWorkbench extends WorkbenchBase
         this._page     = 1
         this._onPageFn = null
 
-        this._view         = null
-        this.listPanel     = null
-        this.detailPanel   = null
-        this.mapPanel      = null
+        this._view       = null
+        this.listPanel   = null
+        this.detailPanel = null
+        this.mapPanel    = null
     }
 
     // ── Initialisation ────────────────────────────────────────────────────────
@@ -61,7 +61,11 @@ export class AdresseWorkbench extends WorkbenchBase
         // Leaflet bus subscriptions — guard _initialized empêche le double abonnement
         initLeaflet()
 
-        this._view = new WorkbenchView(LAYOUT, this.getElement('.wb-content'))
+        this._view = new WorkbenchView(
+            LAYOUT,
+            this.getElement('.wb-content')
+        )
+
         this._view.build()
         this._createPanels()
         this._bindEvents()
@@ -83,7 +87,7 @@ export class AdresseWorkbench extends WorkbenchBase
         })
     }
 
-    // ── Événements ────────────────────────────────────────────────────────────
+    // ── Événements ───────────────────────────────────────────────────────────
 
     _bindEvents()
     {
@@ -92,8 +96,10 @@ export class AdresseWorkbench extends WorkbenchBase
         {
             this._q    = q
             this._page = 1
+
             this.detailPanel.clear()
             this.mapPanel.clear()
+
             this.load()
         })
 
@@ -111,28 +117,38 @@ export class AdresseWorkbench extends WorkbenchBase
             this.detailPanel.showNew()
         })
 
-        // Sauvegarde — JSON pur (pas de FormData pour Adresse)
-        this.detailPanel.onSave(async (adr_id, data) =>
+        // Sauvegarde — JSON pur
+        this.detailPanel.onSave(async (id, data) =>
         {
             this.detailPanel.lock()
+
             try
             {
-                const result = await saveAdresse({ adr_id, ...data })
+                const result = await saveAdresse({
+                    id,
+                    ...data,
+                })
 
-                if (!adr_id) this._page = 1
+                if (!id)
+                    this._page = 1
 
                 await this.load()
 
-                // Si l'API retourne la ressource complète (avec lat/lng éventuels)
+                // L'API retourne idéalement la ressource complète,
+                // notamment les coordonnées géocodées.
                 const saved = result.data ?? null
+
                 if (saved)
                 {
                     this.detailPanel.show(saved)
-                    this.mapPanel.show(saved)  // pans sur les coords géocodées si présentes
+                    this.mapPanel.show(saved)
                 }
                 else
                 {
-                    this.detailPanel.showFeedback('success', 'Enregistré.')
+                    this.detailPanel.showFeedback(
+                        'success',
+                        'Enregistré.'
+                    )
                 }
             }
             catch (err)
@@ -140,6 +156,7 @@ export class AdresseWorkbench extends WorkbenchBase
                 const msg = err.message.includes('422')
                     ? 'Adresse invalide ou déjà existante.'
                     : err.message
+
                 this.detailPanel.showFeedback('error', msg)
             }
             finally
@@ -149,14 +166,17 @@ export class AdresseWorkbench extends WorkbenchBase
         })
 
         // Suppression
-        this.detailPanel.onDelete(async (id) =>
+        this.detailPanel.onDelete(async id =>
         {
             this.detailPanel.lock()
+
             try
             {
                 await deleteAdresse(id)
+
                 this.detailPanel.clear()
                 this.mapPanel.clear()
+
                 this._page = 1
                 await this.load()
             }
@@ -171,11 +191,12 @@ export class AdresseWorkbench extends WorkbenchBase
         })
 
         // Pagination
-        this._onPageFn = (page) =>
+        this._onPageFn = page =>
         {
             this._page = page
             this.load()
         }
+
         this.bus.subscribe('wb:adresse:page', this._onPageFn)
     }
 
@@ -184,6 +205,7 @@ export class AdresseWorkbench extends WorkbenchBase
     async load()
     {
         this.listPanel.showLoading()
+
         try
         {
             const result = await fetchAdresse({
@@ -196,7 +218,10 @@ export class AdresseWorkbench extends WorkbenchBase
                 ? result.data
                 : (result.data ? [result.data] : [])
 
-            this.listPanel.show(items, result.pager ?? null)
+            this.listPanel.show(
+                items,
+                result.pager ?? null
+            )
         }
         catch (err)
         {
@@ -209,12 +234,16 @@ export class AdresseWorkbench extends WorkbenchBase
 
     destroy()
     {
-        this.bus.unsubscribe('wb:adresse:page', this._onPageFn)
+        this.bus.unsubscribe(
+            'wb:adresse:page',
+            this._onPageFn
+        )
+
         this._onPageFn = null
 
         this.listPanel?.destroy()
         this.detailPanel?.destroy()
-        this.mapPanel?.destroy()    // publie leaflet:destroy
+        this.mapPanel?.destroy()
 
         this._view?.unmountPanels()
         this._view?.destroy()
