@@ -77,8 +77,8 @@ Workbench maître de ses panels pour bindEvents
 - AdresseWorkbench sera a reprendre pour suivre le contrat evenment
  
 Contrat à verrouiller
+```
 Workbench
-   │
    ├── crée
    ├── configure
    ├── bindEvents()
@@ -86,9 +86,9 @@ Workbench
         │
         ├── Panel
         │     └── callbacks → Workbench
-        │
         └── Dialog
               └── résultat → appelant
+```
 
 Règles :
 - Panel ne connaît pas son Workbench.
@@ -97,4 +97,34 @@ Règles :
 - Dialog retourne son résultat au demandeur, idéalement par callback/promise.
 - EventBus reste réservé aux événements réellement transversaux ou nécessitant un découplage inter-composants.
 - destroy() doit supprimer les listeners/callbacks propres au composant.
+
+### 4.3
+```
+Organisation
+├── organisation_type_id → organisation_types
+├── adresse_id            → adresses       [0..1]
+├── logo_id               → images         [0..1]
+└── cover_id              → images         [0..1]
+        │
+        │ 1 — 1
+        ▼
+Entreprise
+├── codenaf_id            → codesnaf
+├── forme_juridique_id    → formesjuridiques
+└── 1 — N
+     │
+     ▼
+Établissements
+│
+└── adresse_id            → adresses [0..1]
+```
+ 
+Le 1–1 Organisation → Entreprise est imposé par UNIQUE(organisation_id) avec ON DELETE CASCADE sur les relations enfant.
+Entreprise est une extension 1–1 ; les Établissements, eux, sont une collection.
+
+Concevoir un picker Adresse générique, mais sans encore le spécialiser métier.
+AdressePickerDialog aura au moins deux usages distincts :
+- Organisation.adresse_id
+- Etablissement.adresse_id
+
 
