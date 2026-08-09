@@ -360,7 +360,7 @@ COMMIT;
 
 
 ## Backend
-app/Models/PersonneModel.php - a revoir
+app/Models/PersonneModel.php - a créer
 
 
 ## Relations
