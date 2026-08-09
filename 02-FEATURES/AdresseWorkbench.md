@@ -10,7 +10,7 @@ Il valide le modèle « Mot comme référence » étendu aux 3 zones + composant
 
 
 Ordre dans bootstrap() 
-— les dialogs sont créés avant _createPanels(). 
+— les dialogs sont créés avant _createPanels(). _createDialogs() dans bootstrap()
 C'est important : render() de RelationPickerDialog appelle dialogManager.register() qui insère le <dialog> dans document.body. 
 Quand AdresseDetailPanel construit ensuite le formulaire via Form.js, les bus subscriptions dialog:select des champs relation sont déjà prêtes à recevoir.
 
@@ -42,7 +42,7 @@ AdresseWorkbench          ← orchestrateur (ce fichier)
 
 ---
 
-### Fichiers back
+### Fichiers backend
 - routes
 - controller
 - vue app/Views/workbench/adresse.php
@@ -73,12 +73,21 @@ url : https://zealot.fr/workbench/adresse
 
 #### features / API
 - [/assets/js/features/adresse/adresse.properties.js](/refactoring/assets/js/features/adresse/adresse.properties.js)
+    - codepostal_id + voietype_id en relation
+    - voiecharniere passe en select avec les vrais libellés
 - [/assets/js/features/adresse/adresse.service.js](/refactoring/assets/js/features/adresse/adresse.service.js)
+- assets/js/features/codepostal/codepostal.service.js
+  - read-only, fetchCpLike → items[]
+- assets/js/features/typevoie/typevoie.service.js
+    - CRUD, fetchTvLike → items[]
 
 #### shared
 - [/assets/js/ui/shared/DialogManager.js](/refactoring/assets/js/ui/shared/DialogManager.js)
+    - singleton, bus dialog:show/close/select 
 - [/assets/js/ui/shared/Form.js](/refactoring/assets/js/ui/shared/Form.js)
+    - type 'relation', _displays, _busHandlers 
 - [/assets/js/ui/shared/RelationPickerDialog.js](/refactoring/assets/js/ui/shared/RelationPickerDialog.js)
+    - dialog générique, fetchFn + columns
 
 #### workbench
 - [/assets/js/ui/workbench/adresse/AdresseDetailPanel.js](/refactoring/assets/js/ui/workbench/adresse/AdresseDetailPanel.js)
@@ -86,7 +95,9 @@ url : https://zealot.fr/workbench/adresse
 - [/assets/js/ui/workbench/adresse/AdresseWorkbench.js](/refactoring/assets/js/ui/workbench/adresse/AdresseWorkbench.js)
 - [/assets/js/ui/workbench/adresse/MapPanel.js](/refactoring/assets/js/ui/workbench/adresse/MapPanel.js)
 
-
+### css
+- ajout /assets/css/workbench/dialog.css
+    - <dialog> natif + .wb_relation_wrapper
 
 ### Dialogs relation
 
@@ -115,7 +126,7 @@ c’est le « contrat runtime » du workbench.
 
 Le Workbench attend ces APIs : méthodes et callback
 
-- AdresseListPanel
+#### AdresseListPanel
     - onSearch(fn)
     - onSelect(fn)
     - onNew(fn)
