@@ -72,5 +72,12 @@ createDescriptor({
 
 ### Frontend
 
+- assets/js/ui/shared/DialogManager.js
+- assets/js/ui/shared/Form.js
+- assets/js/ui/shared/RelationPickerDialog.js
 
-Form.js
+#### Services
+
+- assets/js/features/adresse/adresse.properties.js
+
+
