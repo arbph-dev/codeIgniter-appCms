@@ -29,7 +29,8 @@ AdresseWorkbench          ← orchestrateur (ce fichier)
 ### Fichiers back
 - routes
 - controller
-- vue
+- vue app/Views/workbench/adresse.php
+    - Banc de test — AdresseWorkbench , URL : /workbench/adresse 
 - API
     - app/Controllers/Api/Adesse.php
     - app/Controllers/Api/CodePostal.php
