@@ -74,9 +74,11 @@ Form       →  met à jour hidden FK + display
 
 
 ### Panels
+c’est le « contrat runtime » du workbench.
 - listPanel   → left
 - detailPanel → center
 - mapPanel    → right
+
 
 | Panel | Rôle attendu |
 | --- | --- |
@@ -84,7 +86,8 @@ Form       →  met à jour hidden FK + display
 | Detail | Affichage / form (create & edit), save, delete, lock/unlock, feedback |
 | Map | Affiche le point (lat/lng), clear, réagit à leaflet:* via le composant |
 
-Le Workbench attend ces APIs :
+Le Workbench attend ces APIs : méthodes et callback
+
 - AdresseListPanel
     - onSearch(fn)
     - onSelect(fn)
@@ -92,17 +95,22 @@ Le Workbench attend ces APIs :
     - show(items, pager)
     - showLoading()
     - showError(msg)
-(pagination) publish wb:adresse:page
+    - (pagination) publish wb:adresse:page
 
-AdresseDetailPanelshow(adresse), showNew(), clear()
-onSave(fn(adr_id, data)), onDelete(fn(id))
-lock(), unlock(), showFeedback(type, msg)
+- AdresseDetailPanel
+    - show(adresse)
+    - showNew()
+    - clear()
+    - onSave(fn(adr_id, data))
+    - onDelete(fn(id))
+    - lock()
+    - unlock()
+    - showFeedback(type, msg)
 
-MapPanelshow(adresse), clear(), destroy() (→ leaflet:destroy)
-
-Si une de ces méthodes manque ou change de signature, le câblage casse — c’est le « contrat runtime » du workbench.
-
-
+- MapPanel
+    - show(adresse)
+    - clear()
+    - destroy() (→ leaflet:destroy)
 
 
 ### Evénements
