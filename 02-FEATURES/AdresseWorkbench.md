@@ -26,6 +26,9 @@ AdresseWorkbench          ← orchestrateur (ce fichier)
     └── services: fetchAdresse / saveAdresse / deleteAdresse / fetchCpLike / fetchTvLike
 ```
 
+
+---
+
 ### Fichiers back
 - routes
 - controller
@@ -37,6 +40,16 @@ AdresseWorkbench          ← orchestrateur (ce fichier)
     - app/Controllers/Api/TypeVoie.php
     - app/Enums/IndiceRepetition.php
     - app/Enums/Charniere.php
+
+#### relations
+voietype_id et codepostal_id sont des FKs du model Adresse
+
+Les deux patterns displayFn / itemDisplay côte à côte dans le fichier rendent le contrat lisible d'un coup d'œil.
+
+voietype_id — itemDisplay: (item) => item.nom après sélection dialog, displayFn: (data) => data.voietype_nom en mode fill(). Pas de required — le champ peut rester vide.
+
+codepostal_id — itemDisplay joint codepostal + commune, displayFn joint cp_codepostal + cp_commune depuis les données JOIN de l'API. Le required déclenche la validation manuelle dans _checkField (pas d'attribut DOM sur le hidden input). Le validate est une garde supplémentaire contre une valeur corrompue.
+
 
 
 ### Fichiers front
@@ -98,7 +111,7 @@ Le Workbench attend ces APIs : méthodes et callback
     - showError(msg)
     - (pagination) publish wb:adresse:page
 
-- AdresseDetailPanel
+####  AdresseDetailPanel
     - show(adresse)
     - showNew()
     - clear()
@@ -108,10 +121,14 @@ Le Workbench attend ces APIs : méthodes et callback
     - unlock()
     - showFeedback(type, msg)
 
-- MapPanel
+AdresseDetailPanel reconstruit l'intitulé de voie.
+
+#### MapPanel
     - show(adresse)
     - clear()
     - destroy() (→ leaflet:destroy)
+
+MapPanel utilise Number.isFinite() plutôt que || DEFAULT_*, ce qui traite correctement les coordonnées numériques valides, y compris 0.
 
 
 ### Evénements
