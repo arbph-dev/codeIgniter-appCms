@@ -65,3 +65,10 @@ Il peut étendre RelationPickerDialog ou le composer. La décision se prendra en
 - app/Controllers/Api/Organisation.php  (routes + réponses)
 - schema des relations : organisation → adresse(s), contacts…
 
+
+## Session Stage 4
+Préparation
+- [project/daily/2026-08-09.md](/project/daily/2026-08-09.md)
+
+
+
