@@ -2,7 +2,6 @@
 
 # Structure
 
-
 ## fichiers
 ### /assets/js/ui/workbench/mot/
 - [MotDetailPanel.js](/refactoring/assets/js/ui/workbench/mot/MotDetailPanel.js)
@@ -11,10 +10,14 @@
 
 
 ## api
-- [/assets/js/features/mot/mot.service.js](/refactoring/assets/js/features/mot/mot.service.js)
+- [mot.service.js](/refactoring/assets/js/features/mot/mot.service.js)
   - fetchMot
   - saveMot
   - deleteMot
+- [mot.properties.js](/refactoring/assets/js/features/mot/mot.properties.js)
+  - Contient le schéma déclaratif du formulaire Mot.
+
+
 
 ## dépendances
 
@@ -26,3 +29,6 @@
 
 ---
 
+# Notes
+
+Le schéma déclaratif du formulaire Mot est Séparé de la logique Panel, il peut être réutilisé (ex. autocomplete, filtres).
