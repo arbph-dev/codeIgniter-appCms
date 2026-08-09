@@ -1,17 +1,29 @@
 # ImageWorkbench
 
+
+## Structure
+
+### /assets/css/workbench/
+- [image.css](/refactoring/assets/css/workbench/image.css)
+
+
+## fichiers
+### assets/js/ui/workbench/image/
+- [ImageDetailPanel.js](/refactoring/assets/js/ui/workbench/image/ImageDetailPanel.js)
+- [ImageListPanel.js](/refactoring/assets/js/ui/workbench/image/ImageListPanel.js)
+- [ImagePreviewPanel.js](/refactoring/assets/js/ui/workbench/image/ImagePreviewPanel.js)
+- [ImageWorkbench.js](/refactoring/assets/js/ui/workbench/image/ImageWorkbench.js)
+
+## api
+### assets/js/features/image/
+- [image.properties.js](/refactoring/assets/js/features/image/image.properties.js)
+- [image.service.js](/refactoring/assets/js/features/image/image.service.js)
+
+## dépendances
 - assets/js/ui/shared/Form.js
 
-- assets/js/features/image/image.service.js
-- assets/js/features/image/image.properties.js
+## Notes
 
-- assets/js/ui/workbench/image/ImageListPanel.js
-- assets/js/ui/workbench/image/ImagePreviewPanel.js
-- assets/js/ui/workbench/image/ImageDetailPanel.js
-
-- /assets/css/workbench/image.css
-
-assets/js/ui/workbench/image/ImageWorkbench.js
 
 
 3 fichiers back
