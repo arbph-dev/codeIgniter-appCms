@@ -13,6 +13,8 @@
 
 WorkbenchBase.init() appelle typiquement renderStructure() puis bootstrap().
 
+Le Workbench crée les dialogs ; le Form s’y connecte uniquement via le bus (dialogId dans le PropertySet). Découplage propre.
+
 Ordre important : dialogs avant panels, sinon un clic relation trop tôt n’aurait pas de dialog dans le DOM.
 
 ```
@@ -32,6 +34,9 @@ bootstrap()
   ├─ 5. _bindEvents()
   └─ 6. load()   ← premier fetch
 ```
+
+
+
 
 
 
