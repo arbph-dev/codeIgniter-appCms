@@ -57,11 +57,33 @@ AdresseWorkbench          ← orchestrateur (ce fichier)
     └── services: fetchAdresse / saveAdresse / deleteAdresse / fetchCpLike / fetchTvLike
 ```
 
+
+
+### Fichiers
+
+https://zealot.fr/workbench/adresse
+
+#### assets/js/ui/shared/
+[](/)
 - assets/js/ui/shared/DialogManager.js
+[](/)
 - assets/js/ui/shared/RelationPickerDialog.js
 
+#### features / API
+- [/assets/js/features/adresse/adresse.properties.js](/refactoring/assets/js/features/adresse/adresse.properties.js)
+- [/assets/js/features/adresse/adresse.service.js](/refactoring/assets/js/features/adresse/adresse.service.js)
 
-- assets/js/features/adresse/adresse.properties.js
+#### shared
+- [/assets/js/ui/shared/DialogManager.js](/refactoring/assets/js/ui/shared/DialogManager.js)
+- [/assets/js/ui/shared/Form.js](/refactoring/assets/js/ui/shared/Form.js)
+- [/assets/js/ui/shared/RelationPickerDialog.js](/refactoring/assets/js/ui/shared/RelationPickerDialog.js)
+
+#### workbench
+- [/assets/js/ui/workbench/adresse/AdresseDetailPanel.js](/refactoring/assets/js/ui/workbench/adresse/AdresseDetailPanel.js)
+- [/assets/js/ui/workbench/adresse/AdresseListPanel.js](/refactoring/assets/js/ui/workbench/adresse/AdresseListPanel.js)
+- [/assets/js/ui/workbench/adresse/AdresseWorkbench.js](/refactoring/assets/js/ui/workbench/adresse/AdresseWorkbench.js)
+- [/assets/js/ui/workbench/adresse/MapPanel.js](/refactoring/assets/js/ui/workbench/adresse/MapPanel.js)
+
 
 
 ### Dialogs relation
