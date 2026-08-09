@@ -21,3 +21,15 @@ AdresseWorkbench          ← orchestrateur (ce fichier)
 
 
 - assets/js/features/adresse/adresse.properties.js
+
+
+### Dialogs relation
+
+Deux instances de RelationPickerDialog, hors layout, rattachées au body :Dialog
+
+Lien avec Form.js (type relation) :
+
+Bouton 🔍  →  bus.publish('dialog:show', 'dialog_cp')
+Dialog     →  recherche + sélection
+           →  bus.publish('dialog:select', { sourceId, item })
+Form       →  met à jour hidden FK + display
