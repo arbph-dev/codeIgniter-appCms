@@ -107,19 +107,45 @@ Si une de ces méthodes manque ou change de signature, le câblage casse — c�
 
 ### Evénements
 
+Le Workbench est le contrôleur de l'IHM. Il n'a pas besoin du bus pour communiquer avec ses propres sous-composants
+
+Un Panel qui est un **widget UI** proposera des callback
+
+```js
+catalogPanel.onSelect = (definition) => { definitionPanel.render(definition); }
+```
+
+plutôt que :
+```
+CatalogPanel -> bus.publish() -> Workbench -> bus.subscribe() ->DefinitionPanel
+```
+
+Le bus est a réservé aux échanges entre modules métier.
+
+#### bus wb:adresse:pag
+bus 'wb:adresse:page'
+    → _page = page, load()
+
+
+#### listPanel.onSearch
+
 listPanel.onSearch(q)
     → _q = q, _page = 1
     → detail.clear(), map.clear()
     → load()
 
+#### listPanel.onSelect
+
 listPanel.onSelect(adresse)
     → detail.show(adresse)
     → map.show(adresse)          // sync immédiate
 
+#### listPanel.onNew
 listPanel.onNew()
     → map.clear()
     → detail.showNew()
 
+#### detailPanel.onSave
 detailPanel.onSave(adr_id, data)
     → lock()
     → saveAdresse({ adr_id, ...data })   // JSON pur
@@ -129,6 +155,7 @@ detailPanel.onSave(adr_id, data)
       sinon feedback success
     → unlock()  (finally)
 
+#### detailPanel.onDelete
 detailPanel.onDelete(id)
     → lock()
     → deleteAdresse(id)
@@ -136,8 +163,7 @@ detailPanel.onDelete(id)
     → _page = 1, load()
     → unlock()
 
-bus 'wb:adresse:page'
-    → _page = page, load()
+
 
 
 
