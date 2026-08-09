@@ -76,13 +76,18 @@ createDescriptor({
 })
 ```
 
+---
 
 
-## liste des Workbench
-- [AdresseWorkbench](/02-FEATURES/AdresseWorkbench.md)
+# liste des Workbench
+( par ordre d'implémentation)
+
 - [MotWorkbench](/02-FEATURES/MotWorkbench.md)
+- [ImageWorkbench](/02-FEATURES/ImageWorkbench.md)
+- [AdresseWorkbench](/02-FEATURES/AdresseWorkbench.md)
 
 
+---
 
 ## ressources
 
