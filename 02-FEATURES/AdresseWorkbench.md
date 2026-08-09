@@ -9,6 +9,19 @@ AdresseWorkbench est un orchestrateur mince et lisible :bootstrap ordonné (Leaf
 Il valide le modèle « Mot comme référence » étendu aux 3 zones + composant carto + champs relation, sans grossir le core (WorkbenchBase / WorkbenchView inchangés).
 
 
+Ordre dans bootstrap() 
+— les dialogs sont créés avant _createPanels(). 
+C'est important : render() de RelationPickerDialog appelle dialogManager.register() qui insère le <dialog> dans document.body. 
+Quand AdresseDetailPanel construit ensuite le formulaire via Form.js, les bus subscriptions dialog:select des champs relation sont déjà prêtes à recevoir.
+
+render() est chaîné 
+— new RelationPickerDialog({...}).render() retourne this, donc this._cpPicker reçoit bien l'instance, pas undefined.
+
+destroy() dans l'ordre inverse 
+— les dialogs se ferment avant les panels, ce qui évite qu'un dialog:select en transit trouve un Form déjà détruit.
+
+
+
 
 ## Architecture
 
