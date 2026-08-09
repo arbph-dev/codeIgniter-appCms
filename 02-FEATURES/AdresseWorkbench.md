@@ -1,5 +1,27 @@
 # AdresseWorkbench
 
+AdresseWorkbench est un orchestrateur mince et lisible :bootstrap ordonné (Leaflet → dialogs → view → panels → events → load)  
+- 3 zones avec carte synchronisée  
+- relations déléguées au bus + RelationPickerDialog  
+- CRUD JSON via service  
+- destroy complet (bus, dialogs, panels, vue)
+
+Il valide le modèle « Mot comme référence » étendu aux 3 zones + composant carto + champs relation, sans grossir le core (WorkbenchBase / WorkbenchView inchangés).
+
+
+
+Nommage PK — adr_id dans onSave vs éventuel id modèle/API (notes daily). À aligner partout (service, PropertySet, panel).
+
+initLeaflet() global — guard _initialized OK pour une page ; si un jour plusieurs workbenches Leaflet coexistent avec des configs différentes, le guard peut devenir trop strict.
+
+Dialogs hors WorkbenchView — volontaire (body + bus). Ils survivent au unmount des panels tant que destroy() du workbench n’est pas appelé.
+
+Pas de resélection après load() — après save, si result.data est fourni, détail + map sont rafraîchis ; la liste est rechargée mais la ligne sélectionnée n’est pas explicitement re-highlightée (selon l’implémentation du ListPanel).
+
+result.data après save — si l’API ne renvoie que { status } sans ressource, seule la feedback success s’affiche ; la map n’est pas mise à jour avec d’éventuelles coords géocodées côté serveur.
+
+Pagination bus vs callback — léger écart au pattern « tout passe par onXxx des panels ». Fonctionne, mais moins uniforme.
+
 
 - Carte toujours alignée
 Sélection → map ; save réussi avec ressource → map ; new/delete → clear.
@@ -64,6 +86,26 @@ Form       →  met à jour hidden FK + display
 | List | Recherche, pagination, sélection, bouton « Nouveau » |
 | Detail | Affichage / form (create & edit), save, delete, lock/unlock, feedback |
 | Map | Affiche le point (lat/lng), clear, réagit à leaflet:* via le composant |
+
+Le Workbench attend ces APIs :
+- AdresseListPanel
+    - onSearch(fn)
+    - onSelect(fn)
+    - onNew(fn)
+    - show(items, pager)
+    - showLoading()
+    - showError(msg)
+(pagination) publish wb:adresse:page
+
+AdresseDetailPanelshow(adresse), showNew(), clear()
+onSave(fn(adr_id, data)), onDelete(fn(id))
+lock(), unlock(), showFeedback(type, msg)
+
+MapPanelshow(adresse), clear(), destroy() (→ leaflet:destroy)
+
+Si une de ces méthodes manque ou change de signature, le câblage casse — c’est le « contrat runtime » du workbench.
+
+
 
 
 ### Evénements
