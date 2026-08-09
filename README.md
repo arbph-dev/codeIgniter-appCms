@@ -1,46 +1,72 @@
 # ZEALOT - État Actuel du Projet
 
-**Date :** 23 juillet 2026  
-**Version :** X.X.X (Phase 0 - Consolidation)  
-**Statut :** Pré-refactoring
+Le portail historique contient déjà les briques. Il faut maintenant les extraire et les confronter à l'architecture actuelle.
 
-## Présentation du Projet
+la vue principale propose les librairies et les scripts dont "autocomplete"
+- [/old/app/Views/cms/index.php](/old/app/Views/cms/index.php)
 
-**Zealot** est un **Framework d’Applications Métier** full-stack, orienté données et hautement extensible.
+le document est structuré depuis le contrôleur
+- [/old/app/Controllers/Cms.php](/old/app/Controllers/Cms.php)
 
-Il ne s’agit **pas uniquement d’un CMS**, même s’il en intègre un puissant. Zealot a été conçu pour permettre la construction rapide d’applications complexes nécessitant :
+## API 
+les API ont été testée et validé depuis le portail actuel : [documentation/API/index.md](/documentation/API/index.md)
 
-- Une forte composante **données** (structurées et relationnelles)
-- Des interfaces d’administration avancées
-- Des visualisations interactives (2D/3D, graphiques, cartes, etc.)
-- Un système de **composants dynamiques** réutilisables
-- Une architecture modulaire permettant d’ajouter facilement de nouveaux domaines métier
+Les apis ont chacune un "features", structuré avec controller, form, renderer, service et store
 
-### Objectifs principaux
+Les apis en relation comme adresse ont chacune un features : codepostal , typevoie
+Les services historiques et les "API de relation" possèdent déjà deux niveaux d'accès :
+- TypeVoie (CRUD complet) :
+  - recherche paginée fetchTv()
+  - recherche fetchTvLike() pour autocomplete
+  
 
-- Accélérer le développement d’applications métier sur mesure
-- Fournir un socle technique robuste et maintenable (CodeIgniter 4)
-- Offrir un système de composants visuels puissant (Component Registry + Renderers)
-- Permettre la visualisation et la manipulation avancée de données (ModelWorkbench)
-- Combiner la flexibilité d’un framework avec la productivité d’un CMS
+CodePostal (read only car référentiel)
+- recherche paginée avec q, codepostal, codeinsee
+- fetchCpLike() pour autocomplete.
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/public/assets/js/features/codepostal/codepostal.service.js
 
-### Fonctionnalités clés
 
-- **CMS avancé** : gestion de contenu structuré (articles, sections, parts, arbres)
-- **Système de composants** : Apex Charts, Leaflet, Three.js, Mermaid, CodeVal, etc.
-- **ModelWorkbench** : outil d’exploration et de visualisation de modèles de données
-- **API par domaine** : Géographie, Économie, Entités, Images, etc.
-- **Architecture modulaire** : Services, Repositories, Component Registry, Traits
-- **Interface d’administration** : extensible et personnalisable
-- **Outils de développement** : génération, tests, workbench
 
-### Positionnement
+https://zealot.fr/admin/modelworkbench
+https://zealot.fr/cms/article/test-art
+https://zealot.fr/workbench/mot
+https://zealot.fr/workbench/component-catalog
 
-Zealot se situe entre :
-- Un **CMS classique** (trop rigide)
-- Un **framework brut** (trop bas niveau)
+```md
+|Workbench|Rôle actuel|Ce qu'il apporte|Ce qu'il faut en faire|
+|---|---|---|---|
+|`/admin/modelworkbench`|Prototype Three.js|Viewer, scènes, ressources 3D|Conserver comme laboratoire du moteur 3D|
+|`/cms/article/test-art`|CmsArticleWorkbench|Intégration CMS complète, composants, édition|À démanteler progressivement pour extraire les briques communes|
+|`/workbench/mot`|Référence Runtime|CRUD, pagination, recherche, Panels|Conserver comme Workbench de référence|
+|`/workbench/component-catalog`|Référence Builder|Catalogue des composants, descripteurs|Faire évoluer vers l'atelier de conception des composants|
+```
 
-Il offre un juste milieu : structure forte + extensibilité + outils haut niveau.
+D'ailleurs, cette répartition correspond presque exactement aux familles que tu avais commencé à dessiner.
+
+```
+Workbench
+
+            Runtime                       Builder
+    ──────────────────────       ─────────────────────────
+
+    MotWorkbench                 ComponentCatalogWorkbench
+    ImageWorkbench               CarouselWorkbench
+    ImageTaggerWorkbench         MathGraphWorkbench
+    KnowledgeWorkbench           SceneWorkbench
+                                 ModelWorkbench
+```
+
+Je ne mettrais plus `ModelWorkbench` dans Runtime.
+
+|Responsabilité|Mot|ComponentCatalog|Model|CMS|Destination|
+|---|:-:|:-:|:-:|:-:|---|
+|Layout|✓|✓|✓|✓|`WorkbenchView`|
+|Panels|✓|✓|✓|✓|`PanelBase` + `ui/panels`|
+|Formulaires|✓|✓|✓|✓|`shared/Form.js`|
+|Templates|△|△|✓|✓|`shared/templates`|
+|Validation|✓|△|△|✓|`shared/validation`|
+|Composants (Three, Carousel, Apex...)|✗|✓|✓|✓|`ui/widgets` + `components/`|
+|Bus / callbacks|✓|✓|✓|✓|Architecture cible|
 
 ### Technologies
 
