@@ -1,5 +1,10 @@
 # ZEALOT - État Actuel du Projet
 
+## TODAY
+[/index.md](/index.md)
+
+---
+
 Le portail historique [https://zealot.fr/](https://zealot.fr/) contient déjà les briques. Il faut maintenant les extraire et les confronter à l'architecture actuelle.
 
 la vue principale propose les librairies et les scripts dont "autocomplete"
