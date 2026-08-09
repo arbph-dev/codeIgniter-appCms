@@ -46,3 +46,37 @@ Form       →  met à jour hidden FK + display
 | Detail | Affichage / form (create & edit), save, delete, lock/unlock, feedback |
 | Map | Affiche le point (lat/lng), clear, réagit à leaflet:* via le composant |
 
+
+### Evénements
+
+listPanel.onSearch(q)
+    → _q = q, _page = 1
+    → detail.clear(), map.clear()
+    → load()
+
+listPanel.onSelect(adresse)
+    → detail.show(adresse)
+    → map.show(adresse)          // sync immédiate
+
+listPanel.onNew()
+    → map.clear()
+    → detail.showNew()
+
+detailPanel.onSave(adr_id, data)
+    → lock()
+    → saveAdresse({ adr_id, ...data })   // JSON pur
+    → si création : _page = 1
+    → load()
+    → si result.data : detail.show + map.show
+      sinon feedback success
+    → unlock()  (finally)
+
+detailPanel.onDelete(id)
+    → lock()
+    → deleteAdresse(id)
+    → detail.clear(), map.clear()
+    → _page = 1, load()
+    → unlock()
+
+bus 'wb:adresse:page'
+    → _page = page, load()
