@@ -80,6 +80,7 @@ createDescriptor({
 
 ## liste des Workbench
 - [AdresseWorkbench](/02-FEATURES/AdresseWorkbench.md)
+- [MotWorkbench](/02-FEATURES/MotWorkbench.md)
 
 
 
