@@ -15,8 +15,8 @@ Le descripteur ne porte que la structure CSS.
 Les instances de panels restent dans le Workbench (_createPanels + mountPanels) — option B du design (Workbench maître de ses panels pour bindEvents).
 
 
-```
-createDescriptor({js
+```js
+createDescriptor({
   css: 'wb_adresse_layout',
   zones: [
      { name: 'left',   css: 'wb_adresse_left'   },  // liste
