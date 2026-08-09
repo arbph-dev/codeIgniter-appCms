@@ -3,7 +3,7 @@
 Donc une personne → organisation est déjà prévu.
 ### backend
 #### Model 
-app/Models/PersonneRelationModel.php
+app/Models/PersonneRelationModel.php a créer
 #### Vue
 sans 
 #### Controller
