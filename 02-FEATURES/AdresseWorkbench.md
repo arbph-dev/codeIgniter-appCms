@@ -1,5 +1,24 @@
 # AdresseWorkbench
 
+
+- Carte toujours alignée
+Sélection → map ; save réussi avec ressource → map ; new/delete → clear.
+
+- Save JSON, pas FormData
+Contrairement à Image (upload fichier). Cohérent avec une entité purement structurée.
+
+- adr_id vs id
+Le callback expose adr_id : à vérifier côté service/modèle (notes daily parlaient d’un passage à id). Si l’API attend id, il y a un risque de décalage de nommage.
+
+- Pagination via bus
+Le ListPanel publie probablement wb:adresse:page ; le Workbench s’y abonne. Alternative possible : listPanel.onPage(fn) pour rester 100 % callbacks panels — ici le bus est local au workbench, acceptable.
+
+- Erreurs 422
+Message métier dédié (« invalide ou déjà existante ») ; le reste remonte err.message.
+
+
+
+
 ## Architecture
 
 ```
