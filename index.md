@@ -67,8 +67,34 @@ Il peut étendre RelationPickerDialog ou le composer. La décision se prendra en
 
 
 ## Session Stage 4
-Préparation
+
+### Préparation
 - [project/daily/2026-08-09.md](/project/daily/2026-08-09.md)
 
+### 4.1 contrat event workbench / Panel / Dialog
+Workbench maître de ses panels pour bindEvents
+- Plutot gérer par callback que par le bus, voir pour les dialogs lequel est plus adapté
+- AdresseWorkbench sera a reprendre pour suivre le contrat evenment
+ 
+Contrat à verrouiller
+Workbench
+   │
+   ├── crée
+   ├── configure
+   ├── bindEvents()
+   └── détruit
+        │
+        ├── Panel
+        │     └── callbacks → Workbench
+        │
+        └── Dialog
+              └── résultat → appelant
 
+Règles :
+- Panel ne connaît pas son Workbench.
+- Panel ne publie pas d'événements métier sur le bus.
+- Workbench branche les callbacks des Panels.
+- Dialog retourne son résultat au demandeur, idéalement par callback/promise.
+- EventBus reste réservé aux événements réellement transversaux ou nécessitant un découplage inter-composants.
+- destroy() doit supprimer les listeners/callbacks propres au composant.
 
