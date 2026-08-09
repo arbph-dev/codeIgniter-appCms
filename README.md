@@ -1,6 +1,6 @@
 # ZEALOT - État Actuel du Projet
 
-Le portail historique contient déjà les briques. Il faut maintenant les extraire et les confronter à l'architecture actuelle.
+Le portail historique [https://zealot.fr/](https://zealot.fr/) contient déjà les briques. Il faut maintenant les extraire et les confronter à l'architecture actuelle.
 
 la vue principale propose les librairies et les scripts dont "autocomplete"
 - [/old/app/Views/cms/index.php](/old/app/Views/cms/index.php)
@@ -44,11 +44,12 @@ Après différentes versions on arrive a une stabilisation du pattern
 |---|---|---|---|
 |`/admin/modelworkbench`|Prototype Three.js|Viewer, scènes, ressources 3D|Conserver comme laboratoire du moteur 3D|
 |`/cms/article/test-art`|CmsArticleWorkbench|Intégration CMS complète, composants, édition|À démanteler progressivement pour extraire les briques communes|
-|`/workbench/mot`|Référence Runtime|CRUD, pagination, recherche, Panels|Conserver comme Workbench de référence|
+|`/workbench/mot`| Runtime|CRUD, pagination, recherche, Panels|Conserver comme Workbench de référence|
 |`/workbench/component-catalog`|Référence Builder|Catalogue des composants, descripteurs|Faire évoluer vers l'atelier de conception des composants|
+|`workbench/image`| Runtime | Galerie d'image|Faire évoluer vers ImageTaggerWorkbench|
+|`workbench/adresse`| Référence Runtime | Carnet d'adresse|Faire évoluer vers un widget AdressePickerDialog|
 
-
-D'ailleurs, cette répartition correspond presque exactement aux familles que tu avais commencé à dessiner.
+cette répartition correspond à 2 familles.
 
 ```
 Workbench
@@ -63,7 +64,6 @@ Workbench
                                  ModelWorkbench
 ```
 
-Je ne mettrais plus `ModelWorkbench` dans Runtime.
 
 |Responsabilité|Mot|ComponentCatalog|Model|CMS|Destination|
 |---|:-:|:-:|:-:|:-:|---|
@@ -84,122 +84,76 @@ Je ne mettrais plus `ModelWorkbench` dans Runtime.
 
 ---
 
-**Prochaines étapes (Phase 0)**
-- Nettoyage et inventaire complet du code
-- Documentation des flux principaux
-- Identification et suppression des doublons
-- Définition de la nouvelle architecture cible
+**Prochaines étapes (Phase 4)**
 
+## modules métiers
+On va préparer des API ,documenter celle qui existe et les lister dans [documentation/API/index.md](/documentation/API/index.md)
 
----
+- EVENTS
+  - documentation/METIERS/EVENTS/index.md
 
-# Phase 0
+- FORMEJURIDIQUE
+  - documentation/METIERS/FORMEJURIDIQUE/index.md
 
-## TODO
-revoir la structure de la documentation
-url a consulter : 
+- ORGANISATIONS
+  - documentation/METIERS/ORGANISATIONS/index.md
+  - une entreprise est déjà une organisation + une entreprise peut avoir des établissements 
+    - dependances -> documentation/METIERS/FORMEJURIDIQUE/index.md
+
+- PERSONNES
+  - Cette API introduit la notion importante de relation qui peut s'appliquer à d'autres ressources : organisations
+  - documentation/METIERS/PERSONNES/index.md
+  - documentation/METIERS/PERSONNES/personne_relations.md
+
+- MAINTENANCE
+  - documentation/METIERS/MAINTENANCE/index.md
+
+- PRODUITS
+  - documentation/METIERS/PRODUITS/index.md
+    - ébauche, certaines relations sont à répartir vers d'autres ressoucres métiers
+      - un vendeur est une entreprise 
+      - un produit peut se rapprocher d'un article de GMAO
+
+- JURIDIQUE
+  - documentation/METIERS/JURIDIQUE/index.md
+    - Doit permettre de recenser les références législatives ; Ne pas confondre avec formes juridiques des entreprises
+
+## Projets à faire évoluer
+prenoms
+- project/prenoms.md
+  - sur la base de mots
+
+grandeurs
+- project/GrandeursUnits_Specs.md
+- project/Grandeursunits.md
+- dossier project/grandeurs
+
+accidents de la route
+- project/accidents
+
+## Documentation a revoir
+- project/audit
+- project/daily
+- project/stages/PANEL_CONTRACT.md
+
 
 ## evolution cms 
-- [https://zealot.fr/](https://zealot.fr/)
-
+Le CMS va évoluer vers une API
 - [https://zealot.fr/admin/cmstree](https://zealot.fr/admin/cmstree) : Visualisation des element cms classé hiérachirquement de la catégorie à la parts
 - [https://zealot.fr/admin/cmspart](https://zealot.fr/admin/cmspart) : Visualisation des element parts
 - [https://zealot.fr/admin/cmspart/edit/1](https://zealot.fr/admin/cmspart/edit/1) : Edition d element parts
-
-
 - [https://zealot.fr/cms/category/test-cat](https://zealot.fr/cms/category/test-cat)
 - [https://zealot.fr/cms/article/test-art](https://zealot.fr/cms/article/test-art)
 - [https://zealot.fr/cms/section/999](https://zealot.fr/cms/section/999)
 - [https://zealot.fr/cms/part/5](https://zealot.fr/cms/part/5)
 
-
-
-## not found
+a gérer les routes CRUD
 - https://zealot.fr/admin/cmscategory/edit/999
 - https://zealot.fr/admin/cmscategory/999
-
 - https://zealot.fr/cms/tree
-
 
 ## ancienne version
 - [https://zealot.fr/admin/](https://zealot.fr/admin/)
+  - des elements à intégrer dans un AdminWorkbench   
 - [https://zealot.fr/](https://zealot.fr/)
-
-
-
-## Décrire les flux
-
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/admin/bootstrap.js
-/refactoring/assets/js/cms/bootstrap.js
-
-
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/cms/bootstrap.js
-refactoring/assets/js/cms/bootstrap.js
-
-url
-route
-controleur
-dependances :
-model
-service
-vues
-- app/Views/cms/article.php
-  dependances : 
-  - refactoring/assets/js/cms/bootstrap.js
- 
-- app/Views/admin/modelworkbench.php
-   utilise app/Views/cms/libs.php
-
-## Reprise documentation
-un fichier de code doit comporter un fichier de notes ? NON
-
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Config/Routes.php
-
-
----
-
-
-# Zealot - Refactoring/
-
-## 00 - Vision & Objectifs/
-
-### Consolidation (en cours)
-- Inventaire complet **en cours**
-- Nettoyage des doublons
-- Documentation des flux critiques
-- Figer la structure de dossiers
-- Mise à jour ZEALOT-STATE-ACTUEL.md
-
-### Base 
-Centralisation de la logique (Services)
-Refactoring des contrôleurs principaux
-Amélioration du système d’authentification & permissions
-Standardisation des réponses API
-
-### Architecture
-Introduction des Repositories
-Event system
-Cache stratégique
-ComponentRegistry
-
-### Evolutions
-Amélioration du ModelWorkbench
-Outils de génération de CRUD
-Documentation développeur
-Tests automatisés sur les parties critiques
-
----
-## Inventaire complet
-
-
-
-[daily/2026-07-28.md](/project/daily/2026-07-28.md) note journaliere
-
-[daily/guide-composants.md](/project/daily/guide-composants.md)
-
-[project/audit/Phase 0 - Inventory.md](/project/audit/Phase%200%20-%20Inventory.md)
-
-[documentation/REFERENTIELS/shell.md](documentation/REFERENTIELS/shell.md)
-
-[files.md](/files.md) : fichiers a gérer
 
