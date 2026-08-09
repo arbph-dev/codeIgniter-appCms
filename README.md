@@ -23,23 +23,30 @@ Les services historiques et les "API de relation" possèdent déjà deux niveaux
 CodePostal (read only car référentiel)
 - recherche paginée avec q, codepostal, codeinsee
 - fetchCpLike() pour autocomplete.
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/public/assets/js/features/codepostal/codepostal.service.js
+
+## Workbench 
+
+Ils doivent permettre de construire les interfaces des applicatifs. Ils représenteront la stack la plus complexe du projet
+Ils sont décrits ici : [02-FEATURES/index.md](/02-FEATURES/index.md)
+
+
+Après différentes versions on arrive a une stabilisation du pattern
+- https://zealot.fr/admin/modelworkbench
+- https://zealot.fr/cms/article/test-art
+- https://zealot.fr/workbench/mot
+- https://zealot.fr/workbench/component-catalog
+- https://zealot.fr/workbench/image
+- https://zealot.fr/workbench/adresse
 
 
 
-https://zealot.fr/admin/modelworkbench
-https://zealot.fr/cms/article/test-art
-https://zealot.fr/workbench/mot
-https://zealot.fr/workbench/component-catalog
-
-```md
 |Workbench|Rôle actuel|Ce qu'il apporte|Ce qu'il faut en faire|
 |---|---|---|---|
 |`/admin/modelworkbench`|Prototype Three.js|Viewer, scènes, ressources 3D|Conserver comme laboratoire du moteur 3D|
 |`/cms/article/test-art`|CmsArticleWorkbench|Intégration CMS complète, composants, édition|À démanteler progressivement pour extraire les briques communes|
 |`/workbench/mot`|Référence Runtime|CRUD, pagination, recherche, Panels|Conserver comme Workbench de référence|
 |`/workbench/component-catalog`|Référence Builder|Catalogue des composants, descripteurs|Faire évoluer vers l'atelier de conception des composants|
-```
+
 
 D'ailleurs, cette répartition correspond presque exactement aux familles que tu avais commencé à dessiner.
 
