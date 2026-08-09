@@ -223,3 +223,19 @@ const PRECISION = [
 ]
 ```
 
+
+
+
+### Points ouverts à traiter
+Trois points du bilan méritent une action, par ordre de priorité :
+
+- Le nommage PK (adr_id vs id) est résolu dans le Workbench mais à vérifier dans AdresseDetailPanel._showForm — le onSave expose adresse.id, le service reçoit { id, ...data }. À confirmer au test.
+
+- La resélection après load() — après un save, la liste se recharge mais la ligne active n'est pas re-highlightée. AdresseListPanel pourrait exposer un highlight(id) que le Workbench appellerait après load().
+
+- Le result.data conditionnel — si l'API de save ne retourne pas la ressource complète (pas de coords géocodées), la map reste sur l'ancienne position. À voir selon ce que retourne Api/Adresse.php.
+
+# A venir
+
+DialogManager + RelationPickerDialog + Form.js v3 forment maintenant une infrastructure complète. 
+N'importe quel champ FK dans n'importe quel futur PropertySet s'écrit en 6 lignes avec type: 'relation'. C'est la brique la plus précieuse de cette session.
