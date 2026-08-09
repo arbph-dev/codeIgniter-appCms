@@ -8,6 +8,8 @@ AdresseWorkbench est un orchestrateur mince et lisible :bootstrap ordonné (Leaf
 
 Il valide le modèle « Mot comme référence » étendu aux 3 zones + composant carto + champs relation, sans grossir le core (WorkbenchBase / WorkbenchView inchangés).
 
+
+
 ## Architecture
 
 ```
@@ -24,9 +26,19 @@ AdresseWorkbench          ← orchestrateur (ce fichier)
     └── services: fetchAdresse / saveAdresse / deleteAdresse / fetchCpLike / fetchTvLike
 ```
 
+### Fichiers back
+- routes
+- controller
+- vue
+- API
+    - app/Controllers/Api/Adesse.php
+    - app/Controllers/Api/CodePostal.php
+    - app/Controllers/Api/TypeVoie.php
+    - app/Enums/IndiceRepetition.php
+    - app/Enums/Charniere.php
 
 
-### Fichiers
+### Fichiers front
 
 url : https://zealot.fr/workbench/adresse
 
@@ -131,6 +143,7 @@ bus 'wb:adresse:page'
 
 ---
 
+## Bilan
 
 
 Nommage PK — adr_id dans onSave vs éventuel id modèle/API (notes daily). À aligner partout (service, PropertySet, panel).
@@ -160,4 +173,53 @@ Le ListPanel publie probablement wb:adresse:page ; le Workbench s’y abonne. Al
 
 - Erreurs 422
 Message métier dédié (« invalide ou déjà existante ») ; le reste remonte err.message.
+
+
+
+
+j'ai testé l'ensemble, les dialogs apparaissent les valeurs sont bien renvoyées dans les champs du formulaire
+
+
+
+il y a un point que je n'ai pas bien géré : les sources à exploiter
+- le model aurait évité la confusion adr_id / id et montré la liaision avec les enums 
+- app/Enums/Charniere.php contenait les listes de choix , elle est retranscrite dans le renderer du feaures
+
+
+Il y a donc un autre select à créer pour gérér la charniere
+
+
+
+```js
+// js/features/adresse/adresse.renderer.js
+// ── Constantes Enums JS ───────────────────────────────────────────────────────
+
+const CHARNIERES = [
+    { value: '',  label: '— aucune —' },
+    { value: '0', label: 'de'     },
+    { value: '1', label: "d'"     },
+    { value: '2', label: 'du'     },
+    { value: '3', label: 'de la'  },
+    { value: '4', label: 'des'    },
+    { value: '5', label: "de l'"  },
+    { value: '6', label: 'de las' },
+    { value: '7', label: 'de los' },
+]
+
+const RPT = [
+    { value: '',  label: '— aucun —'  },
+    { value: 'B', label: 'Bis'        },
+    { value: 'T', label: 'Ter'        },
+    { value: 'Q', label: 'Quater'     },
+    { value: 'C', label: 'Quinquies'  },
+]
+
+const PRECISION = [
+    { value: '',        label: '— non définie —' },
+    { value: 'numero',  label: 'Au numéro'        },
+    { value: 'voie',    label: 'À la voie'        },
+    { value: 'commune', label: 'À la commune'     },
+    { value: 'approx',  label: 'Approximatif'     },
+]
+```
 
