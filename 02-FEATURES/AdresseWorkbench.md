@@ -61,13 +61,9 @@ AdresseWorkbench          ← orchestrateur (ce fichier)
 
 ### Fichiers
 
-https://zealot.fr/workbench/adresse
+url : https://zealot.fr/workbench/adresse
 
-#### assets/js/ui/shared/
-[](/)
-- assets/js/ui/shared/DialogManager.js
-[](/)
-- assets/js/ui/shared/RelationPickerDialog.js
+
 
 #### features / API
 - [/assets/js/features/adresse/adresse.properties.js](/refactoring/assets/js/features/adresse/adresse.properties.js)
