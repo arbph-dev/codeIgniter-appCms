@@ -8,12 +8,13 @@
 - Services = API
 
 ### Workbench
+Le Workbench crée les dialogs ; le Form s’y connecte uniquement via le bus (dialogId dans le PropertySet).
+
+Le Workbench ne touche pas au DOM interne des panels.
 
 #### Cycle d’initialisation
 
 WorkbenchBase.init() appelle typiquement renderStructure() puis bootstrap().
-
-Le Workbench crée les dialogs ; le Form s’y connecte uniquement via le bus (dialogId dans le PropertySet). Découplage propre.
 
 Ordre important : dialogs avant panels, sinon un clic relation trop tôt n’aurait pas de dialog dans le DOM.
 
@@ -54,7 +55,7 @@ Les instances de panels restent dans le Workbench (_createPanels + mountPanels) 
 createDescriptor({
   css: 'wb_adresse_layout',
   zones: [
-     { name: 'left',   css: 'wb_adresse_left'   },  // liste
+    { name: 'left',   css: 'wb_adresse_left'   },  // liste
     { name: 'center', css: 'wb_adresse_center' },  // détail / form
     { name: 'right',  css: 'wb_adresse_right'  },  // carte Leaflet
   ],
