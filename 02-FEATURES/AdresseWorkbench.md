@@ -15,3 +15,9 @@ AdresseWorkbench          ← orchestrateur (ce fichier)
     ├── RelationPickerDialog × 2  (CP, TypeVoie)
     └── services: fetchAdresse / saveAdresse / deleteAdresse / fetchCpLike / fetchTvLike
 ```
+
+- assets/js/ui/shared/DialogManager.js
+- assets/js/ui/shared/RelationPickerDialog.js
+
+
+- assets/js/features/adresse/adresse.properties.js
