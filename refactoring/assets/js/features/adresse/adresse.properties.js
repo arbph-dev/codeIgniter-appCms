@@ -85,13 +85,21 @@ export const AdressePropertySet = [
 
     {
         name        : 'voiecharniere',
-        description : 'Charniere',
-        type        : 'text',
+        description : 'Charnière',
+        type        : 'select',
         default     : '',
         options     : {
-            placeholder : '0-7',
-            maxlength   : '1',
-            pattern     : '[0-7]',
+            choices : [
+                { value: '',  label: '— aucune —' },
+                { value: '0', label: 'de'          },
+                { value: '1', label: "d'"          },
+                { value: '2', label: 'du'          },
+                { value: '3', label: 'de la'       },
+                { value: '4', label: 'des'         },
+                { value: '5', label: "de l'"       },
+                { value: '6', label: 'de las'      },
+                { value: '7', label: 'de los'      },
+            ],
         },
     },
 
