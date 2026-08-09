@@ -89,21 +89,49 @@ createDescriptor({
 
 ---
 
-## ressources
-
-
-### Backend
-
-
-
-### Frontend
-
+## ressources ( Frontend )
+### shared
 - assets/js/ui/shared/DialogManager.js
 - assets/js/ui/shared/Form.js
 - assets/js/ui/shared/RelationPickerDialog.js
 
-#### Services
-
+### Services
 - assets/js/features/adresse/adresse.properties.js
 
+# Backend
+
+Pour mettre en œuvre un Workbench il faut 
+- une route
+- un contrôleur pour gérer les routes du groupe workbench
+- une vue pour fournir le Workbench
+
+## routes
+Les routes sont regroupées dans le groupe workbench
+
+```php
+$routes->get('adresse' , 'WorkbenchController::adresse');
+```
+
+## controleur WorkbenchController
+Pour chaque **Workbench** on créé une fonction. Cette fonction fournit la vue contenant le script du **Workbench**
+
+```php
+  /** Workbench de test — feature Adresse  ; URL : /workbench/adresse     */    
+  public function adresse() { return view('workbench/adresse'); }      
+```
+## Vue
+La vue fournit 
+- le style css
+- les librairies de script
+- le script d'initialisation 
+
+Les vues ont des dépendances voir refactoring/app/Views/workbench/libs.php
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Views/workbench/adresse.php
+refactoring/app/Views/workbench/adresse.php
+
+
+
+
+```
 
