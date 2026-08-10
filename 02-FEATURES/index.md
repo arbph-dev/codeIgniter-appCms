@@ -1,5 +1,16 @@
 # 02-FEATURES
 
+
+# liste des Workbench
+( par ordre d'implémentation)
+
+- [MotWorkbench](/02-FEATURES/MotWorkbench.md)
+- [ImageWorkbench](/02-FEATURES/ImageWorkbench.md)
+- [AdresseWorkbench](/02-FEATURES/AdresseWorkbench.md)
+
+---
+
+
 ## définitions
 
 - Workbench = orchestrateur  
@@ -10,147 +21,52 @@
 
 
 
+|Workbench|Rôle actuel|Ce qu'il apporte|Ce qu'il faut en faire|
+|---|---|---|---|
+|`/admin/modelworkbench`|Prototype Three.js|Viewer, scènes, ressources 3D|Conserver comme laboratoire du moteur 3D|
+|`/cms/article/test-art`|CmsArticleWorkbench|Intégration CMS complète, composants, édition|À démanteler progressivement pour extraire les briques communes|
+|`/workbench/mot`| Runtime|CRUD, pagination, recherche, Panels|Conserver comme Workbench de référence|
+|`/workbench/component-catalog`|Référence Builder|Catalogue des composants, descripteurs|Faire évoluer vers l'atelier de conception des composants|
+|`workbench/image`| Runtime | Galerie d'image|Faire évoluer vers ImageTaggerWorkbench|
+|`workbench/adresse`| Référence Runtime | Carnet d'adresse|Faire évoluer vers un widget AdressePickerDialog|
 
+cette répartition correspond à 2 familles.
 
-
-
-
-
-### WorkbenchView
-
-#### Layout
-Le descripteur ne porte que la structure CSS.
-
-voir assets/js/ui/workbench/core/LayoutDescriptor.js
-Fabrique un descripteur de layout immuable.
-Un descripteur décrit uniquement la STRUCTURE : la classe CSS du conteneur et les zones qui le composent. Il ne contient jamais de Panels ni de HTML.
-Chaque Workbench définit son propre descripteur (une instance par Workbench).
-
-Les instances de panels restent dans le Workbench (_createPanels + mountPanels) — option B du design (Workbench maître de ses panels pour bindEvents).
-
-
-```js
-//   {
-//     css   : 'wb_mot_layout',            // classe du div conteneur
-//     zones : [
-//       { name: 'left',  css: 'wb_mot_left'  },
-//       { name: 'right', css: 'wb_mot_right' },
-//     ],
-//   }
-
-
-createDescriptor({
-  css: 'wb_adresse_layout',
-  zones: [
-    { name: 'left',   css: 'wb_adresse_left'   },  // liste
-    { name: 'center', css: 'wb_adresse_center' },  // détail / form
-    { name: 'right',  css: 'wb_adresse_right'  },  // carte Leaflet
-  ],
-})
 ```
+Workbench
+
+            Runtime                       Builder
+    ──────────────────────       ─────────────────────────
+
+    MotWorkbench                 ComponentCatalogWorkbench
+    ImageWorkbench               CarouselWorkbench
+    ImageTaggerWorkbench         MathGraphWorkbench
+    KnowledgeWorkbench           SceneWorkbench
+                                 ModelWorkbench
+```
+
+
+|Responsabilité|Mot|ComponentCatalog|Model|CMS|Destination|
+|---|:-:|:-:|:-:|:-:|---|
+|Layout|✓|✓|✓|✓|`WorkbenchView`|
+|Panels|✓|✓|✓|✓|`PanelBase` + `ui/panels`|
+|Formulaires|✓|✓|✓|✓|`shared/Form.js`|
+|Templates|△|△|✓|✓|`shared/templates`|
+|Validation|✓|△|△|✓|`shared/validation`|
+|Composants (Three, Carousel, Apex...)|✗|✓|✓|✓|`ui/widgets` + `components/`|
+|Bus / callbacks|✓|✓|✓|✓|Architecture cible|
+
+
+
+
+
+
+
+
+
 
 ---
 
 
-# liste des Workbench
-( par ordre d'implémentation)
 
-- [MotWorkbench](/02-FEATURES/MotWorkbench.md)
-- [ImageWorkbench](/02-FEATURES/ImageWorkbench.md)
-- [AdresseWorkbench](/02-FEATURES/AdresseWorkbench.md)
-
-
----
-
-# Frontend 
-### core
-[/assets/js/core/domhelper.js](/refactoring/assets/js/core/domhelper.js)
-
-### shared
-
-- [/assets/js/ui/shared/DialogManager.js](/refactoring/assets/js/ui/shared/DialogManager.js)
-- [/assets/js/ui/shared/Form.js](/refactoring/assets/js/ui/shared/Form.js)
-- [/assets/js/ui/shared/RelationPickerDialog.js](/refactoring/assets/js/ui/shared/RelationPickerDialog.js)
-
-### Services / features
-- [/assets/js/features/adresse/adresse.properties.js](/refactoring/assets/js/features/adresse/adresse.properties.js)
-
-# Backend
-
-Pour mettre en œuvre un Workbench il faut 
-- une route
-- un contrôleur pour gérer les routes du groupe workbench
-- une vue pour fournir le Workbench
-
-## routes
-Les routes sont regroupées dans le groupe workbench
-
-```php
-$routes->get('adresse' , 'WorkbenchController::adresse');
-```
-
-## controleur WorkbenchController
-Pour chaque **Workbench** on créé une fonction. Cette fonction fournit la vue contenant le script du **Workbench**
-
-```php
-  /** Workbench de test — feature Adresse  ; URL : /workbench/adresse     */    
-  public function adresse() { return view('workbench/adresse'); }      
-```
-## Vue
-
-La vue fournit 
-- le style css
-- les librairies de script
-- le container, element div
-- le script **Workbench**
-
-Le script complet d'une vue : [app/Views/workbench/adresse.php](/refactoring/app/Views/workbench/adresse.php)
-
-
-### style et script
-Les vues ont des dépendances. Il est possible de regrouper ces dépendances pour les réemployer voir voir refactoring/app/Views/workbench/libs.php.
-
-Dans l'immédiat on inclus directement ces dépendances car elle varie selon les ressources nécessaires
-
-On en distingue 2 types : 
-- Styles applicatifs : tronc commun et spécifique au workbench
-- Styles et scripts des extensions
-
-#### Styles applicatifs
-```html
-<head>
-  ...
-    <!-- Styles applicatifs existants -->
-    <link rel="stylesheet" href="/assets/css/workbench/theme_one.css">
-    <link rel="stylesheet" href="/assets/css/workbench/workbench.css">
-    <link rel="stylesheet" href="/assets/css/workbench/adresse.css">
-```
-#### Styles et scripts des extensions
-```html
-<head>
-  ...
-    <!-- Leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="/assets/css/components/leaflet.css">
-```
-
-
-
-
-### container
-Le body du document contient le container qui accueillera le workbench
-
-```html
-  <body>
-    <div id="adresseWorkbench"></div>
-```
-
-### script **Workbench**
-On le place en fin de page dans un bloc script de type module
-```js
-        import AdressseWorkbench from '/assets/js/ui/workbench/adresse/AdresseWorkbench.js';
-        const wb = new AdressseWorkbench();
-        await wb.init('#adresseWorkbench');
-```
 
