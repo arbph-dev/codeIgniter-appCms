@@ -89,14 +89,18 @@ createDescriptor({
 
 ---
 
-## ressources ( Frontend )
-### shared
-- assets/js/ui/shared/DialogManager.js
-- assets/js/ui/shared/Form.js
-- assets/js/ui/shared/RelationPickerDialog.js
+# Frontend 
+### core
+[/assets/js/core/domhelper.js](/refactoring/assets/js/core/domhelper.js)
 
-### Services
-- assets/js/features/adresse/adresse.properties.js
+### shared
+
+- [/assets/js/ui/shared/DialogManager.js](/refactoring/assets/js/ui/shared/DialogManager.js)
+- [/assets/js/ui/shared/Form.js](/refactoring/assets/js/ui/shared/Form.js)
+- [/assets/js/ui/shared/RelationPickerDialog.js](/refactoring/assets/js/ui/shared/RelationPickerDialog.js)
+
+### Services / features
+- [/assets/js/features/adresse/adresse.properties.js](/refactoring/assets/js/features/adresse/adresse.properties.js)
 
 # Backend
 
