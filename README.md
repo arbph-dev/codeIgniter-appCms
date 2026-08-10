@@ -1,4 +1,20 @@
-# ZEALOT - État Actuel du Projet
+
+# Zealot — Versatile Knowledge Base
+
+**Plateforme de connaissance polyvalente** construite sur CodeIgniter 4.
+
+> Ce n’est plus un simple CMS à widgets.  
+> C’est un socle pour explorer, structurer et manipuler des connaissances métier via des **Workbenches** modulaires.
+
+| | |
+|---|---|
+| **Statut** | Refactoring actif — infrastructure Workbench en stabilisation |
+| **Stack** | CodeIgniter 4 · PHP 8.2+ · Vanilla JS · MySQL/MariaDB |
+| **Site** | [zealot.fr](https://zealot.fr/) |
+| **Licence** | AGPL-3.0 |
+
+
+---
 
 
 ## Workbench 
