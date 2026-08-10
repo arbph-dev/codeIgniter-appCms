@@ -9,6 +9,13 @@ Ce que PanelBase ne fait PAS :
 - aucune validation
 - aucune gestion Dialog
 
+| Méthode | Rôle |
+|---------|------|
+| `constructor(config = {})` | Init sans side-effect |
+| `render()` → `HTMLElement` | Structure DOM vide |
+| `show(...args)` | Affiche les données |
+| `clear()` | État vide |
+| `destroy()` | Libère références & listeners |
   
 ### render()
 doit être implémenté — retourne l'élément DOM racine
