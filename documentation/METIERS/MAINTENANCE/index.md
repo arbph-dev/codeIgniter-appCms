@@ -134,15 +134,12 @@ Les instructions des gammes correspondent sont réalisées dans le cadre d'un **
 - Offrir des options pour filtrer ou rechercher les interventions (par date, site, type d’intervention, etc.).
 
 2. Exemple de structure de menu pour les interventions
-
-Menu Interventions
-------------------
-1. Voir toutes les interventions
-2. Ajouter une nouvelle intervention
-3. Modifier une intervention
-4. Supprimer une intervention
-5. Rechercher une intervention
-6. Retour au menu principal
+	1. Voir toutes les interventions
+	2. Ajouter une nouvelle intervention
+	3. Modifier une intervention
+	4. Supprimer une intervention
+	5. Rechercher une intervention
+	6. Retour au menu principal
 
 3. Fonctionnalités détaillées
 
