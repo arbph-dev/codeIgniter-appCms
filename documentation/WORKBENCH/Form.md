@@ -8,7 +8,7 @@
 # Form.js
 
 Form est un générateur de formulaire déclaratif.  
-On lui passe un PropertySet (schéma de champs) ; il construit le DOM, gère le remplissage, la validation, l’extraction des valeurs, et le nettoyage.
+On lui passe un [PropertySet](/documentation/WORKBENCH/PropertySet.md) (schéma de champs) ; il construit le DOM, gère le remplissage, la validation, l’extraction des valeurs, et le nettoyage.
 
 Il ne connaît ni les Workbenches, ni l’API, ni les messages HTTP.  
 
@@ -52,7 +52,7 @@ new Form({ propertySet, onSubmit, onCancel })
 
 |Propriété|Type|Contenu|
 |---|---|---|
-|_ps|Array|PropertySet (champs éditables)|
+|_ps|Array|[PropertySet](/documentation/WORKBENCH/PropertySet.md) (champs éditables)|
 |_cps|Array|ComputePropertySet (champs calculés à l’extract)|
 |_inputs|Map(name → HTMLElement)|Champ « valeur » (input, select, hidden pour relation)|
 |_displays|Map(name → input)|Champ affichage des relations uniquement|
