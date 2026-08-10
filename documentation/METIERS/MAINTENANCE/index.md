@@ -102,25 +102,76 @@ lié a [equipementreglementaire](/documentation/METIERS/MAINTENANCE/equipementre
 
 ## Maintenance
 
-Une intervention peut etre préventive ou curative voir **interventiontype**
+Une intervention peut être préventive ou curative voir **interventiontype**
 Pour  une intervention curative on doit gérer le demandeur, l'equipement , les dates de demande et cloture
 Pour  une intervention préventive ,le demandeur est la gamme / equipements , les dates sont déteminés depuis la fréquence en mois ou en heure
 les intervention préventives sont déclenches meme si les autres sont en retard on dit gérer un délai de prevenance pour des commandes 
 
-Une intervention peut 
-consommer plusieurs articles.
-mobiliser plusieurs personnes et compétences
-etre réalise selon un contrat, un devis 
+Une intervention peut :
+- consommer plusieurs articles.
+- mobiliser plusieurs personnes et compétences
+- etre réalise selon un contrat, un devis
+- 
 
-Les gammes ont des instances que l'on nomme **OT** pour Ordre de Tavail
+Les gammes ont des instances interventionque l'on nomme **OT** pour Ordre de Tavail
+
 Les instructions des gammes correspondent sont réalisées dans le cadre d'un **OT**, on les nomment **BT** pour bulletins de travail
 
-[intervention](/documentation/METIERS/MAINTENANCE/intervention.md)
-[interventionarticle](/documentation/METIERS/MAINTENANCE/interventionarticle.md)
-[interventiontype](/documentation/METIERS/MAINTENANCE/interventiontype.md)
-[cnssec](/documentation/METIERS/MAINTENANCE/cnssec.md)
+- [intervention](/documentation/METIERS/MAINTENANCE/intervention.md)
+- [interventionarticle](/documentation/METIERS/MAINTENANCE/interventionarticle.md)
+- [interventiontype](/documentation/METIERS/MAINTENANCE/interventiontype.md)
+- [cnssec](/documentation/METIERS/MAINTENANCE/cnssec.md)
 
 
+
+### Gestion des interventions
+
+1. Objectifs pour la gestion des interventions via le menu
+- Permettre à l’utilisateur de visualiser la liste des interventions.
+- Offrir la possibilité de créer une nouvelle intervention.
+- Permettre de modifier ou supprimer une intervention existante.
+- Faciliter la liaison des interventions avec les sites, systèmes et images.
+- Offrir des options pour filtrer ou rechercher les interventions (par date, site, type d’intervention, etc.).
+
+2. Exemple de structure de menu pour les interventions
+
+Menu Interventions
+------------------
+1. Voir toutes les interventions
+2. Ajouter une nouvelle intervention
+3. Modifier une intervention
+4. Supprimer une intervention
+5. Rechercher une intervention
+6. Retour au menu principal
+
+3. Fonctionnalités détaillées
+
+a) Voir toutes les interventions
+- Affiche une liste paginée ou complète des interventions.
+	- Chaque intervention peut afficher : date, site, système, description, statut.
+	- Possibilité de sélectionner une intervention pour voir plus de détails.
+
+b) Ajouter une nouvelle intervention
+- Formulaire ou prompts pour saisir :
+	- Site concerné (sélection dans la liste des sites)
+	- Système concerné (optionnel)
+	- Date de l’intervention
+	- Description
+	- Images associées (via notes image ou fichiers)
+	- Génération automatique d’un ID unique (ex : timestamp).
+
+c) Modifier une intervention
+- Sélection d’une intervention existante.
+	- Modification des champs (date, description, images, liens vers sites/systèmes).
+	- Sauvegarde des modifications.
+
+d) Supprimer une intervention
+- Sélection d’une intervention.
+	- Confirmation avant suppression.
+
+e) Rechercher une intervention
+- Recherche par mots-clés, date, site, système.
+	- Affichage des résultats filtrés.
 
 
 
