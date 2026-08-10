@@ -1,7 +1,27 @@
 # ZEALOT - État Actuel du Projet
 
+
+## Workbench 
+
+Ils doivent permettre de construire les interfaces des applicatifs. Ils représenteront la stack la plus complexe du projet
+Ils sont décrits ici : [02-FEATURES/index.md](/02-FEATURES/index.md)
+
+
+Après différentes versions on arrive a une stabilisation du pattern
+- https://zealot.fr/admin/modelworkbench
+- https://zealot.fr/cms/article/test-art
+- https://zealot.fr/workbench/mot
+- https://zealot.fr/workbench/component-catalog
+- https://zealot.fr/workbench/image
+- https://zealot.fr/workbench/adresse
+
+
+
+
 ## TODAY
-[/index.md](/index.md)
+- Travaux [/index.md](/index.md)
+- Documentation [/documentation](/documentation)
+
 
 ---
 
@@ -29,19 +49,6 @@ CodePostal (read only car référentiel)
 - recherche paginée avec q, codepostal, codeinsee
 - fetchCpLike() pour autocomplete.
 
-## Workbench 
-
-Ils doivent permettre de construire les interfaces des applicatifs. Ils représenteront la stack la plus complexe du projet
-Ils sont décrits ici : [02-FEATURES/index.md](/02-FEATURES/index.md)
-
-
-Après différentes versions on arrive a une stabilisation du pattern
-- https://zealot.fr/admin/modelworkbench
-- https://zealot.fr/cms/article/test-art
-- https://zealot.fr/workbench/mot
-- https://zealot.fr/workbench/component-catalog
-- https://zealot.fr/workbench/image
-- https://zealot.fr/workbench/adresse
 
 
 ### Technologies
