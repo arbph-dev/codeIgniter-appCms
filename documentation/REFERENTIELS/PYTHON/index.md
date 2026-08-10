@@ -48,7 +48,7 @@ class Image(Base):
 
 b) Création de la base et session
 
-``` 
+```py 
 engine = create_engine('sqlite:///maintenance.db')
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
@@ -56,7 +56,7 @@ session = Session()
 ``` 
 
 c) Ajout de données exemple
-```
+```py
 site1 = Site(name="Site A", location="Paris")
 system1 = System(name="Pompage", site=site1)
 image1 = Image(filename="siteA_pompe1.jpg", description="Pompe hydraulique", site=site1, system=system1)
@@ -68,8 +68,8 @@ session.commit()
 ``` 
 
 
-d) Affichage avec Rich
-```
+## Affichage avec Rich
+```py
 from rich.console import Console
 from rich.table import Table
 
@@ -87,8 +87,42 @@ def display_site_images(site):
     console.print(table)
 ```
 
-# Exemple d'affichage
-```
+### Exemple d'affichage
+```py
 site = session.query(Site).filter_by(name="Site A").first()
 display_site_images(site)
 ``` 
+
+
+
+
+## Menu Rich
+
+Voici un exemple de gestion simple des interventions dans un menu console Python (à intégrer avec SQLAlchemy et Rich) :
+```py
+def menu_interventions(session):
+    while True:
+        print("\nMenu Interventions")
+        print("1. Voir toutes les interventions")
+        print("2. Ajouter une nouvelle intervention")
+        print("3. Modifier une intervention")
+        print("4. Supprimer une intervention")
+        print("5. Rechercher une intervention")
+        print("6. Retour au menu principal")
+        choice = input("Choisissez une option : ")
+
+        if choice == '1':
+            afficher_interventions(session)
+        elif choice == '2':
+            ajouter_intervention(session)
+        elif choice == '3':
+            modifier_intervention(session)
+        elif choice == '4':
+            supprimer_intervention(session)
+        elif choice == '5':
+            rechercher_intervention(session)
+        elif choice == '6':
+            break
+        else:
+            print("Option invalide, veuillez réessayer.")
+```
