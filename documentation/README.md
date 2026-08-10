@@ -26,7 +26,7 @@ Documentation a mettre en forme en priorité
 ## Taches
 
 ### Arborescence
-- [ ] Détailler les éléments clefs des Workbench dans 
+- [ ] Détailler les éléments clefs des Workbench dans [WORKBENCH/ARCHITECTURE](/documentation/WORKBENCH/ARCHITECTURE)
 - [ ] Ajuster l'arborescence
 
 
