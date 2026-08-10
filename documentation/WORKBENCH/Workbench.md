@@ -8,7 +8,7 @@
 Contrat strict 
 - pas d’API dans les panels, pas de side-effect dans le constructeur.  
 
-### [Form](/documentation/WORKBENCH/Form.md)
+### [Form](/documentation/WORKBENCH/ARCHITECTURE/Form.md)
 contrat minimal
 - render()
 - fill()
@@ -29,10 +29,10 @@ minimal
 
 **refactoring/assets/js**
 - /core
-    - /[domhelper.js](/refactoring/assets/js/core/domhelper.js) : [domhelper.md](/documentation/WORKBENCH/domhelper.md)
+    - /[domhelper.js](/refactoring/assets/js/core/domhelper.js) : [domhelper.md](/documentation/WORKBENCH/ARCHITECTURE/domhelper.md)
 - /ui
     - /shared
-        - [Form.js](/refactoring/assets/js/ui/shared/Form.js) : [Form.md](/documentation/WORKBENCH/Form.md)
+        - [Form.js](/refactoring/assets/js/ui/shared/Form.js) : [Form.md](/documentation/WORKBENCH/ARCHITECTURE/Form.md)
     - /workbench
         - /core/
             - [LayoutDescriptor.js](/refactoring/assets/js/ui/workbench/core/LayoutDescriptor.js)
@@ -75,11 +75,11 @@ bootstrap()
 # Fichiers
 
 ## architecture
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/Form.md
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/Form.md
 
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/PropertySet.md
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/PropertySet.md
 ## service
 
 
 ## librairie
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/domhelper.md
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/domhelper.md
