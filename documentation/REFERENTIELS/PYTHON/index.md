@@ -2,10 +2,11 @@ Rich
 SQLAlchemy
 
 
-# SQLAlchemy
+# Exemples en Python
 
-Exemples en Python
+Python + SQLAlchemy + Rich offre une solution robuste, programmable et extensible pour gérer des bases de données complexes avec un affichage console avancé, adapté aux développeurs et aux systèmes automatisés.
 
+ 
 a) Modèles SQLAlchemy
 
 ```py 
