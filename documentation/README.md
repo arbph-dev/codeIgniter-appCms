@@ -27,7 +27,8 @@ Backend workbench minimal — route + méthode + vue stub.
 Pas de deuxième pattern — SectionPanel est héritage, non modèle.
 
 ## Arborescence
-- [ ] Détailler les éléments clefs
+- [ ] Détailler les éléments clefs des Workbench
+- [ ] Ajuster l'arboresnce
 
 ```
 refactoring/assets/js/ui/
