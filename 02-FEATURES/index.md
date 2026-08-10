@@ -4,9 +4,9 @@
 # liste des Workbench
 ( par ordre d'implémentation)
 
-- [MotWorkbench](/02-FEATURES/MotWorkbench.md)
-- [ImageWorkbench](/02-FEATURES/ImageWorkbench.md)
-- [AdresseWorkbench](/02-FEATURES/AdresseWorkbench.md)
+- [MotWorkbench](/documentation/WORKBENCH/MotWorkbench.md)
+- [ImageWorkbench](/documentation/WORKBENCH/ImageWorkbench.md)
+- [AdresseWorkbench](/documentation/WORKBENCH/AdresseWorkbench.md)
 
 ---
 
