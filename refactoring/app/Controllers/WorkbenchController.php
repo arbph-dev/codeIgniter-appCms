@@ -30,5 +30,8 @@ class WorkbenchController extends BaseController
     public function image() { return view('workbench/image'); }    
     
     /** Workbench de test — feature Adresse  ; URL : /workbench/image     */    
-    public function adresse() { return view('workbench/adresse'); }      
+    public function adresse() { return view('workbench/adresse'); }
+
+    /** Workbench de test — feature Organisation  ; URL : /workbench/organisation     */   
+    public function organisation() { return view('workbench/organisation'); }
 }
