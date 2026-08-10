@@ -78,7 +78,7 @@ On le place en fin de page dans un bloc script de type module
 ```
 
 
-# ImageWorkbench - Backend 
+# ImageWorkbench-Backend 
 Backend résolu en 3 lignes.
 
 ```php
