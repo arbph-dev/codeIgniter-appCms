@@ -47,7 +47,7 @@ refactoring/assets/js/ui/
 
 - refactoring/assets/js
     - /core
-        - /[domhelper.js](/refactoring/assets/js/core/domhelper.js)
+        - /[domhelper.js](/refactoring/assets/js/core/domhelper.js) : [domhelper.md](/documentation/WORKBENCH/domhelper.md)
     - /ui
         - /shared
             - [Form.js](/refactoring/assets/js/ui/shared/Form.js) : [Form.md](/documentation/WORKBENCH/Form.md)
