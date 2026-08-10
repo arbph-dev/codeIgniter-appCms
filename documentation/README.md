@@ -47,5 +47,5 @@ refactoring/assets/js/ui/
 
 - refactoring/assets/js/ui/
     - shared/
-        - [Forms.js](/refactoring/assets/js/ui/shared/Form.js) : [Forms.md](/refactoring/assets/js/ui/shared/Form.md)
+        - [Form.js](/refactoring/assets/js/ui/shared/Form.js) : [Form.md](/refactoring/assets/js/ui/shared/Form.md)
 
