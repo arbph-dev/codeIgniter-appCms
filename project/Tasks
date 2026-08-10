@@ -1,0 +1,55 @@
+### Définition des taches
+
+id 	int 	PK
+planif_user_id 	int 	Lié au créateur/planificateur
+resp_user_id 	int 	Lié au responsable
+titre 	string 	Nom de la tâche
+description 	text 	Détails
+statut 	enum(todo, doing, done) 	Pour le kanban
+date_debut 	date 	Pour Gantt
+date_fin 	date 	Pour Gantt
+priorite 	enum(basse, moyenne, haute) 	Optionnel
+progression 	int (0-100) 	Pour Gantt, tableau liste
+
+
+A définir
+user distinguer rôle et décrire les relation selon les rôles
+rôle
+	planificateur
+	responsable
+	réalisateur
+
+relations user affectées au tache 
+	planificateur 1- 1 tache,
+	responsable 1-1 tache, 
+	réalisateur personnel affecté n-1 tache
+
+relations taches mères/ filles
+
+ouverture vers 
+projet / réalisation ??
+projets d'entreprise, établissement  / maintenance système / site , portail /  personnel / 
+export vers obsidian
+md 
+```
+- [x] Todo #Laravel #Hostinger 🔺 ➕ 2025-04-27 📅 2025-04-29 ✅ 2025-04-30
+```
+mermaid
+	kanban
+	gantt
+
+
+exemple 
+portail / projets / ajouter mots à la base mot
+portail / projets / ajouter des prénoms à la base mot
+portail / projets / liers des mots à une image (n mots -n images  )
+
+entreprise établissement  / tache selon fonction et service alimente par un autre workflow
+
+voir code obsidian
+[[DOCUMENTATION/OUTILS/OBSIDIAN/PLUGINS/Dataview#Timeline]]
+
+
+---
+---
+[[Z/METIERS/tache/OBSIDIAN]]
