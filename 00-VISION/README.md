@@ -2,36 +2,15 @@
 
 **Plateforme de connaissance polyvalente** construite sur CodeIgniter 4.
 
-> Ce n’est plus un simple CMS à widgets.  
-> C’est un socle pour explorer, structurer et manipuler des connaissances métier via des **Workbenches** modulaires.
-
-| | |
-|---|---|
-| **Statut** | Refactoring actif — infrastructure Workbench stabilisée |
-| **Stack** | CodeIgniter 4 · PHP 8.2+ · Vanilla JS · MySQL/MariaDB |
-| **Site** | [zealot.fr](https://zealot.fr/) |
-| **Licence** | AGPL-3.0 |
-
----
-
-## Vision
-
 **Zealot** permet de construire rapidement des interfaces d’exploration et d’édition de données structurées.
 
-Le cœur du produit n’est plus la publication de pages CMS, mais le **Workbench** : un banc de travail plein écran composé de panels (liste, détail, preview, carte…) pilotés par des services API.
-
-| Domaine | Rôle |
-|---------|------|
-| **Knowledge Base** | Concepts, mots, descripteurs, relations |
-| **Workbenches** | Interfaces d’édition / exploration par domaine |
-| **Component Catalog** | Catalogue de composants visuels (charts, maps, 3D…) |
-| **CMS** | Couche de contenu structurée (héritage, en consolidation) |
+Le cœur du projet n’est plus la publication de pages CMS, mais le **Workbench** : un banc de travail plein écran composé de panels (liste, détail, preview, carte…) pilotés par des services API.
 
 ---
 
 ## Architecture frontend (Workbench)
 
-Principe directeur : **Raw is beautiful** — peu de classes, responsabilités nettes, pas de fat objects.
+Principe directeur : **Raw is beautiful** — responsabilités nettes, pas de fat objects.
 
 ```
 WorkbenchBase
