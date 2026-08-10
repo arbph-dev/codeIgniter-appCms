@@ -1,13 +1,17 @@
 > version : iteration 003 — type relation
 
+# Form.js
 
-Voici le fonctionnement détaillé de Form.js ().Rôle globalForm est un générateur de formulaire déclaratif.  
-Tu lui passes un PropertySet (schéma de champs) ; il construit le DOM, gère le remplissage, la validation, l’extraction des valeurs, et le nettoyage.Il ne connaît ni les Workbenches, ni l’API, ni les messages HTTP.  
+Form est un générateur de formulaire déclaratif.  
+On lui passe un PropertySet (schéma de champs) ; il construit le DOM, gère le remplissage, la validation, l’extraction des valeurs, et le nettoyage.
+
+Il ne connaît ni les Workbenches, ni l’API, ni les messages HTTP.  
+
 Il produit un objet métier ; le Panel décide ensuite de l’envoyer au service.
 
 ---
 
-Cycle de vie public
+## Cycle de vie public
 
 |Méthode|Quand|Effet|
 |---|---|---|
