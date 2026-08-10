@@ -1,5 +1,10 @@
 > version : iteration 003 — type relation
 
+> **Ressources**
+> [PropertySet](/documentation/WORKBENCH/PropertySet.md)
+
+
+
 # Form.js
 
 Form est un générateur de formulaire déclaratif.  
