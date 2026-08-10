@@ -78,4 +78,25 @@ On le place en fin de page dans un bloc script de type module
 ```
 
 
+# ImageWorkbench - Backend 
+Backend résolu en 3 lignes.
+
+```php
+// Routes
+$routes->get('image', 'WorkbenchController::image');
+
+// WorkbenchController
+public function image() {
+    return view('workbench/image');
+}
+
+// Vue : stub pur
+<div id="imageWorkbench"></div>
+<script type="module">
+    import ImageWorkbench from '/assets/js/ui/workbench/image/ImageWorkbench.js';
+    const wb = new ImageWorkbench();
+    await wb.init('#imageWorkbench');
+</script>
+```
+
 
