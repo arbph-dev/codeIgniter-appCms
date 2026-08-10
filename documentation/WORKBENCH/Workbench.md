@@ -8,7 +8,7 @@
 Contrat strict 
 - pas d’API dans les panels, pas de side-effect dans le constructeur.  
 
-### Form.js
+### [Form](/documentation/WORKBENCH/Form.md)
 contrat minimal
 - render()
 - fill()
@@ -25,14 +25,14 @@ minimal
 
 ## Arborescence
 - [ ] Détailler les éléments clefs des Workbench
-- [ ] Ajuster l'arboresnce
+- [ ] Ajuster l'arborescence
 
-refactoring/assets/js
-    - /core
-        - /[domhelper.js](/refactoring/assets/js/core/domhelper.js) : [domhelper.md](/documentation/WORKBENCH/domhelper.md)
-    - /ui
-        - /shared
-            - [Form.js](/refactoring/assets/js/ui/shared/Form.js) : [Form.md](/documentation/WORKBENCH/Form.md)
+**refactoring/assets/js**
+- /core
+    - /[domhelper.js](/refactoring/assets/js/core/domhelper.js) : [domhelper.md](/documentation/WORKBENCH/domhelper.md)
+- /ui
+    - /shared
+        - [Form.js](/refactoring/assets/js/ui/shared/Form.js) : [Form.md](/documentation/WORKBENCH/Form.md)
 
 
 
