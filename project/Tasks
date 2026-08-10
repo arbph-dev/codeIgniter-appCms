@@ -1,5 +1,6 @@
 ### Définition des taches
 
+champs
 id 	int 	PK
 planif_user_id 	int 	Lié au créateur/planificateur
 resp_user_id 	int 	Lié au responsable
