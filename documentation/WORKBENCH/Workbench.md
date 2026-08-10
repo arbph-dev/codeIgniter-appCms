@@ -33,8 +33,9 @@ minimal
 - /ui
     - /shared
         - [Form.js](/refactoring/assets/js/ui/shared/Form.js) : [Form.md](/documentation/WORKBENCH/Form.md)
-
-
+    - /workbench
+        - /core/
+            - [LayoutDescriptor.js](/refactoring/assets/js/ui/workbench/core/LayoutDescriptor.js)
 
 
 
