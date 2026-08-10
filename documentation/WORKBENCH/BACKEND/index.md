@@ -12,8 +12,8 @@ Les routes sont regroupées dans le groupe workbench
 $routes->get('adresse' , 'WorkbenchController::adresse');
 ```
 
-## controleur WorkbenchController
-Pour chaque **Workbench** on créé une fonction. Cette fonction fournit la vue contenant le script du **Workbench**
+## [WorkbenchController](/refactoring/app/Controllers/WorkbenchController.php)
+Pour chaque **Workbench** on créé une fonction dans [WorkbenchController](/refactoring/app/Controllers/WorkbenchController.php). Cette fonction fournit la vue contenant le script du **Workbench**
 
 ```php
   /** Workbench de test — feature Adresse  ; URL : /workbench/adresse     */    
