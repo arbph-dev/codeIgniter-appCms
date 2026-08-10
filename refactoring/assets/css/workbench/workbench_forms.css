@@ -1,0 +1,109 @@
+/* =============================================================================
+   WORKBENCH FORMS — /assets/css/workbench/workbench_forms.css
+   Styles Form.js v4 : radio, checkbox, dirty state TabSystem.
+   Charger après workbench.css.
+   ============================================================================= */
+
+
+/* =============================================================================
+   Radio group
+   ============================================================================= */
+
+.wb_radio_group
+{
+    display   : flex;
+    flex-wrap : wrap;
+    gap       : .4rem .75rem;
+    padding   : .35rem 0;
+}
+
+.wb_radio_label
+{
+    display     : flex;
+    align-items : center;
+    gap         : .35rem;
+    font-size   : .875rem;
+    color       : var(--wb-text);
+    cursor      : pointer;
+    padding     : .3rem .6rem;
+    border      : 1px solid var(--wb-border);
+    border-radius : var(--wb-radius);
+    transition  : border-color .15s, background .15s;
+    user-select : none;
+}
+
+.wb_radio_label:hover
+{
+    border-color : var(--wb-blue);
+    background   : var(--wb-table-row-hover);
+}
+
+.wb_radio_label input[type="radio"]
+{
+    accent-color : var(--wb-blue);
+    width  : 1rem;
+    height : 1rem;
+    cursor : pointer;
+    flex-shrink : 0;
+}
+
+/* Bouton sélectionné — visuellement distinct */
+.wb_radio_label:has(input:checked)
+{
+    border-color : var(--wb-blue);
+    background   : var(--wb-table-row-hover);
+    font-weight  : 600;
+}
+
+
+/* =============================================================================
+   Checkbox
+   ============================================================================= */
+
+.wb_checkbox_wrapper
+{
+    display     : flex;
+    align-items : center;
+    gap         : .5rem;
+    padding     : .35rem 0;
+}
+
+.wb_checkbox_input
+{
+    accent-color  : var(--wb-blue);
+    width         : 1.1rem;
+    height        : 1.1rem;
+    cursor        : pointer;
+    flex-shrink   : 0;
+}
+
+.wb_checkbox_text
+{
+    font-size : .875rem;
+    color     : var(--wb-text);
+    cursor    : pointer;
+    user-select : none;
+}
+
+
+/* =============================================================================
+   TabSystem iter007 — dirty state
+   ============================================================================= */
+
+.wb_tab_dirty
+{
+    position : relative;
+}
+
+/* Point orange en haut à droite du bouton */
+.wb_tab_dirty_dot
+{
+    position      : absolute;
+    top           : .2rem;
+    right         : .2rem;
+    width         : 6px;
+    height        : 6px;
+    border-radius : 50%;
+    background    : var(--wb-orange, #e07b00);
+    pointer-events: none;
+}

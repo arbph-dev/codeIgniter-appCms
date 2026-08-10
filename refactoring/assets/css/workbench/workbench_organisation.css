@@ -1,0 +1,58 @@
+/* =============================================================================
+   WORKBENCH ORGANISATION — /assets/css/workbench/workbench_organisation.css
+   Charger après workbench.css + workbench_forms.css (radio/checkbox).
+   ============================================================================= */
+
+/* ── Layout 2 zones ── */
+.wb_org_layout {
+    display     : flex;
+    align-items : flex-start;
+    gap         : var(--wb-gap);
+    width       : 100%;
+    min-height  : calc(100vh - 2 * var(--wb-padding));
+}
+
+.wb_org_left   { flex: 0 0 300px; min-width: 0; }
+.wb_org_center { flex: 1;         min-width: 0; }
+
+/* ── TabSystem dans OrgDetailPanel ── */
+.wb_org_tabs .wb_tabs_nav {
+    border-bottom : 1px solid var(--wb-border);
+    margin-bottom : .75rem;
+}
+
+.wb_org_tabs .wb_tab_btn {
+    padding       : .4rem .9rem;
+    font-size     : .85rem;
+    font-weight   : 500;
+    border        : none;
+    background    : none;
+    color         : var(--wb-muted);
+    border-bottom : 2px solid transparent;
+    cursor        : pointer;
+    transition    : color .15s, border-color .15s;
+    position      : relative;
+}
+
+.wb_org_tabs .wb_tab_btn:hover       { color: var(--wb-blue); }
+.wb_org_tabs .wb_tab_btn.active      { color: var(--wb-blue); border-bottom-color: var(--wb-blue); }
+
+/* ── Radio group dans les onglets (peut être compact) ── */
+.wb_org_tabs .wb_radio_group {
+    flex-direction : column;
+    gap            : .3rem;
+}
+
+/* ── Actions globales (Supprimer) sous les tabs ── */
+.wb_detail_actions {
+    margin-top  : 1rem;
+    padding-top : .75rem;
+    border-top  : 1px solid var(--wb-border);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .wb_org_layout  { flex-wrap: wrap; }
+    .wb_org_left    { flex: none; width: 100%; }
+    .wb_org_center  { flex: none; width: 100%; }
+}
