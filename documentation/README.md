@@ -45,4 +45,6 @@ refactoring/assets/js/ui/
     └── adresse/
 ```
 
-
+- refactoring/assets/js/ui/
+    - shared/
+        - [Forms.js](refactoring/assets/js/ui/shared/Forms.js) : [Forms.md](refactoring/assets/js/ui/shared/Forms.md)
