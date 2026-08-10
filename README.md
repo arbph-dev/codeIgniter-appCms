@@ -137,9 +137,20 @@ accidents de la route
 - project/accidents
 
 ## Documentation a revoir
-- project/audit
-- project/daily
-- project/stages/PANEL_CONTRACT.md
+```
+codeIgniter-appCms/
+├── refactoring/          # Code actif (cible)
+│   ├── app/              # Controllers, Models, Libraries, Views, Config
+│   └── assets/js/        # Frontend workbench + features
+├── old/                  # Ancienne base (référence / migration)
+├── documentation/        # Doc stable (en réorganisation)
+├── project/
+│   ├── daily/            # Notes de session (source de vérité temporaire)
+│   ├── stages/           # Contrats & checklists (Panel Contract, etc.)
+│   └── audit/
+├── README.md
+└── LICENSE
+```
 
 
 ## evolution cms 
