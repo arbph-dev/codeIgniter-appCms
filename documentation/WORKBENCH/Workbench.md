@@ -8,6 +8,14 @@
 Contrat strict 
 - pas d’API dans les panels, pas de side-effect dans le constructeur.  
 
+| Méthode | Rôle |
+|---------|------|
+| `constructor(config = {})` | Init sans side-effect |
+| `render()` → `HTMLElement` | Structure DOM vide |
+| `show(...args)` | Affiche les données |
+| `clear()` | État vide |
+| `destroy()` | Libère références & listeners |
+
 ### [Form](/documentation/WORKBENCH/ARCHITECTURE/Form.md)
 contrat minimal
 - render()
