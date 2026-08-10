@@ -45,7 +45,10 @@ refactoring/assets/js/ui/
     └── adresse/
 ```
 
-- refactoring/assets/js/ui/
-    - shared/
-        - [Form.js](/refactoring/assets/js/ui/shared/Form.js) : [Form.md](/refactoring/assets/js/ui/shared/Form.md)
+- refactoring/assets/js
+    - /core
+        - /[domhelper.js](/refactoring/assets/js/core/domhelper.js)
+    - /ui
+        - /shared
+            - [Form.js](/refactoring/assets/js/ui/shared/Form.js) : [Form.md](/documentation/WORKBENCH/Form.md)
 
