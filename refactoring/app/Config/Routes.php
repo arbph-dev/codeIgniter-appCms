@@ -38,7 +38,8 @@ $routes->group('workbench', ['namespace' => 'App\Controllers'], static function 
     $routes->get('component-catalog'    ,   'WorkbenchController::componentCatalog' );
     $routes->get('mot'                  ,   'WorkbenchController::mot'              );
     $routes->get('image'                ,   'WorkbenchController::image'            );
-    $routes->get('adresse'              ,   'WorkbenchController::adresse'          );	
+    $routes->get('adresse'              ,   'WorkbenchController::adresse'          );
+    $routes->get('organisation'         ,   'WorkbenchController::organisation'     );	
 });
 
 $routes->group('admin/cmspart', static function($routes)
