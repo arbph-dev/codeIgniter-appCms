@@ -9,7 +9,7 @@ Ils sont destinés a décrire les données échangées avec les  API
 ## type: 'checkbox'
 Schema PropertySet — type 'checkbox' :
 
-```json
+```js
 {
     name:'is_active',
     type:'checkbox',
