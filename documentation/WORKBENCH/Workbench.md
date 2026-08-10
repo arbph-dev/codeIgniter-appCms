@@ -15,11 +15,6 @@ contrat minimal
 - reset()
 - extract().  
 
-### [Backend](/documentation/WORKBENCH/BACKEND/index.md)
-minimal
-- route
-- Controller + méthode
-- vue (css + lib js).  
 
 
 
@@ -71,15 +66,10 @@ bootstrap()
 ```
 
 ---
-
-# Fichiers
-
-## architecture
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/Form.md
-
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/PropertySet.md
-## service
+# [Backend](/documentation/WORKBENCH/BACKEND/index.md)
+minimal
+- route
+- Controller + méthode
+- vue (css + lib js).  
 
 
-## librairie
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/domhelper.md
