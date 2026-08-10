@@ -37,8 +37,28 @@ Après différentes versions on arrive a une stabilisation du pattern
 ## TODAY
 - Travaux [/index.md](/index.md)
 - Documentation [/documentation](/documentation)
+  - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-05.md
+
+A inclure
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/PanelBase.md
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/WorkbenchBase.md
 
 
+
+```*
+WorkbenchBase
+    │  name, container, bus, init(), getElement(), destroy()
+    ▼
+AdresseWorkbench          ← orchestrateur (ce fichier)
+    │
+    ├── WorkbenchView     ← layout 3 zones (left / center / right)
+    ├── AdresseListPanel
+    ├── AdresseDetailPanel
+    ├── MapPanel
+    ├── RelationPickerDialog × 2  (CP, TypeVoie)
+    └── services: fetchAdresse / saveAdresse / deleteAdresse
+                  fetchCpLike / fetchTvLike
+```
 ---
 
 Le portail historique [https://zealot.fr/](https://zealot.fr/) contient déjà les briques. Il faut maintenant les extraire et les confronter à l'architecture actuelle.
