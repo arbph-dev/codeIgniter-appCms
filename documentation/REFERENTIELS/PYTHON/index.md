@@ -1,0 +1,87 @@
+3. Exemple pratique en Python
+
+a) Modèles SQLAlchemy
+
+```py 
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from datetime import datetime
+
+Base = declarative_base()
+
+class Site(Base):
+    __tablename__ = 'sites'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    location = Column(String)
+    images = relationship("Image", back_populates="site")
+    systems = relationship("System", back_populates="site")
+
+class System(Base):
+    __tablename__ = 'systems'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    site_id = Column(Integer, ForeignKey('sites.id'))
+    site = relationship("Site", back_populates="systems")
+    images = relationship("Image", back_populates="system")
+
+class Image(Base):
+    __tablename__ = 'images'
+    id = Column(Integer, primary_key=True)
+    filename = Column(String)
+    description = Column(String)
+    date_taken = Column(DateTime, default=datetime.utcnow)
+    site_id = Column(Integer, ForeignKey('sites.id'))
+    system_id = Column(Integer, ForeignKey('systems.id'))
+    site = relationship("Site", back_populates="images")
+    system = relationship("System", back_populates="images")
+``` 
+
+ 
+
+b) Création de la base et session
+
+``` 
+engine = create_engine('sqlite:///maintenance.db')
+Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
+session = Session()
+``` 
+
+c) Ajout de données exemple
+```
+site1 = Site(name="Site A", location="Paris")
+system1 = System(name="Pompage", site=site1)
+image1 = Image(filename="siteA_pompe1.jpg", description="Pompe hydraulique", site=site1, system=system1)
+
+session.add(site1)
+session.add(system1)
+session.add(image1)
+session.commit()
+``` 
+
+
+d) Affichage avec Rich
+```
+from rich.console import Console
+from rich.table import Table
+
+console = Console()
+
+def display_site_images(site):
+    table = Table(title=f"Images for {site.name}")
+    table.add_column("Filename")
+    table.add_column("Description")
+    table.add_column("Date Taken")
+
+    for img in site.images:
+        table.add_row(img.filename, img.description, img.date_taken.strftime("%Y-%m-%d %H:%M:%S"))
+
+    console.print(table)
+```
+
+# Exemple d'affichage
+```
+site = session.query(Site).filter_by(name="Site A").first()
+display_site_images(site)
+``` 
