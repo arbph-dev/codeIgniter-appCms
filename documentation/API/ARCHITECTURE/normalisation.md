@@ -48,6 +48,8 @@ Zéro fetch si l'utilisateur ne visite jamais l'onglet.
 
 Utile pour le débogage, la navigation et le cache côté client.
 
+# STUB amélioration
+
 ```php
 // app/Controllers/Api/Mot.php  — STUB amélioration
 // ─────────────────────────────────────────────────────────────────────────────
@@ -57,8 +59,7 @@ Utile pour le débogage, la navigation et le cache côté client.
 //   ?sort=mot_lbl&order=asc   Tri contrôlé par le client
 //   /like                     Retourne total en plus de data[]
 //   /batch?ids=1,2,3          Multi-IDs en un seul appel (lazy load par lot)
-//   /:id?include=usages        Include optionnel — prépare les sous-ressources
-//   meta{}                    Remplace pager — echo des params + infos de page
+//   /:id?include=usages        Include optionnel — prépare les sous-ressources  meta{} Remplace pager — echo des params + infos de page
 //
 // Routes :
 //   GET    /api/mot                  index()
