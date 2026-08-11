@@ -31,7 +31,7 @@ const header = toolbar({
 })
 ```
 
-- [X] retrouver header dans MotListPanel.js:
+- [X] retrouver header dans MotListPanel.js : Le Panel ajoute la toolbar référencée par la variable `header`
 
 https://github.com/arbph-dev/codeIgniter-appCms/blob/ab9af6dbbc53165f526ce9f3c2b85619e9ac651d/refactoring/assets/js/ui/workbench/mot/MotListPanel.js#L53
 
