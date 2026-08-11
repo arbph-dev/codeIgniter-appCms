@@ -146,6 +146,11 @@ markDirty/clearDirty sont prêts mais optionnels pour le premier OrganisationWor
 - markDirty(id) `@param {string} id` : Marque un onglet comme "modifié" — indicateur visuel sur le bouton.
 
 
+
+
+
+---
+
 ### [Form.js](/refactoring/assets/js/ui/shared/Form.js)
 Form.js v4 
 
@@ -166,6 +171,15 @@ correct pour un formulaire de création. Mais en onglet compact (TabSystem), le 
 TabSystem dans OrgDetailPanel :
 - renderFn() → form.render() (construit le DOM)
 - initFn() → form.fill(org) (remplit au premier activate, lazy mais instantané — pas de fetch)
+
+OrgDetailPanel appelle this.listPanel.onPage dans _bindEvents() mais OrgListPanel utilise encore pagination({ busEvent: 'wb:org:page' }) 
+
+il faut : 
+- soit câbler le bus dans le Workbench
+- soit modifier OrgListPanel.show() pour utiliser onPage via callback.
+
+**C'est l'incohérence de pagination identifiée en bilan AdresseWorkbench à corriger dans cette implémentation ou notée pour la prochaine session.**
+
 
 _makeForm() dans OrgDetailPanel
 - une seule factory qui crée les trois Forms avec le même onSubmit → onSave(id, data).
@@ -191,6 +205,8 @@ Pas de fichier séparé. C'est RelationPickerDialog configuré avec fetchAdresse
 ---
 
 [OrganisationWorkbench.js](/refactoring/assets/js/ui/workbench/organisation/OrganisationWorkbench.js)
+
+
 
 
 
