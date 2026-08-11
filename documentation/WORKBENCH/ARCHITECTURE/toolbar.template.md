@@ -1,4 +1,5 @@
 # toolbar.template.js
+source : [toolbar.template.js](/refactoring/assets/js/ui/shared/templates/toolbar.template.js)
 
 ## import
 
