@@ -128,7 +128,16 @@ Le PropertySet définit un champ `organisation_type_id` de type **radio** fait l
 }
 ```
 
+### [organisation.properties.js](/refactoring/assets/js/features/organisation/organisation.properties.js)
 
+Trois PropertySets distincts :
+- OrgInfoPropertySet     — identité + type (onglet Informations / form create)
+- OrgContactPropertySet  — coordonnées + liens (onglet Contacts)
+- OrgAdressePropertySet  — adresse_id via AdressePickerDialog (onglet Adresse)
+
+### [organisation.service.js](/refactoring/assets/js/features/organisation/organisation.service.js)
+Adapté depuis old
+- chemins new architecture, pattern image/adresse.service.js
 
 
 
@@ -187,6 +196,23 @@ _makeForm() dans OrgDetailPanel
 
 Le backend CI n'applique que les allowedFields présents — envoyer des champs partiels est sûr.
 
+Deux modes :
+- CREATE → Form unique (OrgInfoPropertySet) — nom + type suffisent
+
+- EDIT   → TabSystem 3 onglets
+  - "Informations" → Form(OrgInfoPS)     renderFn + initFn fill()
+  - "Contacts"     → Form(OrgContactPS)  renderFn + initFn fill()
+  - "Adresse"      → Form(OrgAdressePS)  renderFn + initFn fill()
+
+onSave(fn) : fn(id, data)
+  id   = null → création
+  id   > 0   → mise à jour partielle (seulement les champs du tab actif)
+
+TabSystem.onTabChange() n'est pas nécessaire ici (toutes les données sont déjà dans `org`, pas de fetch lazy par onglet).
+
+
+
+
 
 ### [OrgListPanel.js](/refactoring/assets/js/ui/workbench/organisation/OrgListPanel.js)
 
@@ -204,7 +230,22 @@ Pas de fichier séparé. C'est RelationPickerDialog configuré avec fetchAdresse
 
 ---
 
-[OrganisationWorkbench.js](/refactoring/assets/js/ui/workbench/organisation/OrganisationWorkbench.js)
+## [OrganisationWorkbench.js](/refactoring/assets/js/ui/workbench/organisation/OrganisationWorkbench.js)
+ 2 zones : list (left) + detail (center, TabSystem intégré dans OrgDetailPanel)
+
+ Dialogs :
+   dialog_adresse — RelationPickerDialog pour adresse_id
+                    (fetchAdresseLike → suggest AdresseModel)
+
+ onSave(id, data) — id=null création, id>0 mise à jour partielle
+   Le Workbench fait toujours saveOrg({ id, ...data }) — le backend
+   n'applique que les allowedFields présents dans data.
+
+ Pagination via onPage(fn) — cohérent avec le contrat callback panels.
+
+
+
+
 
 
 
