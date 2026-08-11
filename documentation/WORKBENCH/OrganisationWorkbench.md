@@ -20,7 +20,7 @@
       - [organisation.service.js](/refactoring/assets/js/features/organisation/organisation.service.js)
   - /ui
     - /shared/
-      - [Form.js](/refactoring/assets/js/ui/shared/Form.js) 
+      - [Form.js](/refactoring/assets/js/ui/shared/Form.js)
     - /workbench/
       - [TabSystem.js](/refactoring/assets/js/ui/workbench/TabSystem.js)
       - /organisation/
@@ -75,11 +75,13 @@ On créé le conteneur et on ajout import et script d'initialisation
 
 # Implémentation
 
-[organisation.constants.js](/refactoring/assets/js/features/organisation/organisation.constants.js)
+## Service
+
+### [organisation.constants.js](/refactoring/assets/js/features/organisation/organisation.constants.js)
 
 Définit une ORGANISATION_TYPES, tableau d'objet, miroir de la table. 
 
-Si la table évolue un jour, un seul fichier à mettre à jour.
+**organisation_types** n'as pas d'enum ni de model; c'est un référentiel table pure. Si la table évolue un jour, le fichier est à mettre à jour.
 
 ```js
 export const ORGANISATION_TYPES = [
@@ -93,8 +95,23 @@ export const ORGANISATION_TYPES = [
 ]
 ```
 
+## Workbench core
 
+### [TabSystem.js](/refactoring/assets/js/ui/workbench/TabSystem.js)
+TabSystem iter007 
 
+onTabChange(fn) est la pièce centrale : OrganisationWorkbench l'utilisera pour charger les adresses uniquement quand l'onglet "Adresses" est activé. 
+
+resetTab(id) force le rechargement après un save sans détruire le TabSystem. 
+
+markDirty/clearDirty sont prêts mais optionnels pour le premier OrganisationWorkbench.
+
+### [Form.js](/refactoring/assets/js/ui/shared/Form.js)
+Form.js v4 
+
+radio et checkbox suivent exactement le même schéma : PropertySet que les types précédents. 
+
+Le cas :has(input:checked) en CSS donne un retour visuel immédiat sur le radio sélectionné sans une ligne de JS supplémentaire.
 
 
 
