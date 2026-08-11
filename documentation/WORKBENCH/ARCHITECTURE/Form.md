@@ -285,3 +285,46 @@ Points d’attention
 5. Un handler par champ relation : plusieurs relations dans le même form → plusieurs handlers, tous nettoyés dans destroy().
 
 En résumé : Form reste un outil de schéma → DOM → data, et le type relation y ajoute un couple hidden FK + display + dialog via event bus, sans casser le contrat render / fill / reset / extract / destroy.
+
+---
+
+# Historique
+
+ Iteration002 — extension type 'select' + type 'file'
+```
+Nouveautés vs Iteration001 :
+- PropertySet : type 'select' → <select> piloté par options.choices
+- PropertySet : type 'file'   → <input type="file"> avec options.accept etc.
+- _createField()  dispatche sur prop.type
+- fill()          saute les champs file (restriction navigateur)
+- reset()         vide explicitement les champs file (field.value = '')
+- _checkField()   trois branches : file / select / textuels
+- _castValue()    ajout case 'file' → files[0]
+- render()        Enter/Escape ignorés sur select et file
+
+Schema PropertySet étendu :
+
+{ type: 'select', options: { choices: [{value, label}], required: '' } }
+{ type: 'file',   options: { accept: 'image/*', required: '' } }
+
+Contrat inchangé : render / fill / reset / extract
+```
+ 
+ Iteration004 — type 'radio' + type 'checkbox'
+```
+radio    → groupe de boutons (organisation_type_id, statut…)
+    _inputs stocke le <div role="radiogroup">
+    _castValue  → input:checked.value | null
+    fill()      → coche le radio dont value === data[name]
+    reset()     → coche le radio dont value === prop.default
+    _checkField → required = au moins un coché
+
+checkbox → booléen unique (is_active, is_public…)
+    _inputs stocke le <input type="checkbox">
+    _castValue  → field.checked (boolean)
+    fill()      → field.checked = Boolean(data[name])
+    reset()     → field.checked = Boolean(prop.default)
+    _checkField → required = doit être coché
+
+Enter/Escape ignorés sur radio et checkbox (navigation native clavier)
+```
