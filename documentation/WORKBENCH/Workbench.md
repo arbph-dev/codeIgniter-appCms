@@ -39,7 +39,7 @@ contrat minimal
         - [Form.js](/refactoring/assets/js/ui/shared/Form.js) : [Form.md](/documentation/WORKBENCH/ARCHITECTURE/Form.md)
         - [RelationPickerDialog](/refactoring/assets/js/ui/shared/RelationPickerDialog.js)
         - templates
-            - [toolbar.template.js](/refactoring/assets/js/ui/shared/templates/toolbar.template.js)
+            - [toolbar.template.js](/refactoring/assets/js/ui/shared/templates/toolbar.template.js) : [toolbar.template.md](/documentation/WORKBENCH/ARCHITECTURE/toolbar.template.md)
         - validation
             - [rules](/refactoring/assets/js/ui/shared/validation/rules.js)
             - [validator](/refactoring/assets/js/ui/shared/validation/validator.js)
