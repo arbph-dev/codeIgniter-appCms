@@ -73,7 +73,25 @@ On créé le conteneur et on ajout import et script d'initialisation
     </script>
 ```
 
+# Implémentation
 
+[organisation.constants.js](/refactoring/assets/js/features/organisation/organisation.constants.js)
+
+Définit une ORGANISATION_TYPES, tableau d'objet, miroir de la table. 
+
+Si la table évolue un jour, un seul fichier à mettre à jour.
+
+```js
+export const ORGANISATION_TYPES = [
+    { value: '1', label: 'Entreprise'              },
+    { value: '2', label: 'Association loi 1901'    },
+    { value: '3', label: 'Coopérative'             },
+    { value: '4', label: 'Établissement public'    },
+    { value: '5', label: 'Établissement scolaire'  },
+    { value: '6', label: 'Collectivité territoriale'},
+    { value: '7', label: 'Musée / Site culturel'   },
+]
+```
 
 
 
