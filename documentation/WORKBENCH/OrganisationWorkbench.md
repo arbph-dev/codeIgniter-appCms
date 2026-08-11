@@ -105,6 +105,8 @@ onTabChange(fn) est la pièce centrale : OrganisationWorkbench l'utilisera pour 
 resetTab(id) force le rechargement après un save sans détruire le TabSystem. 
 
 markDirty/clearDirty sont prêts mais optionnels pour le premier OrganisationWorkbench.
+- markDirty(id) `@param {string} id` : Marque un onglet comme "modifié" — indicateur visuel sur le bouton.
+
 
 ### [Form.js](/refactoring/assets/js/ui/shared/Form.js)
 Form.js v4 
