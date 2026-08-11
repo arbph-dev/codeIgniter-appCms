@@ -38,6 +38,7 @@ Après différentes versions on arrive a une stabilisation du pattern
 - Travaux [/index.md](/index.md)
 - Documentation [/documentation](/documentation)
   - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-05.md
+  - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-09.md
 
 A inclure
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/PanelBase.md
