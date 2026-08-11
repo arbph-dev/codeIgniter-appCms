@@ -157,8 +157,41 @@ choix en radio avec flex-wrap donnent 3-4 lignes, **radio** pour la vue form pri
 correct pour un formulaire de création. Mais en onglet compact (TabSystem), le select est plus sobre. 
 
 
+## Panels
+
+
+
+### [OrgDetailPanel.js](/refactoring/assets/js/ui/workbench/organisation/OrgDetailPanel.js)
 
 TabSystem dans OrgDetailPanel :
+- renderFn() → form.render() (construit le DOM)
+- initFn() → form.fill(org) (remplit au premier activate, lazy mais instantané — pas de fetch)
 
-renderFn() → form.render() (construit le DOM)
-initFn() → form.fill(org) (remplit au premier activate, lazy mais instantané — pas de fetch)
+_makeForm() dans OrgDetailPanel
+- une seule factory qui crée les trois Forms avec le même onSubmit → onSave(id, data).
+- Chaque onglet sauvegarde indépendamment ses champs.
+
+Le backend CI n'applique que les allowedFields présents — envoyer des champs partiels est sûr.
+
+
+### [OrgListPanel.js](/refactoring/assets/js/ui/workbench/organisation/OrgListPanel.js)
+
+OrgListPanel.onPage(fn)
+- pagination via callback pur, cohérent avec le contrat panel.
+- Le bus local wb:org:page est éliminé.
+
+
+### AdressePickerDialog
+Pas de fichier séparé. C'est RelationPickerDialog configuré avec fetchAdresseLike et les colonnes adresse. L'abstraction RelationPickerDialog absorbe ce cas sans extension.
+
+
+
+
+
+---
+
+[OrganisationWorkbench.js](/refactoring/assets/js/ui/workbench/organisation/OrganisationWorkbench.js)
+
+
+
+
