@@ -35,7 +35,14 @@ contrat minimal
     - /[domhelper.js](/refactoring/assets/js/core/domhelper.js) : [domhelper.md](/documentation/WORKBENCH/ARCHITECTURE/domhelper.md)
 - /ui
     - /shared
+        - [DialogManager.js](/refactoring/assets/js/ui/shared/DialogManager.js)
         - [Form.js](/refactoring/assets/js/ui/shared/Form.js) : [Form.md](/documentation/WORKBENCH/ARCHITECTURE/Form.md)
+        - [RelationPickerDialog](/refactoring/assets/js/ui/shared/RelationPickerDialog.js)
+        - templates
+            - [toolbar.template.js](/refactoring/assets/js/ui/shared/templates/toolbar.template.js)
+        - validation
+            - [rules](/refactoring/assets/js/ui/shared/validation/rules.js)
+            - [validator](/refactoring/assets/js/ui/shared/validation/validator.js)
     - /workbench
         - /core/
             - [LayoutDescriptor.js](/refactoring/assets/js/ui/workbench/core/LayoutDescriptor.js)
@@ -79,5 +86,14 @@ minimal
 - route
 - Controller + méthode
 - vue (css + lib js).  
+
+---
+
+A créer
+- [DialogManager](/refactoring/assets/js/ui/shared/DialogManager.js)
+- [RelationPickerDialog](/refactoring/assets/js/ui/shared/RelationPickerDialog.js)
+- [rules](/refactoring/assets/js/ui/shared/validation/rules.js)
+- validator [validator](/refactoring/assets/js/ui/shared/validation/validator.js)
+- toolbar.template.js [toolbar.template.js](/refactoring/assets/js/ui/shared/templates/toolbar.template.js)
 
 
