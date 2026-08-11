@@ -5,58 +5,34 @@
 
 ## Architecture
 
+### Frontend
 
 /assets/
 - /css
   - /workbench/
+    - [forms.css](/refactoring/assets/css/workbench/forms.css)
+    - [organisation.css](/refactoring/assets/css/workbench/organisation.css)
 - /js
-  - /features/organisation/
+  - /features
+    - /organisation/
+      - [organisation.constants.js](/refactoring/assets/js/features/organisation/organisation.constants.js)
+      - [organisation.properties.js](/refactoring/assets/js/features/organisation/organisation.properties.js)
+      - [organisation.service.js](/refactoring/assets/js/features/organisation/organisation.service.js)
   - /ui
     - /shared/
+      - [Form.js](/refactoring/assets/js/ui/shared/Form.js) 
     - /workbench/
+      - [TabSystem.js](/refactoring/assets/js/ui/workbench/TabSystem.js)
       - /organisation/
+        - [OrganisationWorkbench.js](/refactoring/assets/js/ui/workbench/organisation/OrganisationWorkbench.js)
+        - [OrgDetailPanel.js](/refactoring/assets/js/ui/workbench/organisation/OrgDetailPanel.js)
+        - [OrgListPanel.js](/refactoring/assets/js/ui/workbench/organisation/OrgListPanel.js)
 
 
-
-```
-/assets/
-- /css
-  - /workbench/
-- /js
-  - /features/organisation/
-  - /ui
-    - /shared/
-    - /workbench/
-      - /organisation/
-```
-
-assets/js/ui/shared/
-- Form.js -> assets/js/ui/shared/Form.js
-
-assets/js/features/organisation/
-- organisation.constants.js -> assets/js/features/organisation/organisation.constants.js
-- organisation.properties.js
-- organisation.service.js
-
-assets/js/ui/workbench/organisation/
-- OrganisationWorkbench.js - assets/js/ui/workbench/organisation/OrganisationWorkbench.js
-- OrgDetailPanel.js
-- OrgListPanel.js
-
-assets/js/ui/workbench/
-- TabSystem.js - assets/js/ui/workbench/TabSystem.js
-
-assets/css/workbench/
-- forms.css
-- organisation.css
-
-
- 
+### Backend
 créé 
 - routes
 - controleur
 - view
+  - [workbench/organisation.php](/refactoring/app/Views/workbench/organisation.php)
 
-
-
-refactoring/app/Views/workbench/organisation.php
