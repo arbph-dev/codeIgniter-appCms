@@ -47,7 +47,32 @@ ajouter methode organisation
 ```
 
 #### view
-[workbench/organisation.php](/refactoring/app/Views/workbench/organisation.php)
+La vue complète : [workbench/organisation.php](/refactoring/app/Views/workbench/organisation.php)
+
+On inclue les feuilles de styles CSS
+- [forms.css](/refactoring/assets/css/workbench/forms.css)
+- [organisation.css](/refactoring/assets/css/workbench/organisation.css)
+
+```html
+    <!-- Styles applicatifs existants -->
+    <link rel="stylesheet" href="/assets/css/workbench/theme_one.css">
+    <link rel="stylesheet" href="/assets/css/workbench/workbench.css">
+    <link rel="stylesheet" href="/assets/css/workbench/organisation.css">
+    <link rel="stylesheet" href="/assets/css/workbench/dialog.css">
+    <link rel="stylesheet" href="/assets/css/workbench/forms.css">
+```
+
+On créé le conteneur et on ajout import et script d'initialisation
+```html
+    <div id="organisationWorkbench"></div>
+
+    <script type="module">
+        import OrganisationWorkbench from '/assets/js/ui/workbench/organisation/OrganisationWorkbench.js';
+        const wb = new OrganisationWorkbench();
+        await wb.init('#organisationWorkbench');
+    </script>
+```
+
 
 
 
