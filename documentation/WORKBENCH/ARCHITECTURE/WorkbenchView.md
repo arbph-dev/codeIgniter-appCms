@@ -1,32 +1,85 @@
 # WorkbenchView
 
-## Layout
-Le descripteur ne porte que la structure CSS.
+source : [`WorkbenchView.js`](/refactoring/assets/js/ui/workbench/core/WorkbenchView.js)
 
-voir assets/js/ui/workbench/core/LayoutDescriptor.js
-Fabrique un descripteur de layout immuable.
-Un descripteur décrit uniquement la STRUCTURE : la classe CSS du conteneur et les zones qui le composent. Il ne contient jamais de Panels ni de HTML.
-Chaque Workbench définit son propre descripteur (une instance par Workbench).
+## Rôle
 
-Les instances de panels restent dans le Workbench (_createPanels + mountPanels) — option B du design (Workbench maître de ses panels pour bindEvents).
+`WorkbenchView` est responsable de la matérialisation visuelle du layout d'un Workbench.
 
+Il fait le lien entre :
+
+- un `LayoutDescriptor` ;
+- le conteneur du Workbench ;
+- les Panels à monter.
+
+## Responsabilités
+
+`WorkbenchView` :
+
+- construit le conteneur du layout ;
+- construit les zones ;
+- monte les Panels ;
+- démonte les Panels ;
+- permet d'accéder à une zone par son nom.
+
+## API
+
+| Méthode | Rôle |
+|---|---|
+| `build()` | Crée le layout et ses zones |
+| `mountPanels(panels)` | Monte les Panels dans leurs zones |
+| `unmountPanels()` | Retire les éléments DOM des zones |
+| `getZone(name)` | Retourne une zone |
+| `destroy()` | Libère les références internes |
+
+## Montage
 
 ```js
-//   {
-//     css   : 'wb_mot_layout',            // classe du div conteneur
-//     zones : [
-//       { name: 'left',  css: 'wb_mot_left'  },
-//       { name: 'right', css: 'wb_mot_right' },
-//     ],
-//   }
+this._view = new WorkbenchView(
+    LAYOUT,
+    this.getElement('.wb-content')
+)
 
+this._view.build()
 
-createDescriptor({
-  css: 'wb_adresse_layout',
-  zones: [
-    { name: 'left',   css: 'wb_adresse_left'   },  // liste
-    { name: 'center', css: 'wb_adresse_center' },  // détail / form
-    { name: 'right',  css: 'wb_adresse_right'  },  // carte Leaflet
-  ],
+this._view.mountPanels({
+    left  : this.listPanel,
+    right : this.detailPanel,
 })
 ```
+
+Lors du montage, `WorkbenchView` appelle `panel.render()` puis ajoute le résultat dans la zone correspondante.
+
+## Ce que WorkbenchView ne fait pas
+
+`WorkbenchView` ne :
+
+- connaît pas les modèles métier ;
+- appelle pas d'API ;
+- valide pas les données ;
+- crée pas les Panels ;
+- ne détruit pas les Panels ;
+- ne contient pas de logique métier ;
+- ne gère pas les formulaires.
+
+La destruction des Panels reste sous la responsabilité du Workbench.
+
+## Découpage architectural
+
+```text
+Workbench
+    │
+    ├── orchestration
+    │
+    ├── WorkbenchView
+    │       │
+    │       ├── LayoutDescriptor
+    │       └── zones DOM
+    │
+    └── Panels
+            ├── ListPanel
+            ├── DetailPanel
+            └── ...
+```
+
+> **WorkbenchView construit la scène ; le Workbench orchestre ce qui s'y passe.**
