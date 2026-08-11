@@ -76,6 +76,20 @@ On créé le conteneur et on ajout import et script d'initialisation
 # Implémentation
 
 ## Service
+
+Pour démarrer OrganisationWorkbench il faut vérifier
+
+Api/Organisation.php
+- format exact des réponses
+  - GET  /api/organisation      → { data:[], pager:{} }
+  - GET  /api/organisation/{id} → { data:{} }
+  - POST /api/organisation      → { data:{} } ou { status, id }
+  - PUT  /api/organisation/{id} → idem
+
+Schema relation
+- organisations ↔ adresses
+  - table pivot ? ou adresse_id directe sur organisations ?
+
 Relations directes sur organisations :
 - adresse_id — FK directe (pas pivot) → AdressePickerDialog = RelationPickerDialog configuré avec fetchAdresseLike
 - withRelations() ne joint pas les adresses
