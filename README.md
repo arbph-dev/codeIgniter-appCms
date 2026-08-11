@@ -40,6 +40,9 @@ Après différentes versions on arrive a une stabilisation du pattern
   - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-05.md
   - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-09.md
 
+## todo
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-09.md#todo
+
 A inclure
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/PanelBase.md
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/WorkbenchBase.md
