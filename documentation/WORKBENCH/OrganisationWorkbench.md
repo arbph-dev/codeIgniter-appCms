@@ -100,7 +100,7 @@ export const ORGANISATION_TYPES = [
     { value: '7', label: 'Musée / Site culturel'   },
 ]
 ```
-Le PropertySet fait le lien avec `ORGANISATION_TYPES` dans [organisation.properties.js](/refactoring/assets/js/features/organisation/organisation.properties.js)
+Le PropertySet définit un champ `organisation_type_id` de type **radio** fait le lien avec `ORGANISATION_TYPES` dans [organisation.properties.js](/refactoring/assets/js/features/organisation/organisation.properties.js)
 ```js
 {
     name        : 'organisation_type_id',
@@ -135,7 +135,7 @@ markDirty/clearDirty sont prêts mais optionnels pour le premier OrganisationWor
 ### [Form.js](/refactoring/assets/js/ui/shared/Form.js)
 Form.js v4 
 
-radio et checkbox suivent exactement le même schéma : PropertySet que les types précédents. 
+**radio et checkbox** suivent exactement le même schéma : PropertySet que les types précédents. 
 
 Le cas :has(input:checked) en CSS donne un retour visuel immédiat sur le radio sélectionné sans une ligne de JS supplémentaire.
 
