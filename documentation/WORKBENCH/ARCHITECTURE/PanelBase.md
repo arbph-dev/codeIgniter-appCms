@@ -1,33 +1,104 @@
-Contrat minimal de tous les Panels.
+# PanelBase
 
-## Règles :
+source : [`PanelBase.js`](/refactoring/assets/js/ui/workbench/core/PanelBase.js)
 
-Ce que PanelBase ne fait PAS :
-- aucune logique métier
-- aucun appel API
-- aucun template
-- aucune validation
-- aucune gestion Dialog
+## Rôle
 
-| Méthode | Rôle |
-|---------|------|
-| `constructor(config = {})` | Init sans side-effect |
-| `render()` → `HTMLElement` | Structure DOM vide |
-| `show(...args)` | Affiche les données |
-| `clear()` | État vide |
-| `destroy()` | Libère références & listeners |
-  
-### render()
-doit être implémenté — retourne l'élément DOM racine
+`PanelBase` définit le contrat minimal commun à tous les Panels d'un Workbench.
 
-### show()
-signature libre dans la sous-classe
+Un Panel est une unité d'interface spécialisée dans l'affichage et la manipulation d'une partie de l'état du Workbench.
 
-### clear()
-remet le panel à l'état vide
+Le Panel :
 
-### destroy() 
-libère les ressources ; appelé une seule fois
+* construit son propre DOM ;
+* affiche les données qui lui sont transmises ;
+* revient à un état vide ;
+* libère ses ressources lorsqu'il est détruit.
 
+Le Panel **ne possède pas la logique d'orchestration du Workbench**.
 
+## Contrat
 
+| Méthode         | Rôle                                                 |
+| --------------- | ---------------------------------------------------- |
+| `constructor()` | Initialise les références internes, sans side-effect |
+| `render()`      | Construit et retourne l'élément DOM racine           |
+| `show(...args)` | Affiche les données reçues                           |
+| `clear()`       | Remet le Panel dans son état vide                    |
+| `destroy()`     | Libère les références, listeners et callbacks        |
+
+`render()` est la seule méthode obligatoirement implémentée par la classe fille.
+
+`show()` et `clear()` possèdent une signature libre adaptée au Panel.
+
+## Exemple
+
+```js
+class MotListPanel extends PanelBase
+{
+    render()
+    {
+        this.element = create('section', {
+            class : 'wb_mot_list_panel',
+        })
+
+        return this.element
+    }
+
+    show(items)
+    {
+        // affichage des mots
+    }
+
+    clear()
+    {
+        // état vide
+    }
+
+    destroy()
+    {
+        // listeners / callbacks spécifiques
+
+        super.destroy()
+    }
+}
+```
+
+## Responsabilités interdites
+
+`PanelBase` et ses sous-classes ne doivent pas :
+
+* appeler directement une API métier ;
+* effectuer un fetch ;
+* connaître le modèle backend ;
+* orchestrer les autres Panels ;
+* créer le layout du Workbench ;
+* effectuer la validation métier ;
+* gérer les dialogs globaux ;
+* contenir la logique de navigation du Workbench.
+
+Le Panel reçoit les données et les affiche.
+
+## Cycle de vie
+
+Le Workbench est responsable du cycle de vie du Panel :
+
+```text
+Workbench
+    │
+    ├── crée le Panel
+    │
+    ├── WorkbenchView.mountPanels()
+    │       │
+    │       └── panel.render()
+    │
+    ├── panel.show(...)
+    │
+    └── panel.destroy()
+```
+
+`WorkbenchView` monte et démonte les éléments DOM, mais **ne détruit pas les Panels**. Leur destruction reste sous la responsabilité du Workbench.
+
+## Règle d'architecture
+
+> **Un Panel sait afficher son état ; le Workbench sait quand et pourquoi cet état doit changer.**
