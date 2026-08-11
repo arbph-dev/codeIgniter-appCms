@@ -94,6 +94,6 @@ A créer
 - [RelationPickerDialog](/refactoring/assets/js/ui/shared/RelationPickerDialog.js)
 - [rules](/refactoring/assets/js/ui/shared/validation/rules.js)
 - validator [validator](/refactoring/assets/js/ui/shared/validation/validator.js)
-- toolbar.template.js [toolbar.template.js](/refactoring/assets/js/ui/shared/templates/toolbar.template.js)
+
 
 
