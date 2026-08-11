@@ -16,7 +16,7 @@ const header = toolbar({ title: 'Détail' })
 
 
 ### MotListPanel.js
-- [ ] retrouver header dans MotListPanel.js
+- [ ] retrouver header dans MotListPanel.js : https://github.com/arbph-dev/codeIgniter-appCms/blob/ab9af6dbbc53165f526ce9f3c2b85619e9ac651d/refactoring/assets/js/ui/workbench/mot/MotListPanel.js#L53
 
 ```js
 this.element = create('section', { class: 'wb_mot_list_panel' })
