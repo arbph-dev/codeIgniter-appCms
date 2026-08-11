@@ -48,7 +48,7 @@ new Form({ propertySet, onSubmit, onCancel })
 
 ---
 
-État interne
+## État interne
 
 |Propriété|Type|Contenu|
 |---|---|---|
@@ -65,7 +65,8 @@ Point clé pour relation : la valeur métier est dans le hidden (_inputs), le la
 
 ---
 
-render() — construction
+### render()
+construction
 
 1. Crée div.wb_form.
 2. Pour chaque prop du PropertySet → _createField(prop).
@@ -77,25 +78,34 @@ Le bouton Enregistrer appelle _handleSubmit() → extract() → onSubmit(data) s
 
 ---
 
-_createField(prop) — les 4 types1. Types classiques (text, number, date, …)
+### _createField(prop) 
+— les 4 types
+
+#### 1. Types classiques (text, number, date, …)
 
 ```text
 label + input[type=prop.type] + span.error
 ```
 
-Valeur stockée dans _inputs.2. select
+Valeur stockée dans _inputs.
+
+#### 2. select
 
 ```text
 label + <select> + options(choices) + span.error
 ```
 
-choices est extrait de options et non passé au DOM comme attribut HTML.3. file
+choices est extrait de options et non passé au DOM comme attribut HTML.
+
+#### 3. file
 
 ```text
 label + input[type=file] + span.error
 ```
 
-Pas de fill du fichier (navigateur interdit le pré-remplissage).4. relation (nouveauté iteration 003)
+Pas de fill du fichier (navigateur interdit le pré-remplissage).
+
+#### 4. relation (nouveauté iteration 003)
 
 ```text
 label
@@ -144,7 +154,8 @@ Le handler est enregistré sur le bus et poussé dans _busHandlers pour être d�
 
 ---
 
-fill(data) — mode éditionPour chaque prop :
+### fill(data) 
+mode éditionPour chaque prop :
 
 |Type|Comportement|
 |---|---|
@@ -157,7 +168,8 @@ Puis : clear erreurs + focus sur le premier champ éditable (pas file ni relatio
 
 ---
 
-reset() — mode création
+### reset()
+mode création
 
 |Type|Comportement|
 |---|---|
@@ -169,19 +181,18 @@ Focus sur le premier champ non-file / non-relation.
 
 ---
 
-extract() — validation + objet métierBoucle sur _ps :
+### extract()
+validation + objet métierBoucle sur _ps :
 
 1. _checkField(prop, field)
 2. Si échec → _showError + mémorise le 1er invalide
 3. Si OK → data[name] = _castValue(field, type)
 
 Si invalide :
-
 - focus sur le display si c’est une relation, sinon sur le field
 - retourne null
 
 Si valide :
-
 - applique chaque computePropertySet : data[name] = prop.calculate(data)
 - retourne data
 
@@ -189,31 +200,31 @@ Form ne fait jamais de fetch.
 
 ---
 
-_checkField — règles par typerelation
+### _checkField
+règles par type
 
+#### relation
 - Si required présent dans options et hidden vide → erreur « sélection requise »
 - Si prop.validate et valeur → validation custom
 - Pas de HTML5 validity (champ hidden)
 
-file
-
+#### file
 - required → au moins un fichier
 - validate(file) optionnel
 
-select
-
+#### select
 - field.validity (HTML5)
 - puis prop.validate si défini
 
-Texte / number / date
-
+#### Texte / number / date
 - HTML5 validity (pattern → message dédié)
 - puis prop.validate
 - Particularité : si validate existe et que value === default, le champ est considéré invalide (évite de soumettre la valeur par défaut non touchée)
 
 ---
 
-_castValue — typage
+### _castValue
+typage
 
 |Type|Résultat|
 |---|---|
@@ -227,7 +238,8 @@ La FK relation part donc en entier (ou null) vers le service — adapté aux col
 
 ---
 
-destroy() — anti-fuites
+### destroy()
+Evite les fuites mémoire
 
 1. bus.unsubscribe pour chaque handler de _busHandlers
 2. Clear des Maps (_inputs, _displays, _errorEls)
@@ -237,7 +249,7 @@ Indispensable dès qu’il y a des relation (handlers bus vivants hors du DOM).
 
 ---
 
-Flux relation complet (exemple Adresse / code postal)
+## Flux relation complet (exemple Adresse / code postal)
 
 ```text
 1. render()
@@ -264,7 +276,7 @@ Flux relation complet (exemple Adresse / code postal)
 
 ---
 
-Frontière de responsabilités
+## Frontière de responsabilités
 
 |Fait par Form|Fait par le Panel|
 |---|---|
@@ -276,7 +288,7 @@ Frontière de responsabilités
 
 ---
 
-Points d’attention
+## Points d’attention
 
 1. required pour relation/file : détecté par 'required' in options, pas par la valeur. required: '' suffit.
 2. Deux display fn : itemDisplay (dialog) vs displayFn (fill API) — à ne pas confondre.
