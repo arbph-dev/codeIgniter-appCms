@@ -30,9 +30,31 @@
 
 
 ### Backend
-créé 
-- routes
-- controleur
-- view
-  - [workbench/organisation.php](/refactoring/app/Views/workbench/organisation.php)
+
+
+#### routes
+Ajouter dans le groupe banc de test
+```php
+$routes->group('workbench', ['namespace' => 'App\Controllers'], static function ($routes)
+{
+    ...
+    $routes->get('organisation'              ,   'WorkbenchController::organisation'          );    
+``` 
+#### controleur WorkbenchController
+ajouter methode organisation
+```php
+    public function organisation() { return view('workbench/organisation'); }
+```
+
+#### view
+[workbench/organisation.php](/refactoring/app/Views/workbench/organisation.php)
+
+
+
+
+
+
+
+
+
 
