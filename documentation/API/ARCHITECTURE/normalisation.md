@@ -1,6 +1,134 @@
-Deux angles : les **principes** pour la suite, puis le **stub Mot** qui les implémente.
+
+Ce que les travaux récents sur `RelationField`, `RelationPickerDialog`, l'autocomplétion et les futurs Workbenches font apparaître, c'est qu'il nous manque une couche conceptuelle stable :
+
+> **la gestion des relations côté backend/API doit être définie avant de figer les composants UI qui vont les exploiter.**
+
+Le cas **Organisation → Entreprise → Établissement → Service**, auquel s'ajoutent les **Personnes**, est suffisamment riche pour servir de cas de référence.
+
+### Le problème à résoudre
+
+On a plusieurs types de relations :
+
+```
+Personne ─────────────── Personne
+   ├──────────────────── Organisation
+   │                         ├── Entreprise
+   │                         │      └── Établissement
+   │                         │               └── Service
+   │                         └── ...
+   └──────────────────── ...
+```
+
+Et ces relations ne doivent pas être traitées comme de simples `JOIN` systématiques.
+
+Il faut distinguer au moins :
+
+1. **l'identification d'une relation** ;
+2. **la recherche d'une entité liée** ;
+3. **le chargement de la relation** ;
+4. **le chargement de l'entité liée** ;
+5. **l'autocomplétion** ;
+6. **la récupération du détail** ;
+7. **la liste des relations** ;
+8. **la création/suppression d'une relation**.
+
+C'est précisément là que le **lazy fetch** devient important.
+
+### Je proposerais donc de reprendre le backend dans cet ordre
+
+```
+1. Modèle de données
+       ↓
+2. Contrat des relations
+       ↓
+3. API Relation
+       ↓
+4. API autocomplete / recherche
+       ↓
+5. Lazy fetch
+       ↓
+6. RelationField
+       ↓
+7. RelationPickerDialog
+       ↓
+8. Workbenches
+```
+
+Et surtout, **ne pas commencer par l'API générique**.
+
+Il faut d'abord reprendre notre modèle métier concret :
+
+```
+Personne
+Organisation
+Entreprise
+Établissement
+Service
+```
+
+et formaliser exactement ce que signifie chaque relation.
+
+Par exemple, une personne peut être liée à une organisation avec un **rôle**, une **fonction**, une **période**, éventuellement un statut ; alors que :
+
+```
+Entreprise → Établissement
+```
+
+est une relation structurelle très différente.
+
+De même :
+
+```
+Établissement → Service
+```
+
+n'est pas simplement une relation générique `entity_id / related_id`.
+
+### Le point important
+
+Je ne chercherais donc pas à construire maintenant un `RelationService` universel.
+
+Je ferais d'abord une **cartographie des relations backend existantes et souhaitées**, notamment celles que nous avions déjà travaillées :
+
+- personne ↔ personne ;
+- personne ↔ organisation ;
+- organisation ↔ entreprise ;
+- entreprise ↔ établissement ;
+- établissement ↔ service.
+
+Puis, pour chacune :
+
+```
+Cardinalité
+Direction
+Table porteuse
+Clé primaire
+Clé étrangère
+Attributs de la relation
+API de lecture
+API de recherche
+API de création
+API de suppression
+Lazy-load nécessaire ?
+Autocomplete nécessaire ?
+```
+
+À partir de là, on pourra dégager le **contrat commun des relations** sans tomber dans une abstraction prématurée.
+
+Et je pense qu'il faut également traiter un sujet que nos travaux frontend viennent de révéler : **la différence entre `id` et `key` doit rester explicite**, notamment pour les PK. On avait justement commencé à toucher ce point avec `relationField` et les `properties`.
+
+Je te propose donc qu'on reprenne **le backend des relations à partir de ce modèle Organisation / Entreprise / Établissement / Service + Personne**, et que nous reconstruisions le contrat API avant de toucher davantage à `RelationField`.
+
+
 
 ---
+
+
+
+
+Deux angles : les **principes** pour la suite, puis le **stub Mot** qui les implémente.
+
+
 
 ### Conseils pour les API futures
 
