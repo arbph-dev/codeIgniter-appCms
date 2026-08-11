@@ -45,9 +45,18 @@ const header = toolbar({
 ---
 
 ## Ressources
-> Référence : [2026-08-05-001.md](/project/daily/2026-08-05-001.md)
-
-
+> Référence :
+> - [2026-08-05-001.md](/project/daily/2026-08-05-001.md)
+> 
+> - [AdresseDetailPanel.js](/refactoring/assets/js/ui/workbench/adresse/AdresseDetailPanel.js)
+> - [AdresseListPanel.js](/refactoring/assets/js/ui/workbench/adresse/AdresseListPanel.js)
+> - [MapPanel.js](/refactoring/assets/js/ui/workbench/adresse/MapPanel.js)
+>
+> - [ImageListPanel.js](/refactoring/assets/js/ui/workbench/image/ImageListPanel.js)
+> - [ImagePreviewPanel.js](/refactoring/assets/js/ui/workbench/image/ImagePreviewPanel.js)
+>
+> - [OrgListPanel.js](/refactoring/assets/js/ui/workbench/organisation/OrgListPanel.js)
+> - [OrgDetailPanel.js](/refactoring/assets/js/ui/workbench/organisation/OrgDetailPanel.js)
 
 
 
