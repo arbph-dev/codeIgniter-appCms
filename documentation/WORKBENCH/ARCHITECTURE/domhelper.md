@@ -13,8 +13,25 @@ Exemple :
     ]))
 ```
 
+## [`notice()`](/refactoring/assets/js/core/domhelper.js#L338)
 
-## [/assets/js/core/domhelper.js : pagination()](/refactoring/assets/js/core/domhelper.js#L338)
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/public/assets/js/core/domhelper.js#L590
+
+Message inline simple (loading / erreur / vide).
+
+type : 'loading' | 'error' | 'empty'
+
+Exemple :
+```js
+    clear(panels.table)
+    panels.table.appendChild(notice('loading'))
+    panels.table.appendChild(notice('error', 'HTTP 500'))
+    panels.table.appendChild(notice('empty'))
+```
+
+
+
+## [`pagination()`](/refactoring/assets/js/core/domhelper.js#L338)
 Construit un bloc de pagination en DOM pur (zéro innerHTML).
 
 Options :
