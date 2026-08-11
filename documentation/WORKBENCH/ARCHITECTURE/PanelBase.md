@@ -34,8 +34,7 @@ Le Panel **ne possède pas la logique d'orchestration du Workbench**.
  
 
 ## Exemple
-
-[`MotListPanel::show()`](https://github.com/arbph-dev/codeIgniter-appCms/blob/4fae9f753383ebc8d1491fc1e0b89e49fc8fcc5f/refactoring/assets/js/ui/workbench/mot/MotListPanel.js#L59)
+[`MotListPanel::show()`](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/ui/workbench/mot/MotListPanel.js#L59)
 
 ```js
 class MotListPanel extends PanelBase
