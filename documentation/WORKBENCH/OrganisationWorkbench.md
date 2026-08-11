@@ -76,10 +76,16 @@ On créé le conteneur et on ajout import et script d'initialisation
 # Implémentation
 
 ## Service
+Relations directes sur organisations :
+- adresse_id — FK directe (pas pivot) → AdressePickerDialog = RelationPickerDialog configuré avec fetchAdresseLike
+- withRelations() ne joint pas les adresses
+  - displayFn affiche Adresse #id au chargement , itemDisplay donne le formatage complet après sélection picker.
+
+**Backend à enrichir** plus tard.
 
 ### [organisation.constants.js](/refactoring/assets/js/features/organisation/organisation.constants.js)
 
-Définit une ORGANISATION_TYPES, tableau d'objet, miroir de la table. 
+Définit une constante `ORGANISATION_TYPES`, tableau d'objet, miroir de la table. 
 
 **organisation_types** n'as pas d'enum ni de model; c'est un référentiel table pure. Si la table évolue un jour, le fichier est à mettre à jour.
 
@@ -94,6 +100,24 @@ export const ORGANISATION_TYPES = [
     { value: '7', label: 'Musée / Site culturel'   },
 ]
 ```
+Le PropertySet fait le lien avec `ORGANISATION_TYPES` dans [organisation.properties.js](/refactoring/assets/js/features/organisation/organisation.properties.js)
+```js
+{
+    name        : 'organisation_type_id',
+    description : 'Type',
+    type        : 'radio',
+    default     : '1',
+    options     : {
+        required : '',
+        choices  : ORGANISATION_TYPES,
+    },
+}
+```
+
+
+
+
+
 
 ## Workbench core
 
@@ -115,8 +139,12 @@ radio et checkbox suivent exactement le même schéma : PropertySet que les type
 
 Le cas :has(input:checked) en CSS donne un retour visuel immédiat sur le radio sélectionné sans une ligne de JS supplémentaire.
 
+choix en radio avec flex-wrap donnent 3-4 lignes, **radio** pour la vue form principale, avec un type: 'select' en fallback si l'espace manque. 
+correct pour un formulaire de création. Mais en onglet compact (TabSystem), le select est plus sobre. 
 
 
 
+TabSystem dans OrgDetailPanel :
 
-
+renderFn() → form.render() (construit le DOM)
+initFn() → form.fill(org) (remplit au premier activate, lazy mais instantané — pas de fetch)
