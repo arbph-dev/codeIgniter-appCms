@@ -33,13 +33,16 @@ $routes->group('admin/component-types', static function ($routes)
     $routes->get('delete/(:num)', 'Admin\ComponentTypeController::delete/$1');
 });
 
+
+/* banc de test    */
 $routes->group('workbench', ['namespace' => 'App\Controllers'], static function ($routes)
 {
     $routes->get('component-catalog'    ,   'WorkbenchController::componentCatalog' );
     $routes->get('mot'                  ,   'WorkbenchController::mot'              );
     $routes->get('image'                ,   'WorkbenchController::image'            );
     $routes->get('adresse'              ,   'WorkbenchController::adresse'          );
-    $routes->get('organisation'         ,   'WorkbenchController::organisation'     );	
+    $routes->get('organisation'         ,   'WorkbenchController::organisation'     );
+    $routes->get('imagetagger'          ,   'WorkbenchController::imagetagger'      );    
 });
 
 $routes->group('admin/cmspart', static function($routes)
@@ -115,9 +118,11 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
     // component-catalog
     $routes->get('component-catalog', 'ComponentCatalogController::index');
 
-    // Mot
-    $routes->get('mot/like', 'Mot::like');// Doit être AVANT la route ressource générique
-    //$routes->resource('mot'); // a tester en lieu et place des 4 linges ci dessous
+    
+    // Doiventt être AVANT la route ressource générique
+    $routes->get('mot/like', 'Mot::like');
+    $routes->get('mot/batch', 'Mot::batch');// Mot batch (lazy loading frontend)
+    //$routes->resource('mot'); // a tester en lieu et place des 4 lignes ci dessous
     $routes->get   ('mot',        'Mot::index');
     $routes->post  ('mot',        'Mot::create');
     $routes->put   ('mot/(:num)', 'Mot::update/$1');
@@ -138,8 +143,19 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
     $routes->get    ('comptespcg/(:segment)/hierarchy','Comptespcg::hierarchy/$1');
     $routes->resource('comptespcg');
 
+    // ajout 2026-08-12
+    $routes->get( 'image/(:num)/mots','ImageMot::index/$1');
+    $routes->post( 'image/(:num)/mots', 'ImageMot::attach/$1');
+    $routes->put( 'image/(:num)/mots', 'ImageMot::sync/$1' );
+    $routes->delete( 'image/(:num)/mots/(:num)', 'ImageMot::detach/$1/$2');
+    $routes->get( 'mot/(:num)/images', 'MotImage::index/$1');
+
     $routes->get('image/like', 'Image::like');
     $routes->resource('image', [ 'controller' => 'Image']);
+
+
+
+
 
     $routes->get   ('formejuridique',        'FormeJuridique::index');
     $routes->get   ('formejuridique/like',   'FormeJuridique::like');
