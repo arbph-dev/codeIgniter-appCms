@@ -1,0 +1,173 @@
+/* =============================================================================
+   WORKBENCH IMAGE TAGGER — /assets/css/workbench/workbench_tagger.css
+   Charger après workbench.css + workbench_image.css.
+   ============================================================================= */
+
+/* ── Fix overflow — dropdown suggestions coupé par le panel parent ── */
+/* .wb_mot_detail_panel hérite overflow:hidden de workbench.css        */
+/* Le contexte tagger doit autoriser le débordement sur la zone center  */
+.wb_tagger_center .wb_mot_detail_panel { overflow : visible; }
+.wb_tagger_center .wb_panel_body       { overflow : visible; }
+
+/* Restaure le border-radius visible malgré overflow:visible */
+.wb_tagger_center .wb_mot_detail_panel { border-radius : var(--wb-radius); }
+
+/* ── Layout 3 zones ── */
+.wb_tagger_layout {
+    display     : flex;
+    align-items : flex-start;
+    gap         : var(--wb-gap);
+    width       : 100%;
+    min-height  : calc(100vh - 2 * var(--wb-padding));
+}
+
+.wb_tagger_left   { flex: 0 0 260px; min-width: 0; }
+.wb_tagger_center { flex: 0 0 360px; min-width: 0; }
+.wb_tagger_right  { flex: 1;         min-width: 0; }
+
+/* ── Filtre statut dans la searchbar ── */
+.wb_tagger_status_select {
+    flex-shrink  : 0;
+    padding      : .35rem .5rem;
+    font-size    : .8rem;
+    font-family  : inherit;
+    border       : 1px solid var(--wb-input-border);
+    border-radius: 4px;
+    background   : var(--wb-input-bg);
+    color        : var(--wb-text);
+    cursor       : pointer;
+}
+
+/* ── Badge mot count sur les vignettes ── */
+.wb_image_badge {
+    position      : absolute;
+    bottom        : .25rem;
+    right         : .25rem;
+    min-width     : 1.25rem;
+    height        : 1.25rem;
+    padding       : 0 .35rem;
+    border-radius : .625rem;
+    font-size     : .65rem;
+    font-weight   : 700;
+    line-height   : 1.25rem;
+    text-align    : center;
+    background    : var(--wb-muted);
+    color         : #fff;
+    pointer-events: none;
+}
+
+.wb_image_badge--tagged {
+    background : var(--wb-blue);
+}
+
+/* ── Section chips ── */
+.wb_tagger_chips_section {
+    margin-bottom : 1rem;
+}
+
+.wb_tagger_chips {
+    display   : flex;
+    flex-wrap : wrap;
+    gap       : .4rem;
+    padding   : .5rem 0;
+    min-height: 2.5rem;
+}
+
+.wb_tagger_empty {
+    font-size  : .8rem;
+    color      : var(--wb-muted);
+    font-style : italic;
+    align-self : center;
+}
+
+/* ── Chip ── */
+.wb_chip {
+    display      : inline-flex;
+    align-items  : center;
+    gap          : .3rem;
+    padding      : .25rem .55rem;
+    border-radius: 1rem;
+    background   : var(--wb-blue);
+    color        : #fff;
+    font-size    : .8rem;
+    font-weight  : 500;
+    line-height  : 1.2;
+    transition   : background .15s;
+}
+
+.wb_chip_label {
+    white-space : nowrap;
+}
+
+.wb_chip_remove {
+    display      : flex;
+    align-items  : center;
+    justify-content: center;
+    width        : 1rem;
+    height       : 1rem;
+    padding      : 0;
+    border       : none;
+    border-radius: 50%;
+    background   : rgba(255,255,255,.25);
+    color        : #fff;
+    font-size    : .75rem;
+    line-height  : 1;
+    cursor       : pointer;
+    transition   : background .15s;
+    flex-shrink  : 0;
+}
+
+.wb_chip_remove:hover { background: rgba(255,255,255,.45); }
+
+/* ── Autocomplete ── */
+.wb_tagger_add_section {
+    position : relative;
+}
+
+.wb_tagger_input_wrapper {
+    position : relative;
+}
+
+.wb_tagger_input {
+    width : 100%;
+}
+
+.wb_tagger_suggestions {
+    position      : absolute;
+    top           : calc(100% + 2px);
+    left          : 0;
+    right         : 0;
+    z-index       : 100;
+    list-style    : none;
+    margin        : 0;
+    padding       : .25rem 0;
+    background    : var(--wb-panel-bg);
+    border        : 1px solid var(--wb-border);
+    border-radius : var(--wb-radius);
+    box-shadow    : 0 4px 12px rgba(0,0,0,.12);
+    max-height    : 220px;
+    overflow-y    : auto;
+}
+
+.wb_suggest_item {
+    padding    : .4rem .75rem;
+    font-size  : .85rem;
+    color      : var(--wb-text);
+    cursor     : pointer;
+    transition : background .1s;
+}
+
+.wb_suggest_item:hover { background: var(--wb-table-row-hover); }
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+    .wb_tagger_layout { flex-wrap: wrap; }
+    .wb_tagger_left   { flex: none; width: 100%; }
+    .wb_tagger_center,
+    .wb_tagger_right  { flex: 1; min-width: 280px; }
+}
+
+@media (max-width: 768px) {
+    .wb_tagger_center,
+    .wb_tagger_right  { flex: none; width: 100%; }
+}
