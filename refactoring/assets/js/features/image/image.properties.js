@@ -1,18 +1,21 @@
 // assets/js/features/image/image.properties.js
 // ─────────────────────────────────────────────────────────────────────────────
-// Deux schémas distincts (différence structurelle vs MotWorkbench) :
+// Correction iteration003 :
+//   status : draft/published/archived → pending/validated/rejected (ImageModel)
 //
-//   ImageCreatePropertySet — CREATE : file + alt + status
-//   ImageEditPropertySet   — UPDATE : alt + status seulement
-//
-// Champs read-only calculés à l'upload (affichés en lecture, jamais dans les
-// PropertySet car non éditables) :
-//   filename, width, height, ratio, extension, size_ko, path
+// Deux schémas distincts (inchangé) :
+//   ImageCreatePropertySet — file + alt + status  (upload)
+//   ImageEditPropertySet   — alt + status         (modification)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/**
- * Schéma CREATE — upload d'une nouvelle image.
- */
+const STATUS_CHOICES = [
+    { value: 'pending',   label: 'En attente'  },
+    { value: 'validated', label: 'Validée'     },
+    { value: 'rejected',  label: 'Rejetée'     },
+]
+
+// ── CREATE ────────────────────────────────────────────────────────────────────
+
 export const ImageCreatePropertySet = [
     {
         name        : 'file',
@@ -23,10 +26,9 @@ export const ImageCreatePropertySet = [
             accept   : 'image/*',
             required : '',
         },
-        // validate reçoit le File object (pas la fake path string)
         validate    : (file) =>
         {
-            if (!file) return 'Fichier requis.'
+            if (!file)                  return 'Fichier requis.'
             if (file.size > 10 * 1024 * 1024) return 'Taille max : 10 Mo.'
             return true
         },
@@ -37,7 +39,7 @@ export const ImageCreatePropertySet = [
         type        : 'text',
         default     : '',
         options     : {
-            placeholder : 'Description de l\'image…',
+            placeholder : "Description de l'image…",
             maxlength   : '255',
         },
     },
@@ -45,21 +47,13 @@ export const ImageCreatePropertySet = [
         name        : 'status',
         description : 'Statut',
         type        : 'select',
-        default     : 'draft',
-        options     : {
-            choices : [
-                { value: 'draft',     label: 'Brouillon'  },
-                { value: 'published', label: 'Publié'     },
-                { value: 'archived',  label: 'Archivé'    },
-            ],
-        },
+        default     : 'pending',
+        options     : { choices: STATUS_CHOICES },
     },
 ]
 
-/**
- * Schéma UPDATE — modification d'une image existante.
- * filename, dimensions, extension, size_ko, path → read-only, affichés via detail()
- */
+// ── EDIT ──────────────────────────────────────────────────────────────────────
+
 export const ImageEditPropertySet = [
     {
         name        : 'alt',
@@ -67,7 +61,7 @@ export const ImageEditPropertySet = [
         type        : 'text',
         default     : '',
         options     : {
-            placeholder : 'Description de l\'image…',
+            placeholder : "Description de l'image…",
             maxlength   : '255',
         },
     },
@@ -75,18 +69,9 @@ export const ImageEditPropertySet = [
         name        : 'status',
         description : 'Statut',
         type        : 'select',
-        default     : 'draft',
-        options     : {
-            choices : [
-                { value: 'draft',     label: 'Brouillon'  },
-                { value: 'published', label: 'Publié'     },
-                { value: 'archived',  label: 'Archivé'    },
-            ],
-        },
+        default     : 'pending',
+        options     : { choices: STATUS_CHOICES },
     },
 ]
 
-/**
- * Champs calculés côté serveur à l'upload — aucun ComputePropertySet côté client.
- */
 export const ImageComputePropertySet = []
