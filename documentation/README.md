@@ -30,4 +30,34 @@ Documentation a mettre en forme en priorité
 - [ ] Détailler les éléments clefs des Workbench dans [WORKBENCH/ARCHITECTURE](/documentation/WORKBENCH/ARCHITECTURE)
 - [ ] Ajuster l'arborescence
 
+%% /assets/js/core/apiFetch.js %%
+[](/)
+
+### Les contrats
+
+#### [Workbench](/documentation/WORKBENCH/ARCHITECTURE/WORKBENCH_CONTRACT.md)
+
+- [WorkbenchBase](/documentation/WORKBENCH/ARCHITECTURE/WorkbenchBase.md)
+- [WorkbenchView](/documentation/WORKBENCH/ARCHITECTURE/WorkbenchView.md)
+- [LayoutDescriptor](/documentation/WORKBENCH/ARCHITECTURE/LayoutDescriptor.md) décrit la structure physique d'un Workbench.
+- [PanelBase](/documentation/WORKBENCH/ARCHITECTURE/PanelBase.md)
+  - [contrat ](/documentation/WORKBENCH/ARCHITECTURE/PanelBase.md#contrat)
+- [Données](/documentation/WORKBENCH/ARCHITECTURE/DATA_CONTRACT.md)
+  - [PropertySet](/documentation/WORKBENCH/ARCHITECTURE/PropertySet.md)
+
+[Form](/documentation/WORKBENCH/ARCHITECTURE/Form.md)
+
+---
+
+a détailler usage : 
+- [DialogManager](/documentation/WORKBENCH/ARCHITECTURE/DialogManager.md)
+- [domhelper](/documentation/WORKBENCH/ARCHITECTURE/domhelper.md)
+- [Formatters](/documentation/WORKBENCH/ARCHITECTURE/Formatters.md) - /assets/js/ui/shared/format.js
+- [RelationPickerDialog](/documentation/WORKBENCH/ARCHITECTURE/RelationPickerDialog.md) - vide
+- [TabSystem](/documentation/WORKBENCH/ARCHITECTURE/TabSystem.md)
+- [toolbar.template](/documentation/WORKBENCH/ARCHITECTURE/toolbar.template.md) utilisé dans les panels
+- [Validation-rules](/documentation/WORKBENCH/ARCHITECTURE/Validation-rules.md)
+- [Validation-validator](/documentation/WORKBENCH/ARCHITECTURE/Validation-validator.md)
+
+
 
