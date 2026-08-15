@@ -62,6 +62,7 @@ Pattern mises à jour optimistes :
   - attach → taggerPanel.addMot (immédiat) → API 
     - succès: badge++
     - erreur: taggerPanel.removeMot + feedback
+
   -  detach → taggerPanel.removeMot (immédiat) → API
     - succès: badge--
     - erreur: taggerPanel.addMot + feedback
@@ -87,6 +88,7 @@ Gestion des mots-tags d'une image.
 - revert sur erreur API (géré par le Workbench via addMot/removeMot).
 
 API publique :
+```
 - render() -> HTMLElement
 - show(image, mots) -> affiche image info + chips
 - clear()
@@ -97,8 +99,9 @@ API publique :
 - onAttach(fn) -> fn(imageId, motId, motObj)
 - onDetach(fn) -> fn(imageId, motId, motObj)
 - destroy()
+```
 
-
+**dépendances** 
 - [PanelBase.js](/refactoring/assets/js/ui/workbench/core/PanelBase.js)
 - [domhelper.js](/refactoring/assets/js/ui/workbench/core/domhelper.js)
 - [toolbar.template.js](/refactoring/assets/js/ui/shared/templates/toolbar.template.js)
