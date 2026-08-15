@@ -13,9 +13,10 @@ class PersonneParcours extends Entity
         'updated_at',
     ];
     protected $casts = [
-        'id'          => 'integer',
-        'personne_id' => 'integer',
-        'structure_id'=> '?integer',
-        'adresse_id'  => '?integer',
+        'id'           => 'integer',
+        'personne_id'  => 'integer',
+        'type'         => 'integer',    // FK vers parcours_types.id — était absent
+        'structure_id' => '?integer',
+        'adresse_id'   => '?integer',
     ];
 }

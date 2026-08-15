@@ -19,7 +19,7 @@ class Personne extends Entity
         'id'                   => 'integer',
         'naissance_adresse_id' => '?integer',
         'deces_adresse_id'     => '?integer',
-        'quality_score'        => '?float',
+        'quality_score'        => '?integer',   // tinyint unsigned en base — était ?float
         'verified_by'          => '?integer',
         'merge_into_id'        => '?integer',
         'created_at'           => 'datetime',
