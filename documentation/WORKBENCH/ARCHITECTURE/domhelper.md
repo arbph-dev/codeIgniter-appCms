@@ -8,11 +8,23 @@ Cette librairie permet de
 ```mermaid
 classDiagram
     class DOMHelper {
-        <<dom selectors>>
+        <<dom utility and selectors>>
         +qs(selector, root): HTMLElement
         +qsa(selector, root): NodeList
         +byId(id): HTMLElement
-        <<utility>>
+        +create(tag, attrs): HTMLElement
+        +clear(element): void
+        +toggle(element, force): void
+    }
+```
+
+```mermaid
+classDiagram
+    class DOMHelper {
+        <<dom utility and selectors>>
+        +qs(selector, root): HTMLElement
+        +qsa(selector, root): NodeList
+        +byId(id): HTMLElement
         +create(tag, attrs): HTMLElement
         +clear(element): void
         +toggle(element, force): void
