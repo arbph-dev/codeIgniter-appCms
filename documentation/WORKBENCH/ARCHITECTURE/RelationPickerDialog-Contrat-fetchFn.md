@@ -6,9 +6,7 @@ Le contrat est volontairement **étroit** : une fonction, une entrée, une sorti
 
 ## 1. Signature
 
-TypeScript
-
-```
+```js
 fetchFn: (q: string) => Promise<object[]>
 ```
 
@@ -29,9 +27,7 @@ Le dialog ne parse pas de JSON, n’ajoute pas de headers, ne gère pas le pager
 - Debounce interne **280 ms** : fetchFn n’est pas appelée à chaque frappe.
 - **Pas** d’objet options passé par le dialog aujourd’hui :
 
-JavaScript
-
-```
+```js
 // Aujourd’hui
 fetchFn(q)
 
@@ -41,9 +37,7 @@ fetchFn({ q, page, filters })
 
 Filtres métier (type, source_type, len…) → **fermeture** dans la fonction fournie par le Workbench :
 
-JavaScript
-
-```
+```js
 fetchFn: (q) => fetchOrgLike({ q, typeId: this._typeId, len: 20 })
 ```
 
@@ -66,7 +60,7 @@ JavaScript
 
 JavaScript
 
-```
+```js
 // Enveloppe API standard
 { status: 200, data: [ ... ], pager: { ... } }
 
@@ -81,7 +75,7 @@ Si le service métier renvoie l’enveloppe DATA_CONTRACT, **normaliser dans le 
 
 JavaScript
 
-```
+```js
 // Dans *.service.js (recommandé)
 export async function fetchCpLike({ q, len = 20 }) {
     const res = await apiFetch(`/api/codepostal/like?q=${encodeURIComponent(q)}&len=${len}`)
@@ -128,9 +122,7 @@ Le dialog **n’interprète pas** les types : il les affiche via table({ columns
 
 ### Exemple item « riche » (adresse)
 
-JavaScript
-
-```
+```js
 {
   id: 5,
   voienom: 'Lilas',
@@ -147,9 +139,7 @@ columns n’affiche qu’un sous-ensemble ; itemDisplay peut utiliser tout l’o
 
 ## 5. Erreurs
 
-JavaScript
-
-```
+```js
 export async function fetchPersonneLike({ q, len = 20 }) {
     const res = await apiFetch(`/api/personnes/like?q=${encodeURIComponent(q)}&len=${len}`)
     if (!res.ok) {
@@ -191,9 +181,7 @@ Un résultat trop long dégrade l’UX ; ce n’est pas au dialog de paginer.
 
 Le dialog ignore le contexte métier. Le Workbench l’injecte par fermeture :
 
-JavaScript
-
-```
+```js
 // Filtre type organisation déjà choisi dans le Workbench
 fetchFn: (q) => fetchOrgLike({
     q,
@@ -214,9 +202,7 @@ Si le contexte change **après** render() (ex. l’utilisateur change target_typ
 - soit la fermeture lit un état mutable (this._targetType) à chaque appel ;
 - soit on destroy() + recrée le dialog (rare).
 
-JavaScript
-
-```
+```js
 // État mutable lu à chaque frappe — OK
 this._relationTargetType = 'organisation'
 
@@ -241,9 +227,7 @@ fetchFn: (q) => {
 |objet complet|passé à itemDisplay(item)|
 |—|displayFn(data) utilise l’objet **API parent** au fill(), pas l’item du picker|
 
-JavaScript
-
-```
+```js
 // Item retourné par fetchFn
 { id: 42, codepostal: '29120', commune: "Pont-l'Abbé" }
 
@@ -263,9 +247,7 @@ Les noms de champs JOIN (cp_commune) peuvent différer des noms suggest (commune
 
 ### Code postal
 
-JavaScript
-
-```
+```js
 // fetchFn
 (q) => fetchCpLike({ q })
 
@@ -275,9 +257,7 @@ JavaScript
 
 ### Adresse
 
-JavaScript
-
-```
+```js
 (q) => fetchAdresseLike({ q, len: 20 })
 
 // Item minimal pour columns + itemDisplay
@@ -292,9 +272,7 @@ JavaScript
 
 ### Organisation
 
-JavaScript
-
-```
+```js
 (q) => fetchOrgLike({ q, len: 20 })
 
 { id: number, nom: string, type_label?: string }
@@ -302,9 +280,7 @@ JavaScript
 
 ### Personne (futur)
 
-JavaScript
-
-```
+```js
 (q) => fetchPersonneLike({ q, len: 20 })
 
 {
@@ -316,9 +292,7 @@ JavaScript
 
 ### Parcours type (référentiel)
 
-JavaScript
-
-```
+```js
 (q) => fetchParcoursTypeLike({ q })
 
 { id: number, code: string, label: string }
@@ -326,9 +300,7 @@ JavaScript
 
 ### Type de relation filtré
 
-JavaScript
-
-```
+```js
 (q) => fetchRelationTypeLike({
   q,
   source_type: 'personne',
