@@ -6,6 +6,7 @@ Cette librairie permet de
 - factoriser la création des éléments
 
 ```mermaid
+classDiagram
     class DOMHelper {
         <<utility>>
         +qs(selector, root): HTMLElement
