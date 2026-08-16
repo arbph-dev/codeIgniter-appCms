@@ -30,9 +30,6 @@ Documentation a mettre en forme en priorité
 - [ ] Détailler les éléments clefs des Workbench dans [WORKBENCH/ARCHITECTURE](/documentation/WORKBENCH/ARCHITECTURE)
 - [ ] Ajuster l'arborescence
 
-%% /assets/js/core/apiFetch.js %%
-[](/)
-
 ### Les contrats
 
 #### [Workbench](/documentation/WORKBENCH/ARCHITECTURE/WORKBENCH_CONTRACT.md)
@@ -58,6 +55,14 @@ a détailler usage :
 - [toolbar.template](/documentation/WORKBENCH/ARCHITECTURE/toolbar.template.md) utilisé dans les panels
 - [Validation-rules](/documentation/WORKBENCH/ARCHITECTURE/Validation-rules.md)
 - [Validation-validator](/documentation/WORKBENCH/ARCHITECTURE/Validation-validator.md)
+
+## Les workbench
+
+[MotWorkbench](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/MotWorkbench.md)
+[ImageWorkbench](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ImageWorkbench.md)
+[AdresseWorkbench](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/AdresseWorkbench.md)
+[OrganisationWorkbench](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/OrganisationWorkbench.md)
+[ImageTaggerWorkbench](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ImageTaggerWorkbench.md)
 
 
 
