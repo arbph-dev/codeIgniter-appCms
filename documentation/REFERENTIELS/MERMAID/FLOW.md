@@ -1,4 +1,4 @@
-```memraid
+```mermaid
 flowchart TB
 
     subgraph APP["Couche métier / Workbench concret"]
