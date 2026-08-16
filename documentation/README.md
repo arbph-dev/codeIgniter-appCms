@@ -161,7 +161,9 @@ D22 CMS ↔ WORKBENCH
 ### D02 Pagination bus
 - voir [domhelper](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/core/domhelper.js#L338)
 - utiliser onPage(fn)
-- Revoir la note : (https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-09.md#todo)
+- Revoir les notes :
+  - [`2026-08-09 / todo`](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-09.md#todo)
+  - [`WORKBENCH_CONTRACT / limitation-actuelle--pagination`](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/WORKBENCH_CONTRACT.md#5-limitation-actuelle--pagination)
 
 
 ### D09 - Auth isolée
