@@ -335,6 +335,12 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], static function ($
     $routes->get('parcours-types/(:num)',  'ParcoursTypes::show/$1');
 });
 ```
+## Résumé des endpoints
+
+|Méthode|Endpoint|Description|
+|---|---|---|
+|GET|/api/personne/@id||
+
 
 ---
 
