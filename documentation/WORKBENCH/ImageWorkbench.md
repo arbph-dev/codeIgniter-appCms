@@ -1,3 +1,34 @@
+**Description** : premier Workbench multi-zones + upload fichier + double PropertySet.
+
+### Forces (d’après doc)
+
+- 3 zones sans toucher au core.
+- Distinction claire CREATE (FormData) / UPDATE (JSON).
+- Champs read-only calculés à l’upload exclus des PropertySet.
+- _destroyForm() extrait pour éviter les fuites mémoire.
+- img.loading = 'lazy' sur les vignettes.
+
+### Dettes techniques
+
+|Dette|Détail|Priorité|
+|---|---|---|
+|Doc partielle|Moins de bilan critique que Adresse/Organisation|Moyenne|
+|Double PropertySet|Pattern CREATE/UPDATE à formaliser dans PropertySet.md|Haute (doc)|
+|Pagination|Probablement encore via bus (à confirmer)|Haute si confirmé|
+|Preview découplée|Bon pattern, mais non généralisé|Basse|
+
+### Croisement
+
+- Daily peu mentionnés sur ImageWorkbench lui-même ; le focus a basculé vers ImageTagger (relation Image↔Mot).
+
+**Verdict** : solide sur le plan fonctionnel ( preview). 
+upload à valider
+Pattern CREATE/UPDATE à consolider dans le contrat PropertySet.
+
+
+
+
+
 # ImageWorkbench
 
 - 3 zones sur WorkbenchView
