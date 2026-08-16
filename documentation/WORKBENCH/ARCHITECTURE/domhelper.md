@@ -8,7 +8,6 @@ Cette librairie permet de
 ```mermaid
 classDiagram
     class DOMHelper {
-        <<dom utility and selectors>>
     }
 ```
 
