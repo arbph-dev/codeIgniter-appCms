@@ -7,8 +7,7 @@ Cette librairie permet de
 
 ```mermaid
 classDiagram
-    class DOMHelper {
-    }
+    class DOMHelper {}
 ```
 
 ```mermaid
