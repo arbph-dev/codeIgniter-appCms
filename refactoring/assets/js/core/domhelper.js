@@ -337,36 +337,46 @@ export function toggle(el, state) {
 /*
   pagination()
   ─────────────────────────────────────────────────────────────────────────────
-  Construit un bloc de pagination en DOM pur (zéro innerHTML).
-
   Options :
-    pager        {object}   { currentPage, pageCount }   — requis
-    busEvent     {string}   nom de l'event bus à publier   (défaut : 'page')
-    style        {string}   'buttons' | 'prev-next' | 'compact'
-    cssPage      {string}   classe CSS du bouton page     (défaut : 'cp_page_btn')
-    cssWrap      {string}   classe CSS du conteneur       (défaut : 'cp_pagination')
-    cssActive    {string}   classe CSS du bouton actif    (défaut : 'active')
-    maxVisible   {number}   nb max de pages affichées en style 'buttons'
-                             0 = toutes (défaut : 0)
+    pager        {object}    { currentPage, pageCount }  — requis
+    onClick      {Function}  (page: number) => void      — prioritaire
+    busEvent     {string}    event bus si pas d'onClick   (défaut : 'page')
+    style        {string}    'buttons' | 'prev-next' | 'compact'
+    cssPage      {string}
+    cssWrap      {string}
+    cssActive    {string}
+    maxVisible   {number}
 
-  Retourne :
-    HTMLElement  (div)   — à appender directement dans le panel
+  Exemple Workbench :
+    pagination({ pager, onClick: (p) => this._onPageFn?.(p), style: 'compact' })
 
-  Exemple :
-    clear(panels.pagination)
-    panels.pagination.appendChild(pagination({
-        pager    : store.pagination,
+  Exemple legacy :
+    pagination({ pager, busEvent: 'mot:page', style: 'buttons' })
+
+    // Workbench / ListPanelBase (cible D02)
+    pagination({
+        pager,
+        onClick    : (page) => this._onPageFn?.(page),
+        style      : 'compact',
+        maxVisible : 5,
+    })
+
+    // Legacy old-portal (inchangé)
+    pagination({
+        pager,
         busEvent : 'mot:page',
-        style    : 'buttons'
-    }))
+        style    : 'buttons',
+    })
+    
 */
 export function pagination({
     pager,
-    busEvent  = 'page',
-    style     = 'buttons',
-    cssPage   = 'cp_page_btn',
-    cssWrap   = 'cp_pagination',
-    cssActive = 'active',
+    busEvent   = 'page',
+    onClick    = null,
+    style      = 'buttons',
+    cssPage    = 'cp_page_btn',
+    cssWrap    = 'cp_pagination',
+    cssActive  = 'active',
     maxVisible = 0,
 } = {}) {
 
@@ -377,59 +387,66 @@ export function pagination({
     const { currentPage, pageCount } = pager
     if (!pageCount || pageCount <= 1) return wrap
 
-    // ── Styles ────────────────────────────────────────────────────────────────
+    // onClick prioritaire ; sinon bus (legacy / old-portal)
+    const go = (page) => {
+        if (typeof onClick === 'function') onClick(page)
+        else if (busEvent) bus.publish(busEvent, page)
+    }
 
+    // ── prev-next ────────────────────────────────────────────────────────────
     if (style === 'prev-next') {
-        // [ ‹ Préc ]  Page X / Y  [ Suiv › ]
         const prev = create('button', {
             type: 'button',
             class: cssPage,
             text: '‹ Préc',
-            ...(currentPage <= 1 ? { disabled: '' } : {})
+            ...(currentPage <= 1 ? { disabled: '' } : {}),
         })
-        prev.addEventListener('click', () => bus.publish(busEvent, currentPage - 1))
+        prev.addEventListener('click', () => go(currentPage - 1))
 
         const info = create('span', {
             class: 'cp_pagination_info',
-            text: `${currentPage} / ${pageCount}`
+            text: `${currentPage} / ${pageCount}`,
         })
 
         const next = create('button', {
             type: 'button',
             class: cssPage,
             text: 'Suiv ›',
-            ...(currentPage >= pageCount ? { disabled: '' } : {})
+            ...(currentPage >= pageCount ? { disabled: '' } : {}),
         })
-        next.addEventListener('click', () => bus.publish(busEvent, currentPage + 1))
+        next.addEventListener('click', () => go(currentPage + 1))
 
         wrap.append(prev, info, next)
         return wrap
     }
 
+    // ── compact ──────────────────────────────────────────────────────────────
     if (style === 'compact') {
-        // [ ‹ ]  [3] [4] [5]  [ › ]  avec ellipsis
         const pages = buildPageRange(currentPage, pageCount, maxVisible || 5)
 
         const prevBtn = create('button', {
             type: 'button',
             class: cssPage,
             text: '‹',
-            ...(currentPage <= 1 ? { disabled: '' } : {})
+            ...(currentPage <= 1 ? { disabled: '' } : {}),
         })
-        prevBtn.addEventListener('click', () => bus.publish(busEvent, currentPage - 1))
+        prevBtn.addEventListener('click', () => go(currentPage - 1))
         wrap.appendChild(prevBtn)
 
         pages.forEach(p => {
             if (p === '…') {
-                wrap.appendChild(create('span', { class: 'cp_pagination_ellipsis', text: '…' }))
+                wrap.appendChild(create('span', {
+                    class: 'cp_pagination_ellipsis',
+                    text: '…',
+                }))
                 return
             }
             const btn = create('button', {
                 type: 'button',
                 class: p === currentPage ? `${cssPage} ${cssActive}` : cssPage,
-                text: String(p)
+                text: String(p),
             })
-            btn.addEventListener('click', () => bus.publish(busEvent, p))
+            btn.addEventListener('click', () => go(p))
             wrap.appendChild(btn)
         })
 
@@ -437,36 +454,38 @@ export function pagination({
             type: 'button',
             class: cssPage,
             text: '›',
-            ...(currentPage >= pageCount ? { disabled: '' } : {})
+            ...(currentPage >= pageCount ? { disabled: '' } : {}),
         })
-        nextBtn.addEventListener('click', () => bus.publish(busEvent, currentPage + 1))
+        nextBtn.addEventListener('click', () => go(currentPage + 1))
         wrap.appendChild(nextBtn)
 
         return wrap
     }
 
-    // style === 'buttons' (défaut) : tous les numéros
+    // ── buttons (défaut) ─────────────────────────────────────────────────────
     const pages = maxVisible > 0
         ? buildPageRange(currentPage, pageCount, maxVisible)
         : Array.from({ length: pageCount }, (_, i) => i + 1)
 
     pages.forEach(p => {
         if (p === '…') {
-            wrap.appendChild(create('span', { class: 'cp_pagination_ellipsis', text: '…' }))
+            wrap.appendChild(create('span', {
+                class: 'cp_pagination_ellipsis',
+                text: '…',
+            }))
             return
         }
         const btn = create('button', {
             type: 'button',
             class: p === currentPage ? `${cssPage} ${cssActive}` : cssPage,
-            text: String(p)
+            text: String(p),
         })
-        btn.addEventListener('click', () => bus.publish(busEvent, p))
+        btn.addEventListener('click', () => go(p))
         wrap.appendChild(btn)
     })
 
     return wrap
 }
-
 /** Construit un tableau de numéros de pages avec ellipsis. */
 function buildPageRange(current, total, window = 5) {
     if (total <= window + 2) return Array.from({ length: total }, (_, i) => i + 1)
