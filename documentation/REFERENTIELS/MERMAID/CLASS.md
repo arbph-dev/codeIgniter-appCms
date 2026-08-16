@@ -1,6 +1,7 @@
 | diagramme | code |
 | --------- | ---- |
-| RelationPickerDialog | ```  |
+| DialogManager | ```  |
+| DOMHelper | ```  |
 | RelationPickerDialog | ```  |
 
 
