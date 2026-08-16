@@ -32,6 +32,7 @@ classDiagram
         -_reset(): void
     }
 ```
+
 #### RelationPickerDialog - code
 ```
 classDiagram
@@ -57,7 +58,7 @@ classDiagram
         -_showHint(): void
         -_reset(): void
     }
-
+```
 
 ### DialogManager
 
