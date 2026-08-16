@@ -5,6 +5,19 @@ Cette librairie permet de
 - disposer de fonctions utilitaires
 - factoriser la création des éléments
 
+```mermaid
+    class DOMHelper {
+        <<utility>>
+        +qs(selector, root): HTMLElement
+        +qsa(selector, root): NodeList
+        +byId(id): HTMLElement
+        +create(tag, attrs): HTMLElement
+        +clear(element): void
+        +toggle(element, force): void
+    }
+```
+
+
 # Sélecteurs DOM
 - qs
 - qsa
