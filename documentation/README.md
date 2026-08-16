@@ -150,4 +150,12 @@ D21 Guideline select
 D22 CMS ↔ WORKBENCH
 ```
 
+---
 
+## Travaux
+
+### D01 - RelationPickerDialog
+- [RelationPickerDialog](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/RelationPickerDialog.md)
+- [RelationPickerDialog / Contrat fetchFn](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/RelationPickerDialog-Contrat-fetchFn.md)
+
+onPage(fn)
