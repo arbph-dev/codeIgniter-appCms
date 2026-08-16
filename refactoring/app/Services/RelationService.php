@@ -30,40 +30,21 @@ class RelationService
         return $this->relationModel->find($id);
     }
 
-    /**
-     * Retourne toutes les relations actives d'une entité,
-     * enrichies de leur RelationType.
-     *
-     * Appelé par PersonneService::findWithRelations()
-     * et son équivalent Organisation.
-     */
     public function getForEntity(string $entityType, int $entityId): array
     {
         $relations = $this->relationModel->findForEntity($entityType, $entityId);
-
-        return array_map(
-            fn(Relation $r) => $this->enrich($r),
-            $relations
-        );
-    }
-
-    /**
-     * Relations sortantes uniquement (source → target), enrichies.
-     */
-    public function getBySource(string $sourceType, int $sourceId, ?int $relationTypeId = null): array
-    {
-        $relations = $this->relationModel->findBySource($sourceType, $sourceId, $relationTypeId);
-
         return array_map(fn(Relation $r) => $this->enrich($r), $relations);
     }
 
-    /**
-     * Relations entrantes uniquement, enrichies.
-     */
+    public function getBySource(string $sourceType, int $sourceId, ?int $relationTypeId = null): array
+    {
+        $relations = $this->relationModel->findBySource($sourceType, $sourceId, $relationTypeId);
+        return array_map(fn(Relation $r) => $this->enrich($r), $relations);
+    }
+
     public function getByTarget(string $targetType, int $targetId, ?int $relationTypeId = null): array
     {
         $relations = $this->relationModel->findByTarget($targetType, $targetId, $relationTypeId);
-
         return array_map(fn(Relation $r) => $this->enrich($r), $relations);
     }
 
@@ -72,7 +53,12 @@ class RelationService
     // =====================================================================
 
     /**
-     * Crée une relation après validation métier.
+     * Crée une relation après résolution et validation métier.
+     *
+     * Ordre des opérations :
+     *   1. applyTargetResolution() — bascule organisation → etablissement si etablissement_id fourni
+     *   2. validateRelationType()  — accepte etablissement quand le type attend organisation
+     *   3. insert()
      *
      * $data attendu :
      * [
@@ -81,10 +67,11 @@ class RelationService
      *   'source_id'        => int,
      *   'target_type'      => 'personne'|'organisation'|'etablissement',
      *   'target_id'        => int,
-     *   'date_debut'       => '2024-01-01',  // optionnel
-     *   'date_fin'         => null,           // optionnel
-     *   'commentaire'      => string,         // optionnel
-     *   'ordre'            => int,            // optionnel, défaut 0
+     *   'etablissement_id' => int,    // optionnel, bascule target sur etablissement
+     *   'date_debut'       => '2024-01-01',
+     *   'date_fin'         => null,
+     *   'commentaire'      => string,
+     *   'ordre'            => int,
      * ]
      */
     public function create(array $data): Relation|false
@@ -92,9 +79,10 @@ class RelationService
         $this->db->transStart();
 
         try {
-            // Résolution organisation → etablissement si applicable
+            // 1. Résolution organisation → etablissement si applicable
             $data = $this->applyTargetResolution($data);
 
+            // 2. Validation cohérence type / paire source-target
             if (! $this->validateRelationType(
                 $data['relation_type_id'],
                 $data['source_type'],
@@ -112,7 +100,6 @@ class RelationService
             }
 
             $this->db->transComplete();
-
             return $this->relationModel->find($id);
         } catch (\Throwable $e) {
             $this->db->transRollback();
@@ -121,9 +108,6 @@ class RelationService
         }
     }
 
-    /**
-     * Met à jour une relation existante.
-     */
     public function update(int $id, array $data): Relation|false
     {
         $relation = $this->relationModel->find($id);
@@ -135,7 +119,6 @@ class RelationService
         $this->db->transStart();
 
         try {
-            // Si source/target changent, on re-résout et re-valide
             if (isset($data['source_type']) || isset($data['target_type']) || isset($data['relation_type_id'])) {
                 $merged = array_merge([
                     'relation_type_id' => $relation->relation_type_id,
@@ -165,7 +148,6 @@ class RelationService
             }
 
             $this->db->transComplete();
-
             return $this->relationModel->find($id);
         } catch (\Throwable $e) {
             $this->db->transRollback();
@@ -174,9 +156,6 @@ class RelationService
         }
     }
 
-    /**
-     * Supprime une relation.
-     */
     public function delete(int $id): bool
     {
         return $this->relationModel->find($id)
@@ -184,9 +163,6 @@ class RelationService
             : false;
     }
 
-    /**
-     * Désactive une relation sans la supprimer (actif = 0).
-     */
     public function deactivate(int $id): bool
     {
         return (bool) $this->relationModel->update($id, ['actif' => 0]);
@@ -198,19 +174,6 @@ class RelationService
 
     /**
      * Résolution organisation → etablissement.
-     *
-     * Règle : si la cible est une organisation ET qu'un etablissement_id
-     * est fourni dans $data, on bascule la cible sur l'établissement.
-     *
-     * Le payload peut contenir :
-     *   'target_type'       => 'organisation'
-     *   'target_id'         => 42      (organisation Leclerc)
-     *   'etablissement_id'  => 7       (établissement spécifique, optionnel)
-     *
-     * Si etablissement_id est présent, la relation est créée avec :
-     *   'target_type' => 'etablissement'
-     *   'target_id'   => 7
-     *
      * etablissement_id est consommé et retiré du payload avant l'INSERT.
      */
     public function applyTargetResolution(array $data): array
@@ -232,7 +195,11 @@ class RelationService
 
     /**
      * Vérifie que le RelationType est applicable pour la paire source/target.
-     * Stocke l'erreur dans les logs si invalide.
+     *
+     * Règle de compatibilité etablissement :
+     *   Un type défini personne→organisation est valide pour personne→etablissement.
+     *   etablissement est une sous-entité d'organisation — applyTargetResolution()
+     *   peut avoir résolu 'organisation' en 'etablissement' avant cet appel.
      */
     public function validateRelationType(int $relationTypeId, string $sourceType, string $targetType): bool
     {
@@ -243,7 +210,13 @@ class RelationService
             return false;
         }
 
-        if ($type->source_type !== $sourceType || $type->target_type !== $targetType) {
+        $sourceMatch = $type->source_type === $sourceType;
+
+        // etablissement est une sous-entité d'organisation
+        $targetMatch = $type->target_type === $targetType
+            || ($targetType === 'etablissement' && $type->target_type === 'organisation');
+
+        if (! $sourceMatch || ! $targetMatch) {
             log_message('warning', sprintf(
                 '[RelationService] Type %s attend %s→%s, reçu %s→%s.',
                 $type->code,
@@ -256,10 +229,6 @@ class RelationService
         return true;
     }
 
-    /**
-     * Résout le type inverse d'une relation.
-     * Utile pour l'affichage côté target : "vu depuis Leclerc, Robert est un employé".
-     */
     public function getInverseType(Relation $relation): ?RelationType
     {
         $type = $this->relationTypeModel->find($relation->relation_type_id);
@@ -275,9 +244,6 @@ class RelationService
     // ENRICHISSEMENT
     // =====================================================================
 
-    /**
-     * Attache le RelationType à une Relation pour éviter les N+1 côté contrôleur.
-     */
     protected function enrich(Relation $relation): array
     {
         return [
