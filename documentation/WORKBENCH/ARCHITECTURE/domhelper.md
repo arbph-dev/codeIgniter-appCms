@@ -9,12 +9,6 @@ Cette librairie permet de
 classDiagram
     class DOMHelper {
         <<dom utility and selectors>>
-        +qs(selector, root): HTMLElement
-        +qsa(selector, root): NodeList
-        +byId(id): HTMLElement
-        +create(tag, attrs): HTMLElement
-        +clear(element): void
-        +toggle(element, force): void
     }
 ```
 
