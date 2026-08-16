@@ -219,14 +219,28 @@ Toutes les méthodes de lecture retournent `['relation' => ..., 'relation_type' 
 Le contrôleur et le service consommateur n'ont pas à charger le type séparément.
 
 ### Enregistrement CI4 obligatoire
-
 Dans `app/Config/Services.php` :
+- Déclarer les services
+
 ```php
-public static function relation(bool $getShared = true): RelationService
-{
-    return static::getSharedInstance('relation', $getShared)
-        ?? new \App\Services\RelationService();
-}
+use App\Services\PersonneService;
+use App\Services\RelationService;
+```
+
+- Ajouter les fonctions
+
+```php
+    public static function relation(bool $getShared = true): RelationService
+    {
+        if ($getShared) { return static::getSharedInstance('relation'); }
+        return new \App\Services\RelationService();
+    }
+
+    public static function personne(bool $getShared = true): PersonneService
+    {
+        if ($getShared) { return static::getSharedInstance('personne');}
+        return new \App\Services\PersonneService();
+    }
 ```
 
 ---
