@@ -19,6 +19,30 @@ Le Panel **ne possède pas la logique d'orchestration du Workbench**.
 
 ## Contrat
 
+Contrat Panel (PanelBase)
+Chaque Panel expose deux surfaces :
+
+Surface Workbench → Panel (méthodes directes)
+render()           → HTMLElement    obligatoire
+show(data, pager?) → void           obligatoire
+clear()            → void           obligatoire
+showLoading()      → void           obligatoire (ListPanel)
+showError(msg)     → void           obligatoire (ListPanel)
+showFeedback(t, m) → void           obligatoire (DetailPanel)
+lock() / unlock()  → void           obligatoire (DetailPanel)
+destroy()          → void           obligatoire
+Surface Panel → Workbench (callbacks enregistrés)
+onSearch(fn)   ListPanel   fn(q: string)
+onSelect(fn)   ListPanel   fn(item: object)
+onNew(fn)      ListPanel   fn()
+onSave(fn)     DetailPanel fn(id: number|null, data: object)
+onDelete(fn)   DetailPanel fn(id: number)
+onTabChange(fn) TabSystem  fn(tabId: string)   [iter007]
+Si une méthode ou signature change, le câblage Workbench casse — c'est le « contrat runtime ».
+
+
+
+
 | Méthode         | Rôle                                                 |
 | --------------- | ---------------------------------------------------- |
 | `constructor()` | Initialise les références internes, sans side-effect |
