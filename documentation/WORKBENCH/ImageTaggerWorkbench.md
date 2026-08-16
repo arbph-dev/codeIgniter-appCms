@@ -1,3 +1,32 @@
+**Description** : premier Workbench de relation N-N + mises à jour optimistes.
+
+### Forces
+
+- Pattern optimiste clairement documenté dans les commentaires source (attach/detach + revert sur erreur).
+- include=mot_ids + fetchMotBatch → badge sans charger les labels (lazy intelligent).
+- Fallback fetchImageMots si mot_ids absent.
+- Pas de dialogs : autocomplete inline dans TaggerPanel (choix architectural assumé).
+- Réutilisation de ImagePreviewPanel (pas de duplication).
+- API TaggerPanel riche (addMot / removeMot / getMotCount / onAttach / onDetach).
+
+### Dettes techniques
+
+|Dette|Détail|Priorité|
+|---|---|---|
+|Pagination via bus|wb:tagger:page — pas encore basculé|Haute|
+|Pattern optimiste non formalisé|Absent du CONTRACT et de DATA_CONTRACT|Haute (doc)|
+|Deux patterns de sélection|RelationPicker (Adresse/Org) vs autocomplete inline (Tagger) — pas de guideline|Moyenne|
+|Relation N-N|Non encore dans DATA_CONTRACT (daily 12/08)|Haute|
+
+### Croisement daily 12/08
+
+- Daily très long et précis sur le pivot image_mot, ImageMotService, attach/detach/sync, include.
+- Le Workbench implémente déjà le cœur de ces décisions.
+- Manque la consolidation documentaire (DATA_CONTRACT + éventuel « Relation Contract »).
+
+**Verdict** : Dettes principales = documentation du pattern optimiste et de la relation N-N, + pagination bus.
+
+
 # ImageTagger
 
 > url : https://zealot.fr/workbench/imagetagger
