@@ -1,3 +1,38 @@
+**Description** : 
+- Workbench le plus avancé sur les conventions actuelles (TabSystem, pagination callback, save partiel).
+- **Workbench de référence** pour les conventions 2026-08. À utiliser comme template pour Personne et suivants.
+
+### Forces
+
+- **Pagination via onPage(fn)** — premier Workbench aligné avec l’évolution souhaitée du CONTRACT.
+- Dialogs créés **avant** panels (_createDialogs() → RelationPickerDialog adresse).
+- TabSystem intégré dans OrgDetailPanel (CREATE = form unique, EDIT = 3 onglets).
+- Save partiel par onglet (backend n’applique que les allowedFields présents) — pattern puissant.
+- Commentaires source excellents (contrat onSave, pagination callback, configuration picker).
+- 3 PropertySets distincts (Info / Contact / Adresse).
+
+### Dettes techniques
+
+|Dette|Détail|Priorité|
+|---|---|---|
+|Filtre type (_typeId)|Présent dans le state et load(), mais pas de UI de filtre visible dans le Workbench source|Moyenne|
+|Backend relations|Doc : withRelations() ne joint pas les adresses ; displayFn affiche « Adresse #id » au chargement|Moyenne (backend)|
+|markDirty / clearDirty|Disponibles dans TabSystem, non branchés|Basse|
+|Doc encore marquée d’incohérences pagination|Certaines notes de la doc .md datent d’avant le basculement onPage|Basse (doc à mettre à jour)|
+
+### Croisement daily
+
+- Daily 13/08 prépare la suite (Personne, relations Organisation↔Adresse, Personne↔Organisation).
+- Organisation est le **modèle de référence actuel** pour les nouveaux Workbenches.
+
+
+
+
+
+
+
+
+
 # OrganisationWorkbench
 
 > url : https://zealot.fr/workbench/organisation
