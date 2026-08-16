@@ -47,9 +47,7 @@ fetchFn: (q) => fetchOrgLike({ q, typeId: this._typeId, len: 20 })
 
 ### Correct
 
-JavaScript
-
-```
+```js
 [
   { id: 42, codepostal: '29120', commune: "Pont-l'Abbé" },
   { id: 43, codepostal: '29000', commune: 'Quimper' },
@@ -58,9 +56,7 @@ JavaScript
 
 ### Incorrect
 
-JavaScript
-
-```js
+```
 // Enveloppe API standard
 { status: 200, data: [ ... ], pager: { ... } }
 
