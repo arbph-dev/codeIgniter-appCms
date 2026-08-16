@@ -2,6 +2,7 @@
 
 Base commune de tous les Workbenches.
 
+**full**
 ```mermaid
 classDiagram
     class WorkbenchBase{
@@ -21,6 +22,15 @@ classDiagram
         +subscribe(event, cb): void
         +destroy(): void
     }
+```
+**Simple**
+```mermaid
+classDiagram
+    class WorkbenchBase{
+    }
+
+    class DOMHelper {}
+WorkbenchBase ..> DOMHelper : utilise (this.dom)
 ```
 
 
