@@ -1,3 +1,19 @@
+
+```
+Relation	Mermaid	Signification
+Héritage	A -->|"extends"| B	A est une spécialisation de B
+Composition	A -->|"compose"| B	A possède / construit B
+Utilisation	A -->|"use"| B	A utilise B
+Communication	A -.-> B	communication indirecte / événementielle
+Couche	subgraph	frontière architecturale
+```
+
+
+
+
+
+
+
 ```mermaid
 flowchart TB
 
