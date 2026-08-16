@@ -2,6 +2,17 @@
 
 source : [`WorkbenchView.js`](/refactoring/assets/js/ui/workbench/core/WorkbenchView.js)
 
+```mermaid
+classDiagram
+    class WorkbenchView{
+        +build(): void
+        +mountPanels(map): void
+        +unmountPanels(): void
+        +destroy(): void
+    }
+```
+
+
 ## Rôle
 
 `WorkbenchView` est responsable de la matérialisation visuelle du layout d'un Workbench.
