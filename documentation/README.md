@@ -159,7 +159,8 @@ D22 CMS ↔ WORKBENCH
 - [RelationPickerDialog / Contrat fetchFn](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/RelationPickerDialog-Contrat-fetchFn.md)
 
 ### D02 Pagination bus
-utiliser onPage(fn)
+- voir [domhelper](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/core/domhelper.js#L338)
+- utiliser onPage(fn)
 
 ### D09 - Auth isolée
 [authentification](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/authentification.md)
