@@ -8,6 +8,7 @@ classDiagram
         +build(): void
         +mountPanels(map): void
         +unmountPanels(): void
+        +getZone(name)
         +destroy(): void
     }
 ```
