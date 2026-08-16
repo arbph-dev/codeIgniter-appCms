@@ -161,6 +161,8 @@ D22 CMS ↔ WORKBENCH
 ### D02 Pagination bus
 - voir [domhelper](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/core/domhelper.js#L338)
 - utiliser onPage(fn)
+- Revoir la note : (https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-09.md#todo)
+
 
 ### D09 - Auth isolée
 [authentification](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/WORKBENCH/ARCHITECTURE/authentification.md)
