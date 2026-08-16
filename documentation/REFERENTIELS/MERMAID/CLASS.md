@@ -1,10 +1,12 @@
+| diagramme | code |
+| --------- | ---- |
+| RelationPickerDialog | ```  |
+| RelationPickerDialog | ```  |
 
 
 ### RelationPickerDialog
 
-| diagramme | code |
-| --------- | ---- |
-| 
+#### RelationPickerDialog - diagramme
 ```mermaid
 classDiagram
     class RelationPickerDialog {
@@ -29,7 +31,9 @@ classDiagram
         -_showHint(): void
         -_reset(): void
     }
-```   | ```
+```
+#### RelationPickerDialog - code
+```
 classDiagram
     class RelationPickerDialog {
         +id: string
@@ -53,15 +57,11 @@ classDiagram
         -_showHint(): void
         -_reset(): void
     }
-```  |
 
 
+### DialogManager
 
-
-code
-
-
-### RelationPickerDialog
+#### DialogManager - diagramme
 ```mermaid
 classDiagram
     class DialogManager {
@@ -73,7 +73,7 @@ classDiagram
         +select(id, item): void
     }
 ```
-
+#### DialogManager - code
 ```
 classDiagram
     class DialogManager {
@@ -87,7 +87,7 @@ classDiagram
 ```
 
 ### DOMHelper
-
+#### DOMHelper - diagramme
 ```mermaid
 classDiagram
     class DOMHelper {
@@ -98,7 +98,7 @@ classDiagram
         +notice(type, msg?): HTMLElement
     }
 ```
-
+#### DOMHelper - code
 ```
 classDiagram
     class DOMHelper {
