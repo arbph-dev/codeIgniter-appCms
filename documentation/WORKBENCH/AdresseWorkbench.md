@@ -1,3 +1,35 @@
+**Descritpion** : premier Workbench « complet » (3 zones + carte + relations).
+
+## Forces
+
+- Architecture 3 zones (list / detail / map) claire.
+- Synchronisation carte sur sélection + après save.
+- Commentaires source excellents (spécificités vs Image, initLeaflet guard, JSON pur).
+- Messages d’erreur métier (422 → « Adresse invalide ou déjà existante »).
+- Doc .md la plus riche des instances.
+
+## Dettes techniques / écarts doc ↔ code
+
+|Dette|Détail|Priorité|
+|---|---|---|
+|**Pagination bus**|wb:adresse:page encore utilisé|Haute|
+|**Dialogs absents du Workbench source**|La doc décrit _createDialogs() (CP + TypeVoie) avant panels. Le code actuel de AdresseWorkbench.js et AdresseDetailPanel.js ne contient **aucune** référence à RelationPicker / dialog_cp / dialog_tv.|**Critique**|
+|Resélection après load|Documentée, non implémentée (highlight(id))|Moyenne|
+|result.data conditionnel|Si l’API ne renvoie pas les coords géocodées, la map reste stale|Moyenne|
+|Ordre des champs formulaire|Note doc : numéro → indice → type voie → nom (à revoir)|Basse|
+|initLeaflet global|Guard _initialized OK pour une page ; fragile si plusieurs Workbenches Leaflet|Moyenne|
+
+### Croisement sources / daily
+
+- Écart documentaire important : la doc AdresseWorkbench.md décrit un état (dialogs relation) qui **n’apparaît plus** dans le code source actuel du Workbench/DetailPanel. Soit les dialogs ont été retirés temporairement, soit ils sont créés ailleurs (à investiguer).
+- Pattern map + synchronisation reste une référence valide.
+
+**Verdict** : architecture riche, mais **écart doc/code sur les dialogs** à clarifier en priorité. Pagination encore sur le bus.
+
+
+
+
+
 # AdresseWorkbench
 
 AdresseWorkbench est un orchestrateur mince et lisible :bootstrap ordonné (Leaflet → dialogs → view → panels → events → load)  
