@@ -1,5 +1,21 @@
 # domhelper
-Cette librairie permet de factoriser la création des éléments
+
+Cette librairie permet de 
+- disposer des sélecteurs dom
+- disposer de fonctions utilitaires
+- factoriser la création des éléments
+
+# Sélecteurs DOM
+- qs
+- qsa
+- byId
+
+# Fonctions utilitaires
+- create
+- clear
+- toggle
+
+
 
 ## [`detail()`](/refactoring/assets/js/core/domhelper.js#L558)
 employée par les **panels**
