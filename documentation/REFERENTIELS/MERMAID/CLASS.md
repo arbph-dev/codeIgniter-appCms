@@ -4,7 +4,8 @@
 
 | diagramme | code |
 | --------- | ---- |
-| ```mermaid
+| 
+```mermaid
 classDiagram
     class RelationPickerDialog {
         +id: string
