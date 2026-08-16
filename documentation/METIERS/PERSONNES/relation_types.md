@@ -47,52 +47,7 @@ partenaire	oui
 
 
 
-# relations
-elle concrétise toute la logique que nous venons de définir.
 
-```sql
-CREATE TABLE relations (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    relation_type_id BIGINT UNSIGNED NOT NULL,
-    source_type ENUM('personne','organisation') NOT NULL,
-    source_id BIGINT UNSIGNED NOT NULL,
-    target_type ENUM('personne','organisation') NOT NULL,
-    target_id BIGINT UNSIGNED NOT NULL,
-    actif BOOLEAN DEFAULT TRUE,
-    ordre SMALLINT DEFAULT 0,
-    date_debut DATE NULL,
-    date_fin DATE NULL,
-    commentaire TEXT NULL,
-    created_at DATETIME NULL,
-    updated_at DATETIME NULL,
-
-    CONSTRAINT fk_relation_type
-        FOREIGN KEY (relation_type_id)
-        REFERENCES relation_types(id),
-
-    INDEX idx_source (source_type, source_id),
-    INDEX idx_target (target_type, target_id),
-    INDEX idx_relation (relation_type_id)
-
-) ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_unicode_ci;
-```
-
-cette structure permet
-Relation	Source	Cible
-Employé	Personne	Organisation
-Parent	Personne	Personne
-Filiale	Organisation	Organisation
-Client	Organisation	Organisation
-Fournisseur	Organisation	Organisation
-Représentant légal	Personne	Organisation
-
-ordre permettra par exemple :
-plusieurs mandats ;
-plusieurs administrateurs ;
-plusieurs dirigeants.
-Une autre réflexion
 
 
 
