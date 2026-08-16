@@ -74,7 +74,34 @@ K --> L["Navigateur"]
 ```
 
 
+```
+flowchart TD
 
+classDef routes fill:#A9D6FF,stroke:#0080FF,stroke-width:4px;
+classDef controller fill:#B7F0B1,stroke:#2E8B57,stroke-width:4px;
+classDef service fill:#FFD39B,stroke:#FF8C00,stroke-width:4px;
+classDef model fill:#FFF3A3,stroke:#C9A000,stroke-width:4px;
+classDef view fill:#E6E6E6,stroke:#808080,stroke-width:4px;
+
+A["Routes.php<br/>/admin/cmstree"]:::routes
+A --> B["Admin\\CmsTree::index()"]:::controller
+
+B --> C["CmsService::getCmsTree()"]:::service
+
+C --> D["CmsCategoryModel"]:::model
+C --> E["CmsArticleModel"]:::model
+C --> F["CmsSectionModel"]:::model
+C --> G["CmsPartModel"]:::model
+
+C --> H["CmsService::enrichPart()"]:::service
+H --> I["CmsService::adminLinks()"]:::service
+
+B --> J["View admin/cmstree/index.php"]:::view
+
+J --> K["View admin/cmstree/node.php<br/>(récursif)"]:::view
+
+K --> L["Navigateur"]
+```
 
 
 
