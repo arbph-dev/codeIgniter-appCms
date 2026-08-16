@@ -2,67 +2,18 @@
 Référentiel normalisé des types de relations.
 
 Couvre
-    Personne    →    Personne
-    Personne    →    Organisation
-    Org         →    Org.
+- Personne    →    Personne
+- Personne    →    Organisation
+- Org         →    Org.
 
 
+## Structure
 
-```sql
-CREATE TABLE relation_types (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    code VARCHAR(100) NOT NULL UNIQUE,
-    label VARCHAR(255) NOT NULL,
-    inverse_code VARCHAR(100) NULL,
-    source_type ENUM('personne','organisation') NOT NULL,
-    target_type ENUM('personne','organisation') NOT NULL,
-    symetrique BOOLEAN NOT NULL DEFAULT FALSE,
-    description TEXT NULL,
-    created_at DATETIME NULL,
-    updated_at DATETIME NULL,
-    INDEX idx_source(source_type),
-    INDEX idx_target(target_type)
-) ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_unicode_ci;
-```
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/API/Personne/tables.md#relation_types
 
-```
-INSERT IGNORE INTO relation_types (code, label, inverse_code, source_type , target_type , symetrique , description ) VALUES
--- ── Famille ───────────────────────────────────────────────────────────────
-('parent'        ,'Parent'      ,'enfant'    ,'personne'    ,'personne'    , false   , 'relation personne à personne  : famille / parent'),
-('conjoint'      ,'Conjoint'    ,'conjoint'  ,'personne'    ,'personne'    , true    , 'relation personne à personne  : famille / conjoint'),
-('enfant',            'Enfant',             'parent',           'personne'),
-('conjoint',          'Conjoint',           'conjoint',         'personne'),
-('frere_soeur',       'Frère / Sœur',       'frere_soeur',      'personne'),
--- ── Institution / Entreprise ──────────────────────────────────────────────
-('membre',            'Membre',              NULL,              'organisation'),
-('administrateur',    'Administrateur',      NULL,              'organisation'),
-('employe',           'Employé',             NULL,              'organisation'),
-('dirige',            'Dirige',              NULL,              'organisation'),
-('represente_legal',  'Représentant légal',  NULL,              'organisation'),
--- ── Poligraph ─────────────────────────────────────────────────────────────
-('elu_de',            'Élu de',              NULL,              'organisation'),
-('preside',           'Préside',             NULL,              'organisation'),
-('appartient_a',      'Appartient à',        NULL,              'mixte'),
--- ── Organisation → Organisation ───────────────────────────────────────────
-('filiale_de',        'Filiale de',          'maison_mere_de',  'organisation'),
-('maison_mere_de',    'Maison mère de',      'filiale_de',      'organisation'),
-('finance_par',       'Financée par',        'financeur_de',    'organisation'),
-('financeur_de',      'Financeur de',        'finance_par',     'organisation'),
-('fusion_avec',       'Issue d\'une fusion', NULL,              'organisation');
-```
+## Seeder
 
-|code|label|inverse|cible_type|
-|---|---|---|---|
-|filiale_de|Filiale de|maison_mere_de|organisation|
-|maison_mere_de|Maison mère de|filiale_de|organisation|
-|membre_de|Membre de|—|organisation|
-|finance_par|Financée par|financeur_de|organisation|
-|financeur_de|Financeur de|finance_par|organisation|
-|fusion_avec|Issue d'une fusion avec|—|organisation|
-
-
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/API/Personne/seeders.md
 
 ## notes
 
