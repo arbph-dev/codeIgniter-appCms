@@ -6,7 +6,7 @@ Base commune de tous les Workbenches.
 classDiagram
     classDef abstract fill:#f9f9f9,stroke:#333,stroke-dasharray: 5 5
 
-    class WorkbenchBase:::abstract {
+    class WorkbenchBase{
         <<abstract>>
         +id: string
         +name: string
@@ -22,7 +22,7 @@ classDiagram
         +publish(event, data): void
         +subscribe(event, cb): void
         +destroy(): void
-    }
+    }:::abstract 
 ```
 
 
