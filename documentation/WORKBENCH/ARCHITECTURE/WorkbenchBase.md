@@ -4,7 +4,9 @@ Base commune de tous les Workbenches.
 
 ```mermaid
 classDiagram
-    class WorkbenchBase {
+    classDef abstract fill:#f9f9f9,stroke:#333,stroke-dasharray: 5 5
+
+    class WorkbenchBase abstract {
         <<abstract>>
         +id: string
         +name: string
