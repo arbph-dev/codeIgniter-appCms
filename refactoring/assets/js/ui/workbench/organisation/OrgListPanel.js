@@ -9,8 +9,7 @@ export class OrgListPanel extends ListPanelBase
     {
         super({
             title             : 'Organisations',
-            newLabel          : '+ Nouveau',
-            panelClass        : 'wb_mot_list_panel', // ou wb_org_list_panel
+            newLabel          : ' Nouveau',
             searchPlaceholder : 'Nom, SIREN…',
             pagerStyle        : 'compact',
             pagerMaxVisible   : 5,
@@ -21,13 +20,15 @@ export class OrgListPanel extends ListPanelBase
     {
         this.tableEl.appendChild(
             table({
+                id      : 'wbOrgTable',
                 data    : items,
                 columns : [
-                    { key: 'nom',        label: 'Nom' },
-                    { key: 'type_label', label: 'Type' },
+                    { key: 'id',         label: 'ID'    },
+                    { key: 'nom',        label: 'Nom'   },
+                    { key: 'type_label', label: 'Type'  },
                     { key: 'siren',      label: 'SIREN' },
                 ],
-                attrs      : { class: 'cp_table' },
+                attrs      : { class: this.styles.table },
                 onRowClick : (row) => this._onSelectFn?.(row),
             })
         )
