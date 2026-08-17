@@ -15,15 +15,32 @@
 //   • aucune validation
 // ─────────────────────────────────────────────────────────────────────────────
 
+
+// Dans le constructor de PanelBase — ou fusion si PanelBase est encore minimal
+
+import { createPanelStyles } from '/assets/js/ui/workbench/core/PanelStyles.js'
+
 export class PanelBase
 {
-    constructor()
+    /**
+     * @param {object} [options]
+     * @param {object} [options.styles]  override partiel des jetons CSS
+     */
+    constructor({ styles = null } = {})
     {
-        this.element = null
+        this.styles = createPanelStyles(this._defaultStyles(), styles ?? {})
+    }
+
+    /**
+     * Sous-classes : DEFAULT_LIST_STYLES | DEFAULT_DETAIL_STYLES | {}
+     * @returns {object}
+     */
+    _defaultStyles()
+    {
+        return {}
     }
 
     // ── Contrat ───────────────────────────────────────────────────────────────
-
     /**
      * Construit l'élément DOM du panel et le retourne.
      * Doit stocker la référence dans this.element.
