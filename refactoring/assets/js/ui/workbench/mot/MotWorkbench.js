@@ -15,6 +15,8 @@ const LAYOUT = createDescriptor({
     ],
 })
 
+
+
 export class MotWorkbench extends WorkbenchBase
 {
     constructor(config = {})
@@ -41,6 +43,7 @@ export class MotWorkbench extends WorkbenchBase
     }
 
 
+
     // ── Panels ────────────────────────────────────────────────────────────────
 
     createPanels()
@@ -52,6 +55,7 @@ export class MotWorkbench extends WorkbenchBase
             left  : this.listPanel,
             right : this.detailPanel,
         })
+
     }
 
     // ── Événements ────────────────────────────────────────────────────────────
@@ -79,6 +83,8 @@ export class MotWorkbench extends WorkbenchBase
         {
             this.detailPanel.showNew()
         })
+
+        this.listPanel.onPage( page => { this._page = page; this.load() } )
 
         // Sauvegarde (create + update)
         this.detailPanel.onSave(async (id, lbl) =>
@@ -169,8 +175,8 @@ export class MotWorkbench extends WorkbenchBase
 
     destroy()
     {
-        this.bus.unsubscribe('wb:mot:page', this._onPageFn)
-        this._onPageFn = null
+        //this.bus.unsubscribe('wb:mot:page', this._onPageFn)
+        //this._onPageFn = null
         this.listPanel?.destroy()
         this.detailPanel?.destroy()
         this._view.unmountPanels()
