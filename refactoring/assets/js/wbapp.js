@@ -36,7 +36,7 @@ async function mountWorkbenches()
         try
         {
             const { default: Klass } = await import(
-                `/assets/js/ui/workbench/${type}/index.js`
+                `/assets/js/ui/workbench/${type}/${el.id}.js`
             )
             const wb = new Klass()
             wb.init(selector)
