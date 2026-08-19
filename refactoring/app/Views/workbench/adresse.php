@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/assets/css/workbench/theme_one.css">
     <link rel="stylesheet" href="/assets/css/workbench/workbench.css">
     <link rel="stylesheet" href="/assets/css/workbench/adresse.css">
+    <link rel="stylesheet" href="/assets/css/workbench/dialog.css">
     <!-- Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -22,6 +23,14 @@
 </head>
 <body>
 
+    <header>
+        <div class="header-auth"></div>
+    </header>
+
+    <div id="AdresseWorkbench" data-workbench="adresse"></div>
+
+    <script type="module" src="/assets/js/wbapp.js"></script>
+    <!-- 
     <div id="adresseWorkbench"></div>
 
     <script type="module">
@@ -29,6 +38,6 @@
         const wb = new AdressseWorkbench();
         await wb.init('#adresseWorkbench');
     </script>
-
+    -->
 </body>
 </html>
