@@ -49,6 +49,8 @@ module personne
 notes de dev a déplacer
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/API/Personne/seeders.md#fix-relationservice--bug-ordre-validation--r%C3%A9solution
 
+---
+
 ### workbench
 #### ListPanel
 factorisation + harmonisation usage callback plutôt que bus dans les panels -> ListPanelBase
@@ -57,6 +59,13 @@ https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-
 #### style 
 harmonisation usage PanelStyles au niveau PanelBase
 https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-17.md
+
+#### [Authentification](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-18.md)
+Intégration dans la stack workbench
+- voir évolution vers layout et multi workbench
+- convention de notation a respecter, dossier et fichier peuvent être diffèrent adresse et AdresseWorkbench => adresse2  mais a bien spécifier dans la vue
+- style banner a revoir
+- modifier les vues pour intégrer auth via wbapp.js
 
 #### todo
 - Image / Tagger style et ListPanel, il utilise un panel qui communiquait sur le bus, les travaux sur ListPanelBase on cassé la communication bus
@@ -82,6 +91,7 @@ CodePostal (read only car référentiel)
 
 ### En cours
 - [PERSONNES](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/API/Personne/index.md)
+- seeder a compléter
 
 ### Technologies
 
