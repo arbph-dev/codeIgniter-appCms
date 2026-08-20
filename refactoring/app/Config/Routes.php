@@ -42,7 +42,8 @@ $routes->group('workbench', ['namespace' => 'App\Controllers'], static function 
     $routes->get('image'                ,   'WorkbenchController::image'            );
     $routes->get('adresse'              ,   'WorkbenchController::adresse'          );
     $routes->get('organisation'         ,   'WorkbenchController::organisation'     );
-    $routes->get('imagetagger'          ,   'WorkbenchController::imagetagger'      );    
+    $routes->get('imagetagger'          ,   'WorkbenchController::imagetagger'      );
+    $routes->get('personne'             ,   'WorkbenchController::personne'         );  	
 });
 
 $routes->group('admin/cmspart', static function($routes)
