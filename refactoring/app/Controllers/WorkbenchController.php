@@ -34,4 +34,8 @@ class WorkbenchController extends BaseController
 
     /** Workbench de test — feature Organisation  ; URL : /workbench/organisation     */   
     public function organisation() { return view('workbench/organisation'); }
+
+    public function imagetagger() { return view('workbench/imagetagger'); }
+
+    public function personne() { return view('workbench/personne'); }    
 }
