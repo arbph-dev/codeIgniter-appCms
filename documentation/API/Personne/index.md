@@ -339,7 +339,20 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], static function ($
 
 |Méthode|Endpoint|Description|
 |---|---|---|
-|GET|/api/personne/@id||
+| GET | `/api/personnes/` | Personne::index |
+| GET | `/api/personnes/{id}` | Personne::show |
+| POST | `/api/personnes` | Personne::create |
+| PUT | `/api/personnes/{id}` | Personne::update |
+| PATCH | `/api/personnes/{id}` | Personne::update | 
+| DELETE | `/api/personnes/{id}` | Personne::delete |
+| POST | `/api/personnes/{sourceId}/merge/{targetId}` | Personne::merge($sourceId = null, $targetId = null) |
+	 
+
+
+	 
+
+
+
 
 
 ---
