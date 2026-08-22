@@ -73,11 +73,6 @@ Garder toujours les mêmes noms, normaliser : **structure_type** et **structure_
     - structure_type
     - structure_id
 
-voir :
-- Organisation
-- Entreprise
-- Etablissement
-
 ## Graphe de relations
 Pour décrire une relation entre deux objets, employer le schamps et les normaliser :
 - source_type / source_id
