@@ -29,9 +29,9 @@ Le module **organisation** permet de gérer toutes les personnes morales : assoc
 Une entreprise est une **organisation** de type **entreprise**
 
 # Classes
-[entreprises](/documentation/METIERS/ORGANISATIONS/entreprises.md)
-[organisation_types](/documentation/METIERS/ORGANISATIONS/organisation_types.md)
-- Gère les types d'organisations
+- [entreprises](/documentation/METIERS/ORGANISATIONS/entreprises.md)
+- [organisation_types](/documentation/METIERS/ORGANISATIONS/organisation_types.md)
+    - Gère les types d'organisations
 
 # Data
 ## Migrations
