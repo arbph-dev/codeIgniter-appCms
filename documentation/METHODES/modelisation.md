@@ -4,7 +4,7 @@
 
 | Cas|	Modèle|	Intégrité|	Exemple|
 |---|---|---|---|
-|1→1 |	FK directe |	★★★★★	| personne → alias |
+|1→1 |	FK directe |	★★★★★	| entreprise → organisation |
 |1→N |	FK directe |	★★★★★	| personne → alias |
 |N→N |	table pivot|	★★★★★	|article ↔ fournisseur|
 |N→N avec attributs	|table métier	|★★★★★	|intervention_article|
