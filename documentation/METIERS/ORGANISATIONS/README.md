@@ -35,7 +35,7 @@ Une entreprise est une **organisation** de type **entreprise**
 
 # Data
 ## Migrations
-[entreprises](/documentation/METIERS/ORGANISATIONS/entreprises/migrations.md)
+[entreprises](/documentation/METIERS/ORGANISATIONS/entreprises/migration.md)
 ## Structures
 [entreprises](/documentation/METIERS/ORGANISATIONS/entreprises/structure.md)
 
