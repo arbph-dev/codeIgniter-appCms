@@ -1,8 +1,20 @@
-Rich
-SQLAlchemy
+
+# pyqt6
 
 
-# Exemples en Python
+pip install pyqt6
+
+
+
+
+
+
+
+# Rich
+# SQLAlchemy
+
+
+## Exemples en Python
 
 Python + SQLAlchemy + Rich offre une solution robuste, programmable et extensible pour gérer des bases de données complexes avec un affichage console avancé, adapté aux développeurs et aux systèmes automatisés.
 
