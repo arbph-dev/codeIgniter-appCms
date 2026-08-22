@@ -3,6 +3,10 @@
 # modules
 dossier documentation/METIERS/modules
 
+workbenches
+
+
+
 classes
 
 
@@ -20,3 +24,7 @@ mvc
 -  Entities
 -  Controllers
 -  Services
+
+front
+-features
+-workbench
