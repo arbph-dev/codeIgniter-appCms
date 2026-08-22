@@ -1,10 +1,41 @@
-import sys
-from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout, QListWidget, QLabel, QTabWidget
-)
-from PyQt6.QtCore import pyqtSignal, Qt
 
-# Panel affichant une liste d'éléments avec gestion de sélection
+dépendances : 
+- sys
+- PyQt6.QtWidgets :
+    - QApplication
+    - QMainWindow
+    - QWidget
+    - QVBoxLayout
+    - QListWidget
+    - QLabel
+    - QTabWidget
+- PyQt6.QtCore
+    - pyqtSignal
+    - Qt
+
+# ListPanel 
+Extends
+QWidget
+
+Description
+- affiche une liste d'éléments avec gestion de sélection
+
+Le constructeur
+- crée et instancie un enfant `self.list_widget` de classe QListWidget
+- ajoute le paramètre `items` contenants les données fournis au constructeur dans `self.list_widget` avec la méthode QListWidget::addItems()
+- Connecte le signal de sélection : `currentRowChanged` au gestionnaire de signal `on_selection_changed`
+
+
+Structure
+```
+ListPanel (QWidget)
+    item_selected ( pyqtSignal )
+    self.list_widget
+    def __init__
+    def on_selection_changed
+```
+
+```py
 class ListPanel(QWidget):
     # Signal émis quand un élément est sélectionné, transmet l'index et le texte
     item_selected = pyqtSignal(int, str)
@@ -24,8 +55,10 @@ class ListPanel(QWidget):
         if current_row >= 0:
             item_text = self.list_widget.item(current_row).text()
             self.item_selected.emit(current_row, item_text)
+```
 
 # Panel affichant les détails d'un élément, avec plusieurs onglets
+```py
 class DetailPanel(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -41,8 +74,9 @@ class DetailPanel(QWidget):
         # Exemple simple : mise à jour du label avec les infos reçues
         self.info_label.setText(f"Détails de l'élément #{index} : {text}")
         # Ici, vous pouvez gérer plusieurs onglets pour afficher plus d'infos
-
+```
 # Workbench qui organise les panels et gère la communication
+```py
 class Workbench(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -62,10 +96,19 @@ class Workbench(QMainWindow):
 
         # Connexion du signal du ListPanel au slot du DetailPanel via le Workbench
         self.list_panel.item_selected.connect(self.detail_panel.update_details)
+```
 
+```py
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = Workbench()
     window.resize(400, 300)
     window.show()
     sys.exit(app.exec())
+```
+
+---
+
+
+### QListWidget
+
