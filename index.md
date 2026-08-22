@@ -43,10 +43,10 @@ documentation/
 
 ### documentation-BACKEND
 Le Backend doit être organisé en module dans le dossier  [documentation/METIERS/](/documentation/METIERS/)
-- un index général
+- un README
 Les modules comme [ORGANISATIONS](/documentation/METIERS/ORGANISATIONS) regrouperont des classes  
 chaque module doit comporter : 
-- un index avec
+- un README avec
   - la liste des classes
   - on indiquera l'état ( projet, en production)
 - un dossier par classe 
