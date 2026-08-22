@@ -4,11 +4,25 @@
 
 | Cas|	Modèle|	Intégrité|	Exemple|
 |---|---|---|---|
+|1→1 |	FK directe |	★★★★★	| personne → alias |
 |1→N |	FK directe |	★★★★★	| personne → alias |
 |N→N |	table pivot|	★★★★★	|article ↔ fournisseur|
 |N→N avec attributs	|table métier	|★★★★★	|intervention_article|
 |relation polymorphe|	objet_type + objet_id	| ★★★☆☆	| document_objet|
 |graphe orienté	|source_type/id + cible_type/id|	★★★☆☆|	relations|
+
+## Relation 1→1
+
+### Class Table Inheritance
+Entreprise = type d'Organisation 
+- `organisations` porte ce qui est **universel** : nom, type, adresse, contacts, liens sociaux, images. 
+- `entreprises` porte ce qui est strictement **métier** de entreprise : SIREN, SIRET, CodeNAF, FormeJuridique.
+
+```
+organisations          ← table mère (champs communs à tous les types d'organisations)
+  └── entreprises      ← extension avec les champs métier spécifiques
+  └── associations     ← future extension
+```
 
 ## Relation 1→N
 
@@ -23,7 +37,8 @@ Toujours une FK.
 
 ## Table pivot
 Lorsque la table ne contient que deux FK.
-Préfèrer : PRIMARY KEY(article_id,fournisseur_id) plutôt qu'un id. Le couple est naturellement unique.
+
+Préfèrer : PRIMARY KEY(article_id,fournisseur_id) plutôt qu'un id d'un enregistrement de la table pivot. **Le couple est naturellement unique**.
 
 - article_fournisseur
   - article_id FK
