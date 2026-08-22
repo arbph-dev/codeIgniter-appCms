@@ -3,24 +3,24 @@
 
 
 
-[ORGANISATIONS/](/documentation/METIERS/ORGANISATIONS/)
+# [ORGANISATIONS/](/documentation/METIERS/ORGANISATIONS/)
 
-classes
+## Classes
 - [entreprises](/documentation/METIERS/ORGANISATIONS/entreprises.md)
-- [etablissements](/documentation/METIERS/ORGANISATIONS/entreprises.md)
+- [etablissements](/documentation/METIERS/ORGANISATIONS/entreprises.md) VOIR
 
-règles 
-une organisation est l'unité principale
-une entreprise est une organisation 
-une entreprise est une organisation 
+## Règles 
+- une organisation est l'unité principale
+- une entreprise est une organisation 
+- une entreprise possèdes des établissemnts
 
-relation
+## relation
  organisation - entreprise 1-1 + polymorphisme
  
-tag
+## tag
 **polymorphisme**
 
-voir
+## voir
 - relation entreprise établissement prévue doit se généraliser : une association secours populaire a un siège et des établissements
 
 
