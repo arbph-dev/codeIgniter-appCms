@@ -1,5 +1,6 @@
 
-une entreprise est une forme d'organisation (relation 1 - 1) 
+une entreprise est une forme d'organisation 
+- Relation 1-1 , Class Table inheritance voir [CTI](/documentation/METHODES/modelisation.md#class-table-inheritance) 
 
 une entreprise à un **siren** porté par organisation
 Le **siret** associé à entreprise doit correspondre à l'établissement siège social. 
