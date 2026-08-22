@@ -15,7 +15,12 @@
 - une entreprise possèdes des établissemnts
 
 ## relation
- organisation - entreprise 1-1 + polymorphisme
+ organisation - entreprise 1-1 + polymorphisme => CTI
+
+| table | champ | type de champ | table et champ liée |
+| --- | --- | --- |--- |
+| entreprises | organisation_id | bigint unsigned | organisation / id |
+| entreprises | codenaf_id| varchar(10) | --- / --- | 
  
 ## tag
 **polymorphisme**
