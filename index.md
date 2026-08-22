@@ -57,6 +57,7 @@ chaque module doit comporter :
 Des notes seront a géré en daily puis a ventilées
 - configuration
 - méthodes
+  - [charte-de-modélisation](/documentation/METHODES/modelisation.md#charte-de-modélisation)
   - table polymorphique
   - gestion des relations
   - contrat api 
