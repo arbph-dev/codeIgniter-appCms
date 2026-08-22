@@ -46,7 +46,7 @@ Le Backend doit être organisé en module dans le dossier  [documentation/METIER
 - un README
 Les modules comme [ORGANISATIONS](/documentation/METIERS/ORGANISATIONS) regrouperont des classes  
 chaque module doit comporter : 
-- un README rédigés selon le template [modules](/documentation/REFERENTIELS/TEMPLATES#modules)dans documentation/REFERENTIELS/TEMPLATES/
+- un README rédigés selon le template [modules](/documentation/METIERS/modules)dans documentation/REFERENTIELS/TEMPLATES/
   - la liste des classes
   - on indiquera l'état ( projet, en production)
 - un dossier par classe 
