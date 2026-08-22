@@ -42,15 +42,24 @@ documentation/
 - [presentation.md](/documentation/API/presentation.md)
 
 ### documentation-BACKEND
-Le Backend doit être organisé en 
-- modules : on indiquera l'état ( projet, en production)
-  - une note par module
+Le Backend doit être organisé en module dans le dossier  [documentation/METIERS/](/documentation/METIERS/)
+- un index général
+Les modules comme [ORGANISATIONS](/documentation/METIERS/ORGANISATIONS) regrouperont des classes  
+chaque module doit comporter : 
+- un index avec
+  - la liste des classes
+  - on indiquera l'état ( projet, en production)
+- un dossier par classe 
+- une note par classe
      - liste des fichiers : model, Controller, routes
-  - une note relation
+- une note relation
+
+Des notes seront a géré en daily puis a ventilées
 - configuration
-- methodes
+- méthodes
   - table polymorphique
   - gestion des relations
+  - contrat api 
 
 ### documentation-FRONTEND
 - L'arborescence doit être détaillé
