@@ -1,4 +1,23 @@
-## Librairies
+# Syntaxe
+
+## Objet
+  
+```python
+class Compte:  
+    def __init__(self, numero, nom, solde=0):  
+        self.numero = numero  
+        self.nom = nom  
+        self.solde = solde  
+  
+    def afficher(self):  
+        print(f"Compte: {self.numero} - {self.nom}, Solde: {self.solde}")
+
+```
+
+
+
+
+# Librairies
 
 ### os
 - [Manipulation de fichiers](/documentation/REFERENTIELS/PYTHON/FILE/index.md)
