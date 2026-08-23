@@ -240,12 +240,24 @@ G:\WEB\CMS\pytest_mysqlconnector.py
 ## Localisaltion 
 Ville
 G:\PYTHON\APPS\stdclass\localisation\CodeVILLE.py
+[[indexAdresse#Test avec Python]]
+[[Essai Python]]
+[[testAdresse_py]]
+[[testAdresse.py]]
+[[testpython_adress.py]]
 
-## EAU
+
+## Eau
 "G:\PYTHON\WATER\eauanl.py"
 contient ion
 
-## SUPERVISION
+## Supervision
 "G:\PYTHON\SUPERV\TkThread_parking.py"
 
+---
+## API
+- [ ] Documenter exploitation python : G:\WEB\BACKUP\Hostinger\HostingerTemp\2025-09-26\INPI.py
+endpoint `https://registre-national-entreprises.inpi.fr/api/sso/login`
+G:\WEB\BACKUP\Hostinger\HostingerTemp\2025-09-26\readme\documentation technique API formalités_v4.0.pdf
+[[DOCUMENTATION/PYTHON/APPLICATIONS/INPI/INPI]]
 
