@@ -26,6 +26,9 @@ class Compte:
 - Rich
 - termcolor
 
+openxxxl pour import et manip excel
+- G:\DATA\LPM\BACKUP_USB\2023_06\TOUSB\PYTHON\GMAO\builder\FileHelper.py
+
 ## plugin Canvas Block : 
 - [ ] documenterplugin Canvas Block #obsidian/plugin 
 
