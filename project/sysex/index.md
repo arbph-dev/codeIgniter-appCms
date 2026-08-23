@@ -13,9 +13,15 @@ table : [`seClass`](/project/sysex/data.md#seclass)
 
 Les classes regroupe les éléments de connaissance 
 
-exemple
-- Animal
-- Oiseau (hérite de Animal)
+
+### exemple
+
+|id|nom|parent|
+|---|---|---|
+|1|Animal|null|
+|2|Oiseau|Animal|
+
+Relation héritage : ajout d'un champ parent (convention pid ?)
 
 ### Instances (de classe)
 table : seInst
@@ -67,22 +73,8 @@ Les valeurs absentes :
 - soit héritées implicitement (plus tard)
 ---
 
-## Tables
-- seClass
-- seInst
-- seProps
-- seInstPropsValues
 
----
 
-### seClass
-
-|id|nom|parent|
-|---|---|---|
-|1|Animal|null|
-|2|Oiseau|Animal|
-
-Relation héritage : ajout d'un champ parent (convnetion pid ?)
 
 ---
 
