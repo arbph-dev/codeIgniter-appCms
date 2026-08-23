@@ -8,7 +8,6 @@ api-client-0-5
 - [inpi_client.py](/project/sysex/api-client-0-5/inpi_client.py)
 - [insee_client.py](/project/sysex/api-client-0-5/insee_client.py)
 - [main2.py](/project/sysex/api-client-0-5/main2.py)
-- [mainui.py](/project/sysex/api-client-0-5/mainui.py)
 - [personne_client.py](/project/sysex/api-client-0-5/personne_client.py)
 
 
