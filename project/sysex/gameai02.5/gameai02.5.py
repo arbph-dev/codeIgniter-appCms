@@ -1,3 +1,8 @@
+
+import json
+import os
+#-------
+
 class KnowledgeBase:
     def __init__(self):
         self.features = ["ailes", "plumes", "crie", "rapace", "mammifère", "vit_dans_leau", "couleur dominante", "taille"]
@@ -83,6 +88,73 @@ class KnowledgeBase:
         if animal in self.animals:
             self.animals[animal][feature] = value
 
+#-------
+
+DATA_FILE = "pywise_kb.json"  # Nom du fichier de sauvegarde
+
+def save_kb(kb):
+    """Sauvegarde la base de connaissances dans un fichier JSON"""
+    data = {
+        "features": kb.features,
+        "animals": kb.animals
+    }
+    try:
+        with open(DATA_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+        print(f"Base de connaissances sauvegardée dans {DATA_FILE}")
+    except Exception as e:
+        print(f"Erreur lors de la sauvegarde : {e}")
+
+def load_kb():
+    """Charge la base de connaissances depuis le fichier JSON, ou crée une nouvelle si absent"""
+    if os.path.exists(DATA_FILE):
+        try:
+            with open(DATA_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            kb = KnowledgeBase()
+            kb.features = data.get("features", [])
+            kb.animals = data.get("animals", {})
+            print(f"Base de connaissances chargée depuis {DATA_FILE} ({len(kb.animals)} animaux, {len(kb.features)} caractéristiques)")
+            return kb
+        except Exception as e:
+            print(f"Erreur lors du chargement, création d'une nouvelle base : {e}")
+    
+    # Si pas de fichier ou erreur → base par défaut enrichie
+    print("Aucun fichier de sauvegarde trouvé, création d'une nouvelle base enrichie.")
+    kb = KnowledgeBase()
+    # On garde ta base enrichie actuelle
+    kb.features = ["ailes", "plumes", "crie", "rapace", "mammifère", "vit_dans_leau", "couleur dominante", "taille"]
+    kb.animals = {
+        "tigre": {
+            "ailes": False, "plumes": False, "crie": "rugit", "rapace": False,
+            "mammifère": True, "vit_dans_leau": False, "couleur dominante": "orange et noir", "taille": None
+        },
+        "merle": {
+            "ailes": True, "plumes": True, "crie": "chante", "rapace": False,
+            "mammifère": False, "vit_dans_leau": False, "couleur dominante": "noir", "taille": None
+        },
+        "faucon": {
+            "ailes": True, "plumes": True, "crie": "crie", "rapace": True,
+            "mammifère": False, "vit_dans_leau": False, "couleur dominante": "brun", "taille": "moyen"
+        },
+        "dauphin": {
+            "ailes": False, "plumes": False, "crie": "clique", "rapace": False,
+            "mammifère": True, "vit_dans_leau": True, "couleur dominante": "gris", "taille": None
+        },
+        "aigle": {
+            "ailes": True, "plumes": True, "crie": "crie", "rapace": True,
+            "mammifère": False, "vit_dans_leau": False, "couleur dominante": "brun et blanc", "taille": "grand"
+        },
+        "pingouin": {
+            "ailes": True, "plumes": True, "crie": "braille", "rapace": False,
+            "mammifère": False, "vit_dans_leau": True, "couleur dominante": "noir et blanc", "taille": None
+        }
+    }
+    return kb
+
+
+
+#-------
 
 def ask_yes_no(question):
     while True:
@@ -377,7 +449,12 @@ def guess_animal(kb, debug=True):
     add_new_animal(kb)
 
 def main_menu():
-    kb = KnowledgeBase()
+    #kb = KnowledgeBase()
+    kb = load_kb()  # Chargement au démarrage
+    
+    def auto_save():
+        save_kb(kb)
+
     while True:
         print("\n--- MENU PRINCIPAL ---")
         print("1. Jouer")
@@ -395,25 +472,32 @@ def main_menu():
         choice = input("Choisissez une option : ").strip()
         if choice == "1":
             guess_animal(kb)
+            auto_save()            
         elif choice == "2":
             list_animals(kb)
         elif choice == "3":
             add_new_animal(kb)
+            auto_save()
         elif choice == "4":
             modify_animal(kb)
+            auto_save()            
         elif choice == "5":
             remove_animal(kb)
+            auto_save()            
         elif choice == "6":
             list_features(kb)
         elif choice == "7":
             add_feature(kb)
+            auto_save()            
         elif choice == "8":
             modify_feature(kb)
         elif choice == "9":
             remove_feature(kb)
+            auto_save()            
         elif choice == "10":
             show_animal_details(kb)            
         elif choice == "0":
+            save_kb(kb)
             print("Au revoir !")
             break
         else:
