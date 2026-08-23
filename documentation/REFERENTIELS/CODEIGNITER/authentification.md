@@ -383,22 +383,74 @@ public array $filters = [
 ```
 
 ## app/Config/Routes.php
+les routes api/auth
 ```php
-// Routes Shield (login web, register web, etc.)
-service('auth')->routes($routes);
+// 1  grouper sous `/api/auth/`
+//── Auth ────────────────────────────────────────────────────────────────────
+$routes->group('api/auth', ['namespace' => 'App\Controllers\Api'], function($routes) {
+    $routes->post('login',    'AuthController::login');    // POST /api/auth/login
+    $routes->get('profile',   'AuthController::profile'); // GET /api/auth/profile
+    $routes->get ('me',       'AuthController::me');       // GET  /api/auth/me
+    $routes->post('logout',   'AuthController::logout');   // POST /api/auth/logout
 
-// Routes API — pas de filtre session ici, géré dans Filters.php
-$routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) {
-    $routes->post('login',    'AuthController::login');
-    $routes->post('register', 'AuthController::register');
-
-    // Routes protégées (filtre tokens appliqué globalement via Filters.php)
-    $routes->get('profile',   'AuthController::profile');
-    $routes->post('logout',   'AuthController::logout');
+//5->    // $routes->post('register','AuthController::register'); // futur
 });
 ```
+
+le controller `app/Controllers/Api/AuthController.php` renvoie du json
+```
+    public function login()
+    {
+        $rules = [
+            'email'    => 'required|valid_email',
+            'password' => 'required|min_length[8]',
+        ];
+
+        if (! $this->validate($rules)) {
+            return $this->response
+                ->setStatusCode(422)
+                ->setJSON(['errors' => $this->validator->getErrors()]);
+        }
+
+        $credentials = [
+            'email'    => $this->request->getVar('email'),
+            'password' => $this->request->getVar('password'),
+        ];
+
+        // ✅ Vérifie les credentials SANS toucher à la session
+        /** @var \CodeIgniter\Shield\Authentication\Authenticators\Session $authenticator */
+        $authenticator = auth('session')->getAuthenticator();
+        $result = $authenticator->check($credentials);
+
+        if (! $result->isOK()) {
+            return $this->response
+                ->setStatusCode(401)
+                ->setJSON(['error' => 'Email ou mot de passe invalide']);
+        }
+
+        // L'utilisateur validé est dans extraInfo()
+        $user  = $result->extraInfo();
+        $token = $user->generateAccessToken('webapp');
+
+
+        return $this->response
+            ->setStatusCode(200)
+            ->setJSON([
+                'token' => $token->raw_token,
+                'user'  => [
+                    'id'    => $user->id,
+                    'username'    => $user->username, //20260508-001 ajout username
+                    'email' => $user->email,
+                    'groups'      => $user->getGroups(), //20260508-001 ajout groups
+                    'permissions' => $user->getPermissions(), //20260508-001 ajout permissions
+                ],
+            ]);
+    }
+```
+```
 ## app/Controllers/Api/AuthController.php
-```php
+Code obsolete revoir (version a jour ci dessus)
+```
 <?php
 
 namespace App\Controllers\Api;
