@@ -21,7 +21,7 @@ Ce dossier doit répertorier les éléments du système expert utiles pour un pr
 - [Couche MetaRegle](/project/sysex/akinator-0-7/XXpertSystem/layerMETARULES.md)
 - [Couche Regle](/project/sysex/akinator-0-7/XXpertSystem/layerRULES.md)
 - [Couche UI](/project/sysex/akinator-0-7/XXpertSystem/layerUI.md)
-  - En rapport :[pyqt6-gui-000.py](/documentation/REFERENTIELS/PYTHON/pyqt6-gui-000.py)
+  - En rapport :[pyqt6-gui-000.py](/documentation/REFERENTIELS/PYTHON/pyqt6-gui-000.py) / [pyqt6-gui-000.md](/documentation/REFERENTIELS/PYTHON/pyqt6-gui-000.md)
 ### Librairies
 
 ```
