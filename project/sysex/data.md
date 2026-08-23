@@ -66,14 +66,16 @@ CREATE TABLE IF NOT EXISTS seinst (
 );
 ```
 ## seinst_value
+```sql
 CREATE TABLE IF NOT EXISTS seinst_value (
     inst_id INTEGER,
     prop_id INTEGER,
     value TEXT,
     PRIMARY KEY (inst_id, prop_id)
 );
-```sql
+```
 ## seprop_stats
+```sql
 -- Nouvelle table pour les statistiques par (classe, propriété numérique)
 CREATE TABLE IF NOT EXISTS seprop_stats (
     class_id INTEGER,
@@ -89,7 +91,7 @@ CREATE TABLE IF NOT EXISTS seprop_stats (
     FOREIGN KEY (class_id) REFERENCES seclass(id),
     FOREIGN KEY (prop_id) REFERENCES seprop(id)
 );
-```sql
+```
 ## seprop_manual_thresholds
 ```sql
 -- Optionnel : table pour seuils manuels (expert)
