@@ -36,9 +36,23 @@ from ui.pyqt_ui import PyQtUI
 
 # Définitions
 ## Règle de conception
-### ⚠️ Normalisation obligatoire pour les noms (classes,propriété)
+### ⚠️ Normalisation obligatoire pour les noms (classes,propriété....)
 - `couleur dominante` → `couleur_dominante`
 - `"true"`, `"false"`, `"n"` → bool normalisé
+
+```py
+def ask_yes_no(question):
+    while True:
+        ans = Prompt.ask(f"[bold cyan]{question}[/] (oui/o / non/n / X inconnu)", default="o").strip().lower()
+        if ans in ("oui", "o", "yes", "y", "1"):
+            return True
+        if ans in ("non", "n", "no", "0"):
+            return False
+        if ans in ("x", "inconnu", ""):
+            return None
+        console.print("[red]Répondez par oui/o, non/n ou X[/red]")
+
+```
 
 ### Hiérachie
 
