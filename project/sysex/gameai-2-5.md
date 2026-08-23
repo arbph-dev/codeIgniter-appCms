@@ -43,9 +43,7 @@ Réponse : o
 
 ```
 → 1 animal(s) éliminé(s) → 1 restant(s)
-
 === FIN DU RAISONNEMENT ===
-```
 Est-ce un pingouin ? (oui/o/non/n/X pour inconnu)
 ```
 Réponse : o
