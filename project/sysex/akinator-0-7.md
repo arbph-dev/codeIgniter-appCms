@@ -61,7 +61,8 @@ from rich.layout import Layout
 from ui.console import show_tree, select_list, show_properties
 ```
 
-## couche db 
+## [couche db](/project/sysex/akinator-0-7/XXpertSystem/layerDB.md) 
+
 trop imbriqué a exploser, retoruver sqlalchemy et cqrs
 ```
 from core.database import KnowledgeBase
