@@ -30,8 +30,9 @@ Langages
 
 
 ## Callout
-### info
-> [!info]
+
+### error
+> [!error]
 >  
 > # Une info
 > 
