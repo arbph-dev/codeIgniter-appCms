@@ -1,3 +1,5 @@
+## core/database.py
+
 [`def __init__(self):`](/project/sysex/akinator-0-7/XXpertSystem/core/database.py#L15)
 - KnowledgeBase::def __init__(self): - App - Nombre de lignes  =9
 
