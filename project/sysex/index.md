@@ -28,7 +28,40 @@ from rich
 from ui.pyqt_ui import PyQtUI
 ```
 
-## Définitions
+
+# Définitions
+## Règle de conception
+### ⚠️ Normalisation obligatoire pour les noms (classes,propriété)
+- `couleur dominante` → `couleur_dominante`
+- `"true"`, `"false"`, `"n"` → bool normalisé
+
+### Hiérachie
+
+#### classes
+  Relation héritage : ajout d'un champ parent (convention pid ?)
+  - ex : Animal / Oiseau
+**⚠️ Héritage automatique** : Oiseau hérite de toutes les **propriétés** de la **classe** Animal et possède ses propres propriétés
+
+#### Instances (de classe)
+une instance d'une classe pourra donner naissance à une classe 
+- classe Animal / instance Oiseau
+- classe Oiseau / instances : aigle, merle
+
+Une instance peut être créée même si elle n’a pas toutes ses Valeurs de propriétés renseignées. Les valeurs absentes seront non créées, null ou héritées 
+
+#### propriété
+👉 **aucune duplication** en base  
+👉 résolution dynamique
+
+
+
+### Relation
+#### Instances (de classe)
+
+
+---
+
+## Elements
 
 ### Classes 
 table : [`seClass`](/project/sysex/data.md#seclass)
@@ -36,7 +69,7 @@ table : [`seClass`](/project/sysex/data.md#seclass)
 Les classes regroupe les éléments de connaissance 
 
 
-### exemple
+#### seClass
 
 |id|name|parent_id |
 |---|---|---|
@@ -48,12 +81,45 @@ Relation héritage : ajout d'un champ parent (convention pid ?)
 ### Instances (de classe)
 table : seInst
 
-Les animaux: tigre, aigle, merle… ne sont PAS des classes ce sont des **instances** de classes
+⚠️ Les animaux: tigre, aigle, merle… ne sont PAS des classes ce sont des **instances** de la classe Animal. Mais une instance d'une classe pourra donner naissance à une classe 
+
+#### seInst
+
+|id|nom|seClass|
+|---|---|---|
+|1|tigre|Animal|
+|2|merle|Animal|
+|3|aigle|Animal|
+|4|manchot empereur|Oiseau|
+|5|lion|Animal|
+
+
 
 ### propriétés (de classe)
 table : [seProps](/project/sysex/data.md#seprop)
+les seProps définissent les caractéristiques d'une classe : ["ailes", "plumes", "crie", ...]`
 
-définissent les caractéristiques d'une classe : ["ailes", "plumes", "crie", ...]`
+une propriété permet de distinguer une classe d'une autre
+- 1 animal a des ailes 
+- 1 animal a des plumes
+
+> c'est un oiseau
+
+
+
+#### seProps (extrait)
+
+|id|nom|type|
+|---|---|---|
+|1|ailes|bool|
+|2|plumes|bool|
+|3|crie|String|
+|4|rapace|bool|
+|5|mammifère|bool|
+|6|vit_dans_leau|bool|
+|7|couleur_dominante|String|
+|8|taille|String|
+|9|a_criniere|bool|
 
 ### Valeurs des propriétés
 table : seInstPropsValues
@@ -68,72 +134,17 @@ Valeurs des propriétés => {
   "mammifère": true
 }
 ```
----
-
-### ⚠️ Normalisation obligatoire pour les noms de classes et propriété:
-- `couleur dominante` → `couleur_dominante`
-- `"true"`, `"false"`, `"n"` → bool normalisé
-
-une propriété permet de distinguer une classe d'une autre
-- 1 animal a des ailes 
-- 1 animal a des plumes
-
-> c'est un oiseau
-
-### ⚠️ Héritage automatique :
-- Oiseau hérite de toutes les **propriétés** de la **classe** Animal et possède ses propres propriétés
-
-👉 **aucune duplication** en base  
-👉 résolution dynamique via service 
-
-### ⚠️ Création des instances
-Une instance peut être créée même si elle n’a pas toutes ses Valeurs de propriétés renseignées**.
-
-Les valeurs absentes :
-- soit non créées
-- soit null
-- soit héritées implicitement (plus tard)
----
-
-
-
-
----
-
-### seInst
-
-|id|nom|seClass|
-|---|---|---|
-|1|tigre|Animal|
-|2|merle|Animal|
-|3|aigle|Animal|
-|4|manchot empereur|Oiseau|
-|5|lion|Animal|
-
----
-
-### seProps (extrait)
-
-|id|nom|type|
-|---|---|---|
-|1|ailes|bool|
-|2|plumes|bool|
-|3|crie|String|
-|4|rapace|bool|
-|5|mammifère|bool|
-|6|vit_dans_leau|bool|
-|7|couleur_dominante|String|
-|8|taille|String|
-|9|a_criniere|bool|
-
----
-
-### seInstPropsValues
+#### seInstPropsValues
 
 |seInst|seClassProp|value|
 |---|---|---|
 |tigre|ailes|false|
 |tigre|mammifère|true|
+
+
+
+
+
 
 
     
