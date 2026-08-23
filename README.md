@@ -39,8 +39,19 @@ Après différentes versions on arrive a une stabilisation du pattern
 - Documentation [/documentation](/documentation)
 - Notes quotidiennes : [/project/daily](/project/daily)
 
+### Pyhton
+Audit de projet 
+- [akinator-0-7](project/sysex/akinator-0-7.md)
+
+
 ### API
-module personne 
+[authentification](documentation/REFERENTIELS/CODEIGNITER/authentification.md)
+- mise a jour du code commentée
+- filters.php mis a jour pour essai API
+  - python (a faire)
+  - html : https://zealot.fr/recherche-mot-api.html ( a documenter en référentiel)
+
+#### module personne 
 - ressources et debut du projet : https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-13.md
 - documentation de l'API: https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/API/Personne/index.md
 
