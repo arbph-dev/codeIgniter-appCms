@@ -297,20 +297,6 @@ def main():
     
     # personne = PersonneClient("https://zealot.fr", "", "")
     personne = PersonneClient("https://zealot.fr", "xxxxxxxxx", "xxxxxxxxxx")
-
-    """
-    # essai login correct => 200 ok
-    personne = PersonneClient("https://zealot.fr", "xxxxxxx", "xxxxxxx")
-        [PersonneClient] GET https://zealot.fr/api/personnes?q=gaulle&page=1&per_page=20 → 200
-
-    # essai erreur login => 401 
-    personne = PersonneClient("https://zealot.fr", "yyyyyyy", "yyyyyyy")
-        [PersonneClient] GET https://zealot.fr/api/personnes?q=gaulle&page=1&per_page=20 → 401
-        [PersonneClient] 401 — tentative de refresh token...
-        [PersonneClient] HTTP Error login : 401 Client Error: Unauthorized for url: https://zealot.fr/api/auth/login — {"error":"Email ou mot de passe invalide"}
-        [PersonneClient] HTTP Error : 401 Client Error: Unauthorized for url: https://zealot.fr/api/personnes?q=gaulle&page=1&per_page=20 — {"message":"The access token is invalid."}
-
-    """
     personne.login()  # décommenter quand l'auth est en place
 
     while True:
