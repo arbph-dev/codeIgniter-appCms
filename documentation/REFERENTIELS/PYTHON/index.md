@@ -20,7 +20,7 @@
 > 
 > *Cela garantit que votre gestionnaire de paquets PIP est à jour et fonctionnel.*
 
-# pyqt6
+# PyQt6
 
 > [!note]
 >  
