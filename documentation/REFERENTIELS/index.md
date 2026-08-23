@@ -44,7 +44,7 @@ Langages
 ### warning
 > [!warning]
 > 
-> # Un avetissment
+> # Un avertissment
 > 
 > **message** : Attention 
 > 
