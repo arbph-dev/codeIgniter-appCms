@@ -30,15 +30,8 @@ Langages
 
 
 ## Callout
-
-### error
-> [!error]
->  
-> # Une info
-> 
-> Texte de la note
-> - tache 1
-> - tache 2
+error, info ne fonctionne pas 
+- [ ] a documenter
  
 ### note
 > [!note]
