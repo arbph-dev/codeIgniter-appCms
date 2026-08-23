@@ -1,6 +1,61 @@
 # gameai-2-5
 
-a documenter sur le modèle de akinator-0-7
+--- ÉTAPE 0 ---
+```
+Pensez à un animal, je vais essayer de deviner.
+=== DÉBUT DU RAISONNEMENT ===
+Étape 0 : Candidats initiaux (6) : aigle, dauphin, faucon, merle, pingouin, tigre
+```
+
+--- ÉTAPE 1 ---
+```
+Candidats actuels (6) : aigle, dauphin, faucon, merle, pingouin, tigre
+Questions possibles :
+   Booléennes : ['ailes', 'plumes', 'rapace', 'mammifère', 'vit_dans_leau']
+   Textuelles distinctes : ["crie = 'clique'", "crie = 'rugit'", "crie = 'braille'", "crie = 'crie'", "crie = 'chante'", "couleur dominante = 'noir et blanc'", "couleur dominante = 'brun'", "couleur dominante = 'orange et noir'", "couleur dominante = 'noir'", "couleur dominante = 'gris'", "couleur dominante = 'brun et blanc'"]
+L'animal a-t-il ailes ? (oui/o/non/n/X pour inconnu)
+```
+Réponse : o
+
+--- ÉTAPE 2 ---
+```
+→ 2 animal(s) éliminé(s) → 4 restant(s)
+
+Candidats actuels (4) : aigle, faucon, merle, pingouin
+Questions possibles :
+   Booléennes : ['rapace', 'vit_dans_leau']
+   Textuelles distinctes : ["crie = 'braille'", "crie = 'chante'", "crie = 'crie'", "couleur dominante = 'brun et blanc'", "couleur dominante = 'noir'", "couleur dominante = 'brun'", "couleur dominante = 'noir et blanc'"]
+L'animal a-t-il rapace ? (oui/o/non/n/X pour inconnu)
+```
+Réponse : n
+
+--- ÉTAPE 3 ---
+```
+→ 2 animal(s) éliminé(s) → 2 restant(s)
+
+Candidats actuels (2) : merle, pingouin
+Questions possibles :
+   Booléennes : ['vit_dans_leau']
+   Textuelles distinctes : ["crie = 'braille'", "crie = 'chante'", "couleur dominante = 'noir et blanc'", "couleur dominante = 'noir'"]
+L'animal a-t-il vit_dans_leau ? (oui/o/non/n/X pour inconnu)
+```
+Réponse : o
+
+```
+→ 1 animal(s) éliminé(s) → 1 restant(s)
+
+=== FIN DU RAISONNEMENT ===
+```
+Est-ce un pingouin ? (oui/o/non/n/X pour inconnu)
+```
+Réponse : o
+
+```
+J'ai trouvé ! C'est un pingouin ! 🎉
+Base de connaissances sauvegardée dans pywise_kb.json
+```
+
+## documenter
 
 [`def __init__(self):`](/project/sysex/gameai02.5/gameai02.5.py#L7)
 - KnowledgeBase::def __init__(self): - MetaRules - Nombre de lignes  =29
