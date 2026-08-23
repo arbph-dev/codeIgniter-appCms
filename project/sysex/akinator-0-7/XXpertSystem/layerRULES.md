@@ -26,7 +26,7 @@
 
 ## game/akinator.py
 
-[`def play(kb, class_name):`](/project/sysex/akinator-0-7/XXpertSystem/game/akinator.py#L21)
+[`def play(kb, class_name):`](/project/sysex/akinator-0-7/XXpertSystem/game/akinator.py#L23)
 - def play(kb, class_name): - MetaRules - Nombre de lignes  =195
 
 
