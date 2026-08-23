@@ -31,4 +31,20 @@ Langages
 
 ## Callout
 
+### note
+> [!note]
+>  
+> # Une note
+> 
+> Texte de la note
+> - tache 1
+> - tache 2
+ 
 
+### warning
+> [!warning]
+> 
+> # Un avetissment
+> 
+> **message** : Attention 
+> 
