@@ -27,6 +27,13 @@ Langages
 
 ## Entités UTF
 - 🎉
+- 💻
+- 🔗
+- 👉
+- ❌
+- ⏭️
+- ⚠️
+- ✅
 
 
 ## Callout
