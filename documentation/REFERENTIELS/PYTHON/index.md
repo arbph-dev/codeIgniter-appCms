@@ -20,23 +20,17 @@
 > 
 > *Cela garantit que votre gestionnaire de paquets PIP est à jour et fonctionnel.*
 
-
-
-
 # pyqt6
 
+> [!note]
+>  
+> python -m pip install pyqt6
+>
+> pip install pyqt6
 
-pip install pyqt6
-
-
-
-
-
-
-
+---
 
 # SQLAlchemy
-
 
 ## Exemples en Python
 
