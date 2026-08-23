@@ -13,12 +13,25 @@ dépendances :
     - pyqtSignal
     - Qt
 
-# ListPanel 
-Extends
-QWidget
+# pyqt6-gui-000
 
-Description
-- affiche une liste d'éléments avec gestion de sélection
+`Workbench::__init__` créé les panels et établit la connexion du **signal** du ListPanel au **slot** du DetailPanel
+```py
+self.list_panel.item_selected.connect(self.detail_panel.update_details)
+```
+
+ListPanel affiche une liste d'éléments, sur une sélection ListPanel transmet le **signal** avec `ListPanel::on_selection_changed`
+```py
+self.item_selected.emit(current_row, item_text)
+```
+
+DetailPanel reçoit le signal sur son slot et appel `DetailPanel::update_details(self, index, text)`
+
+
+## ListPanel 
+Affiche une liste d'éléments avec gestion de sélection
+
+Extends : QWidget
 
 Le constructeur
 - crée et instancie un enfant `self.list_widget` de classe QListWidget
@@ -57,7 +70,18 @@ class ListPanel(QWidget):
             self.item_selected.emit(current_row, item_text)
 ```
 
-# Panel affichant les détails d'un élément, avec plusieurs onglets
+## DetailPanel
+affiche les détails d'un élément, avec plusieurs onglets
+
+Structure
+```
+DetailPanel (QWidget)
+    self.tabs
+    self.info_label
+    def __init__
+    def update_details(self, index, text):
+```
+
 ```py
 class DetailPanel(QWidget):
     def __init__(self, parent=None):
@@ -75,7 +99,9 @@ class DetailPanel(QWidget):
         self.info_label.setText(f"Détails de l'élément #{index} : {text}")
         # Ici, vous pouvez gérer plusieurs onglets pour afficher plus d'infos
 ```
-# Workbench qui organise les panels et gère la communication
+## Workbench
+organise les panels et gère la communication
+
 ```py
 class Workbench(QMainWindow):
     def __init__(self):
