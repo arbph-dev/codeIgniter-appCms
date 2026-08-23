@@ -34,7 +34,7 @@ pip install pyqt6
 
 
 
-# Rich
+
 # SQLAlchemy
 
 
@@ -103,6 +103,9 @@ session.add(image1)
 session.commit()
 ``` 
 
+---
+
+# Rich
 
 ## Affichage avec Rich
 ```py
