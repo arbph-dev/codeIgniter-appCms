@@ -16,7 +16,7 @@ Les classes regroupe les éléments de connaissance
 
 ### exemple
 
-|id|nom|parent|
+|id|name|parent_id |
 |---|---|---|
 |1|Animal|null|
 |2|Oiseau|Animal|
