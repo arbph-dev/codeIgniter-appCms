@@ -37,7 +37,7 @@ XXpertSystem\relics\core\__init__.py
 XXpertSystem\relics\main.py
 ```
 
-## couche ui 
+## [couche ui](/project/sysex/akinator-0-7/XXpertSystem/layerUI.md)
 on emploie à différents endroits, il faut séparer les couches ui et app
 - rich à ajouter au référentiel
 - des fonctions de présentation
