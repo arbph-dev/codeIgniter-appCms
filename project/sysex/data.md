@@ -2,26 +2,19 @@
 
 seclass
 - contient les classes du système : animal, mammifère 
-
 seprop
 - contient les propriétés qui sont affectables aux classes
-
 seclass_prop
 - contient les propriétés affectées aux classes
-
 seinst
 - instance de classe
-
 - seinst_value
-
 - seprop_stats
-
 - seprop_manual_thresholds
-
 - se_users
-
 - se_submissions
-
+- se_events
+    - a documenter
 
 
 ## seclass
