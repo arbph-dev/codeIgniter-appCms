@@ -33,14 +33,28 @@ XXpertSystem\relics\main.py
 ```
 
 ## couche ui 
-on emploie 
+on emploie à différents endroits, il faut séparer les couches ui et app
 - rich à ajouter au référentiel
-- des fonctions de presentation
+- des fonctions de présentation
+
+
+
 ```
+# main.py
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 from rich.prompt import Prompt, Confirm, IntPrompt
+
+# ui/console.py
+from rich.console import Console
+from rich.table import Table
+from rich.tree import Tree
+from rich.panel import Panel
+from rich.prompt import Prompt, Confirm
+from rich.live import Live
+from rich.layout import Layout
+
 ```
 
 ```
