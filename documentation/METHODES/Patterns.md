@@ -62,17 +62,11 @@ Ces patterns concernent la communication entre objets et la gestion des responsa
 
 ---
 
-Si vous souhaitez, je peux approfondir un ou plusieurs de ces patterns avec des exemples concrets et leurs cas d'utilisation typiques.
+# Patterns structurels
 
-Suivi
 
-Pourrais tu montrer un exemple de bridge en js?
 
-Bien sûr ! Voici un exemple simple et clair du pattern **Bridge** en JavaScript.
-
----
-
-## Exemple du pattern Bridge en JavaScript
+## Pattern Bridge en JavaScript
 
 Le pattern Bridge consiste à séparer l'abstraction (interface principale) de son implémentation, afin qu'elles puissent évoluer indépendamment.
 
@@ -139,22 +133,12 @@ circle2.draw(); // Rendering a circle of radius 5 at (30, 40) using Canvas.
 
 ---
 
-## Explications
+### Explications
 
 - La classe `Shape` est l'abstraction qui utilise un `renderer` (implémentation).
 - Les classes `SvgRenderer` et `CanvasRenderer` sont les différentes implémentations concrètes.
 - La classe `Circle` est une spécialisation de `Shape` qui délègue le rendu à l'implémentation.
 - On peut facilement ajouter d'autres formes ou d'autres types de rendu sans modifier les classes existantes.
-
----
-
-Si vous souhaitez un exemple plus complexe ou adapté à un autre contexte, n'hésitez pas à me le demander !
-
-Suivi
-
-Montres moi factory method toujours en js
-
-Voici un exemple simple et clair du pattern **Factory Method** en JavaScript.
 
 ---
 
