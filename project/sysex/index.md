@@ -1,9 +1,14 @@
-Ce dossier doit répertorier les elements du système expert
+Ce dossier doit répertorier les elements du système expert utiles pour un projet à venir
 
-[Couche DB sqlite3](/project/sysex/akinator-0-7/XXpertSystem/layerDB.md)
-[Tables de données](/project/sysex/data.md)
+## Ressources
+[akinator-0-7](/project/sysex/akinator-0-7.md)
 
-[Couche Regle](/project/sysex/akinator-0-7/XXpertSystem/layerRULES.md)
+
+### Couches applicatives
+- [Couche DB sqlite3](/project/sysex/akinator-0-7/XXpertSystem/layerDB.md)
+  - [Tables de données](/project/sysex/data.md)
+- [Couche Regle](/project/sysex/akinator-0-7/XXpertSystem/layerRULES.md)
+
 
 
 ## Définitions
