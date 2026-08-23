@@ -1,4 +1,21 @@
 
+## plugin Canvas Block : 
+- [ ] documenterplugin Canvas Block #obsidian/plugin 
+
+### Outil python
+
+> [!note]
+> python -m pip install termcolor
+> python -m pip install pyyaml
+> 
+> python -m ensurepip --upgrade 
+> python -m pip install --upgrade pip
+> 
+> *Cela garantit que votre gestionnaire de paquets PIP est à jour et fonctionnel.*
+
+
+
+
 # pyqt6
 
 
