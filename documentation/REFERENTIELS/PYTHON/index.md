@@ -14,7 +14,8 @@
 
 > [!warning]
 > 
-> python -m ensurepip --upgrade 
+> python -m ensurepip --upgrade
+> 
 > python -m pip install --upgrade pip
 > 
 > *Cela garantit que votre gestionnaire de paquets PIP est à jour et fonctionnel.*
