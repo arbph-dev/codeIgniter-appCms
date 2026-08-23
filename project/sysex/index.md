@@ -1,8 +1,8 @@
-Ce dossier doit répertorier les elements du système expert utiles pour un projet à venir
+Ce dossier doit répertorier les éléments du système expert utiles pour un projet à venir
 
 ## Ressources
 [akinator-0-7](/project/sysex/akinator-0-7.md) sur disque local : "G:\PY\backup\XXpertSystem0.7\XXpertSystem\main.py"
-
+- akinator-0-9, PyQtUI sur disque local "G:\PY\xxpert_system\main.py" 
 
 ### Couches applicatives
 - [Couche DB](/project/sysex/akinator-0-7/XXpertSystem/layerDB.md)
@@ -11,6 +11,16 @@ Ce dossier doit répertorier les elements du système expert utiles pour un proj
 - [Couche Regle](/project/sysex/akinator-0-7/XXpertSystem/layerRULES.md)
 - [Couche UI](/project/sysex/akinator-0-7/XXpertSystem/layerUI.md)
 
+### Librairies
+
+```
+import statistics  # Pour median et stdev
+import sqlite3
+from rich
+
+## DEV 2025-12-25
+from ui.pyqt_ui import PyQtUI
+```
 
 ## Définitions
 
