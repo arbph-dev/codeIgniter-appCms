@@ -12,5 +12,5 @@
 
 ## game/akinator.py
 
-[`def ask_yes_no(question):`](/project/sysex/akinator-0-7/XXpertSystem/game/akinator.py#L21)
+[`def ask_yes_no(question):`](/project/sysex/akinator-0-7/XXpertSystem/game/akinator.py#L12)
 - def ask_yes_no(question): - ui - Nombre de lignes  =11
