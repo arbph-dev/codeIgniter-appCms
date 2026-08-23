@@ -8,6 +8,7 @@ Ce dossier doit répertorier les éléments du système expert utiles pour un pr
 - [Couche DB](/project/sysex/akinator-0-7/XXpertSystem/layerDB.md)
   - [Couche DB sqlite3](/project/sysex/akinator-0-7/XXpertSystem/layerDB.md)
   - [Tables de données](/project/sysex/data.md)
+- [Couche MetaRegle](/project/sysex/akinator-0-7/XXpertSystem/layerMETARULES.md)
 - [Couche Regle](/project/sysex/akinator-0-7/XXpertSystem/layerRULES.md)
 - [Couche UI](/project/sysex/akinator-0-7/XXpertSystem/layerUI.md)
 
