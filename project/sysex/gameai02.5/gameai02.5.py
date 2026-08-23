@@ -365,9 +365,9 @@ def filter_candidates(candidates, feat, response, qtype, extra, kb):
 
 def guess_animal(kb, debug=True):
     print("Pensez à un animal, je vais essayer de deviner.\n")
-    skipped_questions = set()  # Pour mémoriser les questions ignorées (feat + valeur)
+    
     candidates = list(kb.animals.keys())
-    answers = {}
+    skipped_questions = set()
     step = 1
 
     if debug:
@@ -383,19 +383,19 @@ def guess_animal(kb, debug=True):
 
         if debug:
             if questions:
-                bools = [f for f, t, _ in questions if t == "bool"]
-                commons = [f"{f}='{e}'" for f, t, e in questions if t == "text_common"]
-                distincts = [f"{f}='{e}'" for f, t, e in questions if t == "text_distinct"]
-                print("Questions possibles :")
-                if bools: print(f"   Bool : {bools}")
-                if commons: print(f"   Commun : {commons}")
-                if distincts: print(f"   Distinct : {distincts}")
+                bool_qs = [q[0] for q in questions if q[1] == "bool"]
+                common_qs = [f"{q[0]} = '{q[2]}'" for q in questions if q[1] == "text_common"]
+                distinct_qs = [f"{q[0]} = '{q[2]}'" for q in questions if q[1] == "text_distinct"]
+                print(f"Questions possibles :")
+                if bool_qs: print(f"   Booléennes : {bool_qs}")
+                if common_qs: print(f"   Textuelles communes : {common_qs}")
+                if distinct_qs: print(f"   Textuelles distinctes : {distinct_qs}")
             else:
-                print("Aucune question discriminante.")
+                print("Aucune question discriminante trouvée.")
 
         if not questions:
             if debug:
-                print("→ Plus de questions utiles.\n")
+                print("→ Plus de questions utiles. Fin du raisonnement adaptatif.\n")
             break
 
         # Priorité : bool > text_distinct > text_common
@@ -405,26 +405,23 @@ def guess_animal(kb, debug=True):
 
         response, feat, extra = ask_question(chosen)
 
-        if response is None:
+        if response is None:  # Réponse "X" = inconnu
             if debug:
                 print("→ Réponse : inconnu (X) → je passe à une autre question")
             if chosen[1] in ("text_distinct", "text_common"):
-                skipped_key = f"{feat}={extra}"
-                skipped_questions.add(skipped_key)
+                skipped_questions.add(f"{feat}={extra}")
             continue
 
-        # Sinon, réponse oui/non → on filtre normalement
+        # Filtrage des candidats
+        old_count = len(candidates)
         candidates = filter_candidates(candidates, feat, response, chosen[1], extra, kb)
+
         if debug:
-                print("→ WATCH guess_animal :  filter_candidates ")
-        
-        if debug:
-            eliminated = len(candidates) < len(candidates)  # juste pour affichage
-            print(f"→ Réponse : {'oui' if response else 'non' if chosen[1] != 'text_open' else response}")
-            print(f"→ {len(candidates)} restant(s)\n")
+            eliminated = old_count - len(candidates)
+            print(f"→ {eliminated} animal(s) éliminé(s) → {len(candidates)} restant(s)\n")
             step += 1
 
-    # === Fin ===
+    # === Fin du raisonnement ===
     if debug:
         print("=== FIN DU RAISONNEMENT ===\n")
 
@@ -433,20 +430,39 @@ def guess_animal(kb, debug=True):
         if ask_yes_no(f"Est-ce un {candidate} ?"):
             print(f"J'ai trouvé ! C'est un {candidate} ! 🎉")
             return
-        else:
-            # ... (gestion du "non", ajout, etc. – tu peux garder ton code existant ici)
-            real_animal = input("Quel était l'animal auquel vous pensiez ? ").strip().lower()
-            if real_animal in kb.animals:
-                ask_discriminating_feature(kb, real_animal, candidate)
+
+        # --- Cas "non" : l'utilisateur pensait à un autre animal ---
+        real_animal = input("Quel était l'animal auquel vous pensiez ? ").strip().lower()
+
+        if real_animal != candidate:
+            if real_animal not in kb.animals:
+                print(f"Ajout du nouvel animal '{real_animal}'.")
+                features = ask_features(kb, real_animal)  # Demande toutes les caractéristiques connues
+                kb.add_animal(real_animal, features)
             else:
-                kb.add_animal(real_animal, answers)
-                print(f"Animal '{real_animal}' ajouté.")
-    else:
-        print(f"\nJe n'arrive pas à deviner précisément. Restants : {len(candidates)}")
+                print(f"L'animal '{real_animal}' existe déjà dans la base.")
+
+            # Toujours demander la différence pour apprendre
+            print(f"\nD'accord, ce n'était pas un {candidate}, c'était un {real_animal}.")
+            ask_discriminating_feature(kb, real_animal, candidate)
+        else:
+            print("D'accord, c'était bien ça alors !")
+
+        return  # On sort ici → pas de double ajout
+
+    # Cas plusieurs candidats ou zéro
+    if len(candidates) > 1:
+        print(f"\nJe n'arrive pas à deviner précisément. Animaux possibles ({len(candidates)}) :")
         for c in sorted(candidates):
             print(f"- {c}")
-    
+    else:
+        print("\nAucun animal ne correspond aux réponses données.")
+
+    # Seulement si on n'a pas déjà ajouté un animal
     add_new_animal(kb)
+
+
+
 
 def main_menu():
     #kb = KnowledgeBase()
