@@ -1,10 +1,15 @@
 Ce dossier doit répertorier les elements du système expert
 
+[Couche DB sqlite3](/project/sysex/akinator-0-7/XXpertSystem/layerDB.md)
+[Tables de données](/project/sysex/data.md)
+
+[Couche Regle](/project/sysex/akinator-0-7/XXpertSystem/layerRULES.md)
+
 
 ## Définitions
 
 ### Classes 
-table : seClass
+table : [`seClass`](/project/sysex/data.md#seclass)
 
 Les classes regroupe les éléments de connaissance 
 
@@ -18,7 +23,7 @@ table : seInst
 Les animaux: tigre, aigle, merle… ne sont PAS des classes ce sont des **instances** de classes
 
 ### propriétés (de classe)
-table : seProps
+table : [seProps](/project/sysex/data.md#seprop)
 
 définissent les caractéristiques d'une classe : ["ailes", "plumes", "crie", ...]`
 
