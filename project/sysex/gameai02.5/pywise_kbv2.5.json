@@ -1,0 +1,103 @@
+{
+    "features": [
+        "ailes",
+        "plumes",
+        "crie",
+        "rapace",
+        "mammifère",
+        "vit_dans_leau",
+        "couleur dominante",
+        "taille",
+        "a_criniere"
+    ],
+    "animals": {
+        "tigre": {
+            "ailes": false,
+            "plumes": false,
+            "crie": "rugit",
+            "rapace": false,
+            "mammifère": true,
+            "vit_dans_leau": false,
+            "couleur dominante": "orange et noir",
+            "taille": null,
+            "a_criniere": "false"
+        },
+        "merle": {
+            "ailes": true,
+            "plumes": true,
+            "crie": "chante",
+            "rapace": false,
+            "mammifère": false,
+            "vit_dans_leau": false,
+            "couleur dominante": "noir",
+            "taille": null,
+            "a_criniere": null
+        },
+        "faucon": {
+            "ailes": true,
+            "plumes": true,
+            "crie": "crie",
+            "rapace": true,
+            "mammifère": false,
+            "vit_dans_leau": false,
+            "couleur dominante": "brun",
+            "taille": "moyen",
+            "a_criniere": null
+        },
+        "dauphin": {
+            "ailes": false,
+            "plumes": false,
+            "crie": "clique",
+            "rapace": false,
+            "mammifère": true,
+            "vit_dans_leau": true,
+            "couleur dominante": "gris",
+            "taille": null,
+            "a_criniere": null
+        },
+        "aigle": {
+            "ailes": true,
+            "plumes": true,
+            "crie": "crie",
+            "rapace": true,
+            "mammifère": false,
+            "vit_dans_leau": false,
+            "couleur dominante": "brun et blanc",
+            "taille": "grand",
+            "a_criniere": null
+        },
+        "pingouin": {
+            "ailes": true,
+            "plumes": true,
+            "crie": "o",
+            "rapace": false,
+            "mammifère": false,
+            "vit_dans_leau": true,
+            "couleur dominante": "noir blanc",
+            "taille": "petit",
+            "a_criniere": null
+        },
+        "manchot empereur": {
+            "ailes": true,
+            "plumes": true,
+            "crie": true,
+            "rapace": false,
+            "mammifère": false,
+            "vit_dans_leau": true,
+            "couleur dominante": true,
+            "taille": "grand",
+            "a_criniere": null
+        },
+        "lion": {
+            "ailes": false,
+            "plumes": false,
+            "crie": "n",
+            "rapace": false,
+            "mammifère": true,
+            "vit_dans_leau": false,
+            "couleur dominante": "fauve beige",
+            "taille": null,
+            "a_criniere": "true"
+        }
+    }
+}
