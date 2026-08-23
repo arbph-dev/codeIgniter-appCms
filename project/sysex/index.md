@@ -1,7 +1,7 @@
 Ce dossier doit répertorier les elements du système expert utiles pour un projet à venir
 
 ## Ressources
-[akinator-0-7](/project/sysex/akinator-0-7.md)
+[akinator-0-7](/project/sysex/akinator-0-7.md) sur disque local : "G:\PY\backup\XXpertSystem0.7\XXpertSystem\main.py"
 
 
 ### Couches applicatives
