@@ -21,4 +21,3 @@
 
 [`def prove(self, objective, inst_name, class_name):`](/project/sysex/akinator-0-7/XXpertSystem/core/inference.py#L71)
 - BackwardEngine::def prove(self, objective, inst_name, class_name): - MetaRules - Nombre de lignes  =33
-<img width="816" height="461" alt="image" src="https://github.com/user-attachments/assets/010dbf77-4a36-46ef-af4f-b4ea47a5c9bc" />
