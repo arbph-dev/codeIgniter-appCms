@@ -72,5 +72,3 @@
 
 [`def ask_and_set_properties(self, inst_name, class_name):`](/project/sysex/akinator-0-7/XXpertSystem/core/database.py#L454)
 - KnowledgeBase::def ask_and_set_properties(self, inst_name, class_name): - MetaRules - Nombre de lignes  =45
-
-![Uploading image.png…]()
