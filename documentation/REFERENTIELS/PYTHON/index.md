@@ -21,6 +21,7 @@ class Compte:
 
 ### os
 - [Manipulation de fichiers](/documentation/REFERENTIELS/PYTHON/FILE/index.md)
+
 - PyQt6
 - SQLAlchemy
 - Rich
@@ -32,8 +33,9 @@ openxxxl pour import et manip excel
 ## plugin Canvas Block : 
 - [ ] documenterplugin Canvas Block #obsidian/plugin 
 
-### Outil python
+## Outil python
 
+### installer une librairie
 > [!note]
 >  
 > python -m pip install termcolor
@@ -49,6 +51,24 @@ openxxxl pour import et manip excel
 > python -m pip install --upgrade pip
 > 
 > *Cela garantit que votre gestionnaire de paquets PIP est à jour et fonctionnel.*
+
+### Serveur local
+> [!note]
+>
+> 💻 Depuis PowerShell ou CMD (Windows) :
+> - Ouvrir un terminal.
+> - Atteindre le dossier contenant les fichiers : cd "C:\DOSSIER\SOUDOSSIER\TEST"
+> - Lance le serveur HTTP intégré à Python : `python -m http.server 8080`
+>
+> 🔗 Accès depuis le navigateur :
+> - 👉 http://localhost:8080/index.html
+
+## requis
+adresse relative plutot que aboslu
+
+
+---
+
 
 # PyQt6
 
@@ -189,3 +209,43 @@ def menu_interventions(session):
         else:
             print("Option invalide, veuillez réessayer.")
 ```
+---
+# Ressources
+
+## Mysql
+```
+G:\Arnaud\Projets\PYTHON\test_mysql.py
+G:\BACUP_USB\TOUSB\PYTHON\APPS\app.py
+G:\BACUP_USB\TOUSB\PYTHON\APPS\db\mariadb.py
+G:\BACUP_USB\TOUSB\PYTHON\APPS_BAK\db\mariadb.py
+G:\BACUP_USB\TOUSB\PYTHON\OLDIES\dbconn.py
+G:\BACUP_USB\TOUSB\PYTHON\OLDIES\test.py
+G:\BACUP_USB\TOUSB\PYTHON\OLDIES\APP_PY2\db\mariadb.py
+G:\BACUP_USB\TOUSB\PYTHON\OLDIES\APP_PY\db\mariadb.py
+G:\DATA\LPM\BACKUP_USB\2023_06\TOUSB\PYTHON\APPS\app.py
+G:\DATA\LPM\BACKUP_USB\2023_06\TOUSB\PYTHON\APPS\db\mariadb.py
+G:\DATA\LPM\BACKUP_USB\2023_06\TOUSB\PYTHON\APPS_BAK\db\mariadb.py
+G:\DATA\LPM\BACKUP_USB\2023_06\TOUSB\PYTHON\OLDIES\dbconn.py
+G:\DATA\LPM\BACKUP_USB\2023_06\TOUSB\PYTHON\OLDIES\test.py
+G:\DATA\LPM\BACKUP_USB\2023_06\TOUSB\PYTHON\OLDIES\APP_PY2\db\mariadb.py
+G:\DATA\LPM\BACKUP_USB\2023_06\TOUSB\PYTHON\OLDIES\APP_PY\db\mariadb.py
+G:\DRIVE2\ELECTRO\INFO\PROGRAMMATION\python\APPS\app.py
+G:\DRIVE2\ELECTRO\INFO\PROGRAMMATION\python\APPS\db\mariadb.py
+G:\PYTHON\APPS\app.py
+G:\PYTHON\APPS\db\mariadb.py
+G:\WEB\CMS\pycsv.py
+G:\WEB\CMS\pycsv0.py
+G:\WEB\CMS\pytest_mysqlconnector.py
+```
+## Localisaltion 
+Ville
+G:\PYTHON\APPS\stdclass\localisation\CodeVILLE.py
+
+## EAU
+"G:\PYTHON\WATER\eauanl.py"
+contient ion
+
+## SUPERVISION
+"G:\PYTHON\SUPERV\TkThread_parking.py"
+
+
