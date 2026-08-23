@@ -2,20 +2,25 @@ On reprend les différentes fonctions
 
 # Audit
 
+L'application est lancé via main.py
+
+[`def main():`](/project/sysex/akinator-0-7/XXpertSystem/main.py#L12)
+- def main(): - Controller,App,ui,data,rules - Nombre de lignes  =235
+
+
+
 ## Structure 
 
-```
-XXpertSystem\ui\console.py
-XXpertSystem\ui\__init__.py
-XXpertSystem\game\akinator_old.py
-XXpertSystem\game\akinator.py
-XXpertSystem\game\__init__.py
-XXpertSystem\core\user.py
-XXpertSystem\core\inference.py
-XXpertSystem\core\database.py
-XXpertSystem\core\__init__.py
-XXpertSystem\main.py
-```
+[`main.py`](/project/sysex/akinator-0-7/XXpertSystem/main.py)
+- **/core/**
+    - [`database.py`](/project/sysex/akinator-0-7/XXpertSystem/core/database.py)
+    - [`inference.py`](/project/sysex/akinator-0-7/XXpertSystem/core/inference.py)
+    - [`user.py`](/project/sysex/akinator-0-7/XXpertSystem/core/user.py)
+- **/game/**
+    - [`akinator.py`](/project/sysex/akinator-0-7/XXpertSystem/game/akinator.py)
+- **/ui/**
+    - [`console.py`](/project/sysex/akinator-0-7/XXpertSystem/ui/console.py)
+
 
 ```
 XXpertSystem\relics\ui\console.py
