@@ -30,7 +30,15 @@ Langages
 
 
 ## Callout
-
+### info
+> [!info]
+>  
+> # Une info
+> 
+> Texte de la note
+> - tache 1
+> - tache 2
+ 
 ### note
 > [!note]
 >  
