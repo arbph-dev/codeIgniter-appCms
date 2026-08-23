@@ -100,4 +100,4 @@ a documenter sur le modèle de akinator-0-7
 
 [`auto_save`](/project/sysex/gameai02.5/gameai02.5.py#L509)
 - auto_save - Data - Nombre de lignes  =1
-<img width="816" height="2029" alt="image" src="https://github.com/user-attachments/assets/6af113c1-2983-4998-b016-f80141aa43ac" />
+
