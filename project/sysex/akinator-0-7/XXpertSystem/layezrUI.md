@@ -1,3 +1,7 @@
+
+## ui/console.py
+
+
 [`def show_tree(kb):`](/project/sysex/akinator-0-7/XXpertSystem/ui/console.py#L12)
 - def show_tree(kb): - ui - Nombre de lignes  =19
 
