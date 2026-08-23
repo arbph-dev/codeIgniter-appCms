@@ -23,3 +23,10 @@
 
 [`def prove(self, objective, inst_name, class_name):`](/project/sysex/akinator-0-7/XXpertSystem/core/inference.py#L71)
 - BackwardEngine::def prove(self, objective, inst_name, class_name): - MetaRules - Nombre de lignes  =33
+
+## game/akinator.py
+
+[`def play(kb, class_name):`](/project/sysex/akinator-0-7/XXpertSystem/game/akinator.py#L21)
+- def play(kb, class_name): - MetaRules - Nombre de lignes  =195
+
+
