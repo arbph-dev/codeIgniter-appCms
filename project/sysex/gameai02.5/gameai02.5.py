@@ -1,4 +1,4 @@
-
+from termcolor import colored
 import json
 import os
 #-------
@@ -165,13 +165,14 @@ def ask_yes_no(question):
             return False
         if answer in ("x", "inconnu", "je sais pas", "jsp"):
             return None  # None signifie "inconnu"
-        print("Réponse invalide, veuillez répondre par 'oui', 'o', 'non', 'n' ou 'X' pour inconnu.")
+        #print("Réponse invalide, veuillez répondre par 'oui', 'o', 'non', 'n' ou 'X' pour inconnu.")
+        print(colored("Réponse invalide, veuillez répondre par 'oui', 'o', 'non', 'n' ou 'X'.", 'red'))                    
 
 def ask_value(question):
     return input(question + " ").strip().lower()
 
 
-def ask_features(kb, animal_name):
+def ask_featuresold(kb, animal_name):
     features = {}
     for feat in kb.features:
         val = kb.get_feature_value(animal_name, feat)
@@ -180,6 +181,41 @@ def ask_features(kb, animal_name):
         else:
             features[feat] = ask_value(f"Comment l'animal {animal_name} {feat}-il ?")
     return features
+
+def ask_features(kb, animal_name):
+    features = {}
+    for feat in kb.features:
+        sample_val = kb.get_feature_value(animal_name, feat)  # Valeur existante si modification
+        if sample_val is not None:
+            # Si valeur existante, on propose de la modifier ou garder
+            print(f"Valeur actuelle pour '{feat}' : {sample_val}")
+            if not ask_yes_no(f"Voulez-vous modifier '{feat}' ?"):
+                features[feat] = sample_val
+                continue
+
+        # Détecter si la feature est booléenne ou textuelle/numérique
+        known_types = [type(kb.get_feature_value(a, feat)) for a in kb.animals if kb.get_feature_value(a, feat) is not None]
+        is_bool = all(t == bool for t in known_types) if known_types else False
+
+        if is_bool:
+            val = ask_yes_no(f"L'animal {animal_name} a-t-il {feat} ?")
+            if val is None:  # X
+                features[feat] = None
+            else:
+                features[feat] = val
+        else:
+            # Question ouverte pour text/num
+            response = input(f"Quelle est la valeur de '{feat}' pour {animal_name} ? (X pour inconnu) ").strip().lower()
+            if response == 'x':
+                features[feat] = None
+            else:
+                # Tentative de conversion numérique si possible
+                try:
+                    features[feat] = float(response) if '.' in response else int(response)
+                except ValueError:
+                    features[feat] = response  # Sinon, string
+    return features
+
 
 def ask_question(chosen):
     feat, qtype, extra = chosen
@@ -364,8 +400,9 @@ def filter_candidates(candidates, feat, response, qtype, extra, kb):
 
 
 def guess_animal(kb, debug=True):
-    print("Pensez à un animal, je vais essayer de deviner.\n")
-    
+    #print("Pensez à un animal, je vais essayer de deviner.\n")
+    print(colored("Pensez à un animal, je vais essayer de deviner.", 'cyan'))
+
     candidates = list(kb.animals.keys())
     skipped_questions = set()
     step = 1
@@ -428,7 +465,8 @@ def guess_animal(kb, debug=True):
     if len(candidates) == 1:
         candidate = candidates[0]
         if ask_yes_no(f"Est-ce un {candidate} ?"):
-            print(f"J'ai trouvé ! C'est un {candidate} ! 🎉")
+            #print(f"J'ai trouvé ! C'est un {candidate} ! 🎉")
+            print(colored(f"J'ai trouvé ! C'est un {candidate} ! 🎉", 'green', attrs=['bold']))
             return
 
         # --- Cas "non" : l'utilisateur pensait à un autre animal ---
@@ -472,7 +510,8 @@ def main_menu():
         save_kb(kb)
 
     while True:
-        print("\n--- MENU PRINCIPAL ---")
+        #print("\n--- MENU PRINCIPAL ---")
+        print(colored("\n--- MENU PRINCIPAL ---", 'blue', attrs=['bold']))
         print("1. Jouer")
         print("2. Voir les animaux")
         print("3. Ajouter un animal")
