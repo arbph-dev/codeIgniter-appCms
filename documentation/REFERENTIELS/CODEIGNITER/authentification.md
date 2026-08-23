@@ -398,7 +398,7 @@ $routes->group('api/auth', ['namespace' => 'App\Controllers\Api'], function($rou
 ```
 
 le controller `app/Controllers/Api/AuthController.php` renvoie du json
-```
+```php
     public function login()
     {
         $rules = [
@@ -447,7 +447,7 @@ le controller `app/Controllers/Api/AuthController.php` renvoie du json
             ]);
     }
 ```
-```
+
 ## app/Controllers/Api/AuthController.php
 Code obsolete revoir (version a jour ci dessus)
 ```
