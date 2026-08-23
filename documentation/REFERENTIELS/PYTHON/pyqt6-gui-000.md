@@ -15,17 +15,35 @@ dépendances :
 
 # pyqt6-gui-000
 
-`Workbench::__init__` créé les panels et établit la connexion du **signal** du ListPanel au **slot** du DetailPanel
+Au lancement `Workbench::__init__`
+- créé les panels
+- organise la fenêtre principale
+- établit la connexion du **signal** du ListPanel au **slot** du DetailPanel
+
+### Organisation de la fenêtre principale
+```py
+central_widget = QWidget()
+layout = QVBoxLayout()
+layout.addWidget(self.list_panel)
+layout.addWidget(self.detail_panel)
+central_widget.setLayout(layout)
+self.setCentralWidget(central_widget)
+```
+
+### connexion du signal
 ```py
 self.list_panel.item_selected.connect(self.detail_panel.update_details)
 ```
-
+### Affichage de la liste
 ListPanel affiche une liste d'éléments, sur une sélection ListPanel transmet le **signal** avec `ListPanel::on_selection_changed`
+
 ```py
 self.item_selected.emit(current_row, item_text)
 ```
 
+### Affichage de la selection
 DetailPanel reçoit le signal sur son slot et appel `DetailPanel::update_details(self, index, text)`
+
 
 
 ## ListPanel 
@@ -101,6 +119,15 @@ class DetailPanel(QWidget):
 ```
 ## Workbench
 organise les panels et gère la communication
+
+Structure
+```
+Workbench (QMainWindow)
+    self.list_panel
+    self.detail_panel
+    def __init__
+    def update_details(self, index, text):
+```
 
 ```py
 class Workbench(QMainWindow):
