@@ -124,7 +124,10 @@ une propriété permet de distinguer une classe d'une autre
 
 > c'est un oiseau
 
-
+**types**
+```py
+ptype = Prompt.ask("[cyan]Type[/cyan]", choices=["string","bool","int","float","date"], default="bool")
+```
 
 #### seProps (extrait)
 
