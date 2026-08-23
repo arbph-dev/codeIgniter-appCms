@@ -1,3 +1,11 @@
+## Librairies
+
+### os
+- [Manipulation de fichiers](/documentation/REFERENTIELS/PYTHON/FILES/index.md)
+- PyQt6
+- SQLAlchemy
+- Rich
+- termcolor
 
 ## plugin Canvas Block : 
 - [ ] documenterplugin Canvas Block #obsidian/plugin 
