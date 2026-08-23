@@ -1,7 +1,7 @@
 ## Librairies
 
 ### os
-- [Manipulation de fichiers](/documentation/REFERENTIELS/PYTHON/FILES/index.md)
+- [Manipulation de fichiers](/documentation/REFERENTIELS/PYTHON/FILE/index.md)
 - PyQt6
 - SQLAlchemy
 - Rich
