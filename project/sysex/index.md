@@ -41,6 +41,9 @@ from ui.pyqt_ui import PyQtUI
 
 # Définitions
 ## Règle de conception
+
+👉 Les arbres de décision sont les plus compatibles avec un moteur expert (explicables).
+
 ### ⚠️ Normalisation obligatoire pour les noms (classes,propriété....)
 - `couleur dominante` → `couleur_dominante`
 - `"true"`, `"false"`, `"n"` → bool normalisé
@@ -64,7 +67,24 @@ def ask_yes_no(question):
 #### classes
   Relation héritage : ajout d'un champ parent (convention pid ?)
   - ex : Animal / Oiseau
+  
 **⚠️ Héritage automatique** : Oiseau hérite de toutes les **propriétés** de la **classe** Animal et possède ses propres propriétés
+
+Une sous-classe n’existe que si :
+- Elle est discriminante
+- Elle regroupe un nombre suffisant d’instances
+- Elle ajoute au moins une contrainte nouvelle
+
+Exemple :
+- Classe = Animal = Prop : ovipare = true → création de Animal.Ovipare
+
+Ne pas faire !  Animal.MasseSupérieureA50kg → bruit statistique, pas conceptuel
+
+👉 Distinguer :
+- classe sémantique (mammifère, reptile)
+- classe de segmentation (cluster temporaire)
+
+
 
 #### Instances (de classe)
 une instance d'une classe pourra donner naissance à une classe 
@@ -89,8 +109,27 @@ Exemple : une classe à des props (seProps)
 alimentation = Carnivore → génère : carnivore = true ; herbivore = false ; omnivore = false
 ```
 
+##### Typologie claire des propriétés
+
+Distinguer au niveau modèle : (voir type sqlite)
+
+| Type logique |  Exemple |  Traitement | 
+| --- |  --- |  --- | 
+| Booléenne |  carnivore |  Feature binaire | 
+| Catégorielle mono |  habitat |  Enum | 
+| Catégorielle multi |  alimentation |  Enum | 
+| Numérique |  masse |  Stat + seuils | 
+| Identité |  sys_imdb_id |  clé externe | 
+
+
+
+
+
 
 ### Relation
+
+
+
 #### Instances (de classe)
 
 
