@@ -1,0 +1,515 @@
+
+après lecture des deux `main.py`, je te conseille **de ne pas simplement transférer la gestion d'authentification de `XXpertSystem` dans `main2.py`**. Il vaut mieux profiter de la reprise pour séparer clairement :
+
+1. **configuration**
+2. **stockage des identifiants**
+3. **authentification API**
+4. **clients API**
+5. **interface PySide6**
+
+Les deux projets ont déjà une séparation intéressante, mais `main2.py` est encore très « console » : il récupère directement `INPI_USER`, `INPI_PASS` et `INSEE_KEY` depuis l'environnement.  
+À l'inverse, `XXpertSystem` possède une architecture plus structurée autour de `core`, `features`, controllers et bus événementiel.
+
+## 1. Je partirais sur cette architecture
+
+```
+api-client/
+│
+├── main.py
+│
+├── app/
+│   ├── application.py
+│   └── bootstrap.py
+│
+├── config/
+│   ├── settings.py
+│   └── secrets.py
+│
+├── database/
+│   ├── engine.py
+│   ├── session.py
+│   ├── base.py
+│   └── models/
+│       ├── api_account.py
+│       └── ...
+│
+├── auth/
+│   ├── credentials.py
+│   ├── auth_service.py
+│   └── token_store.py
+│
+├── api/
+│   ├── base_client.py
+│   ├── inpi_client.py
+│   ├── insee_client.py
+│   └── personne_client.py
+│
+├── ui/
+│   ├── main_window.py
+│   ├── login_dialog.py
+│   ├── settings_dialog.py
+│   └── ...
+│
+└── features/
+    ├── inpi/
+    ├── insee/
+    └── personne/
+```
+
+L'idée importante est que **PySide6 ne doit jamais connaître les détails de l'authentification** et que les clients INPI/INSEE ne doivent pas savoir si leurs secrets viennent de `.env` ou de SQLite/MySQL.
+
+---
+
+# 2. Deux modes de stockage : oui, mais derrière le même contrat
+
+Je conserverais tes deux possibilités.
+
+### Mode ENV
+
+```
+.env
+   ↓
+Settings
+   ↓
+CredentialProvider
+   ↓
+AuthService
+   ↓
+API Client
+```
+
+Par exemple :
+
+```
+INPI_USER
+INPI_PASS
+INSEE_KEY
+```
+
+C'est très pratique pour le développement et les scripts.
+
+### Mode DB
+
+```
+SQLite
+   ↓
+SQLAlchemy
+   ↓
+CredentialProvider
+   ↓
+AuthService
+   ↓
+API Client
+```
+
+La DB pourrait contenir quelque chose comme :
+
+```
+api_accounts
+────────────────────────────
+id
+provider
+username
+secret
+api_key
+enabled
+created_at
+updated_at
+```
+
+Mais **je ne mélangerais pas les deux dans les clients API**.
+
+Le client ne devrait jamais faire :
+
+```
+os.getenv(...)
+```
+
+ni :
+
+```
+session.query(...)
+```
+
+Il devrait simplement recevoir ses credentials.
+
+---
+
+# 3. Le point clé : un `CredentialProvider`
+
+Je ferais un contrat très simple :
+
+```
+class CredentialProvider(Protocol):
+
+    def get(self, provider: str) -> dict:
+        ...
+```
+
+Puis deux implémentations :
+
+```
+EnvCredentialProvider
+DbCredentialProvider
+```
+
+Et éventuellement plus tard :
+
+```
+KeyringCredentialProvider
+```
+
+Cela permettrait :
+
+```
+provider = EnvCredentialProvider()
+```
+
+ou :
+
+```
+provider = DbCredentialProvider(session_factory)
+```
+
+sans modifier `InpiClient`, `InseeClient`, etc.
+
+C'est particulièrement intéressant puisque ton objectif est précisément de pouvoir reprendre des composants de plusieurs projets.
+
+---
+
+# 4. Je déconseille de stocker les mots de passe en clair
+
+C'est le point sur lequel je modifierais ton idée initiale.
+
+Pour une application desktop PySide6, **SQLite + SQLAlchemy est très bien pour stocker la configuration**, mais je n'utiliserais pas une table SQLite comme coffre-fort pour les mots de passe en clair.
+
+Je distinguerais :
+
+### DB
+
+```
+provider
+username
+endpoint
+enabled
+options
+```
+
+### Secret
+
+Stockage sécurisé du système :
+
+- Windows Credential Manager
+- macOS Keychain
+- Secret Service sous Linux
+
+Donc :
+
+```
+SQLAlchemy
+    │
+    ├── provider = INPI
+    ├── username = ...
+    └── credential_ref = ...
+              │
+              ▼
+        OS Credential Store
+              │
+              ▼
+          password
+```
+
+Cela rendrait ton application beaucoup plus propre.
+
+---
+
+# 5. Et SQLAlchemy est un très bon choix
+
+Pour le projet Python, je partirais directement sur **SQLAlchemy 2.x**, pas sur l'ancienne API `session.query()`.
+
+La documentation SQLAlchemy actuelle recommande le modèle `Session` + `select()` pour l'ORM 2.x.
+
+Par exemple :
+
+```
+stmt = select(ApiAccount).where(
+    ApiAccount.provider == "INPI"
+)
+
+account = session.scalars(stmt).first()
+```
+
+Et surtout :
+
+```
+with Session(engine) as session:
+    ...
+```
+
+Le `Session` gère également le cycle transactionnel.
+
+Pour ton application desktop, **SQLite serait probablement le bon premier backend** :
+
+```
+api-client.db
+```
+
+Puis SQLAlchemy te laisse éventuellement migrer vers MariaDB/PostgreSQL sans refaire le domaine.
+
+---
+
+# 6. Je ferais même une distinction entre Auth et Credentials
+
+C'est important.
+
+### Credentials
+
+Répond à :
+
+> « Où sont mes identifiants ? »
+
+```
+credentials = credential_provider.get("INPI")
+```
+
+### AuthService
+
+Répond à :
+
+> « Comment m'authentifier auprès de cette API ? »
+
+Par exemple :
+
+```
+class AuthService:
+
+    def authenticate(self, provider, credentials):
+        ...
+```
+
+Parce que les API ne fonctionneront probablement pas toutes de la même façon.
+
+Tu peux avoir :
+
+```
+INPI
+ └── login/password → token
+
+INSEE
+ └── API key
+
+API CMS
+ └── login/password → JWT
+
+Autre API
+ └── Bearer token
+```
+
+Donc **ne crée surtout pas un mécanisme d'authentification unique artificiel**.
+
+Crée plutôt un contrat commun et des stratégies spécifiques.
+
+---
+
+# 7. Pour les API, je créerais un `BaseApiClient`
+
+Actuellement `main2.py` instancie directement :
+
+```
+InpiClient
+InseeClient
+PersonneClient
+```
+
+et la configuration est encore remontée depuis `main2.py`.
+
+Je voudrais arriver à :
+
+```
+inpi = InpiClient(auth=auth_service)
+insee = InseeClient(auth=auth_service)
+personne = PersonneClient(auth=auth_service)
+```
+
+ou encore mieux :
+
+```
+api = ApiRegistry(...)
+
+api.inpi()
+api.insee()
+api.personne()
+```
+
+Avec éventuellement une authentification lazy :
+
+```
+InpiClient
+    ↓
+AuthService
+    ↓
+CredentialProvider
+    ↓
+ENV / DB
+```
+
+---
+
+# 8. PySide6 arrive ensuite
+
+Je ne commencerais **pas** par convertir `main2.py` en PySide6.
+
+Je ferais :
+
+```
+Phase 1
+───────
+main2.py
+   ↓
+services propres
+   ↓
+tests
+```
+
+puis :
+
+```
+Phase 2
+───────
+PySide6
+   ↓
+Application
+   ↓
+Services
+   ↓
+API
+```
+
+C'est important parce que sinon tu risques d'avoir :
+
+```
+QMainWindow
+ ├── SQLAlchemy
+ ├── os.getenv()
+ ├── requests
+ ├── login
+ ├── API
+ └── affichage
+```
+
+dans le même code.
+
+Et ce serait exactement le genre de couplage qu'on cherche à éviter dans ton architecture JS/Workbench.
+
+PySide6 est d'ailleurs le binding Qt officiel pour Python et expose les API Qt6.
+
+---
+
+# 9. Je vois une architecture assez proche de ton travail actuel
+
+Tu pourrais retrouver une séparation :
+
+```
+                    ┌────────────────────┐
+                    │      PySide6       │
+                    │       UI           │
+                    └─────────┬──────────┘
+                              │
+                              ▼
+                    ┌────────────────────┐
+                    │    Application     │
+                    │    / Controllers   │
+                    └─────────┬──────────┘
+                              │
+             ┌────────────────┴────────────────┐
+             ▼                                 ▼
+      ┌──────────────┐                 ┌──────────────┐
+      │ AuthService  │                 │ API Services │
+      └──────┬───────┘                 └──────┬───────┘
+             │                                │
+             ▼                                ▼
+      CredentialProvider                 BaseApiClient
+          /       \                    /      |       \
+         /         \                  /       |        \
+       ENV         DB               INPI     INSEE    Personne
+                     │
+                     ▼
+                 SQLAlchemy
+                     │
+                     ▼
+                  SQLite
+```
+
+Et ça me paraît beaucoup plus cohérent avec ce que tu es en train de faire côté Workbench : **une infrastructure générique, puis des features qui l'utilisent**.
+
+---
+
+# 10. Il y a toutefois une chose que je veux vérifier avant de coder
+
+J'ai bien récupéré les deux `main.py`, mais **la logique d'authentification elle-même n'est manifestement pas entièrement dans ces deux fichiers**.
+
+`main2.py` ne fait actuellement que récupérer :
+
+```
+INPI_USER
+INPI_PASS
+INSEE_KEY
+```
+
+depuis l'environnement.
+
+Il faut donc examiner les fichiers importés, notamment :
+
+```
+inpi_client.py
+insee_client.py
+personne_client.py
+```
+
+et, côté `XXpertSystem`, les modules `features` / `core` qui portent réellement la connexion API.
+
+C'est là que se trouve la différence entre :
+
+```
+configuration
+```
+
+et :
+
+```
+authentification effective
+```
+
+### Ma recommandation
+
+**Ne développons pas encore PySide6.**
+
+Je propose qu'on fasse d'abord un **audit croisé des deux projets**, fichier par fichier :
+
+```
+XXpertSystem
+    ↓
+identifier exactement :
+    - configuration ENV
+    - login
+    - token
+    - headers
+    - session
+    - expiration
+    - refresh
+    - gestion erreurs
+
+api-client-0-5
+    ↓
+identifier exactement :
+    - clients actuels
+    - appels HTTP
+    - configuration
+    - modèles de données
+```
+
+Puis on définit le **contrat `CredentialProvider` + `AuthService` + `BaseApiClient`**.
+
+Ensuite seulement on introduit **SQLAlchemy**, puis **PySide6**.
+
+C'est, à mon avis, la meilleure façon de récupérer le code existant sans reproduire dans le nouveau projet les couplages des anciens projets.
