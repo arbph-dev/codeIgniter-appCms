@@ -7,6 +7,7 @@ Ce dossier doit répertorier les éléments du système expert utiles pour un pr
 - [gameai-2-5](/project/sysex/gameai-2-5.md) sur "G:\WEB\BACKUP\Hostinger\HostingerTemp\OBSIDIANDEV\OBSIDIANDEV\DOCUMENTATION\PYTHON\APPLICATIONS\AI\gameai02.5.py"
 - [gameai-0-5](/project/sysex/gameai-0-5.md)
 - [ai-1-0](/project/sysex/ai-1-0.md) calcul numérique Loi d'ohm
+- "G:\WWW\TRAVAUX\TEMP\2026-06-08-001\main_v3.py"
 
 ### API 
 - api-client-0-5
