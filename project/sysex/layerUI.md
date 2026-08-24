@@ -749,7 +749,7 @@ services/
 
 ### Règles importantes avec StackLayout
 
-1. Utiliser uniquement des enfants directs
+#### 1. Utiliser uniquement des enfants directs
 Les enfants du StackLayout déterminent les indices :
 
 ```qml
@@ -761,12 +761,13 @@ StackLayout {
 ```
 Ne mélangez pas des éléments décoratifs avec les pages :
 
-qml
+```qml
 StackLayout {
     Rectangle {} // deviendrait index 0
     PageA {}     // index 1
 }
-2. Ne pas utiliser d’ancres sur les enfants du layout
+```
+#### 2. Ne pas utiliser d’ancres sur les enfants du layout
 Évitez ceci :
 
 ```qml
@@ -788,7 +789,7 @@ StackLayout {
 ```
 Les layouts Qt Quick redimensionnent leurs enfants et proposent les propriétés attachées Layout.fillWidth, Layout.fillHeight et Layout.preferredWidth.
 
-3. Garder un index par niveau
+#### 3. Garder un index par niveau
 Structure correcte :
 
 ```qml
@@ -803,7 +804,7 @@ property int currentIndex: 0
 ```
 utilisée simultanément pour la sidebar et plusieurs TabBar.
 
-4. Ne pas recréer inutilement les pages
+#### 4. Ne pas recréer inutilement les pages
 Puisque votre client WebAssembly consulte des données API sans temps réel, il est généralement inutile de reconstruire les pages à chaque actualisation. Actualisez plutôt les propriétés des modèles :
 
 ```qml
