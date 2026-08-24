@@ -27,4 +27,5 @@ client/agrégateur Python multi-API, avec authentification factorisée, credenti
 
 
 ## services\api\
-
+Le notes d'implémentation à reprendre vers api et ou métiers
+- [insee_note.md](/Orbis/services/api/insee_note.md)
