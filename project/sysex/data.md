@@ -1,31 +1,21 @@
 # Tables
 
-[seclass](/project/sysex/data.md#seclass)
-- contient les classes du système : animal, mammifère 
+- [seclass](/project/sysex/data.md#seclass) : contient les classes du système : animal, mammifère 
+- seprop : contient les propriétés qui sont affectables aux classes
+- seclass_prop : contient les propriétés affectées aux classes
+- seinst : instance de classe
+- seinst_value
+- seprop_stats
+- seprop_manual_thresholds
+- se_users
+- se_submissions
+- se_events
+- credentials
 
-seprop
-- contient les propriétés qui sont affectables aux classes
 
-seclass_prop
-- contient les propriétés affectées aux classes
+## a documenter
+Index recommandés  pour les tables
 
-seinst
-- instance de classe
-
-seinst_value
-
-seprop_stats
-
-seprop_manual_thresholds
-
-se_users
-
-se_submissions
-
-se_events
-    - a documenter
-
-credentials
 
 ## seclass
 champs
@@ -41,6 +31,8 @@ CREATE TABLE IF NOT EXISTS seclass (
     parent_id INTEGER,
     FOREIGN KEY (parent_id) REFERENCES seclass(id)
 );
+
+CREATE INDEX IF NOT EXISTS idx_seclass_parent ON seclass(parent_id);
 ```
 
 ## seprop
@@ -51,6 +43,7 @@ CREATE TABLE IF NOT EXISTS seprop (
     type TEXT NOT NULL DEFAULT 'string'
 );
 ```
+Normalisation : seprop.type stocke des strings ; considérer l'utilisation d'un enum/contrainte pour valider.
 
 ## seclass_prop
 ```sql
@@ -61,6 +54,8 @@ CREATE TABLE IF NOT EXISTS seclass_prop (
     FOREIGN KEY (class_id) REFERENCES seclass(id),
     FOREIGN KEY (prop_id) REFERENCES seprop(id)
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_seprop_name ON seprop(LOWER(name));
 ```
 ## seinst
 ```sql
@@ -71,7 +66,10 @@ CREATE TABLE IF NOT EXISTS seinst (
     UNIQUE(name, class_id),
     FOREIGN KEY (class_id) REFERENCES seclass(id)
 );
+
+CREATE INDEX IF NOT EXISTS idx_seinst_class_name ON seinst(class_id, LOWER(name));
 ```
+
 ## seinst_value
 ```sql
 CREATE TABLE IF NOT EXISTS seinst_value (
@@ -80,7 +78,14 @@ CREATE TABLE IF NOT EXISTS seinst_value (
     value TEXT,
     PRIMARY KEY (inst_id, prop_id)
 );
+
+CREATE INDEX IF NOT EXISTS idx_seinst_value_prop ON seinst_value(prop_id);
 ```
+
+Contraintes FK : ajouter 
+- FOREIGN KEY (inst_id) REFERENCES seinst(id) ON DELETE CASCADE ;
+- FOREIGN KEY (prop_id) REFERENCES seprop(id) ON DELETE CASCADE;
+
 ## seprop_stats
 ```sql
 -- Nouvelle table pour les statistiques par (classe, propriété numérique)
@@ -98,6 +103,8 @@ CREATE TABLE IF NOT EXISTS seprop_stats (
     FOREIGN KEY (class_id) REFERENCES seclass(id),
     FOREIGN KEY (prop_id) REFERENCES seprop(id)
 );
+
+CREATE INDEX IF NOT EXISTS idx_seprop_stats_class_prop ON seprop_stats(class_id, prop_id);
 ```
 ## seprop_manual_thresholds
 ```sql
