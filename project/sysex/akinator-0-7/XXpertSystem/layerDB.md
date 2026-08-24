@@ -1,3 +1,36 @@
+
+#### version sqlite
+```sql
+CREATE TABLE "maritimus_quartier_maritime" (
+    "rowid" integer PRIMARY KEY AUTOINCREMENT,
+    "domaine" text,
+    "lbl" text,
+    "nom" text,
+    "secteur" text
+);
+```
+
+#### version mysql / mariadb
+```sql
+CREATE TABLE maritimus_quartier_maritime (
+  rowid INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  domaine TINYTEXT NOT NULL,
+  lbl TINYTEXT NULL,
+  nom TINYTEXT NULL,
+  secteur TINYTEXT NULL,
+  PRIMARY KEY (rowid))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+```
+
+attention
+- aux backstick de mysql
+- les "" pose problème pour mysql / mariadb, en cas d'export sqlite il faut supprimer les "" voir ci dessus
+- rowid est spécifique a sqlite
+
+
+
+
 ## core/database.py
 
 [`def __init__(self):`](/project/sysex/akinator-0-7/XXpertSystem/core/database.py#L15)
