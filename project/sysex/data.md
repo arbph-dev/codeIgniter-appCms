@@ -160,3 +160,30 @@ CREATE TABLE credentials (
     updated_at DATETIME
 );
 ```
+
+# Types
+
+| Type de données                   | MySQL                 | SQLite                       | JavaScript                  | PHP                  | Laravel (Migration) | Python                |
+| ------------------------------------------- | --------------------- | ---------------------------- | --------------------------- | -------------------- | ------------------- | --------------------- |
+| Entier                                      |  INT, TINYINT, BIGINT | INTEGER                      | Number (integer)            | int                  | integer             | int                   |
+| Petit entier                                | TINYINT               | INTEGER                      | Number (integer)            | int                  | tinyInteger         | int                   |
+| Entier long                                 | BIGINT                | INTEGER                      | Number (integer)            | int                  | bigInteger          | int                   |
+| Nombre à virgule flottante  FLOAT, )        | FLOAT                 | FLOAT                        | DOUBLE  REAL  Number (float | float                | float               | float                 |
+| Nombre décimal précis                       | DECIMAL               | NUMERIC                      | Number (float)              | string (decimal      | decimal             | decimal.Decimal (lib) |
+| Chaîne de caractères  , TEXT    String    , | VARCHAR               | TEXT                         | string                      | string               | text                | str                   |
+| Texte long  ,                               | TEXT                  | LONGTEXT  TEXT               | String                      | string               | text                | str                   |
+| Booléen  ,                                  | BOOLEAN               | TINYINT(1)  INTEGER (0/1)    | Boolean                     | bool                 | boolean             | bool                  |
+| Date                                        | DATE                  | TEXT (format ISO)            | Date object                 | string (Y-m-d)       | date                | datetime.date         |
+| Date et heure  ,                            | DATETIME              | TIMESTAMP  TEXT (format ISO) | Date object                 | string (Y-m-d H:i:s) | dateTime            | datetime.datetime     |
+| Heure                                       | TIME                  | TEXT (format HH:MM)          | Date object                 | string (H:i:s        | time                | datetime.time         |
+| Binaire                                     | BLOB                  | BLOB                         | ArrayBuffer, Uint8Array )   | string (binary data  | binary              | bytes                 |
+| UUID                                        | CHAR(36)              | TEXT                         | String                      | string               | uuid                | str                   |
+
+**MySQL** : Types classiques d'une base relationnelle robuste, avec une distinction claire entre types numériques, chaînes, dates, etc.  
+SQLite : Typage plus souple, souvent stocké sous forme de TEXT ou INTEGER, mais avec des conventions d'usage.  
+JavaScript : Types dynamiques, principalement Number (qui regroupe int et float), String, Boolean, et objets Date pour les dates.  
+PHP : Types primitifs classiques, avec string pour les chaînes, int pour les entiers, bool pour les booléens.  
+Laravel (Migration) : Types abstraits utilisés dans les migrations pour créer des colonnes dans les bases de données, qui sont ensuite traduits selon le SGBD utilisé.  
+Python : Types natifs, avec des modules spécifiques pour gérer les décimales précises (decimal.Decimal) et les dates (datetime).
+
+---
