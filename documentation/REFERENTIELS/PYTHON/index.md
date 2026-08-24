@@ -82,6 +82,45 @@ adresse relative plutot que aboslu
 
 # SQLAlchemy
 
+
+```py 
+import mysql.connector
+from sqlalchemy import create_engine, inspect, text
+# --------------------------
+# Connexion SQLAlchemy
+host = "XXX.XXX.XXX.XXX" # aces autorise 109.30.175.247
+user = "XXXXXXXXXXXX"
+password = "XXXXXXXXXXX"
+database = "XXXXXXXXXX"
+port ="3306"
+
+connString = f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
+print(connString)
+
+engine = create_engine(connString)
+
+try:
+    with engine.connect() as connection:
+        print("Connexion réussie")
+except Exception as e:
+    print(f"Erreur de connexion : {e}")
+    exit()
+
+inspector = inspect(engine)
+
+# --------------------------
+# Fonctions SQL
+# --------------------------
+
+def list_tables():
+    tables = inspector.get_table_names()
+    print("\n📌 Tables dans la base :")
+    for t in tables:
+        print(" -", t)
+    return tables
+```
+
+
 ## Exemples en Python
 
 Python + SQLAlchemy + Rich offre une solution robuste, programmable et extensible pour gérer des bases de données complexes avec un affichage console avancé, adapté aux développeurs et aux systèmes automatisés.
