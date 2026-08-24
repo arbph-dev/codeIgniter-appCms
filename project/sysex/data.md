@@ -152,4 +152,4 @@ CREATE TABLE credentials (
     token      TEXT,
     updated_at DATETIME
 );
-```sql
+```
