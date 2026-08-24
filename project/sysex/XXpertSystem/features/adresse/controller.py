@@ -54,7 +54,7 @@ def init_adresse_controller(bus) -> None:
             adresse_store["loading"] = False
             bus.publish("adresse:loading", False)
 
-    # ── Sélection d'un résultat BAN + résolution des dépendances ─────────────
+    # ── Sélection d'un résultat BAN + résolution via FieldMapper ──────────────
 
     def on_ban_select(payload):
         index = payload.get("index", 0) if isinstance(payload, dict) else 0
@@ -69,61 +69,33 @@ def init_adresse_controller(bus) -> None:
         bus.publish("adresse:loading", True)
 
         try:
-            # 1. Résolution type de voie
-            from .typevoie_service import resolve_type_voie
-            type_raw = selected.get("type_voie", "")
-            tv_id, tv_status, tv_label = resolve_type_voie(type_raw)
-
-            # Avertissement si pending ou approx
-            if tv_status == "pending":
-                adresse_store["pending_types"].append({
-                    "nom_ban": type_raw,
-                    "nom_ci":  tv_label,
-                    "id":      tv_id,
-                })
-                bus.publish("adresse:pending:type", {
-                    "nom_ban": type_raw,
-                    "nom_ci":  tv_label,
-                    "id":      tv_id,
-                    "message": "Type de voie " + str(type_raw) + " cree en attente de validation",
-                })
-            elif tv_status == "approx":
-                bus.publish("adresse:approx:type", {
-                    "nom_ban": type_raw,
-                    "nom_ci":  tv_label,
-                    "id":      tv_id,
-                    "message": "Type " + str(type_raw) + " -> " + str(tv_label) + " (correspondance approchee)",
-                })
-            elif tv_status == "error":
-                bus.publish("adresse:error", "TypeVoie non resolu : " + str(tv_label))
-                return
-
-            # 2. Résolution code postal
-            from .ci_adresse_service import fetch_codepostal_id
-            cp_id = fetch_codepostal_id(
-                postcode = selected.get("postcode"),
-                citycode = selected.get("citycode"),
-            )
-            if not cp_id:
-                bus.publish("adresse:error",
-                    "Code postal " + str(selected.get('postcode')) + " introuvable dans CI")
-                return
-
-            # 3. Construction payload
             from .ci_adresse_service import ban_to_ci_payload
-            payload_ci = ban_to_ci_payload(
-                ban_result    = selected,
-                typevoie_id   = tv_id,
-                codepostal_id = cp_id,
-            )
 
-            # Publie le payload pour confirmation par l'utilisateur
+            # FieldMapper orchestre resolve_type_voie + fetch_codepostal_id
+            result = ban_to_ci_payload(selected)
+
+            # Remonter les warnings du mapper vers le bus
+            resolve_meta = {}
+            for w in result.warnings:
+                if w.value and isinstance(w.value, dict) and "status" in w.value:
+                    resolve_meta[w.field] = w.value
+                    status = w.value.get("status")
+                    if status == "pending":
+                        adresse_store["pending_types"].append(w.value)
+                        bus.publish("adresse:pending:type", w.value)
+                    elif status == "approx":
+                        bus.publish("adresse:approx:type", w.value)
+                elif w.level == "error":
+                    bus.publish("adresse:error", w.message)
+                    return
+
+            if not result.ok:
+                return
+
             bus.publish("adresse:ready", {
-                "payload":    payload_ci,
-                "ban_result": selected,
-                "tv_status":  tv_status,
-                "tv_label":   tv_label,
-                "cp_id":      cp_id,
+                "payload":      result.payload,
+                "ban_result":   selected,
+                "resolve_meta": resolve_meta,
             })
 
         except Exception as err:
@@ -131,7 +103,6 @@ def init_adresse_controller(bus) -> None:
             bus.publish("adresse:error", str(err))
         finally:
             bus.publish("adresse:loading", False)
-
     # ── Sauvegarde CI ────────────────────────────────────────────────────────
 
     def on_save(payload):
