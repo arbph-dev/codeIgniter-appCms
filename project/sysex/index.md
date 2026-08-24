@@ -77,6 +77,17 @@ Une instance peut être créée même si elle n’a pas toutes ses Valeurs de pr
 👉 **aucune duplication** en base  
 👉 résolution dynamique
 
+💡 Règle : **Une propriété booléenne est une projection d’une propriété catégorielle.**
+
+Exemple : une classe à des props (seProps)
+- carnivore ( bool )  = True / False
+- herbivore ( bool )  = True / False
+- omnivore ( bool )  = True / False
+- alimentation ( enum ) = Carnivore / Herbivore / Omnivore
+
+```
+alimentation = Carnivore → génère : carnivore = true ; herbivore = false ; omnivore = false
+```
 
 
 ### Relation
