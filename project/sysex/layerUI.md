@@ -631,7 +631,7 @@ Pages toujours chargées :
 
 Puis Loader uniquement pour les pages lourdes.
 
-## Gestion du chargement des API
+### Gestion du chargement des API
 Pour chaque page, prévoir trois états :
 
 loading
