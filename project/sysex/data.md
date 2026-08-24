@@ -42,6 +42,8 @@ CREATE TABLE IF NOT EXISTS seprop (
     name TEXT UNIQUE NOT NULL,
     type TEXT NOT NULL DEFAULT 'string'
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_seprop_name ON seprop(LOWER(name));
 ```
 Normalisation : seprop.type stocke des strings ; considérer l'utilisation d'un enum/contrainte pour valider.
 
@@ -54,8 +56,6 @@ CREATE TABLE IF NOT EXISTS seclass_prop (
     FOREIGN KEY (class_id) REFERENCES seclass(id),
     FOREIGN KEY (prop_id) REFERENCES seprop(id)
 );
-
-CREATE UNIQUE INDEX IF NOT EXISTS idx_seprop_name ON seprop(LOWER(name));
 ```
 ## seinst
 ```sql
