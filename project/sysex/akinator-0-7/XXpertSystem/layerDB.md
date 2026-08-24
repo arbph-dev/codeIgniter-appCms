@@ -39,6 +39,11 @@ attention
 - les "" pose problème pour mysql / mariadb, en cas d'export sqlite il faut supprimer les "" voir ci dessus
 - rowid est spécifique a sqlite
 
+ci_client/formejuridique.py
+Note PK :
+    La PK est un CHAR(4) paddé zéros à gauche.
+    "5499" → "5499"  /  "10" → "0010"  /  5499 → "5499"
+    pad_id() gère la normalisation automatiquement.
 
 
 
