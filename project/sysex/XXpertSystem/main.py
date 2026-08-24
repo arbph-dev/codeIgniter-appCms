@@ -29,11 +29,12 @@ from features.codenaf.controller    import init_codenaf_controller
 from features.codenaf.renderer      import init_codenaf_renderer
 from features.api_tests.controller  import init_api_tests_controller
 from features.api_tests.renderer    import init_api_tests_renderer
-# from features.formejuridique.controller import init_fj_controller
-# from features.formejuridique.renderer   import init_fj_renderer
+from features.formejuridique.controller import init_fj_controller
+from features.formejuridique.renderer   import init_fj_renderer
 # from features.insee.controller          import init_insee_controller
 # from features.inpi.controller           import init_inpi_controller
-
+from features.adresse.controller         import init_adresse_controller
+from features.adresse.renderer           import init_adresse_renderer
 console = Console()
 
 
@@ -218,6 +219,140 @@ def menu_codenaf():
             bus.publish("naf:hierarchy", {"code": code})
 
 
+def menu_formejuridique():
+    while True:
+        console.print(Panel("[bold magenta]FormeJuridique[/]", border_style="magenta"))
+        console.print("[cyan]1[/]  Fiche par code (ex: 5499)")
+        console.print("[cyan]2[/]  Recherche par libelle")
+        console.print("[cyan]3[/]  Autocomplete (like)")
+        console.print("[cyan]4[/]  Creer")
+        console.print("[cyan]5[/]  Modifier")
+        console.print("[cyan]6[/]  Supprimer")
+        console.print("[cyan]0[/]  Retour")
+        choice = Prompt.ask("Choix", choices=["0","1","2","3","4","5","6"])
+        if choice == "0":
+            return
+        elif choice == "1":
+            code = Prompt.ask("[cyan]Code[/] (ex: 5499)")
+            bus.publish("fj:get", {"code": code})
+        elif choice == "2":
+            q = Prompt.ask("[cyan]Libelle[/]")
+            bus.publish("fj:search", {"q": q})
+        elif choice == "3":
+            q = Prompt.ask("[cyan]Debut de libelle[/] (min 2 car.)")
+            bus.publish("fj:like", {"q": q, "len": 10})
+        elif choice == "4":
+            code = Prompt.ask("[cyan]Code (4 chiffres)[/]")
+            desc = Prompt.ask("[cyan]Libelle[/]")
+            bus.publish("fj:create", {"code": code, "description": desc})
+        elif choice == "5":
+            code = Prompt.ask("[cyan]Code a modifier[/]")
+            desc = Prompt.ask("[cyan]Nouveau libelle[/]")
+            bus.publish("fj:update", {"code": code, "description": desc})
+        elif choice == "6":
+            code = Prompt.ask("[cyan]Code a supprimer[/]")
+            from rich.prompt import Confirm
+            if Confirm.ask(f"Supprimer {code!r} ?", default=False):
+                bus.publish("fj:delete", {"code": code})
+
+
+def menu_adresse():
+    while True:
+        console.print(Panel("[bold blue]Adresse[/]", border_style="blue"))
+        console.print("[cyan]1[/]  Geocoder une adresse (BAN -> CI)")
+        console.print("[cyan]2[/]  Rechercher dans CI")
+        console.print("[cyan]3[/]  Fiche par id")
+        console.print("[cyan]0[/]  Retour")
+        choice = Prompt.ask("Choix", choices=["0","1","2","3"])
+        if choice == "0":
+            return
+        elif choice == "1":
+            q = Prompt.ask("[cyan]Adresse libre[/] (ex: 15 rue de la paix 29000 Quimper)")
+            bus.publish("adresse:ban:search", {"q": q})
+        elif choice == "2":
+            q = Prompt.ask("[cyan]Recherche[/]")
+            bus.publish("adresse:search", {"q": q})
+        elif choice == "3":
+            id_ = Prompt.ask("[cyan]Id[/]")
+            bus.publish("adresse:get", {"id": int(id_)})
+
+
+
+def menu_adresse_tests():
+    """Tests BAN et TypeVoie avec sauvegarde JSON."""
+    from features.adresse.ban_service      import fetch_ban_search, fetch_ban_reverse
+    from features.adresse.ban_service      import extract_type_from_street, normalize_type_label
+    from core.json_store                   import save_response
+
+    while True:
+        console.print(Panel("[bold blue]Tests Adresse / BAN[/]", border_style="blue"))
+        console.print("[cyan]1[/]  BAN — geocodage adresse libre")
+        console.print("[cyan]2[/]  BAN — geocodage inverse (lat/lon)")
+        console.print("[cyan]3[/]  Extraction type de voie (sans reseau)")
+        console.print("[cyan]0[/]  Retour")
+        choice = Prompt.ask("Choix", choices=["0","1","2","3"])
+        if choice == "0":
+            return
+
+        elif choice == "1":
+            q = Prompt.ask("[cyan]Adresse[/] (ex: 15 rue de la paix 29000 Quimper)")
+            try:
+                results = fetch_ban_search(q, limit=5)
+                filename = save_response(results, source="ban", endpoint="search", params={"q": q})
+                if not results:
+                    console.print("[yellow]Aucun resultat.[/]")
+                    continue
+                table = Table(title=f"BAN — {q!r}", show_lines=True)
+                table.add_column("Score", style="cyan",  width=6)
+                table.add_column("Label", style="white", width=45)
+                table.add_column("Type voie", width=12)
+                table.add_column("Postcode",  width=8)
+                table.add_column("Ville",     width=15)
+                for r in results:
+                    table.add_row(
+                        f"{r['score']:.2f}",
+                        r["label"],
+                        r["type_voie"],
+                        r["postcode"],
+                        r["city"],
+                    )
+                console.print(table)
+                console.print(f"[dim]Sauvegarde : {filename}[/]")
+            except Exception as e:
+                console.print(f"[red]Erreur : {e}[/]")
+
+        elif choice == "2":
+            lat = Prompt.ask("[cyan]Latitude[/]  (ex: 47.9959)")
+            lon = Prompt.ask("[cyan]Longitude[/] (ex: -4.0956)")
+            try:
+                result = fetch_ban_reverse(float(lat), float(lon))
+                if not result:
+                    console.print("[yellow]Aucun resultat.[/]")
+                    continue
+                filename = save_response(result, source="ban", endpoint="reverse",
+                                         params={"lat": lat, "lon": lon})
+                console.print(Panel(
+                    f"[white]{result['label']}[/]\n"
+                    f"[dim]type_voie=[cyan]{result['type_voie']}[/] "
+                    f"citycode=[cyan]{result['citycode']}[/] "
+                    f"score=[cyan]{result['score']:.2f}[/][/]",
+                    title="[bold]BAN reverse[/]", border_style="blue"
+                ))
+                console.print(f"[dim]Sauvegarde : {filename}[/]")
+            except Exception as e:
+                console.print(f"[red]Erreur : {e}[/]")
+
+        elif choice == "3":
+            raw = Prompt.ask("[cyan]Voie brute[/] (ex: av. Jean Jaures)")
+            type_v, nom_v = extract_type_from_street(raw)
+            normalized    = normalize_type_label(type_v)
+            console.print(
+                f"  type extrait  : [cyan]{type_v!r}[/]\n"
+                f"  nom voie      : [white]{nom_v!r}[/]\n"
+                f"  normalise     : [green]{normalized!r}[/]"
+            )
+
+
 def menu_api_tests():
     while True:
         console.print(Panel("[bold magenta]Tests API — sauvegarde JSON[/]", border_style="magenta"))
@@ -247,9 +382,14 @@ def menu_api():
         console.print(Panel("[bold cyan]APIs externes[/]", border_style="cyan"))
         console.print("[cyan]1[/]  OMDB")
         console.print("[cyan]2[/]  CodeNaf")
-        console.print("[cyan]3[/]  [bold magenta]Tests & sauvegarde JSON[/]")
+        console.print("[cyan]3[/]  FormeJuridique")
+        console.print("[cyan]4[/]  Adresse / BAN")        
+        console.print("[cyan]5[/]  Adresse")
+        console.print("[cyan]6[/]  [bold magenta]Tests & sauvegarde JSON[/]")
         console.print("[cyan]0[/]  Retour")
-        choice = Prompt.ask("Choix", choices=["0", "1", "2", "3"])
+        
+        choice = Prompt.ask("Choix", choices=["0", "1", "2", "3", "4", "5","6"])
+        
         if choice == "0":
             return
         if choice == "1":
@@ -257,6 +397,12 @@ def menu_api():
         elif choice == "2":
             menu_codenaf()
         elif choice == "3":
+            menu_formejuridique()
+        elif choice == "4":
+            menu_adresse_tests()
+        elif choice == "5":
+            menu_adresse()            
+        elif choice == "6":
             menu_api_tests()
 
 
@@ -271,15 +417,20 @@ def bootstrap():
     """
     init_omdb_controller(bus)
     init_omdb_renderer(bus)
+    
     init_codenaf_controller(bus)
     init_codenaf_renderer(bus)
+    
     init_api_tests_controller(bus)
     init_api_tests_renderer(bus)
-    # init_fj_controller(bus)
-    # init_fj_renderer(bus)
+    
+    init_fj_controller(bus)
+    init_fj_renderer(bus)
     # init_insee_controller(bus)
     # init_inpi_controller(bus)
 
+    init_adresse_controller(bus)
+    init_adresse_renderer(bus)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Menu principal
