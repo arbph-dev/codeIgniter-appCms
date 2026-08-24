@@ -10,6 +10,17 @@ CREATE TABLE "maritimus_quartier_maritime" (
 );
 ```
 
+type sqlite
+```
+  PK       = "INTEGER PRIMARY KEY AUTOINCREMENT"
+  INTEGER  = "INTEGER DEFAULT NULL"
+  REAL     = "REAL DEFAULT NULL"
+  TEXT     = "TEXT DEFAULT NULL"
+  BOOL     = "INTEGER DEFAULT 0"       # SQLite stocke les bool en int
+  DATETIME = "TEXT DEFAULT NULL"       # ISO 8601
+```
+
+
 #### version mysql / mariadb
 ```sql
 CREATE TABLE maritimus_quartier_maritime (
