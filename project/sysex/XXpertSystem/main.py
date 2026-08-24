@@ -12,8 +12,6 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from services.auth import CredentialsStore
-
 from rich.console import Console
 from rich.panel   import Panel
 from rich.table   import Table
@@ -25,10 +23,12 @@ from core.inference import ForwardEngine, BackwardEngine
 from core.rules     import load_rules
 
 # ── Features : import des init functions ──────────────────────────────────────
-from features.omdb.controller    import init_omdb_controller
-from features.omdb.renderer      import init_omdb_renderer
-from features.codenaf.controller import init_codenaf_controller
-from features.codenaf.renderer   import init_codenaf_renderer
+from features.omdb.controller       import init_omdb_controller
+from features.omdb.renderer         import init_omdb_renderer
+from features.codenaf.controller    import init_codenaf_controller
+from features.codenaf.renderer      import init_codenaf_renderer
+from features.api_tests.controller  import init_api_tests_controller
+from features.api_tests.renderer    import init_api_tests_renderer
 # from features.formejuridique.controller import init_fj_controller
 # from features.formejuridique.renderer   import init_fj_renderer
 # from features.insee.controller          import init_insee_controller
@@ -218,19 +218,46 @@ def menu_codenaf():
             bus.publish("naf:hierarchy", {"code": code})
 
 
+def menu_api_tests():
+    while True:
+        console.print(Panel("[bold magenta]Tests API — sauvegarde JSON[/]", border_style="magenta"))
+        console.print("[cyan]1[/]  OMDB — recherche film")
+        console.print("[cyan]2[/]  CodeNaf — recherche libelle")
+        console.print("[cyan]3[/]  CodeNaf — autocomplete (like)")
+        console.print("[cyan]4[/]  Lister les samples sauvegardes")
+        console.print("[cyan]0[/]  Retour")
+        choice = Prompt.ask("Choix", choices=["0", "1", "2", "3", "4"])
+        if choice == "0":
+            return
+        if choice == "1":
+            q = Prompt.ask("[cyan]Titre du film[/]")
+            bus.publish("api_tests:omdb:search", {"q": q})
+        elif choice == "2":
+            q = Prompt.ask("[cyan]Libelle NAF[/]")
+            bus.publish("api_tests:codenaf:search", {"q": q})
+        elif choice == "3":
+            q = Prompt.ask("[cyan]Debut de libelle[/] (min 2 car.)")
+            bus.publish("api_tests:codenaf:like", {"q": q})
+        elif choice == "4":
+            bus.publish("api_tests:list_samples", {})
+
+
 def menu_api():
     while True:
         console.print(Panel("[bold cyan]APIs externes[/]", border_style="cyan"))
         console.print("[cyan]1[/]  OMDB")
         console.print("[cyan]2[/]  CodeNaf")
+        console.print("[cyan]3[/]  [bold magenta]Tests & sauvegarde JSON[/]")
         console.print("[cyan]0[/]  Retour")
-        choice = Prompt.ask("Choix", choices=["0", "1", "2"])
+        choice = Prompt.ask("Choix", choices=["0", "1", "2", "3"])
         if choice == "0":
             return
         if choice == "1":
             menu_omdb()
         elif choice == "2":
             menu_codenaf()
+        elif choice == "3":
+            menu_api_tests()
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -246,6 +273,8 @@ def bootstrap():
     init_omdb_renderer(bus)
     init_codenaf_controller(bus)
     init_codenaf_renderer(bus)
+    init_api_tests_controller(bus)
+    init_api_tests_renderer(bus)
     # init_fj_controller(bus)
     # init_fj_renderer(bus)
     # init_insee_controller(bus)
@@ -262,8 +291,6 @@ def main():
         "[dim]Qualification structurelle + APIs[/dim]",
         style="bold blue"
     ))
-
-
 
     # 1. Bootstrap features (une seule fois)
     bootstrap()
