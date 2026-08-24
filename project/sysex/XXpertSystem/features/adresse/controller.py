@@ -85,17 +85,17 @@ def init_adresse_controller(bus) -> None:
                     "nom_ban": type_raw,
                     "nom_ci":  tv_label,
                     "id":      tv_id,
-                    "message": f"Type de voie {type_raw!r} créé en attente de validation",
+                    "message": "Type de voie " + str(type_raw) + " cree en attente de validation",
                 })
             elif tv_status == "approx":
                 bus.publish("adresse:approx:type", {
                     "nom_ban": type_raw,
                     "nom_ci":  tv_label,
                     "id":      tv_id,
-                    "message": f"Type {type_raw!r} → {tv_label!r} (correspondance approchée)",
+                    "message": "Type " + str(type_raw) + " -> " + str(tv_label) + " (correspondance approchee)",
                 })
             elif tv_status == "error":
-                bus.publish("adresse:error", f"TypeVoie non résolu : {tv_label}")
+                bus.publish("adresse:error", "TypeVoie non resolu : " + str(tv_label))
                 return
 
             # 2. Résolution code postal
@@ -106,7 +106,7 @@ def init_adresse_controller(bus) -> None:
             )
             if not cp_id:
                 bus.publish("adresse:error",
-                    f"Code postal {selected.get('postcode')!r} introuvable dans CI")
+                    "Code postal " + str(selected.get('postcode')) + " introuvable dans CI")
                 return
 
             # 3. Construction payload
