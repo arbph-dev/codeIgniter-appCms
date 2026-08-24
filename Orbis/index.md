@@ -29,3 +29,8 @@ client/agrégateur Python multi-API, avec authentification factorisée, credenti
 ## services\api\
 Le notes d'implémentation à reprendre vers api et ou métiers
 - [insee_note.md](/Orbis/services/api/insee_note.md)
+
+----
+
+
+je réfléchis a employer qt, qt quick qml qtcreator et webassembly pour utiliser les mêmes technologies sur le front javascript et le client python est ce une bonne option ?
