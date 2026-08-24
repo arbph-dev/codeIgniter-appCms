@@ -1,6 +1,6 @@
 # Tables
 
-seclass
+[seclass](/project/sysex/data.md#seclass)
 - contient les classes du système : animal, mammifère 
 
 seprop
