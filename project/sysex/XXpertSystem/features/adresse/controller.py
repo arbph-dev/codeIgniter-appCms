@@ -127,9 +127,6 @@ def init_adresse_controller(bus) -> None:
             })
 
         except Exception as err:
-            import traceback
-            print(f"[ADRESSE DEBUG] Exception brute: {repr(str(err))}")
-            traceback.print_exc()
             adresse_store["error"] = str(err)
             bus.publish("adresse:error", str(err))
         finally:
