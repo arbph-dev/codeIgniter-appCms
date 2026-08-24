@@ -1,14 +1,9 @@
 # Conception DB 
 
-##  indexation (SQLite)
-Index recommandés  pour les tables
-CREATE INDEX IF NOT EXISTS idx_seclass_parent ON seclass(parent_id);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_seprop_name ON seprop(LOWER(name));
-CREATE INDEX IF NOT EXISTS idx_seinst_class_name ON seinst(class_id, LOWER(name));
-CREATE INDEX IF NOT EXISTS idx_seinst_value_prop ON seinst_value(prop_id);
-CREATE INDEX IF NOT EXISTS idx_seprop_stats_class_prop ON seprop_stats(class_id, prop_id);
-Contraintes FK : ajouter FOREIGN KEY (inst_id) REFERENCES seinst(id) ON DELETE CASCADE ; FOREIGN KEY (prop_id) REFERENCES seprop(id) ON DELETE CASCADE pour seinst_value.
-Normalisation : seprop.type stocke des strings ; considérer l'utilisation d'un enum/contrainte pour valider.
+La liste des tables se trouve ici : [project/sysex/data.md](/project/sysex/data.md)
+- 2026-08-23 : ajout indexation (SQLite)
+
+
 
 
 #### version sqlite
