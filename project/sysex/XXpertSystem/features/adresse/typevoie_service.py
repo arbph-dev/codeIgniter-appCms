@@ -81,9 +81,12 @@ def resolve_type_voie(ban_type_raw: str) -> tuple[int | None, str, str]:
     if not normalized:
         return (None, "error", "")
 
+    print(f"[typevoie] resolve: raw={ban_type_raw!r} normalized={normalized!r}")
     try:
         candidates = fetch_tv_like(normalized, len_=10)
+        print(f"[typevoie] candidates: {candidates}")
     except Exception as e:
+        print(f"[typevoie] fetch_tv_like ERROR: {e}")
         return (None, "error", str(e))
 
     # Match exact insensible à la casse
