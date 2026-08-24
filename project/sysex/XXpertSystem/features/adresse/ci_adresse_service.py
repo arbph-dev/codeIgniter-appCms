@@ -72,21 +72,21 @@ class Charniere:
     """
     # Ordre important : les plus longs d'abord pour éviter match partiel
     _PATTERNS: list[tuple[str, int]] = [
-        ("de l'",  4),   # apostrophe droit
-        ("de l’", 4), # apostrophe typographique
-        ("de la",  2),   # AVANT "de l" pour eviter match partiel
-        ("de l",   4),   # sans apostrophe (rare)
-        ("des",    3),
-        ("du",     1),
-        ("de",     5),
-        ("aux",    6),
-        ("au",     6),
-        ("les",    7),
-        ("le",     7),
-        ("la",     7),
-        ("l'",     7),
-        ("l’",7),
-        ("l",      7),
+        ("de l'",  5),   # apostrophe droit
+        ("de l'",  5),   # apostrophe typographique (unicode)
+        ("de la",  3),   # AVANT "de l" — évite match partiel
+        ("de l",   5),   # sans apostrophe (rare)
+        ("des",    4),
+        ("du",     2),
+        ("de",     6),
+        ("aux",    7),
+        ("au",     7),
+        ("les",    1),   # à confirmer
+        ("le",     1),
+        ("la",     1),
+        ("l'",     1),
+        ("l'",     1),   # unicode
+        ("l",      1),
     ]
 
     @classmethod
@@ -176,13 +176,13 @@ def fetch_codepostal_id(postcode: str, citycode: str = None) -> int | None:
             params={"codeinsee": citycode},
             timeout=10,
         )
-        print(f"[codepostal] codeinsee={citycode} status={r.status_code}")
         if r.ok:
-            raw = r.json()
-            print(f"[codepostal] reponse cles={list(raw.keys())} data={raw.get('data', raw)!r:.200}")
-            data = raw.get("data", [])
+            data = r.json().get("data", [])
             if data:
-                return data[0].get("id")
+                try:
+                    return int(data[0].get("id"))
+                except (TypeError, ValueError):
+                    pass
 
     # Fallback : code postal seul
     if postcode:
@@ -191,14 +191,13 @@ def fetch_codepostal_id(postcode: str, citycode: str = None) -> int | None:
             params={"codepostal": postcode},
             timeout=10,
         )
-        print(f"[codepostal] codepostal={postcode} status={r.status_code}")
         if r.ok:
-            raw = r.json()
-            print(f"[codepostal] reponse cles={list(raw.keys())} data={str(raw.get('data', raw)):.200}")
-            data = raw.get("data", [])
+            data = r.json().get("data", [])
             if data:
-                return data[0].get("id")
-        print("[codepostal] INTROUVABLE")
+                try:
+                    return int(data[0].get("id"))
+                except (TypeError, ValueError):
+                    pass
 
     return None
 
@@ -236,7 +235,8 @@ def ban_to_ci_payload(
     payload = {
         "codepostal_id":  codepostal_id,
         "voietype_id":    typevoie_id,
-        "voienumero":     numero        or None,
+        #"voienumero":     numero        or None,
+        "voienumero": int(numero) if numero else None,        
         "voierpt":        voierpt       or None,
         "voiecharniere":  charniere_code if charniere_code > 0 else None,
         "voienom":        voienom       or ban_result.get("street", ""),
