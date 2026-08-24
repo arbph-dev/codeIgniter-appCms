@@ -176,8 +176,11 @@ def fetch_codepostal_id(postcode: str, citycode: str = None) -> int | None:
             params={"codeinsee": citycode},
             timeout=10,
         )
+        print(f"[codepostal] codeinsee={citycode} status={r.status_code}")
         if r.ok:
-            data = r.json().get("data", [])
+            raw = r.json()
+            print(f"[codepostal] reponse cles={list(raw.keys())} data={raw.get('data', raw)!r:.200}")
+            data = raw.get("data", [])
             if data:
                 return data[0].get("id")
 
@@ -188,10 +191,14 @@ def fetch_codepostal_id(postcode: str, citycode: str = None) -> int | None:
             params={"codepostal": postcode},
             timeout=10,
         )
+        print(f"[codepostal] codepostal={postcode} status={r.status_code}")
         if r.ok:
-            data = r.json().get("data", [])
+            raw = r.json()
+            print(f"[codepostal] reponse cles={list(raw.keys())} data={str(raw.get('data', raw)):.200}")
+            data = raw.get("data", [])
             if data:
                 return data[0].get("id")
+        print("[codepostal] INTROUVABLE")
 
     return None
 
@@ -200,7 +207,11 @@ def fetch_codepostal_id(postcode: str, citycode: str = None) -> int | None:
 # Mapping BAN → payload CI Adresse
 # ─────────────────────────────────────────────────────────────────────────────
 
-def ban_to_ci_payload( ban_result:    dict , typevoie_id:   int | None , codepostal_id: int | None, ) -> dict:
+def ban_to_ci_payload(
+    ban_result:    dict,
+    typevoie_id:   int | None,
+    codepostal_id: int | None,
+) -> dict:
     """
     Construit le payload JSON pour POST /api/adresse depuis un résultat BAN parsé.
 
