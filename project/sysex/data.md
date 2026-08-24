@@ -11,14 +11,21 @@ seclass_prop
 
 seinst
 - instance de classe
-- seinst_value
-- seprop_stats
-- seprop_manual_thresholds
-- se_users
-- se_submissions
-- se_events
+
+seinst_value
+
+seprop_stats
+
+seprop_manual_thresholds
+
+se_users
+
+se_submissions
+
+se_events
     - a documenter
 
+credentials
 
 ## seclass
 champs
@@ -132,3 +139,17 @@ CREATE TABLE IF NOT EXISTS se_submissions (
     FOREIGN KEY (validated_by) REFERENCES se_users(id)
 );
 ```
+
+
+
+## credentials
+```sql
+CREATE TABLE credentials (
+    service    TEXT PRIMARY KEY,
+    login      TEXT,
+    password   TEXT,
+    api_key    TEXT,
+    token      TEXT,
+    updated_at DATETIME
+);
+```sql
