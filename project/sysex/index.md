@@ -127,7 +127,28 @@ Distinguer au niveau modèle : (voir type sqlite)
 
 
 ### Relation
+gestion des relations entre instances 
 
+C'est une étape clé pour enrichir le système expert, car ça permet de modéliser des liens complexes (ex : un "Animal" "possède" un "Habitat", ou un "CircuitElectrique" "contient" des "Composants").Rappel du contexte
+
+Actuellement, ton modèle a :
+- Classes (hierarchie avec parent_id)
+- Propriétés (attachées à classes via seclass_prop)
+- Instances (attachées à classes via class_id)
+- Valeurs (seinst_value pour props des instances)
+
+Mais pas de liens directs entre instances (ex : une instance A "est parent de" B, ou A "contient" plusieurs B).
+
+Idées pour l'implémentation
+
+1. Modèle de relations :
+    - Ajouter une table se_relation pour des liens n-m (flexible) :
+        - id (PK)
+        - source_inst_id (FK seinst)
+        - target_inst_id (FK seinst)
+        - relation_type (string : "parent_of", "contains", "depends_on", etc.)
+        - optional : props_json (pour métadonnées sur le lien, ex : {"strength": 0.8})
+    - Alternative : Utiliser des propriétés de type "reference" ou "list_reference" (stocké comme ID ou liste d'IDs en JSON dans seinst_value). Plus simple, mais moins queryable.
 
 
 #### Instances (de classe)
