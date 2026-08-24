@@ -6,7 +6,16 @@ from rich.console import Console
 from rich.table   import Table
 from rich.panel   import Panel
 
+from rich.markup import escape
+
 console = Console()
+
+
+def _e(value) -> str:
+    """Échappe les crochets Rich dans une valeur variable.
+    À utiliser pour toute donnée externe injectée dans du markup.
+    """
+    return escape(str(value)) if value is not None else ""
 
 # Labels charnière pour affichage
 _CHARNIERE_LABELS = {
@@ -72,9 +81,9 @@ def init_adresse_renderer(bus) -> None:
     def on_pending_type(payload):
         console.print(Panel(
             f"[yellow]⚠ Type de voie créé en attente de validation[/]\n"
-            f"  BAN    : [dim]{payload.get('nom_ban')}[/]\n"
-            f"  CI id  : [cyan]{payload.get('id')}[/]  "
-            f"nom : [white]{payload.get('nom_ci')}[/]\n"
+            f"  BAN    : [dim]{_e(payload.get('nom_ban'))}[/]\n"
+            f"  CI id  : [cyan]{_e(payload.get('id'))}[/]  "
+            f"nom : [white]{_e(payload.get('nom_ci'))}[/]\n"
             f"  [dim]→ GET /api/typevoie?status=pending pour valider[/]",
             border_style="yellow",
             title="[bold yellow]TypeVoie pending[/]",
@@ -83,9 +92,9 @@ def init_adresse_renderer(bus) -> None:
     def on_approx_type(payload):
         console.print(
             f"[dim]ℹ  TypeVoie approché :[/] "
-            f"[yellow]{payload.get('nom_ban')!r}[/] → "
-            f"[green]{payload.get('nom_ci')!r}[/] "
-            f"[dim](id {payload.get('id')})[/]"
+            f"[yellow]{_e(payload.get('nom_ban'))}[/] → "
+            f"[green]{_e(payload.get('nom_ci'))}[/] "
+            f"[dim](id {_e(payload.get('id'))})[/]"
         )
 
     # ── Payload prêt — confirmation ──────────────────────────────────────────
@@ -148,9 +157,9 @@ def init_adresse_renderer(bus) -> None:
 
     def on_saved(item):
         console.print(Panel(
-            f"[green]✓ Adresse enregistrée[/]  id=[cyan]{item.get('id')}[/]\n"
-            f"  {item.get('ligne4', item.get('voienom', ''))}  "
-            f"[dim]{item.get('acheminement', '')}[/]",
+            f"[green]✓ Adresse enregistrée[/]  id=[cyan]{_e(item.get('id'))}[/]\n"
+            f"  {_e(item.get('ligne4', item.get('voienom', '')))}  "
+            f"[dim]{_e(item.get('acheminement', ''))}[/]",
             border_style="green",
         ))
 
@@ -177,16 +186,16 @@ def init_adresse_renderer(bus) -> None:
 
     def on_detail_loaded(item):
         console.print(Panel(
-            f"[cyan]#{item.get('id')}[/]  "
-            f"[white]{item.get('ligne4', item.get('voienom',''))}[/]\n"
-            f"[dim]{item.get('cp_codepostal','')} "
-            f"{item.get('cp_commune','')}[/]",
+            f"[cyan]#{_e(item.get('id'))}[/]  "
+            f"[white]{_e(item.get('ligne4', item.get('voienom','')))}[/]\n"
+            f"[dim]{_e(item.get('cp_codepostal',''))} "
+            f"{_e(item.get('cp_commune',''))}[/]",
             title="[bold]Adresse CI[/]",
             border_style="cyan",
         ))
 
     def on_error(msg):
-        console.print(f"[red]Adresse erreur : {msg}[/]")
+        console.print(f"[red]Adresse erreur :[/] {_e(msg)}")
 
     # ── Abonnements ──────────────────────────────────────────────────────────
 
