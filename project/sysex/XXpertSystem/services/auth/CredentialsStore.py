@@ -1,4 +1,3 @@
-
 """
 services/auth/CredentialsStore.py
 Stockage local des credentials dans une table SQLite dédiée.
@@ -18,7 +17,7 @@ Usage :
 
     store.set("insee",  api_key="ma_cle_insee")
     store.set("inpi",   login="user@mail.com", password="secret")
-    store.set("zealot", login="sdd@ddytt.fr", password="secret")
+    store.set("zealot", login="admin@zealot.fr", password="secret")
 
     creds = store.get("insee")
     # → {"service": "insee", "api_key": "ma_cle_insee", ...}
