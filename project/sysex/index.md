@@ -23,15 +23,7 @@ Ce dossier doit répertorier les éléments du système expert utiles pour un pr
 - [Couche UI](/project/sysex/akinator-0-7/XXpertSystem/layerUI.md)
   - En rapport :[pyqt6-gui-000.py](/documentation/REFERENTIELS/PYTHON/pyqt6-gui-000.py) / [pyqt6-gui-000.md](/documentation/REFERENTIELS/PYTHON/pyqt6-gui-000.md)
 
-SQLite
-```
-  PK       = "INTEGER PRIMARY KEY AUTOINCREMENT"
-  INTEGER  = "INTEGER DEFAULT NULL"
-  REAL     = "REAL DEFAULT NULL"
-  TEXT     = "TEXT DEFAULT NULL"
-  BOOL     = "INTEGER DEFAULT 0"       # SQLite stocke les bool en int
-  DATETIME = "TEXT DEFAULT NULL"       # ISO 8601
-```
+
 
 ### Librairies
 
