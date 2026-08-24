@@ -70,22 +70,25 @@ class Charniere:
       6 = au / aux
       7 = le / la / les / l'
     """
-    # Ordre important : les plus longs d'abord pour éviter match partiel
+    # Codes CI confirmés (voiecharniere, less_than[8] = valeurs 0-7) :
+    #   0 = aucune → None (champ omis)    1 = le/la/les (à confirmer)
+    #   2 = du      3 = de la    4 = des
+    #   5 = de l'   6 = de       7 = au/aux
     _PATTERNS: list[tuple[str, int]] = [
-        ("de l'",  5),   # apostrophe droit
-        ("de l'",  5),   # apostrophe typographique (unicode)
-        ("de la",  3),   # AVANT "de l" — évite match partiel
-        ("de l",   5),   # sans apostrophe (rare)
-        ("des",    4),
-        ("du",     2),
-        ("de",     6),
-        ("aux",    7),
-        ("au",     7),
-        ("les",    1),   # à confirmer
+        ("de l'",  5),   # apostrophe droit    → CI 5
+        ("de l’", 5), # apostrophe typographique
+        ("de la",  3),   # AVANT "de l"        → CI 3
+        ("de l",   5),   # sans apostrophe     → CI 5
+        ("des",    4),   #                     → CI 4
+        ("du",     2),   #                     → CI 2
+        ("de",     6),   #                     → CI 6
+        ("aux",    7),   #                     → CI 7
+        ("au",     7),   #                     → CI 7
+        ("les",    1),   # CI 1 à confirmer
         ("le",     1),
         ("la",     1),
         ("l'",     1),
-        ("l'",     1),   # unicode
+        ("l’",1),
         ("l",      1),
     ]
 
@@ -203,52 +206,71 @@ def fetch_codepostal_id(postcode: str, citycode: str = None) -> int | None:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Mapping BAN → payload CI Adresse
+# Helpers transforms pour FieldMapper
 # ─────────────────────────────────────────────────────────────────────────────
 
-def ban_to_ci_payload(
-    ban_result:    dict,
-    typevoie_id:   int | None,
-    codepostal_id: int | None,
-) -> dict:
+def _extract_numero(housenumber: str):
+    """BAN housenumber '15 bis' -> 15 (int)"""
+    if not housenumber:
+        return None
+    parts = housenumber.strip().split(None, 1)
+    try:
+        return int(parts[0])
+    except (ValueError, TypeError):
+        return None
+
+def _extract_rpt(housenumber: str):
+    """BAN housenumber '15 bis' -> 'B' """
+    _, rpt = IndiceRepetition.extract(housenumber or "")
+    return rpt or None
+
+def _extract_charniere(nom_voie: str):
+    """nom_voie -> code int CI (0 = aucune -> None envoye)"""
+    code, _ = Charniere.extract(nom_voie or "")
+    return code if code > 0 else None
+
+def _extract_voienom(nom_voie: str, street: str = ""):
+    """Extrait le nom pur apres charniere, fallback sur street."""
+    _, nom = Charniere.extract(nom_voie or "")
+    return nom or street or None
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Mapping BAN -> payload CI Adresse  (declaratif via FieldMapper)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _build_ban_mapper():
+    from .typevoie_service import resolve_type_voie
+    m = FieldMapper("ban", "ci_adresse")
+    
+    m.field( "voienumero", from_="housenumber", type_=int, transform=_extract_numero )
+    m.field( "voierpt", from_="housenumber", type_=str, transform=_extract_rpt)
+    
+    m.computed("voiecharniere", depends=["nom_voie"], fn=_extract_charniere)
+    m.computed("voienom", depends=["nom_voie", "street"], fn=_extract_voienom)
+    m.computed("precision", depends=["type", "score"], fn=GeocodePrecision.from_ban)
+    
+    m.resolve("voietype_id", from_="type_voie", fn=resolve_type_voie, type_=int)
+    m.resolve("codepostal_id", from_="postcode", fn=fetch_codepostal_id, type_=int, aux={"citycode": "citycode"}, required=True)
+    
+    m.field("acheminement", from_="city",  type_=str)
+    m.field("latitude", from_="lat",   type_=float)
+    m.field("longitude", from_="lon",   type_=float)
+    return m
+
+_ban_mapper = None   # construit au premier appel
+
+def ban_to_ci_payload(ban_result: dict):
     """
-    Construit le payload JSON pour POST /api/adresse depuis un résultat BAN parsé.
-
-    ban_result    : dict retourné par parse_ban_feature()
-    typevoie_id   : id CI résolu par typevoie_service.resolve_type_voie()
-    codepostal_id : id CI résolu par fetch_codepostal_id()
-
-    Retourne un dict prêt pour le POST CI.
+    Mappe un resultat BAN parse vers un payload CI Adresse.
+    Retourne un MappingResult (payload + warnings integres).
+    Remplace l'ancienne signature (result, tv_id, cp_id) :
+    les resolutions FK sont maintenant declarees dans le mapper.
     """
-    # Numéro + indice de répétition
-    numero, voierpt = IndiceRepetition.extract(ban_result.get("housenumber", ""))
-
-    # Charnière + nom de voie pur
-    charniere_code, voienom = Charniere.extract(ban_result.get("nom_voie", ""))
-
-    # Précision géocodage
-    precision = GeocodePrecision.from_ban(
-        ban_type = ban_result.get("type",  ""),
-        score    = ban_result.get("score", 0.0),
-    )
-
-    payload = {
-        "codepostal_id":  codepostal_id,
-        "voietype_id":    typevoie_id,
-        #"voienumero":     numero        or None,
-        "voienumero": int(numero) if numero else None,        
-        "voierpt":        voierpt       or None,
-        "voiecharniere":  charniere_code if charniere_code > 0 else None,
-        "voienom":        voienom       or ban_result.get("street", ""),
-        "acheminement":   ban_result.get("city", ""),
-        "latitude":       ban_result.get("lat"),
-        "longitude":      ban_result.get("lon"),
-        "precision":      precision,
-    }
-
-    # Nettoyage des None pour ne pas envoyer de clés vides
-    return {k: v for k, v in payload.items() if v is not None}
-
+    global _ban_mapper
+    if _ban_mapper is None:
+        _ban_mapper = _build_ban_mapper()
+    return _ban_mapper.apply(ban_result)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CRUD CI Adresse
