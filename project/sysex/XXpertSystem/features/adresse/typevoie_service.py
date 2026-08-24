@@ -81,29 +81,34 @@ def resolve_type_voie(ban_type_raw: str) -> tuple[int | None, str, str]:
     if not normalized:
         return (None, "error", "")
 
-    print(f"[typevoie] resolve: raw={ban_type_raw!r} normalized={normalized!r}")
     try:
         candidates = fetch_tv_like(normalized, len_=10)
-        print(f"[typevoie] candidates: {candidates}")
     except Exception as e:
-        print(f"[typevoie] fetch_tv_like ERROR: {e}")
         return (None, "error", str(e))
 
     # Match exact insensible à la casse
+    def _id(c):
+        try: return int(c.get("id"))
+        except (TypeError, ValueError): return c.get("id")
+
     for c in candidates:
         if c.get("nom", "").strip().lower() == normalized.lower():
-            return (c["id"], "validated", c["nom"])
+            return (_id(c), "validated", c["nom"])
 
     # Match approché — premier résultat si la liste n'est pas vide
     if candidates:
         best = candidates[0]
-        return (best["id"], "approx", best["nom"])
+        return (_id(best), "approx", best["nom"])
 
     # Absent → créer pending
     try:
         created = fetch_tv_create_pending(nom=normalized, nom_ban=ban_type_raw)
         if created:
-            return (created.get("id"), "pending", normalized)
+            try:
+                cid = int(created.get("id"))
+            except (TypeError, ValueError):
+                cid = created.get("id")
+            return (cid, "pending", normalized)
         return (None, "error", f"Échec création pending pour {normalized!r}")
     except Exception as e:
         return (None, "error", str(e))
