@@ -101,7 +101,6 @@ def init_adresse_renderer(bus) -> None:
 
     def on_ready(payload):
         ci    = payload.get("payload",    {})
-        ban   = payload.get("ban_result", {})
         tv_st = payload.get("tv_status",  "?")
         tv_lb = payload.get("tv_label",   "?")
 
@@ -109,44 +108,46 @@ def init_adresse_renderer(bus) -> None:
 
         # Reconstitue la ligne 4 pour vérification visuelle
         ligne4_parts = filter(None, [
-            ci.get("voienumero", ""),
-            ci.get("voierpt", ""),
-            tv_lb,
-            charniere_label,
-            ci.get("voienom", ""),
+            str(ci.get("voienumero") or ""),
+            str(ci.get("voierpt")    or ""),
+            str(tv_lb                or ""),
+            str(charniere_label      or ""),
+            str(ci.get("voienom")    or ""),
         ])
-        ligne4 = " ".join(ligne4_parts)
+        ligne4 = " ".join(p for p in ligne4_parts if p)
 
-        # Tableau récap
-        table = Table(title="Adresse à enregistrer", show_lines=True)
+        # Tableau récap — toutes les valeurs passent par _e()
+        table = Table(title="Adresse a enregistrer", show_lines=True)
         table.add_column("Champ",   style="cyan",  width=18)
         table.add_column("Valeur",  style="white", width=40)
         table.add_column("Statut",  style="dim",   width=12)
 
         rows = [
-            ("Ligne 4",         ligne4,                            ""),
-            ("voienom",         ci.get("voienom", ""),             ""),
-            ("voiecharniere",   f"{ci.get('voiecharniere','')} "
-                                f"({charniere_label})",            ""),
-            ("voienumero",      ci.get("voienumero", ""),          ""),
-            ("voierpt",         ci.get("voierpt", ""),             ""),
-            ("type_voie",       f"{tv_lb} (id {ci.get('voietype_id','')})",
-                                                                   tv_st),
-            ("codepostal_id",   str(ci.get("codepostal_id", "")), ""),
-            ("acheminement",    ci.get("acheminement", ""),        ""),
-            ("precision",       ci.get("precision", ""),           ""),
-            ("lat / lon",       f"{ci.get('latitude','')} / "
-                                f"{ci.get('longitude','')}",       ""),
+            ("Ligne 4",       ligne4,                                          ""),
+            ("voienom",       ci.get("voienom",       ""),                     ""),
+            ("voiecharniere", str(ci.get("voiecharniere", ""))
+                              + (" (" + charniere_label + ")" if charniere_label else ""), ""),
+            ("voienumero",    ci.get("voienumero",    ""),                     ""),
+            ("voierpt",       ci.get("voierpt",       ""),                     ""),
+            ("type_voie",     str(tv_lb) + " (id " + str(ci.get("voietype_id", "")) + ")",
+                                                                               tv_st),
+            ("codepostal_id", str(ci.get("codepostal_id", "")),                ""),
+            ("acheminement",  ci.get("acheminement",  ""),                     ""),
+            ("precision",     ci.get("precision",     ""),                     ""),
+            ("lat / lon",     str(ci.get("latitude", "")) + " / "
+                              + str(ci.get("longitude", "")),                  ""),
         ]
         for champ, valeur, statut in rows:
-            color = "yellow" if statut == "pending" \
-                   else "dim" if statut == "approx" \
-                   else ""
-            table.add_row(
-                champ,
-                valeur,
-                f"[{color}]{statut}[/]" if statut else "",
-            )
+            # Statut : markup conditionnel uniquement si statut non vide
+            if statut == "pending":
+                statut_cell = "[yellow]pending[/yellow]"
+            elif statut == "approx":
+                statut_cell = "[dim]approx[/dim]"
+            elif statut:
+                statut_cell = _e(statut)
+            else:
+                statut_cell = ""
+            table.add_row(_e(champ), _e(valeur), statut_cell)
         console.print(table)
 
         from rich.prompt import Confirm
