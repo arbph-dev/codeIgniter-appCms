@@ -1,3 +1,15 @@
+# Conception DB 
+
+##  indexation (SQLite)
+Index recommandés  pour les tables
+CREATE INDEX IF NOT EXISTS idx_seclass_parent ON seclass(parent_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_seprop_name ON seprop(LOWER(name));
+CREATE INDEX IF NOT EXISTS idx_seinst_class_name ON seinst(class_id, LOWER(name));
+CREATE INDEX IF NOT EXISTS idx_seinst_value_prop ON seinst_value(prop_id);
+CREATE INDEX IF NOT EXISTS idx_seprop_stats_class_prop ON seprop_stats(class_id, prop_id);
+Contraintes FK : ajouter FOREIGN KEY (inst_id) REFERENCES seinst(id) ON DELETE CASCADE ; FOREIGN KEY (prop_id) REFERENCES seprop(id) ON DELETE CASCADE pour seinst_value.
+Normalisation : seprop.type stocke des strings ; considérer l'utilisation d'un enum/contrainte pour valider.
+
 
 #### version sqlite
 ```sql
@@ -39,6 +51,10 @@ attention
 - les "" pose problème pour mysql / mariadb, en cas d'export sqlite il faut supprimer les "" voir ci dessus
 - rowid est spécifique a sqlite
 
+
+---
+# notes
+
 ci_client/formejuridique.py
 Note PK :
     La PK est un CHAR(4) paddé zéros à gauche.
@@ -46,6 +62,10 @@ Note PK :
     pad_id() gère la normalisation automatiquement.
 
 
+
+---
+
+# akinator-0-7/XXpertSystem/
 
 ## core/database.py
 
