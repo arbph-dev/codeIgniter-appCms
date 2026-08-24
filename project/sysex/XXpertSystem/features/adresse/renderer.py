@@ -100,9 +100,15 @@ def init_adresse_renderer(bus) -> None:
     # ── Payload prêt — confirmation ──────────────────────────────────────────
 
     def on_ready(payload):
-        ci    = payload.get("payload",    {})
-        tv_st = payload.get("tv_status",  "?")
-        tv_lb = payload.get("tv_label",   "?")
+        ci   = payload.get("payload", {})
+        meta = payload.get("resolve_meta", {})
+        # tv_label/status depuis resolve_meta (warnings mapper)
+        tv_info = meta.get("voietype_id", {})
+        tv_st   = tv_info.get("status", "validated")
+        tv_lb   = tv_info.get("label",  "")
+        # Si validated, pas de warning — on restitue depuis le payload
+        if not tv_lb:
+            tv_lb = str(ci.get("voietype_id", ""))
 
         charniere_label = _CHARNIERE_LABELS.get(ci.get("voiecharniere", 0), "")
 
