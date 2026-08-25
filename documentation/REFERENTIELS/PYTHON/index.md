@@ -190,7 +190,9 @@ session.commit()
 
 # Rich
 
-## Affichage avec Rich
+## Tableau  Rich
+
+### Tableau SqlAlchemy
 ```py
 from rich.console import Console
 from rich.table import Table
@@ -208,6 +210,36 @@ def display_site_images(site):
 
     console.print(table)
 ```
+### Tableau Json
+
+exploiter les données dnas un tableau
+- constuire le tableau, et ses colonnes
+- parourir les donnees brutes
+- les mettre en forme
+    extract_unite_legale
+- les ajouter
+- afficher le tableau    
+
+
+```py
+  table = Table(title=f"INSEE Siren — {q!r}", show_lines=True)
+  table.add_column("siren", style="cyan",  width=12)
+  table.add_column("denomination", style="white", width=45)
+  table.add_column("naf", width=8)
+  table.add_column("categorie",  width=8)
+
+  for u in data.get("unitesLegales", []):
+      r = extract_unite_legale(u)
+      table.add_row(
+          f"{r['siren']}",
+          r["denomination"],
+          r["naf"],
+          r["categorie"],
+      )
+  
+  console.print(table)
+```
+
 
 ### Exemple d'affichage
 ```py
