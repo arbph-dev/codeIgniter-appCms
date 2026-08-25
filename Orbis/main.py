@@ -14,9 +14,23 @@ V3 ajout core/json_store.py pour logging json
         ...
         if choix == "1" : # "siren"  
         ...    
-        filename = save_response(data, source="insee", endpoint="siren", params={"q": q})
-        console.print(f"[dim]Sauvegarde : {filename}[/]")  
+            filename = save_response(data, source="insee", endpoint="siren", params={"q": q})
+            console.print(f"[dim]Sauvegarde : {filename}[/]")  
 
+V4 ajout Tree
+    def menu_insee():
+        ...
+        if choix == "1" : # "siren"  
+        ...    
+            tree = afficher_json_recursive(data)
+            console.print(tree)
+
+
+    ajout extract_schema(....) depuis from core.json_store 
+    → {"title": "str", "year": "int", "cast": ["str"]}
+
+V5 repris services api
+    services/api/BaseApiClient.py
 
 
 """
@@ -25,11 +39,52 @@ from rich.console       import Console
 from rich.table         import Table
 from rich.prompt        import Prompt, Confirm
 from rich.panel         import Panel
-from core.json_store    import save_response
+from rich.tree          import Tree
+
+from core.json_store    import save_response , extract_schema
 from services.auth      import CredentialsStore, AuthProvider
 
 console = Console()
+# ===========================================================================
+# Helpers data / presentation
+# ===========================================================================
+"""
+try:
+    data = json.loads(json_data)
+    console = Console()
+    tree = afficher_json_recursive(data)
+    console.print(tree)
+except json.JSONDecodeError:
+    print("Erreur : Le format JSON est invalide.")
+"""
+def afficher_json_recursive(data, tree=None):
+    # Initialisation de l'arbre au premier appel
+    if tree is None:
+        tree = Tree("📂 [bold blue]Root[/bold blue]")
 
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if isinstance(value, (dict, list)):
+                # Branche pour les objets ou listes imbriquées
+                branch = tree.add(f"[bold cyan]{key}[/bold cyan]")
+                afficher_json_recursive(value, branch)
+            else:
+                # Affichage des valeurs simples avec gestion des types spéciaux
+                val_str = str(value)
+                if value is None:
+                    val_str = "[italic red]null[/italic red]"
+                elif isinstance(value, bool):
+                    val_str = f"[italic yellow]{value}[/italic yellow]"
+                tree.add(f"[bold green]{key}[/bold green]: {val_str}")
+
+    elif isinstance(data, list):
+        for index, item in enumerate(data):
+            if isinstance(item, (dict, list)):
+                branch = tree.add(f"[bold magenta][{index}][/bold magenta]")
+                afficher_json_recursive(item, branch)
+            else:
+                tree.add(f"[bold magenta][{index}][/bold magenta]: {item}")
+    return tree
 
 # ===========================================================================
 # Helpers auth
@@ -124,6 +179,12 @@ def menu_insee():
                     )
                 
                 console.print(table)
+
+                tree = afficher_json_recursive(data)
+                console.print(tree)
+
+                console.print( extract_schema(data) )
+
             else:
                 console.print("[yellow]Aucun resultat.[/]")
                 continue
