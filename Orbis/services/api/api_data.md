@@ -18,15 +18,15 @@ for x, y in thisdict.items():
 on a une requête qui renvoie une réponse structuré en JSON dans une vairable **data**
 
 ```py
-            q = Prompt.ask("Requête Lucene (siren/)")            
-            
-            data = client.search_siren(q, nombre=10)
-            if data:
-                total = data.get("header", {}).get("total", 0)
-                console.print(f"Total : {total}")
-                for u in data.get("unitesLegales", []):
-                    e = extract_unite_legale(u)
-                    console.print(f"  {e['siren']} — {e['denomination']} ({e['naf']}) [{e['categorie']}]")
+    q = Prompt.ask("Requête Lucene (siren/)")            
+    
+    data = client.search_siren(q, nombre=10)
+    if data:
+        total = data.get("header", {}).get("total", 0)
+        console.print(f"Total : {total}")
+        for u in data.get("unitesLegales", []):
+            e = extract_unite_legale(u)
+            console.print(f"  {e['siren']} — {e['denomination']} ({e['naf']}) [{e['categorie']}]")
 ```
 
 Dans la structure JSON : data a deux enfants
@@ -48,9 +48,9 @@ Le json renvoye contient data la variable s'appelle ainsi c'est une coincidence
 ```
 Le JSON est écrit directement dans un fichier sans traitement ^particulier
 ```py
-                filename = save_response(data, source="insee", endpoint="siren", params={"q": q})
-                console.print(f"[dim]Sauvegarde : {filename}[/]")
-```py
+    filename = save_response(data, source="insee", endpoint="siren", params={"q": q})
+    console.print(f"[dim]Sauvegarde : {filename}[/]")
+```
 
 ## Afficher les données
 ### exploiter les données dans un tableau
