@@ -1,0 +1,31 @@
+{
+  "_meta": {
+    "source": "ban",
+    "endpoint": "search",
+    "params": {
+      "q": "12 rue république quimper"
+    },
+    "timestamp": "2026-08-26T01:46:15",
+    "saved_at": "2026-08-26 01:46:15"
+  },
+  "data": [
+    {
+      "ban_id": "29232_5570_00012",
+      "label": "12 Rue de la Republique 29000 Quimper",
+      "score": 0.7178427272727272,
+      "type": "housenumber",
+      "housenumber": "12",
+      "street": "Rue de la Republique",
+      "type_voie": "Rue",
+      "nom_voie": "de la Republique",
+      "postcode": "29000",
+      "citycode": "29232",
+      "city": "Quimper",
+      "context": "29, Finistère, Bretagne",
+      "lat": 48.002973,
+      "lon": -4.085901,
+      "x": 172275.01,
+      "y": 6790648.34
+    }
+  ]
+}

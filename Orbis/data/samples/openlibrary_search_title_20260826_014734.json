@@ -1,0 +1,708 @@
+{
+  "_meta": {
+    "source": "openlibrary",
+    "endpoint": "search_title",
+    "params": {
+      "title": "liberty"
+    },
+    "timestamp": "2026-08-26T01:47:34",
+    "saved_at": "2026-08-26 01:47:34"
+  },
+  "data": {
+    "numFound": 16020,
+    "start": 0,
+    "numFoundExact": true,
+    "num_found": 16020,
+    "documentation_url": "https://openlibrary.org/dev/docs/api/search",
+    "q": "",
+    "offset": null,
+    "docs": [
+      {
+        "author_key": [
+          "OL108289A"
+        ],
+        "author_name": [
+          "John Stuart Mill"
+        ],
+        "cover_edition_key": "OL8837549M",
+        "cover_i": 966821,
+        "ebook_access": "public",
+        "edition_count": 465,
+        "first_publish_year": 1859,
+        "has_fulltext": true,
+        "ia": [
+          "onliberty00mill",
+          "onliberty00milluoft",
+          "onlibertyotheres0000mill",
+          "onlibertywithani00milluoft",
+          "onlibertyxero00milluoft",
+          "onliberty00inmill",
+          "frayhaym00mill",
+          "frayhaym00mill",
+          "nybc208565",
+          "onliberty02millgoog",
+          "onliberty05millgoog",
+          "onliberty06millgoog",
+          "onliberty08millgoog",
+          "onliberty07millgoog",
+          "lalibert00goog",
+          "lalibert00dupogoog",
+          "onliberty100mill",
+          "onliberty0000mill",
+          "onliberty0000mill_a4x3",
+          "onliberty300mill",
+          "delaliberte0000mill",
+          "onliberty0000mill_j9k7",
+          "onlibertyandutil0000mill",
+          "onliberty0000mill_c9v0",
+          "onlibertymillrich",
+          "onlibertypenguin00john",
+          "onlibertyrethink00john"
+        ],
+        "ia_collection": [
+          "americana",
+          "americanuniversity-ol",
+          "barryuniversity-ol",
+          "belmont-ol",
+          "binghamton-ol",
+          "bpljordan-ol",
+          "cdl",
+          "claremont_school_of_theology",
+          "cua-ol",
+          "dartmouthlibrary-ol",
+          "europeanlibraries",
+          "georgetown-university-law-library-ol",
+          "gwulibraries-ol",
+          "inlibrary",
+          "internetarchivebooks",
+          "ithacacollege-ol",
+          "johnshopkins-ol",
+          "kalamazoocollege-ol",
+          "lincolncollection",
+          "marymount-ol",
+          "nationalyiddishbookcenter",
+          "openlibrary-d-ol",
+          "printdisabled",
+          "riceuniversity-ol",
+          "robarts",
+          "rochester-ol",
+          "the-claremont-colleges-ol",
+          "toronto",
+          "unb-ol",
+          "uni-ol",
+          "university_of_toronto",
+          "universityofarizona-ol",
+          "universityofcoloradoboulder-ol",
+          "universityofoklahoma-ol",
+          "universityofthewest-ol",
+          "utmississauga",
+          "wilsoncollege-ol"
+        ],
+        "key": "/works/OL1068091W",
+        "language": [
+          "eng",
+          "jpn",
+          "fre",
+          "heb",
+          "dan",
+          "spa",
+          "swe",
+          "urd",
+          "chi",
+          "ger",
+          "yid",
+          "per"
+        ],
+        "lending_edition_s": "OL14032385M",
+        "lending_identifier_s": "onliberty00mill",
+        "public_scan_b": true,
+        "title": "On Liberty",
+        "id_standard_ebooks": [
+          "john-stuart-mill/on-liberty"
+        ]
+      },
+      {
+        "author_key": [
+          "OL216536A"
+        ],
+        "author_name": [
+          "Eric Foner"
+        ],
+        "cover_edition_key": "OL28840278M",
+        "cover_i": 10359577,
+        "ebook_access": "printdisabled",
+        "edition_count": 36,
+        "first_publish_year": 2010,
+        "has_fulltext": true,
+        "ia": [
+          "givemelibertyame0000fone_m5g8"
+        ],
+        "ia_collection": [
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL21299006W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Give Me Liberty!"
+      },
+      {
+        "author_key": [
+          "OL216536A"
+        ],
+        "author_name": [
+          "Eric Foner"
+        ],
+        "cover_edition_key": "OL7458469M",
+        "cover_i": 252119,
+        "ebook_access": "printdisabled",
+        "edition_count": 12,
+        "first_publish_year": 2004,
+        "has_fulltext": true,
+        "ia": [
+          "givemeliberty00eric",
+          "givemeliberty00eric_0",
+          "givemelibertyame0002fone_v3t0",
+          "givemelibertyame0000fone_y6s1",
+          "givemelibertyame00fone"
+        ],
+        "ia_collection": [
+          "americana",
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL1805115W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Give Me Liberty!"
+      },
+      {
+        "author_key": [
+          "OL216536A"
+        ],
+        "author_name": [
+          "Eric Foner"
+        ],
+        "cover_edition_key": "OL41333148M",
+        "cover_i": 13239714,
+        "ebook_access": "no_ebook",
+        "edition_count": 20,
+        "first_publish_year": 2014,
+        "has_fulltext": false,
+        "key": "/works/OL26570720W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Give Me Liberty!"
+      },
+      {
+        "author_key": [
+          "OL125391A"
+        ],
+        "author_name": [
+          "Georges Simenon"
+        ],
+        "cover_edition_key": "OL2397063M",
+        "cover_i": 9158341,
+        "ebook_access": "borrowable",
+        "edition_count": 15,
+        "first_publish_year": 1977,
+        "has_fulltext": true,
+        "ia": [
+          "megrevmeblirovan0000sime",
+          "maigretinderlibe0000sime",
+          "maigretonriviera00sime_0",
+          "libertybar0000geor",
+          "libertybar0000sime_u2z5libertybar0000sime_u2z5",
+          "libertybar0000sime"
+        ],
+        "ia_collection": [
+          "inlibrary",
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL1242646W",
+        "language": [
+          "fre",
+          "eng",
+          "ger",
+          "spa",
+          "kor",
+          "rus",
+          "por"
+        ],
+        "lending_edition_s": "OL37789811M",
+        "lending_identifier_s": "megrevmeblirovan0000sime",
+        "public_scan_b": false,
+        "title": "Liberty bar"
+      },
+      {
+        "author_key": [
+          "OL117843A"
+        ],
+        "author_name": [
+          "Friedrich A. von Hayek"
+        ],
+        "cover_edition_key": "OL6273842M",
+        "cover_i": 8151148,
+        "ebook_access": "printdisabled",
+        "edition_count": 12,
+        "first_publish_year": 1960,
+        "has_fulltext": true,
+        "ia": [
+          "constit_hay_1960_00_0669",
+          "bwb_P8-AHH-497",
+          "constitutionofli00frie"
+        ],
+        "ia_collection": [
+          "ambslibrary-ol",
+          "americana",
+          "americanuniversity-ol",
+          "binghamton-ol",
+          "georgetown-university-law-library",
+          "georgetown-university-law-library-rr",
+          "globallibraries",
+          "internetarchivebooks",
+          "printdisabled",
+          "randolph-macon-college-ol",
+          "the-claremont-colleges-ol",
+          "toronto",
+          "unb-ol",
+          "uni-ol",
+          "wilsoncollege-ol"
+        ],
+        "key": "/works/OL1164995W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "The constitution of liberty"
+      },
+      {
+        "author_key": [
+          "OL228743A"
+        ],
+        "author_name": [
+          "Carla Stevens"
+        ],
+        "cover_edition_key": "OL9756293M",
+        "cover_i": 5010989,
+        "ebook_access": "borrowable",
+        "edition_count": 3,
+        "first_publish_year": 1992,
+        "has_fulltext": true,
+        "ia": [
+          "lilymissliberty1992stev"
+        ],
+        "ia_collection": [
+          "inlibrary",
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL1909665W",
+        "language": [
+          "eng"
+        ],
+        "lending_edition_s": "OL1536469M",
+        "lending_identifier_s": "lilymissliberty1992stev",
+        "public_scan_b": false,
+        "title": "Lily and Miss Liberty"
+      },
+      {
+        "author_key": [
+          "OL2657453A"
+        ],
+        "author_name": [
+          "Isaiah Berlin"
+        ],
+        "cover_edition_key": "OL4406154M",
+        "cover_i": 4395485,
+        "ebook_access": "borrowable",
+        "edition_count": 17,
+        "first_publish_year": 1969,
+        "has_fulltext": true,
+        "ia": [
+          "fouressaysonlibe0000berl",
+          "fouressaysonlibe0000berl_x4f6",
+          "fouressaysonlibe0000isai"
+        ],
+        "ia_collection": [
+          "americana",
+          "georgetown-university-law-library",
+          "georgetown-university-law-library-rr",
+          "globallibraries",
+          "inlibrary",
+          "internetarchivebooks",
+          "patron-library-collection",
+          "patron-schools-colleges-university-libraries",
+          "printdisabled",
+          "trent_university"
+        ],
+        "key": "/works/OL930402W",
+        "language": [
+          "fre",
+          "eng",
+          "heb",
+          "spa",
+          "gre"
+        ],
+        "lending_edition_s": "OL22343389M",
+        "lending_identifier_s": "fouressaysonlibe0000berl",
+        "public_scan_b": false,
+        "title": "Four Essays on Liberty"
+      },
+      {
+        "author_key": [
+          "OL19306A"
+        ],
+        "author_name": [
+          "Elisabeth Elliot"
+        ],
+        "cover_edition_key": "OL8184432M",
+        "cover_i": 632929,
+        "ebook_access": "borrowable",
+        "edition_count": 6,
+        "first_publish_year": 1968,
+        "has_fulltext": true,
+        "ia": [
+          "libertyofobedien00elli",
+          "libertyofobedien00elis"
+        ],
+        "ia_collection": [
+          "americana",
+          "inlibrary",
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL14849230W",
+        "language": [
+          "eng"
+        ],
+        "lending_edition_s": "OL5621777M",
+        "lending_identifier_s": "libertyofobedien00elli",
+        "public_scan_b": false,
+        "title": "The Liberty of Obedience"
+      },
+      {
+        "author_key": [
+          "OL216536A"
+        ],
+        "author_name": [
+          "Eric Foner"
+        ],
+        "cover_edition_key": "OL24815854M",
+        "cover_i": 10040509,
+        "ebook_access": "no_ebook",
+        "edition_count": 1,
+        "first_publish_year": 2011,
+        "has_fulltext": false,
+        "key": "/works/OL15909461W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Give me liberty!"
+      },
+      {
+        "author_key": [
+          "OL29853A"
+        ],
+        "author_name": [
+          "Lucille Recht Penner"
+        ],
+        "cover_edition_key": "OL7512065M",
+        "cover_i": 10250989,
+        "ebook_access": "borrowable",
+        "edition_count": 3,
+        "first_publish_year": 2002,
+        "has_fulltext": true,
+        "ia": [
+          "libertyhowrevolu0000penn"
+        ],
+        "ia_collection": [
+          "inlibrary",
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL15212707W",
+        "language": [
+          "eng"
+        ],
+        "lending_edition_s": "OL7512065M",
+        "lending_identifier_s": "libertyhowrevolu0000penn",
+        "public_scan_b": false,
+        "subtitle": "How the Revolutionary War Began (Landmark Books)",
+        "title": "Liberty!"
+      },
+      {
+        "author_key": [
+          "OL7607068A"
+        ],
+        "author_name": [
+          "Kaitlyn Greenidge"
+        ],
+        "cover_edition_key": "OL32929603M",
+        "cover_i": 11550615,
+        "ebook_access": "no_ebook",
+        "edition_count": 7,
+        "first_publish_year": 2021,
+        "has_fulltext": false,
+        "key": "/works/OL22027939W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Libertie"
+      },
+      {
+        "author_key": [
+          "OL239487A"
+        ],
+        "author_name": [
+          "Catherine Aird"
+        ],
+        "cover_edition_key": "OL2723181M",
+        "cover_i": 15210515,
+        "ebook_access": "borrowable",
+        "edition_count": 5,
+        "first_publish_year": 1986,
+        "has_fulltext": true,
+        "ia": [
+          "deadliberty00aird"
+        ],
+        "ia_collection": [
+          "inlibrary",
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL1989505W",
+        "language": [
+          "eng"
+        ],
+        "lending_edition_s": "OL2723181M",
+        "lending_identifier_s": "deadliberty00aird",
+        "public_scan_b": false,
+        "title": "A dead liberty"
+      },
+      {
+        "author_key": [
+          "OL216536A"
+        ],
+        "author_name": [
+          "Eric Foner"
+        ],
+        "cover_edition_key": "OL28107784M",
+        "cover_i": 9661813,
+        "ebook_access": "printdisabled",
+        "edition_count": 5,
+        "first_publish_year": 2011,
+        "has_fulltext": true,
+        "ia": [
+          "givemelibertyame0000fone_v1f3"
+        ],
+        "ia_collection": [
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL16811230W",
+        "public_scan_b": false,
+        "subtitle": "An American History / Edition 3",
+        "title": "Give Me Liberty!"
+      },
+      {
+        "author_key": [
+          "OL2630363A"
+        ],
+        "author_name": [
+          "L. M. Elliott"
+        ],
+        "cover_edition_key": "OL9235561M",
+        "cover_i": 34052,
+        "ebook_access": "printdisabled",
+        "edition_count": 13,
+        "first_publish_year": 2006,
+        "has_fulltext": true,
+        "ia": [
+          "givemeliberty00elli"
+        ],
+        "ia_collection": [
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL275786W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Give Me Liberty"
+      },
+      {
+        "author_key": [
+          "OL771711A"
+        ],
+        "author_name": [
+          "Sara M. Evans"
+        ],
+        "cover_edition_key": "OL7721579M",
+        "cover_i": 426495,
+        "ebook_access": "printdisabled",
+        "edition_count": 1,
+        "first_publish_year": 1997,
+        "has_fulltext": true,
+        "ia": [
+          "bornforliberty00sara"
+        ],
+        "ia_collection": [
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL6567231W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Born for Liberty"
+      },
+      {
+        "author_key": [
+          "OL20476A"
+        ],
+        "author_name": [
+          "Ann Rinaldi"
+        ],
+        "cover_edition_key": "OL3552822M",
+        "cover_i": 437145,
+        "ebook_access": "printdisabled",
+        "edition_count": 7,
+        "first_publish_year": 2002,
+        "has_fulltext": true,
+        "ia": [
+          "takinglibertysto0000rina",
+          "takinglibertysto00rina",
+          "takinglibertysto0000rina_x0z1"
+        ],
+        "ia_collection": [
+          "1000blackgirlbooks",
+          "americana",
+          "bpljordan-ol",
+          "cnusd-ol",
+          "internetarchivebooks",
+          "openlibrary-d-ol",
+          "printdisabled",
+          "universityofoklahoma-ol"
+        ],
+        "key": "/works/OL112471W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Taking Liberty"
+      },
+      {
+        "author_key": [
+          "OL147106A"
+        ],
+        "author_name": [
+          "H. L. A. Hart"
+        ],
+        "cover_edition_key": "OL5856849M",
+        "cover_i": 9529785,
+        "ebook_access": "printdisabled",
+        "edition_count": 7,
+        "first_publish_year": 1963,
+        "has_fulltext": true,
+        "ia": [
+          "lawlibertymorali0000hart_d9a6",
+          "lawlibertymorali00hart"
+        ],
+        "ia_collection": [
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL1420753W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Law, liberty, and morality"
+      },
+      {
+        "author_key": [
+          "OL2865730A"
+        ],
+        "author_name": [
+          "Mark R. Levin"
+        ],
+        "cover_edition_key": "OL23102881M",
+        "cover_i": 5735516,
+        "ebook_access": "printdisabled",
+        "edition_count": 7,
+        "first_publish_year": 2009,
+        "has_fulltext": true,
+        "ia": [
+          "libertytyrannyco00levi"
+        ],
+        "ia_collection": [
+          "americana",
+          "delawarecountydistrictlibrary",
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL8552879W",
+        "language": [
+          "eng",
+          "spa"
+        ],
+        "public_scan_b": false,
+        "title": "Liberty and Tyranny"
+      },
+      {
+        "author_key": [
+          "OL2929768A"
+        ],
+        "author_name": [
+          "William Edward Hartpole Lecky"
+        ],
+        "cover_edition_key": "OL7025605M",
+        "cover_i": 5739413,
+        "ebook_access": "public",
+        "edition_count": 32,
+        "first_publish_year": 1896,
+        "has_fulltext": true,
+        "ia": [
+          "democracyliberty01leckuoft",
+          "democracyandlibe01leckiala",
+          "democracyliberty00leck",
+          "democracyliberty02leck",
+          "democracyliberty01leckiala",
+          "democracyandlib06leckgoog",
+          "democracyliberty0000leck"
+        ],
+        "ia_collection": [
+          "americana",
+          "cdl",
+          "inlibrary",
+          "internetarchivebooks",
+          "printdisabled",
+          "robarts",
+          "toronto",
+          "ubclibrary",
+          "university_of_toronto"
+        ],
+        "key": "/works/OL54189W",
+        "language": [
+          "eng"
+        ],
+        "lending_edition_s": "OL7025605M",
+        "lending_identifier_s": "democracyliberty01leckuoft",
+        "public_scan_b": true,
+        "title": "Democracy and liberty"
+      }
+    ]
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "_meta": {
+    "source": "zealot",
+    "endpoint": "search_personne",
+    "params": {
+      "q": "gaulle"
+    },
+    "timestamp": "2026-08-26T01:44:07",
+    "saved_at": "2026-08-26 01:44:07"
+  },
+  "data": {
+    "status": 200,
+    "message": "Liste des personnes (recherche)",
+    "data": [
+      {
+        "id": 11,
+        "nom": "de Gaulle",
+        "prenoms": "Charles",
+        "nom_complet": "Charles de Gaulle",
+        "nom_naissance": null,
+        "civilite": "Général",
+        "sexe": "M",
+        "date_naissance": {
+          "date": "1890-11-22 00:00:00.000000",
+          "timezone_type": 3,
+          "timezone": "UTC"
+        },
+        "precision_naissance": "jour",
+        "naissance_adresse_id": null,
+        "date_deces": {
+          "date": "1970-11-09 00:00:00.000000",
+          "timezone_type": 3,
+          "timezone": "UTC"
+        },
+        "precision_deces": "jour",
+        "deces_adresse_id": null,
+        "nationalite": "française",
+        "bio": "Charles de Gaulle est un militaire et homme d'État français, chef de la France libre pendant la Seconde Guerre mondiale.",
+        "detail": "<p>Charles de Gaulle dirige la France libre depuis Londres et joue un rôle majeur dans la libération de la France.</p>",
+        "slug": "charles-de-gaulle",
+        "source": "test-seeder",
+        "quality_score": 99,
+        "verified_at": {
+          "date": "2026-05-27 00:00:00.000000",
+          "timezone_type": 3,
+          "timezone": "UTC"
+        },
+        "verified_by": null,
+        "merge_into_id": null,
+        "created_at": {
+          "date": "2026-05-27 00:00:00.000000",
+          "timezone_type": 3,
+          "timezone": "UTC"
+        },
+        "updated_at": {
+          "date": "2026-05-27 00:00:00.000000",
+          "timezone_type": 3,
+          "timezone": "UTC"
+        },
+        "deleted_at": null
+      }
+    ]
+  }
+}

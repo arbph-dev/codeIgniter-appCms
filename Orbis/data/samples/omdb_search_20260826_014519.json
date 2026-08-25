@@ -1,0 +1,80 @@
+{
+  "_meta": {
+    "source": "omdb",
+    "endpoint": "search",
+    "params": {
+      "title": "bridge too far"
+    },
+    "timestamp": "2026-08-26T01:45:19",
+    "saved_at": "2026-08-26 01:45:19"
+  },
+  "data": {
+    "Search": [
+      {
+        "Title": "A Bridge Too Far",
+        "Year": "1977",
+        "imdbID": "tt0075784",
+        "Type": "movie",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BODg5MDQ5OTAtNzU3NC00YjBjLTkzM2MtNDdiOGMwOTJiYWI1XkEyXkFqcGc@._V1_SX300.jpg"
+      },
+      {
+        "Title": "Close Combat: A Bridge Too Far",
+        "Year": "1997",
+        "imdbID": "tt0778647",
+        "Type": "game",
+        "Poster": "N/A"
+      },
+      {
+        "Title": "A Bridge Too Far: Richard Attenborough - A Director Remembers",
+        "Year": "2004",
+        "imdbID": "tt0457116",
+        "Type": "movie",
+        "Poster": "N/A"
+      },
+      {
+        "Title": "A Bridge Too Far",
+        "Year": "2010",
+        "imdbID": "tt1590748",
+        "Type": "movie",
+        "Poster": "N/A"
+      },
+      {
+        "Title": "The Adventures of Slick Willy: A Bridge Too Far",
+        "Year": "2016",
+        "imdbID": "tt5893980",
+        "Type": "movie",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BYzViMmRhOTQtZDhhZi00OWM1LWE3ZWQtZGQzYWFhMDkwOTljXkEyXkFqcGdeQXVyNDE3MzM2MzY@._V1_SX300.jpg"
+      },
+      {
+        "Title": "Behind-the-scenes: The Adventures of Slick Willy: A Bridge Too Far",
+        "Year": "2016",
+        "imdbID": "tt13899396",
+        "Type": "movie",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BNjI4NWNlZjItOTc1My00ZTUwLTllNzEtNWI2OTIxZjQ4N2ExXkEyXkFqcGdeQXVyNDE3MzM2MzY@._V1_SX300.jpg"
+      },
+      {
+        "Title": "Arnhem: A Bridge Too Far - The True Story",
+        "Year": "2001",
+        "imdbID": "tt32986685",
+        "Type": "movie",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BOWFlNjIyYzMtMWUwMS00OGI3LTk4YjctZTUxNGJhYzFmZDk1XkEyXkFqcGc@._V1_SX300.jpg"
+      },
+      {
+        "Title": "A Bridge Too Far from Hero Street",
+        "Year": "2019",
+        "imdbID": "tt36006168",
+        "Type": "movie",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BYTBhYTZjOGMtYmY0Yy00OGI0LWE4NDAtNjNlOTQzOTZkNGEwXkEyXkFqcGc@._V1_SX300.jpg"
+      },
+      {
+        "Title": "Operation Market Garden: A Bridge Too Far",
+        "Year": "2026",
+        "imdbID": "tt39759238",
+        "Type": "movie",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BZTk1MGMwZWMtMWZhMC00MDUzLTk0ZTYtYzZiNzIwZWI4OTA5XkEyXkFqcGc@._V1_SX300.jpg"
+      }
+    ],
+    "totalResults": "9",
+    "Response": "True"
+  }
+}

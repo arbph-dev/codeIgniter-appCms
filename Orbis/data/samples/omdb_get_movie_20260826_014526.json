@@ -1,0 +1,51 @@
+{
+  "_meta": {
+    "source": "omdb",
+    "endpoint": "get_movie",
+    "params": {
+      "imdb_id": "tt0075784"
+    },
+    "timestamp": "2026-08-26T01:45:26",
+    "saved_at": "2026-08-26 01:45:26"
+  },
+  "data": {
+    "Title": "A Bridge Too Far",
+    "Year": "1977",
+    "Rated": "PG",
+    "Released": "15 Jun 1977",
+    "Runtime": "175 min",
+    "Genre": "Drama, History, War",
+    "Director": "Richard Attenborough",
+    "Writer": "Cornelius Ryan, William Goldman",
+    "Actors": "Sean Connery, Ryan O'Neal, Michael Caine",
+    "Plot": "The true story of Operation Market Garden, the Allies attempt, in September 1944, to hasten the end of World War II by driving through Belgium and Holland into Germany. The idea was for U.S. airborne divisions to take the towns of Eindhoven and Nijmegen and a British airborne division, reinforced by a Polish airborne brigade, to take the town of Arnhem. They would be reinforced, in due course and in turn, by the British XXX Corps, land-based and driving up from the British lines in the south. The key to the operation was the bridges, as if the Germans held or blew them, the paratroopers could not be relieved. Faulty intelligence, Allied high command hubris, and stubborn German resistance would ensure that Arnhem was a bridge too far.",
+    "Language": "English, German, Dutch, Polish, Latin",
+    "Country": "United States, United Kingdom",
+    "Awards": "Won 4 BAFTA 7 wins & 5 nominations total",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BODg5MDQ5OTAtNzU3NC00YjBjLTkzM2MtNDdiOGMwOTJiYWI1XkEyXkFqcGc@._V1_SX300.jpg",
+    "Ratings": [
+      {
+        "Source": "Internet Movie Database",
+        "Value": "7.4/10"
+      },
+      {
+        "Source": "Rotten Tomatoes",
+        "Value": "61%"
+      },
+      {
+        "Source": "Metacritic",
+        "Value": "63/100"
+      }
+    ],
+    "Metascore": "63",
+    "imdbRating": "7.4",
+    "imdbVotes": "67,192",
+    "imdbID": "tt0075784",
+    "Type": "movie",
+    "DVD": "N/A",
+    "BoxOffice": "$50,750,000",
+    "Production": "N/A",
+    "Website": "N/A",
+    "Response": "True"
+  }
+}
