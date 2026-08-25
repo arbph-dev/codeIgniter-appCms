@@ -1,5 +1,5 @@
 """
-ORBIS — main2.py
+ORBIS — main3.py
 
 Toute la logique d'authentification est déléguée à services/auth.
 Les clients métier ne reçoivent qu'une session déjà configurée.
@@ -7,14 +7,26 @@ Les clients métier ne reçoivent qu'une session déjà configurée.
 Ordre de démarrage :
     python main2.py               → menu principal
     python main2.py --init-creds  → saisie guidée des credentials
+
+
+V3 ajout core/json_store.py pour logging json
+    def menu_insee():
+        ...
+        if choix == "1" : # "siren"  
+        ...    
+        filename = save_response(data, source="insee", endpoint="siren", params={"q": q})
+        console.print(f"[dim]Sauvegarde : {filename}[/]")  
+
+
+
 """
 import sys
-from rich.console import Console
-from rich.table   import Table
-from rich.prompt  import Prompt, Confirm
-from rich.panel import Panel
-
-from services.auth import CredentialsStore, AuthProvider
+from rich.console       import Console
+from rich.table         import Table
+from rich.prompt        import Prompt, Confirm
+from rich.panel         import Panel
+from core.json_store    import save_response
+from services.auth      import CredentialsStore, AuthProvider
 
 console = Console()
 
@@ -66,13 +78,9 @@ def menu_insee():
     while True:
         console.rule("[bold cyan]INSEE Sirene[/]")
         """
-        choix = Prompt.ask(
-            "Action",
-            choices=["siren", "siret", "retour"],
-            default="retour",
-        )
+
         """
-        console.print("\n[bold cyan]INSEE Sirenel[/]")
+        console.print("\n[bold cyan]INSEE Sirene[/]")
         console.print("1. siren")
         console.print("2. siret")
         console.print("0. Retour")
@@ -93,7 +101,33 @@ def menu_insee():
                 for u in data.get("unitesLegales", []):
                     e = extract_unite_legale(u)
                     console.print(f"  {e['siren']} — {e['denomination']} ({e['naf']}) [{e['categorie']}]")
-        
+
+                filename = save_response(data, source="insee", endpoint="siren", params={"q": q})
+                console.print(f"[dim]Sauvegarde : {filename}[/]")
+
+                # exploiter les données dnas un tableau
+                # extract_unite_legale
+
+                table = Table(title=f"INSEE Siren — {q!r}", show_lines=True)
+                table.add_column("siren", style="cyan",  width=12)
+                table.add_column("denomination", style="white", width=45)
+                table.add_column("naf", width=8)
+                table.add_column("categorie",  width=8)
+
+                for u in data.get("unitesLegales", []):
+                    r = extract_unite_legale(u)
+                    table.add_row(
+                        f"{r['siren']}",
+                        r["denomination"],
+                        r["naf"],
+                        r["categorie"],
+                    )
+                
+                console.print(table)
+            else:
+                console.print("[yellow]Aucun resultat.[/]")
+                continue
+
         elif choix == "2" :
             q = Prompt.ask("Requête Lucene (siret/)") 
 
