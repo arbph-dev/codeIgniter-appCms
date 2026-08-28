@@ -1,0 +1,87 @@
+{
+  "_meta": {
+    "source": "omdb",
+    "endpoint": "search",
+    "params": {
+      "title": "bridge"
+    },
+    "timestamp": "2026-08-27T00:51:35",
+    "saved_at": "2026-08-27 00:51:35"
+  },
+  "data": {
+    "Search": [
+      {
+        "Title": "Bridge of Spies",
+        "Year": "2015",
+        "imdbID": "tt3682448",
+        "Type": "movie",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMjIxOTI0MjU5NV5BMl5BanBnXkFtZTgwNzM4OTk4NTE@._V1_SX300.jpg"
+      },
+      {
+        "Title": "The Bridge on the River Kwai",
+        "Year": "1957",
+        "imdbID": "tt0050212",
+        "Type": "movie",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BNzdkYmU2YmItNmZiYy00OWQyLTg0YWYtZmUxM2U3YTRiNTQ1XkEyXkFqcGc@._V1_SX300.jpg"
+      },
+      {
+        "Title": "Bridge to Terabithia",
+        "Year": "2007",
+        "imdbID": "tt0398808",
+        "Type": "movie",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMTMzOTk1MzIyN15BMl5BanBnXkFtZTcwNTM3MjczMQ@@._V1_SX300.jpg"
+      },
+      {
+        "Title": "The Bridge",
+        "Year": "2011–2018",
+        "imdbID": "tt1733785",
+        "Type": "series",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMjQ3MDAzNDU4NV5BMl5BanBnXkFtZTgwNjE2NDQ0NzE@._V1_SX300.jpg"
+      },
+      {
+        "Title": "A Bridge Too Far",
+        "Year": "1977",
+        "imdbID": "tt0075784",
+        "Type": "movie",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BODg5MDQ5OTAtNzU3NC00YjBjLTkzM2MtNDdiOGMwOTJiYWI1XkEyXkFqcGc@._V1_SX300.jpg"
+      },
+      {
+        "Title": "The Bridge",
+        "Year": "2013–2014",
+        "imdbID": "tt2406376",
+        "Type": "series",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMTQyNjEzMjIyMV5BMl5BanBnXkFtZTgwMTg0NjYxMjE@._V1_SX300.jpg"
+      },
+      {
+        "Title": "Under the Bridge",
+        "Year": "2024",
+        "imdbID": "tt1640719",
+        "Type": "series",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BZDIyNjBlMzUtOGI3ZS00N2Q1LWE0NGUtM2RhMGM2MDFlNTE3XkEyXkFqcGc@._V1_SX300.jpg"
+      },
+      {
+        "Title": "The Lovers on the Bridge",
+        "Year": "1991",
+        "imdbID": "tt0101318",
+        "Type": "movie",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BNmYyZTUyNDctNmYwYi00OTIxLWIzMDQtNTRkZDE0MGI3MmVkXkEyXkFqcGc@._V1_SX300.jpg"
+      },
+      {
+        "Title": "Girl on the Bridge",
+        "Year": "1999",
+        "imdbID": "tt0144201",
+        "Type": "movie",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BNTYxMzU5NmQtN2IwMS00NTUzLWJmNzUtM2YzM2ZmNjE4YmU0XkEyXkFqcGc@._V1_SX300.jpg"
+      },
+      {
+        "Title": "The Curse of Bridge Hollow",
+        "Year": "2022",
+        "imdbID": "tt15289240",
+        "Type": "movie",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BZGM3ODMwYmUtYzQ2ZC00ZjFlLWJiN2ItNDBmMmFiNmMzMDExXkEyXkFqcGc@._V1_SX300.jpg"
+      }
+    ],
+    "totalResults": "1258",
+    "Response": "True"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "_meta": {
+    "source": "ban",
+    "endpoint": "search",
+    "params": {
+      "q": "5 gare quimper"
+    },
+    "timestamp": "2026-08-27T07:05:01",
+    "saved_at": "2026-08-27 07:05:01"
+  },
+  "data": [
+    {
+      "ban_id": "29233_b024_00005",
+      "label": "5 Gare la Forêt 29300 Quimperlé",
+      "score": 0.49489636363636363,
+      "type": "housenumber",
+      "housenumber": "5",
+      "street": "Gare la Forêt",
+      "type_voie": "Gare",
+      "nom_voie": "la Forêt",
+      "postcode": "29300",
+      "citycode": "29233",
+      "city": "Quimperlé",
+      "context": "29, Finistère, Bretagne",
+      "lat": 47.842731,
+      "lon": -3.579766,
+      "x": 208396.96,
+      "y": 6769642.42
+    },
+    {
+      "ban_id": "29232_1580",
+      "label": "Avenue de la Gare 29000 Quimper",
+      "score": 0.4550536363636363,
+      "type": "street",
+      "housenumber": "",
+      "street": "Avenue de la Gare",
+      "type_voie": "Avenue",
+      "nom_voie": "de la Gare",
+      "postcode": "29000",
+      "citycode": "29232",
+      "city": "Quimper",
+      "context": "29, Finistère, Bretagne",
+      "lat": 47.994488,
+      "lon": -4.094635,
+      "x": 171541.69,
+      "y": 6789767.68
+    },
+    {
+      "ban_id": "29232_1582",
+      "label": "Impasse de la Gare 29000 Quimper",
+      "score": 0.4334251048951049,
+      "type": "street",
+      "housenumber": "",
+      "street": "Impasse de la Gare",
+      "type_voie": "Impasse",
+      "nom_voie": "de la Gare",
+      "postcode": "29000",
+      "citycode": "29232",
+      "city": "Quimper",
+      "context": "29, Finistère, Bretagne",
+      "lat": 47.99354,
+      "lon": -4.093027,
+      "x": 171651.69,
+      "y": 6789652
+    },
+    {
+      "ban_id": "29233_0460_00005",
+      "label": "5 Boulevard de la Gare 29300 Quimperlé",
+      "score": 0.3991157771260997,
+      "type": "housenumber",
+      "housenumber": "5",
+      "street": "Boulevard de la Gare",
+      "type_voie": "Boulevard",
+      "nom_voie": "de la Gare",
+      "postcode": "29300",
+      "citycode": "29233",
+      "city": "Quimperlé",
+      "context": "29, Finistère, Bretagne",
+      "lat": 47.866565,
+      "lon": -3.544136,
+      "x": 211272.14,
+      "y": 6772060.35
+    },
+    {
+      "ban_id": "29233_s11fj3",
+      "label": "Rond point de la Gare 29300 Quimperlé",
+      "score": 0.3577419061583577,
+      "type": "locality",
+      "housenumber": "",
+      "street": "",
+      "type_voie": "",
+      "nom_voie": "",
+      "postcode": "29300",
+      "citycode": "29233",
+      "city": "Quimperlé",
+      "context": "29, Finistère, Bretagne",
+      "lat": 47.868201,
+      "lon": -3.552198,
+      "x": 210686.5,
+      "y": 6772291.44
+    }
+  ]
+}

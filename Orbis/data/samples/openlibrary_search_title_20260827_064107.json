@@ -1,0 +1,561 @@
+{
+  "_meta": {
+    "source": "openlibrary",
+    "endpoint": "search_title",
+    "params": {
+      "title": "hydraulics"
+    },
+    "timestamp": "2026-08-27T06:41:07",
+    "saved_at": "2026-08-27 06:41:07"
+  },
+  "data": {
+    "numFound": 4975,
+    "start": 0,
+    "numFoundExact": true,
+    "num_found": 4975,
+    "documentation_url": "https://openlibrary.org/dev/docs/api/search",
+    "q": "",
+    "offset": null,
+    "docs": [
+      {
+        "author_key": [
+          "OL533217A"
+        ],
+        "author_name": [
+          "Michael J. Pinches"
+        ],
+        "cover_edition_key": "OL2399256M",
+        "cover_i": 4125510,
+        "ebook_access": "borrowable",
+        "edition_count": 2,
+        "first_publish_year": 1988,
+        "has_fulltext": true,
+        "ia": [
+          "powerhydraulics0000pinc",
+          "powerhydraulics0000mich"
+        ],
+        "ia_collection": [
+          "inlibrary",
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL3268909W",
+        "language": [
+          "eng"
+        ],
+        "lending_edition_s": "OL2399256M",
+        "lending_identifier_s": "powerhydraulics0000pinc",
+        "public_scan_b": false,
+        "title": "Power hydraulics"
+      },
+      {
+        "author_key": [
+          "OL135862A"
+        ],
+        "author_name": [
+          "Ven Te Chow"
+        ],
+        "cover_edition_key": "OL14888772M",
+        "cover_i": 5294973,
+        "ebook_access": "borrowable",
+        "edition_count": 8,
+        "first_publish_year": 1959,
+        "has_fulltext": true,
+        "ia": [
+          "openchannelhydra0000chou",
+          "openchannelhydra0000chow"
+        ],
+        "ia_collection": [
+          "inlibrary",
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL1332594W",
+        "language": [
+          "eng"
+        ],
+        "lending_edition_s": "OL14888772M",
+        "lending_identifier_s": "openchannelhydra0000chou",
+        "public_scan_b": false,
+        "title": "Open-channel hydraulics"
+      },
+      {
+        "author_key": [
+          "OL3301734A"
+        ],
+        "author_name": [
+          "Eaton Fluid Power Training(Vickers)"
+        ],
+        "cover_edition_key": "OL9645848M",
+        "cover_i": 1725009,
+        "ebook_access": "no_ebook",
+        "edition_count": 1,
+        "first_publish_year": 2007,
+        "has_fulltext": false,
+        "key": "/works/OL9244514W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Industrial Hydraulics Manual"
+      },
+      {
+        "author_key": [
+          "OL415246A"
+        ],
+        "author_name": [
+          "Peter Rohner"
+        ],
+        "cover_edition_key": "OL10309175M",
+        "cover_i": 12701555,
+        "ebook_access": "borrowable",
+        "edition_count": 5,
+        "first_publish_year": 1988,
+        "has_fulltext": true,
+        "ia": [
+          "industrialhydrau0000rohn"
+        ],
+        "ia_collection": [
+          "inlibrary",
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL2800364W",
+        "language": [
+          "eng"
+        ],
+        "lending_edition_s": "OL10309175M",
+        "lending_identifier_s": "industrialhydrau0000rohn",
+        "public_scan_b": false,
+        "title": "Industrial Hydraulic Control"
+      },
+      {
+        "author_key": [
+          "OL583356A",
+          "OL3296194A",
+          "OL2736057A"
+        ],
+        "author_name": [
+          "R. E. Featherstone",
+          "R.E. Featherstone",
+          "C. Nalluri"
+        ],
+        "cover_edition_key": "OL1100311M",
+        "cover_i": 1328301,
+        "ebook_access": "borrowable",
+        "edition_count": 9,
+        "first_publish_year": 1982,
+        "has_fulltext": true,
+        "ia": [
+          "civilengineering0000feat"
+        ],
+        "ia_collection": [
+          "inlibrary",
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL3493143W",
+        "language": [
+          "eng"
+        ],
+        "lending_edition_s": "OL1100311M",
+        "lending_identifier_s": "civilengineering0000feat",
+        "public_scan_b": false,
+        "title": "Civil engineering hydraulics"
+      },
+      {
+        "author_key": [
+          "OL1761283A"
+        ],
+        "author_name": [
+          "Horace Williams King"
+        ],
+        "cover_edition_key": "OL6029759M",
+        "cover_i": 5815520,
+        "ebook_access": "public",
+        "edition_count": 8,
+        "first_publish_year": 1922,
+        "has_fulltext": true,
+        "ia": [
+          "cu31924022872497",
+          "hydraulics00kingrich",
+          "hydraulics00kinguoft",
+          "hydraulics00wislgoog",
+          "hydraulics00king"
+        ],
+        "ia_collection": [
+          "americana",
+          "cdl",
+          "cornell",
+          "gerstein",
+          "internetarchivebooks",
+          "printdisabled",
+          "toronto",
+          "university_of_toronto"
+        ],
+        "key": "/works/OL6569003W",
+        "language": [
+          "eng"
+        ],
+        "lending_edition_s": "OL6645827M",
+        "lending_identifier_s": "cu31924022872497",
+        "public_scan_b": true,
+        "title": "Hydraulics"
+      },
+      {
+        "author_key": [
+          "OL2103234A"
+        ],
+        "author_name": [
+          "Calvin Victor Davis"
+        ],
+        "cover_i": 6997245,
+        "ebook_access": "borrowable",
+        "edition_count": 7,
+        "first_publish_year": 1942,
+        "has_fulltext": true,
+        "ia": [
+          "handbookofapplie00davi"
+        ],
+        "ia_collection": [
+          "inlibrary",
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL185361W",
+        "language": [
+          "eng"
+        ],
+        "lending_edition_s": "OL6094827M",
+        "lending_identifier_s": "handbookofapplie00davi",
+        "public_scan_b": false,
+        "title": "Handbook of applied hydraulics"
+      },
+      {
+        "author_key": [
+          "OL185838A"
+        ],
+        "author_name": [
+          "W. Bolton"
+        ],
+        "cover_i": 1400211,
+        "ebook_access": "no_ebook",
+        "edition_count": 1,
+        "first_publish_year": 1997,
+        "has_fulltext": false,
+        "key": "/works/OL1658343W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Pneumatic and hydraulic systems"
+      },
+      {
+        "author_key": [
+          "OL734091A"
+        ],
+        "author_name": [
+          "Andrew Parr"
+        ],
+        "cover_edition_key": "OL7972057M",
+        "cover_i": 1400452,
+        "ebook_access": "printdisabled",
+        "edition_count": 4,
+        "first_publish_year": 1992,
+        "has_fulltext": true,
+        "ia": [
+          "isbn_9780750644198"
+        ],
+        "ia_collection": [
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL3993399W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Hydraulics and Pneumatics"
+      },
+      {
+        "author_key": [
+          "OL2225926A"
+        ],
+        "author_name": [
+          "Herbert E. Merritt"
+        ],
+        "cover_edition_key": "OL7619258M",
+        "cover_i": 1249024,
+        "ebook_access": "printdisabled",
+        "edition_count": 3,
+        "first_publish_year": 1967,
+        "has_fulltext": true,
+        "ia": [
+          "hydrauliccontrol0000merr"
+        ],
+        "ia_collection": [
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL185520W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Hydraulic control systems"
+      },
+      {
+        "author_key": [
+          "OL7852771A"
+        ],
+        "author_name": [
+          "Dr. P.N. MODI & S.M. SETH        "
+        ],
+        "cover_edition_key": "OL27974411M",
+        "cover_i": 9362805,
+        "ebook_access": "no_ebook",
+        "edition_count": 2,
+        "first_publish_year": 2019,
+        "has_fulltext": false,
+        "key": "/works/OL20689239W",
+        "public_scan_b": false,
+        "title": "Hydraulics and Fluid Mechanics Including Hydraulics Machines"
+      },
+      {
+        "author_key": [
+          "OL1001949A"
+        ],
+        "author_name": [
+          "I. E. Idelʹchik"
+        ],
+        "ebook_access": "no_ebook",
+        "edition_count": 1,
+        "first_publish_year": 2008,
+        "has_fulltext": false,
+        "key": "/works/OL18720466W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Handbook of hydraulic resistance"
+      },
+      {
+        "author_key": [
+          "OL231411A"
+        ],
+        "author_name": [
+          "Melvyn Kay"
+        ],
+        "cover_edition_key": "OL370201M",
+        "cover_i": 1224790,
+        "ebook_access": "printdisabled",
+        "edition_count": 10,
+        "first_publish_year": 1998,
+        "has_fulltext": true,
+        "ia": [
+          "practicalhydraul0000kaym"
+        ],
+        "ia_collection": [
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL1929665W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Practical hydraulics"
+      },
+      {
+        "author_key": [
+          "OL6201223A"
+        ],
+        "author_name": [
+          "K. R. Arora"
+        ],
+        "cover_edition_key": "OL21096488M",
+        "cover_i": 14601352,
+        "ebook_access": "no_ebook",
+        "edition_count": 1,
+        "first_publish_year": 1976,
+        "has_fulltext": false,
+        "key": "/works/OL13301821W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Fluid mechanics, hydraulics and hydraulic machines"
+      },
+      {
+        "author_key": [
+          "OL408145A"
+        ],
+        "author_name": [
+          "Michael B. Abbott"
+        ],
+        "cover_edition_key": "OL710769M",
+        "cover_i": 3795438,
+        "ebook_access": "no_ebook",
+        "edition_count": 6,
+        "first_publish_year": 1979,
+        "has_fulltext": false,
+        "key": "/works/OL2772381W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Computational hydraulics"
+      },
+      {
+        "author_key": [
+          "OL1004942A"
+        ],
+        "author_name": [
+          "A. T. Sayers"
+        ],
+        "cover_edition_key": "OL2194668M",
+        "cover_i": 4086118,
+        "ebook_access": "no_ebook",
+        "edition_count": 1,
+        "first_publish_year": 1990,
+        "has_fulltext": false,
+        "key": "/works/OL4781823W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Hydraulic and compressible flow turbomachines"
+      },
+      {
+        "author_key": [
+          "OL2777154A",
+          "OL2654480A",
+          "OL2777155A"
+        ],
+        "author_name": [
+          "James F. Cruise",
+          "Vijay P. Singh",
+          "Mohsen M. Sherif"
+        ],
+        "cover_edition_key": "OL17888842M",
+        "cover_i": 14462112,
+        "ebook_access": "printdisabled",
+        "edition_count": 2,
+        "first_publish_year": 2006,
+        "has_fulltext": true,
+        "ia": [
+          "elementaryhydrau0000crui"
+        ],
+        "ia_collection": [
+          "internetarchivebooks",
+          "printdisabled"
+        ],
+        "key": "/works/OL8345148W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Elementary hydraulics"
+      },
+      {
+        "author_key": [
+          "OL893731A"
+        ],
+        "author_name": [
+          "R. B. Walters"
+        ],
+        "cover_edition_key": "OL22456995M",
+        "cover_i": 4969081,
+        "ebook_access": "unclassified",
+        "edition_count": 4,
+        "first_publish_year": 1991,
+        "has_fulltext": false,
+        "ia": [
+          "hydraulicelectro00ceng"
+        ],
+        "key": "/works/OL4478964W",
+        "language": [
+          "eng"
+        ],
+        "public_scan_b": false,
+        "title": "Hydraulic and electro-hydraulic control systems"
+      },
+      {
+        "author_key": [
+          "OL887915A"
+        ],
+        "author_name": [
+          "William A. Neese"
+        ],
+        "cover_edition_key": "OL21229632M",
+        "cover_i": 14384447,
+        "ebook_access": "borrowable",
+        "edition_count": 5,
+        "first_publish_year": 1984,
+        "has_fulltext": true,
+        "ia": [
+          "aircrafthydrauli0000nees",
+          "aircrafthydrauli0000nees_i2z0_3edi"
+        ],
+        "ia_collection": [
+          "inlibrary",
+          "internetarchivebooks",
+          "nationaluniversity",
+          "printdisabled"
+        ],
+        "key": "/works/OL4456147W",
+        "language": [
+          "eng"
+        ],
+        "lending_edition_s": "OL21229632M",
+        "lending_identifier_s": "aircrafthydrauli0000nees",
+        "public_scan_b": false,
+        "title": "Aircraft hydraulic systems"
+      },
+      {
+        "author_key": [
+          "OL317232A"
+        ],
+        "author_name": [
+          "Mansfield Merriman"
+        ],
+        "cover_edition_key": "OL23382853M",
+        "cover_i": 6125529,
+        "ebook_access": "public",
+        "edition_count": 14,
+        "first_publish_year": 1892,
+        "has_fulltext": true,
+        "ia": [
+          "treatisehydraulics00merrrich",
+          "treatiseonhydrau00merrrich",
+          "treathydraulics00merrrich",
+          "cu31924004684225",
+          "treatisehydraulic00merrrich",
+          "treatiseonhydrau00merruoft",
+          "treatiseonhydra00merrgoog",
+          "treatiseonhydra09merrgoog",
+          "atreatiseonhydr04merrgoog",
+          "treatiseonhydra02merrgoog",
+          "treatiseonhydra06merrgoog",
+          "treatiseonhydra05merrgoog"
+        ],
+        "ia_collection": [
+          "americana",
+          "cdl",
+          "cornell",
+          "gerstein",
+          "toronto",
+          "university_of_toronto"
+        ],
+        "key": "/works/OL2343524W",
+        "language": [
+          "eng"
+        ],
+        "lending_edition_s": "OL7094583M",
+        "lending_identifier_s": "treatisehydraulics00merrrich",
+        "public_scan_b": true,
+        "title": "Treatise on hydraulics"
+      }
+    ]
+  }
+}
