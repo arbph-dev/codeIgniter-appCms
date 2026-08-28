@@ -27,7 +27,7 @@ Identifiants stables :
 - LM = liste municipale
 
 Usage :
-````py
+```py
     client = PoligraphClient()
     data = client.list_politiques()
     data = client.get_politique("jean-luc-melenchon")
