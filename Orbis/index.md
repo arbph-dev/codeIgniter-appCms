@@ -28,25 +28,25 @@ client/agrégateur Python multi-API, avec authentification factorisée, credenti
 
 ## structure
 
-- [main.py](/Orbis/main.py).py
-- [main2.py](/Orbis/main2.py).py
-- main6_light.py
+- [main.py](/Orbis/main.py)
+- [main2.py](/Orbis/main2.py)
+- [main6_light.py](/Orbis/main6_light.py)
 - acquisition\
-  - sources.py
+  - [sources.py](/Orbis/acquisition/sources.py)
 - cli\
-  - __init__.py
-  - menu.py
-  - presentation.py
+  - [__init__.py](/Orbis/cli/__init__.py)
+  - [menu.py](/Orbis/cli/menu.py)
+  - [presentation.py](/Orbis/cli/presentation.py)
   - menus\
-    - __init__.py
-    - ban.py
-    - credentials.py
-    - inpi.py
-    - insee.py
-    - omdb.py
-    - openlibrary.py
-    - personne.py
-    - poligraph.py
+    - [__init__.py](/Orbis/cli/menus/__init__.py)
+    - [ban.py](/Orbis/cli/menus/ban.py)
+    - [credentials.py](/Orbis/cli/menus/credentials.py)
+    - [inpi.py](/Orbis/cli/menus/inpi.py)
+    - [insee.py](/Orbis/cli/menus/insee.py)
+    - [omdb.py](/Orbis/cli/menus/omdb.py)
+    - [openlibrary.py](/Orbis/cli/menus/openlibrary.py)
+    - [personne.py](/Orbis/cli/menus/personne.py)
+    - [poligraph.py](/Orbis/cli/menus/poligraph.py)
 - core\
   - __init__.py
   - json_store.py
