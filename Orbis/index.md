@@ -48,26 +48,26 @@ client/agrégateur Python multi-API, avec authentification factorisée, credenti
     - [personne.py](/Orbis/cli/menus/personne.py)
     - [poligraph.py](/Orbis/cli/menus/poligraph.py)
 - core\
-  - __init__.py
-  - json_store.py
+  - [__init__.py](/Orbis/cli/menus/__init__.py)
+  - [json_store.py](/Orbis/cli/menus/json_store.py)
 - persistence\
-  - conflict_log.py
-  - db.py
-  - models.py
-  - repository.py
-  - siren_guard.py
+  - [conflict_log.py](/Orbis/cli/menus/conflict_log.py)
+  - [db.py](/Orbis/cli/menus/db.py)
+  - [models.py](/Orbis/cli/menus/models.py)
+  - [repository.py](/Orbis/cli/menus/repository.py)
+  - [siren_guard.py](/Orbis/cli/menus/siren_guard.py)
 - services\
   - services\api\
     - [__init__.py](/Orbis/services/api/__init__.py)
-    - BanClient.py
-    - BaseApiClient.py
+    - [BanClient.py](/Orbis/services/api/BanClient.py)
+    - [BaseApiClient.py](/Orbis/services/api/BaseApiClient.py)
     - [inpi_client.py](/Orbis/services/api/inpi_client.py)
     - [insee_client.py](/Orbis/services/api/insee_client.py)
-    - OmdbClient.py
-    - OpenLibraryClient.py
-    - poligraph_client.py
+    - [OmdbClient.py](/Orbis/services/api/OmdbClient.py)
+    - [OpenLibraryClient.py](/Orbis/services/api/OpenLibraryClient.py)
+    - [poligraph_client.py](/Orbis/services/api/poligraph_client.py)
     - [personne_client.py](/Orbis/services/api/personne_client.py)
-    - referentiels.py
+    - [referentiels.py](/Orbis/services/api/referentiels.py)
   - services\auth\
     - [__init__.py](/Orbis/services/auth/__init__.py) 
     - [ApiKeyAuth.py](/Orbis/services/auth/ApiKeyAuth.py)
@@ -75,7 +75,7 @@ client/agrégateur Python multi-API, avec authentification factorisée, credenti
     - [BearerAuth.py](/Orbis/services/auth/BearerAuth.py)
     - [CredentialsStore.py](/Orbis/services/auth/CredentialsStore.py)
 - transformation/
-  - mapper.py
+  - [mapper.py](/Orbis/transformation/mapper.py)
 
 ----
 ## Travaux
