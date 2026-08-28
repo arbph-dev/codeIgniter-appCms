@@ -92,6 +92,7 @@ Le notes d'implémentation à reprendre vers api et ou métiers
 
 ##  ui
 je réfléchis a employer qt, qt quick qml qtcreator et webassembly pour utiliser les mêmes technologies sur le front javascript et le client python est ce une bonne option ?
+
 ----
 
 
