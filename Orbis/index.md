@@ -2,34 +2,92 @@
 
 client/agrégateur Python multi-API, avec authentification factorisée, credentials locaux SQLAlchemy, puis interface PySide6.
 
+## Architecture des 6 couches 
+```
+┌──────────────────────────────────────────────────────────────────┐
+│ 6 · PRÉSENTATION   QML — Layout / Panels / CrudToolbar           │
+│     ConflictLog visible admin ·                                  │
+├──────────────────────────────────────────────────────────────────┤
+│ 5 · LOGIQUE MÉTIER  tag, score, dédoublonnage, règles            │
+├──────────────────────────────────────────────────────────────────┤
+│ 4 · PERSISTANCE     EntrepriseModel (SQLAlchemy)                 │
+│     Repository : CRUD + import/export CSV                        │
+├──────────────────────────────────────────────────────────────────┤
+│ 3 · TRANSFORMATION  EntrepriseMapper                             │
+│     mapInsee / mapInpi / mapZealot / mapUi → EntrepriseModel     │
+├──────────────────────────────────────────────────────────────────┤
+│ 2 · ACQUISITION    API EntrepriseInsee / Inpi / Zealot / UI      │
+│     + CSV · JSON ·                                               │
+├──────────────────────────────────────────────────────────────────┤
+│ 1 · SÉCURITÉ        CredentialsStore(encryption=NoEncryption())  │
+│     AuthProvider → ApiKeyAuth / BearerAuth                       │
+│     EncryptionProvider → NoEncryption | FernetEncryption         │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+
 ## structure
 
 - [main.py](/Orbis/main.py).py
 - [main2.py](/Orbis/main2.py).py
+- main6_light.py
+- acquisition\
+  - sources.py
+- cli\
+  - __init__.py
+  - menu.py
+  - presentation.py
+  - menus\
+    - __init__.py
+    - ban.py
+    - credentials.py
+    - inpi.py
+    - insee.py
+    - omdb.py
+    - openlibrary.py
+    - personne.py
+    - poligraph.py
+- core\
+  - __init__.py
+  - json_store.py
+- persistence\
+  - conflict_log.py
+  - db.py
+  - models.py
+  - repository.py
+  - siren_guard.py
 - services\
   - services\api\
-    - [__init__.py](/Orbis/services/api/__init__.py) 
+    - [__init__.py](/Orbis/services/api/__init__.py)
+    - BanClient.py
+    - BaseApiClient.py
     - [inpi_client.py](/Orbis/services/api/inpi_client.py)
     - [insee_client.py](/Orbis/services/api/insee_client.py)
+    - OmdbClient.py
+    - OpenLibraryClient.py
+    - poligraph_client.py
     - [personne_client.py](/Orbis/services/api/personne_client.py)
+    - referentiels.py
   - services\auth\
     - [__init__.py](/Orbis/services/auth/__init__.py) 
     - [ApiKeyAuth.py](/Orbis/services/auth/ApiKeyAuth.py)
     - [AuthProvider.py](/Orbis/services/auth/AuthProvider.py)
     - [BearerAuth.py](/Orbis/services/auth/BearerAuth.py)
     - [CredentialsStore.py](/Orbis/services/auth/CredentialsStore.py)
+- transformation/
+  - mapper.py
 
 ----
 ## Travaux
 - simplification des fichiers
-- harmonisation credentials et auth
-
+  - séparer chaque menu en fichiers de commande
+- mise a jour documentation
 
 
 ## services\api\
 Le notes d'implémentation à reprendre vers api et ou métiers
 - [insee_note.md](/Orbis/services/api/insee_note.md)
-
+- poligraph en cours
 ----
 
 
