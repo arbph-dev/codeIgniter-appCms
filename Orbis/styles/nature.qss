@@ -1,0 +1,21 @@
+/* Thème nature */
+
+@background: #eef1ed;
+@header: #173b2b;
+@sidebar: #1d4d38;
+@card: #ffffff;
+@input: #ffffff;
+@button: #dfe6df;
+
+@text: #17231b;
+@mutedText: #68766d;
+@border: #c8d2c9;
+
+@hover: #d8e5da;
+@selected: #2f6b4f;
+@selectedText: #ffffff;
+@pressed: #b8cfbd;
+
+@accent: #8caf72;
+@accentHover: #769d5d;
+@accentText: #ffffff;

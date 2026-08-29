@@ -1,1 +1,21 @@
+/* Thème marine */
 
+@background: #f4f7f9;
+@header: #06283d;
+@sidebar: #073b4c;
+@card: #ffffff;
+@input: #ffffff;
+@button: #e8eef2;
+
+@text: #102a43;
+@mutedText: #829ab1;
+@border: #d9e2ec;
+
+@hover: #d9edf2;
+@selected: #0b5368;
+@selectedText: #ffffff;
+@pressed: #b8d8df;
+
+@accent: #d4a72c;
+@accentHover: #b98b1e;
+@accentText: #ffffff;
