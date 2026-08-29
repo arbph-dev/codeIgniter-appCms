@@ -1,3 +1,23 @@
+
+
+
+# A documenter
+sys
+os
+pathlib / Path
+__file__
+
+
+```python
+from pathlib import Path
+import sys
+
+BASE_DIR = Path(__file__).resolve().parent
+STYLES_DIR = BASE_DIR / "styles"
+```
+
+
+
 # Manipulation de fichier
 
 ## compilation de fichiers
