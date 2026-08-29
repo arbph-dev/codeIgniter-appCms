@@ -1,0 +1,82 @@
+{
+  "_meta": {
+    "source": "zealot_org",
+    "endpoint": "list",
+    "params": {
+      "q": "aise",
+      "type_id": null,
+      "page": 1,
+      "per_page": 20
+    },
+    "timestamp": "2026-08-29T18:17:34",
+    "saved_at": "2026-08-29 18:17:34"
+  },
+  "data": {
+    "status": 200,
+    "message": "OK",
+    "data": [
+      {
+        "id": "10",
+        "nom": "a l'aise breizh",
+        "slug": null,
+        "organisation_type_id": "1",
+        "description": null,
+        "detail": null,
+        "site_web": null,
+        "urlreg": null,
+        "email": null,
+        "telephone": null,
+        "lien_facebook": null,
+        "lien_instagram": null,
+        "lien_linkedin": null,
+        "adresse_id": null,
+        "logo_id": null,
+        "cover_id": null,
+        "siren": null,
+        "tva_intracom": null,
+        "actif": "1",
+        "rna": null,
+        "date_creation": null,
+        "date_dissolution": null,
+        "created_at": null,
+        "updated_at": null,
+        "deleted_at": null,
+        "type_label": "Entreprise"
+      },
+      {
+        "id": "128",
+        "nom": "Armée française",
+        "slug": "armee-fr",
+        "organisation_type_id": "8",
+        "description": null,
+        "detail": null,
+        "site_web": null,
+        "urlreg": null,
+        "email": null,
+        "telephone": null,
+        "lien_facebook": null,
+        "lien_instagram": null,
+        "lien_linkedin": null,
+        "adresse_id": null,
+        "logo_id": null,
+        "cover_id": null,
+        "siren": null,
+        "tva_intracom": null,
+        "actif": "1",
+        "rna": null,
+        "date_creation": null,
+        "date_dissolution": null,
+        "created_at": null,
+        "updated_at": null,
+        "deleted_at": null,
+        "type_label": "Armée"
+      }
+    ],
+    "pager": {
+      "currentPage": 1,
+      "perPage": 20,
+      "total": 2,
+      "pageCount": 1
+    }
+  }
+}
