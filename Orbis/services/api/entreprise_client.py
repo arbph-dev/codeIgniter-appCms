@@ -198,3 +198,17 @@ class EntrepriseClient(BaseApiClient):
         """DELETE /entreprise/:id (soft delete via org mère)."""
         result = self._request("DELETE", f"/entreprise/{id_}")
         return result is not None
+    
+
+    def attach_to_organisation(self, org_id: int, **kwargs) -> Optional[dict]:
+        """
+        POST /organisation/:id/entreprise
+        Rattache une extension entreprise à une organisation existante.
+        Ne crée PAS une nouvelle org.
+
+        kwargs : siren, siret, adresse_id, codenaf_id, forme_juridique_id,
+                 capital, effectif_min, effectif_max, …
+        """
+        data = self.post(f"/organisation/{org_id}/entreprise", kwargs)
+        self._save(data, "attach", {"org_id": org_id, **kwargs})
+        return (data or {}).get("data")
