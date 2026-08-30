@@ -33,4 +33,10 @@ class Services extends BaseService
     {
         return static::getSharedInstance('relation', $getShared) ?? new \App\Services\RelationService();
     }
+
+    public static function entreprise(bool $getShared = true) : EntrepriseService
+    {
+        return static::getSharedInstance('entreprise', $getShared) ?? new \App\Services\EntrepriseService();
+    }
+    
 }
