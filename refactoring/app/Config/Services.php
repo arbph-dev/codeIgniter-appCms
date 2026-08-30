@@ -19,24 +19,22 @@ use CodeIgniter\Config\BaseService;
  */
 class Services extends BaseService
 {
-    /*
-     * public static function example($getShared = true)
-     * {
-     *     if ($getShared) {
-     *         return static::getSharedInstance('example');
-     *     }
-     *
-     *     return new \CodeIgniter\Example();
-     * }
-     */
     public static function relation(bool $getShared = true): RelationService
     {
-        return static::getSharedInstance('relation', $getShared) ?? new \App\Services\RelationService();
+        if ($getShared) { return static::getSharedInstance('relation'); }
+        return new \App\Services\RelationService();
     }
 
-    public static function entreprise(bool $getShared = true) : EntrepriseService
+    public static function personne(bool $getShared = true): PersonneService
     {
-        return static::getSharedInstance('entreprise', $getShared) ?? new \App\Services\EntrepriseService();
+        if ($getShared) { return static::getSharedInstance('personne'); }
+        return new \App\Services\PersonneService();
+    }
+
+    public static function entreprise(bool $getShared = true)
+    {
+        if ($getShared) { return static::getSharedInstance('entreprise'); }
+        return new \App\Services\EntrepriseService();
     }
     
 }
