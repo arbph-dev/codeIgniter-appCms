@@ -3,19 +3,23 @@ ORBIS — main.py  V0.8
 Entrée CLI mince. Les menus métier sont dans cli/menus/.
 """
 import sys
-from rich.console import Console
-from rich.panel   import Panel
+from rich.console           import Console
+from rich.panel             import Panel
 
-from cli.menu          import menu
+from cli.menu               import menu
 
-from cli.menus.insee   import menu_insee
-from cli.menus.inpi  import menu_inpi
-from cli.menus.personne import menu_personne
-from cli.menus.omdb import menu_omdb
-from cli.menus.openlibrary import menu_openlibrary
-from cli.menus.poligraph import menu_poligraph
-from cli.menus.ban import menu_ban
-from cli.menus.credentials import menu_credentials
+from cli.menus.insee        import menu_insee
+from cli.menus.inpi         import menu_inpi
+from cli.menus.personne     import menu_personne
+from cli.menus.omdb         import menu_omdb
+from cli.menus.openlibrary  import menu_openlibrary
+from cli.menus.poligraph    import menu_poligraph
+from cli.menus.ban          import menu_ban
+from cli.menus.credentials  import menu_credentials
+from cli.menus.entreprise   import menu_entreprise
+from cli.menus.organisation import menu_organisation
+
+from cli.menus.layer5       import menu_layer5
 
 console = Console()
 
@@ -28,17 +32,23 @@ MENU_PRINCIPAL = [
     "Poligraph",
     "Adresses BAN",
     "Credentials",
+    "Entreprises (zealot)",
+    "Organisations (zealot)",
+    "Couche 5 — Enrichissement",
 ]
 
 HANDLERS = {
-    "1": menu_insee,
-    "2": menu_inpi,
-    "3": menu_personne,
-    "4": menu_omdb,
-    "5": menu_openlibrary,
-    "6": menu_poligraph,
-    "7": menu_ban,
-    "8": menu_credentials,
+    "1"     : menu_insee,
+    "2"     : menu_inpi,
+    "3"     : menu_personne,
+    "4"     : menu_omdb,
+    "5"     : menu_openlibrary,
+    "6"     : menu_poligraph,
+    "7"     : menu_ban,
+    "8"     : menu_credentials,
+    "9"     : menu_entreprise,
+    "10"    : menu_organisation,
+    "11"    : menu_layer5,   # ajuster le numéro
 }
 
 
