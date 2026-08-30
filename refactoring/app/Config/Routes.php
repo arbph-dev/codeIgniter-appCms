@@ -186,6 +186,8 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
 
  
     // Organisation
+    $routes->post  ('organisation/(:num)/entreprise', 'Entreprise::attach/$1');	// Sous-ressource AVANT les routes paramétrées génériques
+	
     $routes->get   ('organisation',        'Organisation::index');
     $routes->get   ('organisation/like',   'Organisation::like');
     $routes->get   ('organisation/(:num)', 'Organisation::show/$1');
