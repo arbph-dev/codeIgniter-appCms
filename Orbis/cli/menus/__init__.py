@@ -7,6 +7,10 @@ from .openlibrary   import menu_openlibrary
 from .poligraph     import menu_poligraph
 from .ban           import menu_ban
 from .credentials   import menu_credentials
+from .organisation  import menu_organisation
+from .entreprise    import menu_entreprise
+
+from .layer5        import menu_layer5
 
 __all__ = [
     "menu_insee",
@@ -17,4 +21,7 @@ __all__ = [
     "menu_poligraph",
     "menu_ban",
     "menu_credentials",
+    "menu_organisation",
+    "menu_entreprise",
+    "menu_layer5",
 ]
