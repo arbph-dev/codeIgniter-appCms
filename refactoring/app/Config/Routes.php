@@ -203,6 +203,15 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
     $routes->put   ('entreprise/(:num)', 'Entreprise::update/$1');
     $routes->delete('entreprise/(:num)', 'Entreprise::delete/$1');
 
+	$routes->get   ('etablissement/like'					, 'Api\Etablissement::like');
+	$routes->get   ('organisation/(:num)/etablissements'	, 'Api\Etablissement::byOrganisation/$1');
+	$routes->post  ('organisation/(:num)/etablissement'		, 'Api\Etablissement::siege/$1');
+	$routes->get   ('etablissement'							, 'Api\Etablissement::index');
+	$routes->get   ('etablissement/(:num)'					, 'Api\Etablissement::show/$1');
+	$routes->post  ('etablissement'							, 'Api\Etablissement::create');
+	$routes->put   ('etablissement/(:num)'					, 'Api\Etablissement::update/$1');
+	$routes->delete('etablissement/(:num)'					, 'Api\Etablissement::delete/$1');
+
 
     // Debug
     $routes->get('ping',  'Ping::getIndex');
