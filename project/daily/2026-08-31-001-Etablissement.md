@@ -3,7 +3,7 @@
 # Domaine Organisation
 ajout des etablissments, table deja créé
 - création du model [EtablissementModel.php](/refactoring/app/Models/EtablissementModel.php)
-- création du controller [Etablissement.php](/refactoring/app/Controllers/Etablissement.php)
+- création du controller [Etablissement.php](/refactoring/app/Controllers/Api/Etablissement.php)
 - 8 routes à déclarer
 
 ```php
