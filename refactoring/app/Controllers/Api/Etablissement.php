@@ -9,7 +9,7 @@
 //   PUT    etablissement/(:num)                      → update/$1
 //   DELETE etablissement/(:num)                      → delete/$1
 //   GET    organisation/(:num)/etablissements        → byOrganisation/$1
-//   POST   organisation/(:num)/etablissement         → siege/$1   (ensureSiege via service)
+//   POST   organisation/(:num)/etablissement         → siege/$1
 
 namespace App\Controllers\Api;
 
@@ -33,7 +33,7 @@ class Etablissement extends ResourceController
     // ?org=     filtre organisation_id
     // ?siege=1  filtre is_siege
     // ?actif=1  filtre actif
-    // ?page= &per_page=
+    // ?page=  &per_page=
 
     public function index()
     {
@@ -72,7 +72,10 @@ class Etablissement extends ResourceController
             ->orderBy('etablissements.nom',      'ASC')
             ->paginate($perPage, 'default', $page);
 
-        return $this->apiOk($data, $model->pager);
+        return $this->apiOk(
+            EtablissementModel::enrichAll($data),
+            $model->pager
+        );
     }
 
     // ── GET /api/etablissement/:id ──────────────────────────────────────
@@ -80,21 +83,22 @@ class Etablissement extends ResourceController
     public function show($id = null)
     {
         $item = $this->getModel()->withRelations()->find((int) $id);
+
         return $item
-            ? $this->apiOk($item)
+            ? $this->apiOk(EtablissementModel::enrich($item))
             : $this->apiNotFound("Établissement #{$id} introuvable.");
     }
 
     // ── POST /api/etablissement ─────────────────────────────────────────
     // Création directe d'un établissement (pas nécessairement un siège).
-    // Pour un siège, préférer POST /organisation/:id/etablissement.
+    // Pour créer / mettre à jour un siège, utiliser POST /organisation/:id/etablissement.
 
     public function create()
     {
         $body  = $this->request->getJSON(true) ?? [];
         $model = $this->getModel();
 
-        // Dériver le NIC depuis le SIRET si absent
+        // NIC dérivé automatiquement du SIRET si absent
         if (empty($body['nic']) && ! empty($body['siret'])) {
             $siret = preg_replace('/\D/', '', (string) $body['siret']);
             if (strlen($siret) === 14) {
@@ -108,8 +112,10 @@ class Etablissement extends ResourceController
             return $this->apiValidationError($model->errors());
         }
 
+        $created = $this->getModel()->withRelations()->find($id);
+
         return $this->apiCreated(
-            $this->getModel()->withRelations()->find($id),
+            EtablissementModel::enrich($created),
             'Établissement créé.'
         );
     }
@@ -119,6 +125,7 @@ class Etablissement extends ResourceController
     public function update($id = null)
     {
         $model = $this->getModel();
+
         if (! $model->find((int) $id)) {
             return $this->apiNotFound("Établissement #{$id} introuvable.");
         }
@@ -138,18 +145,24 @@ class Etablissement extends ResourceController
             return $this->apiValidationError($model->errors());
         }
 
+        $updated = $this->getModel()->withRelations()->find((int) $id);
+
         return $this->apiOk(
-            $this->getModel()->withRelations()->find((int) $id),
+            EtablissementModel::enrich($updated),
             null,
             "Établissement #{$id} mis à jour."
         );
     }
 
     // ── DELETE /api/etablissement/:id ───────────────────────────────────
+    // Hard delete (pas de deleted_at pour l'instant — priorité basse).
+    // Si tu ajoutes le soft delete : activer $useSoftDeletes dans le model,
+    // ajouter la colonne deleted_at, et supprimer ce commentaire.
 
     public function delete($id = null)
     {
         $model = $this->getModel();
+
         if (! $model->find((int) $id)) {
             return $this->apiNotFound("Établissement #{$id} introuvable.");
         }
@@ -169,6 +182,7 @@ class Etablissement extends ResourceController
             return $this->apiOk([]);
         }
 
+        // suggest() retourne id+siret+nom+organisation_nom : pas d'adresse → pas d'enrich
         return $this->apiOk($this->getModel()->suggest($q, $len));
     }
 
@@ -177,17 +191,14 @@ class Etablissement extends ResourceController
 
     public function byOrganisation($orgId = null)
     {
-        $data = $this->getModel()->byOrganisation((int) $orgId);
-        return $this->apiOk($data);
+        $rows = $this->getModel()->byOrganisation((int) $orgId);
+
+        return $this->apiOk(EtablissementModel::enrichAll($rows));
     }
 
     // ── POST /api/organisation/:orgId/etablissement ─────────────────────
-    // Crée ou met à jour le siège d'une organisation via EntrepriseService.
+    // Crée ou met à jour le siège social via EntrepriseService::ensureSiege().
     // Corps attendu : siret (obligatoire), adresse_id?, nom?, siren?
-    //
-    // Peut aussi être appelé pour un établissement secondaire — dans ce cas
-    // passer is_siege=false et utiliser le create() standard, mais la route
-    // /organisation/:id/etablissement cible conventionnellement le siège.
 
     public function siege($orgId = null)
     {
@@ -198,7 +209,7 @@ class Etablissement extends ResourceController
         }
 
         try {
-            $result = service('entreprise')->ensureSiege(
+            $raw = service('entreprise')->ensureSiege(
                 (int) $orgId,
                 (string) $body['siret'],
                 isset($body['adresse_id']) ? (int) $body['adresse_id'] : null,
@@ -206,7 +217,13 @@ class Etablissement extends ResourceController
                 $body['siren'] ?? null
             );
 
-            return $this->apiCreated($result, 'Siège créé / mis à jour.');
+            // ensureSiege() retourne find() sans join : on refetch avec withRelations()
+            $full = $this->getModel()->withRelations()->find((int) $raw['id']);
+
+            return $this->apiCreated(
+                EtablissementModel::enrich($full),
+                'Siège créé / mis à jour.'
+            );
         } catch (\InvalidArgumentException $e) {
             return $this->apiError($e->getMessage(), 422);
         } catch (\RuntimeException $e) {
