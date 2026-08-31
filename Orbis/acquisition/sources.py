@@ -48,13 +48,31 @@ class EntrepriseInsee:
         periodes = data.get("periodesUniteLegale", [{}])
         p        = periodes[0] if periodes else {}
         siren    = data.get("siren", "")
-        nic      = p.get("nicSiegeUniteLegale")
+        # 2026-08-31-004 - nic      = p.get("nicSiegeUniteLegale")
+        nic      = p.get("nicSiegeUniteLegale") or data.get("nicSiegeUniteLegale")
+        
+        # 2026-08-31-004 + -----------------------------------------------------------------
+        # INSEE envoie "O" / "N" (chaîne), alors que la colonne SQLAlchemy est un Boolean.
+        ess = p.get("economieSocialeSolidaireUniteLegale")
+        if ess is None:
+            ess = data.get("economieSocialeSolidaireUniteLegale")
+        # INSEE : "O" / "N" / True / False
+        if isinstance(ess, str):
+            ess_bool = ess.upper() in ("O", "1", "TRUE", "OUI")
+        elif isinstance(ess, bool):
+            ess_bool = ess
+        else:
+            ess_bool = None
+        # --------------------------------------------------------------------------------
+
         return cls(
             siren            = siren,
             denomination     = p.get("denominationUniteLegale"),
-            sigle            = data.get("sigleUniteLegale"),
+            # 2026-08-31-004 - sigle            = data.get("sigleUniteLegale"),
+            sigle            = p.get("sigleUniteLegale") or data.get("sigleUniteLegale"),
             naf              = p.get("activitePrincipaleUniteLegale"),
-            naf_naf25        = data.get("activitePrincipaleNAF25UniteLegale"),
+            # 2026-08-31-004 - naf_naf25        = data.get("activitePrincipaleNAF25UniteLegale"),
+            naf_naf25        = p.get("activitePrincipaleNAF25UniteLegale") or data.get("activitePrincipaleNAF25UniteLegale"),
             categorie        = data.get("categorieEntreprise"),
             etat             = p.get("etatAdministratifUniteLegale"),
             forme_juridique  = p.get("categorieJuridiqueUniteLegale"),
@@ -62,7 +80,8 @@ class EntrepriseInsee:
             tranche_effectif = data.get("trancheEffectifsUniteLegale"),
             nic_siege        = nic,
             siret_siege      = siren + nic if siren and nic else None,
-            economie_sociale = p.get("economieSocialeSolidaireUniteLegale"),
+            # 2026-08-31-004 - economie_sociale = p.get("economieSocialeSolidaireUniteLegale"),
+            economie_sociale = ess_bool,  # ← bool | None, plus "N"
             statut_diffusion = data.get("statutDiffusionUniteLegale"),
         )
 
@@ -376,38 +395,183 @@ class OuvrageOpenLibrary:
 
 
 # ═══════════════════════════════════════════════════════════════════
+# zealot.fr — Organisation / Entreprise
+# ═══════════════════════════════════════════════════════════════════
+
+
+def _as_int(v) -> Optional[int]:
+    if v is None or v == "":
+        return None
+    try:
+        return int(v)
+    except (TypeError, ValueError):
+        return None
+
+
+def _as_float(v) -> Optional[float]:
+    if v is None or v == "":
+        return None
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return None
+
+
+def _as_bool(v) -> Optional[bool]:
+    if v is None or v == "":
+        return None
+    if isinstance(v, bool):
+        return v
+    return v in (1, "1", "true", "True")
+
+
+@dataclass
+class OrganisationZealot:
+    """
+    Organisation issue de l'API zealot.fr.
+    Source : GET /organisation  ou  /organisation/{id}
+
+    Sample liste : zealot_org_list_*.json
+    """
+    id:                   int
+    nom:                  Optional[str] = None
+    slug:                 Optional[str] = None
+    organisation_type_id: Optional[int] = None
+    type_label:           Optional[str] = None
+    description:          Optional[str] = None
+    detail:               Optional[str] = None
+    site_web:             Optional[str] = None
+    urlreg:               Optional[str] = None
+    email:                Optional[str] = None
+    telephone:            Optional[str] = None
+    siren:                Optional[str] = None
+    tva_intracom:         Optional[str] = None
+    rna:                  Optional[str] = None
+    adresse_id:           Optional[int] = None
+    logo_id:              Optional[int] = None
+    cover_id:             Optional[int] = None
+    actif:                Optional[bool] = None
+    date_creation:        Optional[str] = None
+    date_dissolution:     Optional[str] = None
+
+    @classmethod
+    def from_api(cls, data: dict) -> "OrganisationZealot":
+        return cls(
+            id                   = int(data["id"]),
+            nom                  = data.get("nom"),
+            slug                 = data.get("slug"),
+            organisation_type_id = _as_int(data.get("organisation_type_id")),
+            type_label           = data.get("type_label"),
+            description          = data.get("description"),
+            detail               = data.get("detail"),
+            site_web             = data.get("site_web"),
+            urlreg               = data.get("urlreg"),
+            email                = data.get("email"),
+            telephone            = data.get("telephone"),
+            siren                = (data.get("siren") or None) or None,
+            tva_intracom         = data.get("tva_intracom"),
+            rna                  = data.get("rna"),
+            adresse_id           = _as_int(data.get("adresse_id")),
+            logo_id              = _as_int(data.get("logo_id")),
+            cover_id             = _as_int(data.get("cover_id")),
+            actif                = _as_bool(data.get("actif")),
+            date_creation        = data.get("date_creation"),
+            date_dissolution     = data.get("date_dissolution"),
+        )
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+
+def organisations_from_list_response(payload: dict) -> list[OrganisationZealot]:
+    """payload = corps JSON { status, data: [...], pager|meta }."""
+    items = payload.get("data")
+    if isinstance(items, dict):
+        # parfois data encapsule encore data[]
+        items = items.get("data") or []
+    if not isinstance(items, list):
+        return []
+    return [OrganisationZealot.from_api(x) for x in items]
+
+# ═══════════════════════════════════════════════════════════════════
 # zealot.fr — Organisation / Entreprise  (skeleton)
 # ═══════════════════════════════════════════════════════════════════
 
 @dataclass
 class EntrepriseZealot:
     """
-    Organisation/Entreprise issue de zealot.fr.
-    Source : GET /organisations/{id}  ou  /organisations?q=…
+    Payload API GET /entreprise et GET /entreprise/:id (withRelations).
 
-    Skeleton — sera affiné à réception du JSON sample.
-    Cas d'usage principal : réconciliation Organisation ↔ EntrepriseInsee
-    (des organisations ont été créées sans SIREN associé).
+    Table entreprises  + champs organisation jointés + libellés référentiels.
+    Optionnel : siège si le Service l'ajoute (clé "siege").
     """
-    id_zealot:    int
-    siren:        Optional[str]         # peut être null si non rapproché
-    nom:          Optional[str]         # denomination dans zealot
-    slug:         Optional[str]
-    tags:         list  = field(default_factory=list)
+    # ── entreprise (table) ──────────────────────────────────────────
+    id:                 int
+    organisation_id:    int
+    codenaf_id:         Optional[str] = None
+    forme_juridique_id: Optional[str] = None   # code 4 chiffres
+    capital:            Optional[float] = None
+    effectif_min:       Optional[int] = None
+    effectif_max:       Optional[int] = None
+
+    # ── organisation (jointure) ─────────────────────────────────────
+    nom:                  Optional[str] = None
+    slug:                 Optional[str] = None
+    siren:                Optional[str] = None
+    site_web:             Optional[str] = None
+    urlreg:               Optional[str] = None
+    email:                Optional[str] = None
+    telephone:            Optional[str] = None
+    description:          Optional[str] = None
+    lien_facebook:        Optional[str] = None
+    lien_instagram:       Optional[str] = None
+    lien_linkedin:        Optional[str] = None
+    adresse_id:           Optional[int] = None
+    logo_id:              Optional[int] = None
+    cover_id:             Optional[int] = None
+    organisation_type_id: Optional[int] = None
+
+    # ── libellés ────────────────────────────────────────────────────
+    type_label:           Optional[str] = None
+    codenaf_nom:          Optional[str] = None
+    forme_juridique_nom:  Optional[str] = None
+
+    # ── siège (loadFull) ────────────────────────────────────────────
+    siege:                Optional[dict] = None   # brut pour l'instant
 
     @classmethod
     def from_api(cls, data: dict) -> "EntrepriseZealot":
         return cls(
-            id_zealot = data.get("id"),
-            siren     = data.get("siren"),
-            nom       = data.get("nom") or data.get("denomination"),
-            slug      = data.get("slug"),
-            tags      = data.get("tags", []),
+            id                 = int(data["id"]),
+            organisation_id    = int(data["organisation_id"]),
+            codenaf_id         = data.get("codenaf_id"),
+            forme_juridique_id = data.get("forme_juridique_id"),
+            capital            = _as_float(data.get("capital")),
+            effectif_min       = _as_int(data.get("effectif_min")),
+            effectif_max       = _as_int(data.get("effectif_max")),
+            nom                = data.get("nom") or data.get("denomination"),
+            slug               = data.get("slug"),
+            siren              = data.get("siren") or None,
+            site_web           = data.get("site_web"),
+            urlreg             = data.get("urlreg"),
+            email              = data.get("email"),
+            telephone          = data.get("telephone"),
+            description        = data.get("description"),
+            lien_facebook      = data.get("lien_facebook"),
+            lien_instagram     = data.get("lien_instagram"),
+            lien_linkedin      = data.get("lien_linkedin"),
+            adresse_id         = _as_int(data.get("adresse_id")),
+            logo_id            = _as_int(data.get("logo_id")),
+            cover_id           = _as_int(data.get("cover_id")),
+            organisation_type_id = _as_int(data.get("organisation_type_id")),
+            type_label           = data.get("type_label"),
+            codenaf_nom          = data.get("codenaf_nom"),
+            forme_juridique_nom  = data.get("forme_juridique_nom"),
+            siege                = data.get("siege"),
         )
 
     def to_dict(self) -> dict:
         return asdict(self)
-
 
 # ═══════════════════════════════════════════════════════════════════
 # Saisie UI  (formulaire desktop / web)
