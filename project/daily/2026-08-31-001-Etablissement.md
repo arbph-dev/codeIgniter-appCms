@@ -1,5 +1,3 @@
-2026-08-31-001-Etablissement
-
 
 
 # Domaine Organisation
