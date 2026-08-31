@@ -12,6 +12,11 @@ class EtablissementModel extends Model
     protected $returnType = 'array';
     protected $useTimestamps = true;
 
+    // ── Soft delete (priorité basse) ───────────────────────────────────
+    // Décommenter + ajouter la colonne deleted_at si besoin :
+    // protected $useSoftDeletes = true;
+    // protected $deletedField   = 'deleted_at';
+
     protected $allowedFields = [
         'organisation_id', 'parent_id', 'code',
         'telephone', 'email',
@@ -44,28 +49,44 @@ class EtablissementModel extends Model
 
     // ── Vue enrichie ───────────────────────────────────────────────────
     /**
-     * Joins : organisation, adresses.
-     * Adapte les colonnes de `adresses` à ton schéma si nécessaire.
+     * Joints :
+     *   organisations            → organisation_nom, siren
+     *   adresses                 → champs bruts pour formatLigne4
+     *   type_voies (via adresse) → voietype_nom
+     *   codes_postaux (via adresse) → cp_codepostal, cp_commune
+     *
+     * Note : vérifie que tes FK dans `adresses` s'appellent bien
+     *   adresses.voietype_id  et  adresses.code_postal_id
+     * (noms habituels dans ton schéma, à ajuster si différent).
+     *
+     * Pays : non présent dans le schéma actuel — décommenter le select
+     *   et ajouter la colonne quand ce sera fait.
      */
     public function withRelations(): static
     {
         return $this
             ->select('
                 etablissements.*,
-                o.nom            AS organisation_nom,
+                o.nom                AS organisation_nom,
                 o.siren,
-                a.libelle        AS adresse_libelle,
-                a.code_postal,
-                a.ville,
-                a.pays
+                a.voienumero,
+                a.voierpt,
+                a.voiecharniere,
+                a.voienom,
+                tv.nom               AS voietype_nom,
+                cp.codepostal        AS cp_codepostal,
+                cp.commune           AS cp_commune
             ')
-            ->join('organisations o', 'o.id = etablissements.organisation_id', 'left')
-            ->join('adresses       a', 'a.id = etablissements.adresse_id',      'left');
+            ->join('organisations   o',  'o.id  = etablissements.organisation_id', 'left')
+            ->join('adresses        a',  'a.id  = etablissements.adresse_id',       'left')
+            ->join('type_voies      tv', 'tv.id = a.voietype_id',                   'left')
+            ->join('codes_postaux   cp', 'cp.id = a.code_postal_id',                'left');
     }
 
     // ── Tous les établissements d'une organisation ─────────────────────
     /**
-     * Retourne siège en premier, puis par nom.
+     * Retourne les lignes brutes (withRelations).
+     * L'enrichissement ligne4 est délégué au controller via enrichAll().
      */
     public function byOrganisation(int $orgId): array
     {
@@ -91,5 +112,28 @@ class EtablissementModel extends Model
             ->orderBy('etablissements.nom', 'ASC')
             ->limit($len)
             ->find();
+    }
+
+    // ── Enrichissement ligne4 ──────────────────────────────────────────
+    /**
+     * Ajoute la clé `ligne4` (adresse formatée) sur un enregistrement.
+     * Délègue à AdresseModel::formatLigne4() pour cohérence.
+     *
+     * Utilisable sur tout tableau issu de withRelations() :
+     *   $row = EtablissementModel::enrich($row);
+     */
+    public static function enrich(array $row): array
+    {
+        $row['ligne4'] = AdresseModel::formatLigne4($row);
+        return $row;
+    }
+
+    /**
+     * Version tableau : applique enrich() sur chaque élément.
+     *   $rows = EtablissementModel::enrichAll($rows);
+     */
+    public static function enrichAll(array $rows): array
+    {
+        return array_map([self::class, 'enrich'], $rows);
     }
 }
