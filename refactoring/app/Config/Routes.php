@@ -185,27 +185,26 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes) 
     $routes->delete('adresse/(:num)', 'Adresse::delete/$1');
 
  
+    // relation domaine Organisation
+    $routes->post  ('organisation/(:num)/entreprise'		, 'Entreprise::attach/$1');	// Sous-ressource AVANT les routes paramétrées génériques
+	$routes->get   ('organisation/(:num)/etablissements'	, 'Api\Etablissement::byOrganisation/$1');
+	$routes->post  ('organisation/(:num)/etablissement'		, 'Api\Etablissement::siege/$1');
     // Organisation
-    $routes->post  ('organisation/(:num)/entreprise', 'Entreprise::attach/$1');	// Sous-ressource AVANT les routes paramétrées génériques
-	
-    $routes->get   ('organisation',        'Organisation::index');
-    $routes->get   ('organisation/like',   'Organisation::like');
+	$routes->get   ('organisation/like'						, 'Organisation::like');
+	$routes->get   ('organisation',        'Organisation::index');
     $routes->get   ('organisation/(:num)', 'Organisation::show/$1');
     $routes->post  ('organisation',        'Organisation::create');
     $routes->put   ('organisation/(:num)', 'Organisation::update/$1');
     $routes->delete('organisation/(:num)', 'Organisation::delete/$1');
-
     // Entreprise
+	$routes->get   ('entreprise/like',   'Entreprise::like');
     $routes->get   ('entreprise',        'Entreprise::index');
-    $routes->get   ('entreprise/like',   'Entreprise::like');
     $routes->get   ('entreprise/(:num)', 'Entreprise::show/$1');
     $routes->post  ('entreprise',        'Entreprise::create');
     $routes->put   ('entreprise/(:num)', 'Entreprise::update/$1');
     $routes->delete('entreprise/(:num)', 'Entreprise::delete/$1');
-
+	// Etablissement
 	$routes->get   ('etablissement/like'					, 'Api\Etablissement::like');
-	$routes->get   ('organisation/(:num)/etablissements'	, 'Api\Etablissement::byOrganisation/$1');
-	$routes->post  ('organisation/(:num)/etablissement'		, 'Api\Etablissement::siege/$1');
 	$routes->get   ('etablissement'							, 'Api\Etablissement::index');
 	$routes->get   ('etablissement/(:num)'					, 'Api\Etablissement::show/$1');
 	$routes->post  ('etablissement'							, 'Api\Etablissement::create');
