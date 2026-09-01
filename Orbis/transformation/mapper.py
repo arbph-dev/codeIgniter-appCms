@@ -30,6 +30,7 @@ from typing import Optional
 from acquisition.sources import (
     EntrepriseInsee,
     EntrepriseInpi,
+    OrganisationZealot,
     EntrepriseZealot,
     EntrepriseUI,
 )
@@ -49,6 +50,11 @@ class EntrepriseMapper:
         Couvre : denomination, sigle, NAF, catégorie, état, forme juridique,
                  siège, effectif, date de création, statut diffusion.
         """
+        # 2026-08-31-004 +
+        ess = src.economie_sociale
+        if isinstance(ess, str):
+            ess = ess.upper() in ("O", "1", "TRUE", "OUI")        
+        # --------------------------------------------------------------------------
         return EntrepriseModel(
             siren            = src.siren,
             denomination     = src.denomination,
@@ -61,7 +67,8 @@ class EntrepriseMapper:
             nic_siege        = src.nic_siege,
             siret_siege      = src.siret_siege,
             tranche_effectif = src.tranche_effectif,
-            economie_sociale = src.economie_sociale,
+            # 2026-08-31-004 - economie_sociale = src.economie_sociale,
+            economie_sociale = ess if isinstance(ess, bool) else None,
             date_creation    = src.date_creation,
             statut_diffusion = src.statut_diffusion,
             source           = "insee",
@@ -91,20 +98,35 @@ class EntrepriseMapper:
         )
 
     @staticmethod
-    def mapZealotToModel(src: EntrepriseZealot) -> EntrepriseModel:
+    def mapZealotOrgToModel(src: OrganisationZealot) -> EntrepriseModel:
         """
-        Organisation zealot.fr → EntrepriseModel.
-        Couvre : id_zealot, denomination (nom), siren si disponible.
-
-        Note : src.siren peut être None pour les organisations orphelines.
-        Dans ce cas siren="" — à rapprocher via reconcileZealot() ensuite.
+        Organisation zealot → EntrepriseModel (partiel).
+        siren peut être vide → à rapprocher via reconcileZealot().
         """
         return EntrepriseModel(
             siren        = src.siren or "",
             denomination = src.nom,
-            id_zealot    = src.id_zealot,
+            id_zealot    = src.id,
             source       = "zealot",
         )
+
+    @staticmethod
+    def mapZealotEntToModel(src: EntrepriseZealot) -> EntrepriseModel:
+        return EntrepriseModel(
+            siren           = src.siren or "",
+            denomination    = src.nom,
+            naf             = src.codenaf_id,
+            forme_juridique = src.forme_juridique_id,
+            capital         = src.capital,
+            siret_siege     = (src.siege or {}).get("siret") if src.siege else None,
+            id_zealot       = src.organisation_id,  # org id côté serveur
+            source          = "zealot",
+        )
+    
+    @staticmethod
+    def mapZealotToModel(src: OrganisationZealot) -> EntrepriseModel:
+        """Alias rétrocompatible : organisation = entrée principale layer5."""
+        return EntrepriseMapper.mapZealotOrgToModel(src)
 
     @staticmethod
     def mapUiToModel(src: EntrepriseUI) -> EntrepriseModel:
@@ -166,29 +188,19 @@ class EntrepriseMapper:
     # ──────────────────────────────────────────────────────────────
 
     @staticmethod
-    def reconcileZealot(
-        org:   EntrepriseZealot,
-        insee: EntrepriseInsee,
-    ) -> EntrepriseModel:
+    def reconcileZealot( org:   OrganisationZealot, insee: EntrepriseInsee, ) -> EntrepriseModel:
         """
-        Réconcilie une organisation zealot (sans SIREN) avec une fiche INSEE.
-
-        Usage : des organisations ont été créées dans zealot sans SIREN associé.
-        On retrouve l'entreprise INSEE par recherche, puis on rapproche.
-
-        Résultat : modèle INSEE (données métier complètes) + id_zealot zealot.
-        source = "insee+zealot"
-
-        Raises ValueError si org.siren est renseigné et différent de insee.siren.
+        Organisation zealot (souvent sans SIREN) + fiche INSEE.
+        → modèle INSEE complet + id_zealot.
         """
         if org.siren and org.siren != insee.siren:
             raise ValueError(
                 f"SIREN incompatibles : org={org.siren!r} ≠ insee={insee.siren!r}"
             )
 
-        model          = EntrepriseMapper.mapInseeToModel(insee)
-        model.id_zealot = org.id_zealot
-        model.source   = "insee+zealot"
+        model = EntrepriseMapper.mapInseeToModel(insee)
+        model.id_zealot = org.id
+        model.source = "insee+zealot"
         return model
 
     # ──────────────────────────────────────────────────────────────
@@ -196,10 +208,7 @@ class EntrepriseMapper:
     # ──────────────────────────────────────────────────────────────
 
     @staticmethod
-    def enrichFromInsee(
-        model: EntrepriseModel,
-        insee: EntrepriseInsee,
-    ) -> EntrepriseModel:
+    def enrichFromInsee( model: EntrepriseModel, insee: EntrepriseInsee,) -> EntrepriseModel:
         """
         Enrichit un modèle existant (ex: issu de zealot ou UI)
         avec les données INSEE.
