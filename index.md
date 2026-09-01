@@ -49,11 +49,11 @@ Projet en cours
 # [2026-08-30](/project/daily/2026-08-30.md)
 - Refactor Organisation Entreprises Etablissements pour Orbis
 - [Orbis / Couche 5 / definition](/project/daily/2026-08-30-001-Orbis.md)
-- [Orbis / Couche 5 / Étape 1](//project/daily/2026-08-30-002.md)
+- [Orbis / Couche 5 / Étape 1](/project/daily/2026-08-30-002.md)
 	- Orbis/Couche 5/etape1 — qualification / enrichissement (stub).
 
 
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-30-001-Orbis.md
+
 
 
 
