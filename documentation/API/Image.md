@@ -3,6 +3,8 @@
 
 ## images
 
+DESCRIBE images;
+
 | Field      | Type                                   | Null | Key | Default           | Extra                                         |
 | ---------- | -------------------------------------- | ---- | --- | ----------------- | --------------------------------------------- |
 | id         | int unsigned                           | NO   | PRI | _NULL_            | auto_increment                                |
@@ -19,8 +21,17 @@
 | created_at | timestamp                              | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED                             |
 | updated_at | timestamp                              | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
 
+SHOW INDEX FROM images
 
-```sql
+| Table  | Non_unique | Key_name   | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
+| ------ | ---------- | ---------- | ------------ | ----------- | --------- | ----------- | -------- | ------ | ---- | ---------- | ------- | ------------- | ------- | ---------- |
+| images | 0          | PRIMARY    | 1            | id          | A         | 813         | _NULL_   | _NULL_ |      | BTREE      |         |               | YES     | _NULL_     |
+| images | 0          | uk_path    | 1            | path        | A         | 813         | _NULL_   | _NULL_ |      | BTREE      |         |               | YES     | _NULL_     |
+| images | 1          | idx_user   | 1            | user_id     | A         | 1           | _NULL_   | _NULL_ |      | BTREE      |         |               | YES     | _NULL_     |
+| images | 1          | idx_status | 1            | status      | A         | 1           | _NULL_   | _NULL_ |      | BTREE      |         |               | YES     | _NULL_     |
+
+
+```
 -- Images / OBSOLETE
 CREATE TABLE images (
     id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -33,7 +44,11 @@ CREATE TABLE images (
     updated_at  DATETIME
 );
 ```
-## image_categories
+
+
+## image_categories - a créer
+- DESCRIBE image_categories;
+- SHOW INDEX FROM image_categories
 
 ```sql
 -- Classification hiérarchique images
@@ -45,8 +60,26 @@ CREATE TABLE image_categories (
 );
 ```
 
+
+
 ## mot_image
-```sql
+
+DESCRIBE mot_image;
+
+| Field    | Type         | Null | Key | Default | Extra |
+| -------- | ------------ | ---- | --- | ------- | ----- |
+| image_id | int unsigned | NO   | PRI | _NULL_  |       |
+| mot_id   | int          | NO   | PRI | _NULL_  |       |
+
+SHOW INDEX FROM mot_image
+
+| Table     | Non_unique | Key_name             | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
+| --------- | ---------- | -------------------- | ------------ | ----------- | --------- | ----------- | -------- | ------ | ---- | ---------- | ------- | ------------- | ------- | ---------- |
+| image_mot | 0          | PRIMARY              | 1            | image_id    | A         | 19          | _NULL_   | _NULL_ |      | BTREE      |         |               | YES     | _NULL_     |
+| image_mot | 0          | PRIMARY              | 2            | mot_id      | A         | 42          | _NULL_   | _NULL_ |      | BTREE      |         |               | YES     | _NULL_     |
+| image_mot | 1          | idx_image_mot_mot_id | 1            | mot_id      | A         | 34          | _NULL_   | _NULL_ |      | BTREE      |         |               | YES     | _NULL_     |
+
+```
 -- Pivot mot ↔ image
 CREATE TABLE mot_image (
     mot_id      INT UNSIGNED,
