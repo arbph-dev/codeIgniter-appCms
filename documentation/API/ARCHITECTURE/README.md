@@ -88,6 +88,38 @@ Tout modèle qui participe à une API doit avoir `$returnType` configuré sur so
 
 ---
 
+
+### Types de données
+
+Equivalence type Python / JSON (JavaScript)
+
+|Python|JSON|
+|---|---|
+|dict|Object|
+|list|Array|
+|tuple|Array|
+|str|String|
+|int|Number|
+|float|Number|
+|True|true|
+|False|false|
+|None|null|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Versioning
 
 Non traité dans les documents existants — à définir. Recommandation minimale : préfixe `/api/v1/` sur les nouvelles routes, les routes actuelles restant non versionnées pendant la période de transition.
