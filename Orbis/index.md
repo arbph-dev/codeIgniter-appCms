@@ -85,6 +85,9 @@ client/agrégateur Python multi-API, avec authentification factorisée, credenti
 | /cli/layer5/ | [etapes.py](/Orbis/cli/layer5/etapes.py) | 5 | --- |
 | /cli/layer5/ | [scoring.py](/Orbis/cli/layer5/scoring.py) | 5 | --- |
 | /cli/layer5/ | [working_memory.py](/Orbis/cli/layer5/working_memory.py) | 5 | --- |
+| /cli/menus/ | [layer5.py](/Orbis/cli/menus/layer5.py) | 5 | --- |
+
+
 
 
 ----
