@@ -38,6 +38,9 @@ Projet en cours
 
 - [2026-08-31-001](/project/daily/2026-08-31-001-Etablissement.md)
 	- Serveur Zealot / Domaine Organisation / API
+ 	- Dans etablissement - relation adresse, que l'on va pouvoir propager aux organisations
+ 		- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Models/EtablissementModel.php
+   		- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Controllers/Api/Etablissement.php
 - [2026-08-31-002](/project/daily/2026-08-31-002.md)
 	- Étape 2 — Recherche INSEE (WorkingMemory)
 - [2026-08-31-003](/project/daily/2026-08-31-003.md)
@@ -56,6 +59,11 @@ Projet en cours
 - [Orbis / Couche 5 / Étape 1](/project/daily/2026-08-30-002.md)
 	- Orbis/Couche 5/etape1 — qualification / enrichissement (stub).
 
+
+---
+A documenter :
+- EntrepriseZealot
+- un sample JSON réel GET /entreprise/:id permet de valider siege et les libellés.
 
 
 
