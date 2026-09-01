@@ -1,6 +1,3 @@
----
-
-
 ## `isinstance()`
 
 **fonction native Python**. Elle permet de vérifier si un objet est une instance d'une classe donnée ou d'une sous-classe de celle-ci.
