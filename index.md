@@ -5,7 +5,9 @@ https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/TASKS.md
 Projet en cours
 - Orbis (python)
   - [Orbis / Couche 3](/project/daily/2026-09-01.md)
-  - [Orbis / Couche 5 / Étape 2](/project/daily/2026-08-31-003.md) : Découpage en 3 modules + layer5.py mince. Scoring intégré à l’étape 2, colonnes M/V/G.- 
+  - [Orbis / Couche 5 / Étape 1](//project/daily/2026-08-30-002.md)
+  - [Orbis / Couche 5 / Étape 2](/project/daily/2026-08-31-003.md) : Découpage en 3 modules + layer5.py mince. Scoring intégré à l’étape 2, colonnes M/V/G.-
+  - [Orbis / Couche 5 / Étape 3](/project/daily/2026-08-31-004.md)
   - [Orbis / Couche 5 / Étape 4](/project/daily/2026-09-01-001.md)
   - [Orbis / Couche 5 / Etat et évolutions](/project/daily/2026-09-01-002.md)
 - referentiels
@@ -13,6 +15,7 @@ Projet en cours
 - Workbench Js
 - Serveur CodeIgniter
 - API
+	- [2026-08-30](/project/daily/2026-08-30.md) : Refactor Organisation Entreprises Etablissements pour Orbis
 	- [2026-08-31-001-Etablissement](/project/daily/2026-08-31-001-Etablissement.md)
 
 ---
@@ -43,18 +46,11 @@ Projet en cours
 
 ---
 
-# 2026-08-30
-
-
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-30.md
-	Refactor Organisation Entreprises Etablissements pour Orbis
-		a rapprocher de https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-31-001-Etablissement.md
-
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-30-001-Orbis.md
-	Couche 5
-
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-30-002.md
-	Couche 5 — qualification / enrichissement (stub).
+# [2026-08-30](/project/daily/2026-08-30.md)
+- Refactor Organisation Entreprises Etablissements pour Orbis
+- [Orbis / Couche 5 / definition](/project/daily/2026-08-30-001-Orbis.md)
+- [Orbis / Couche 5 / Étape 1](//project/daily/2026-08-30-002.md)
+	- Orbis/Couche 5/etape1 — qualification / enrichissement (stub).
 
 
 
