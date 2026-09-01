@@ -89,6 +89,14 @@ $routes->get('codepostal/(:num)', 'CodePostal::show/$1');
 // ⚠ Pas de POST/PUT/DELETE — référentiel en lecture seule.
 ```
 
+---
+
+## Historique
+[2026-09-01](/project/daily/2026-09-01-003.md#modification-backend)
+
+
+---
+
 ### Frontend
 
 \assets\js\features\adresse\adresse.controller.js"
