@@ -1,15 +1,17 @@
 ---
 
-La fonction `isinstance()` est une fonction native (_built-in_) de **Python**. Elle fait partie du cœur du langage depuis ses premières versions (présente dès Python 1.0).
 
-**Origine du nom** Son nom vient de la contraction de deux mots anglais : **"is"** (est) et **"instance"** (une instance / un objet). Elle permet de vérifier si un objet est une instance d'une classe donnée ou d'une sous-classe de celle-ci.
+## `isinstance()`
+
+**fonction native Python**. Elle permet de vérifier si un objet est une instance d'une classe donnée ou d'une sous-classe de celle-ci.
+
+`isinstance()` est privilégié par rapport à `type(obj) == Classe` car il prend en compte **l'héritage** (si une classe hérite d'une autre, `isinstance` renverra `True` pour la classe parente).
 
 **Fonctionnement de base** Elle prend deux arguments principaux :
-
 - L'objet à tester
 - La classe (ou un tuple de classes) de référence
 
-# Exemple
+#### Exemple
 ```python
 nom = "Alice"
 
@@ -17,9 +19,7 @@ isinstance(nom, str)  # Renvoie True car 'nom' est une chaîne de caractères
 isinstance(nom, int)  # Renvoie False
 ```
 
-**Pourquoi l'utiliser ?** En Python, le typage est dynamique.
 
-`isinstance()` est privilégié par rapport à `type(obj) == Classe` car il prend en compte **l'héritage** (si une classe hérite d'une autre, `isinstance` renverra `True` pour la classe parente).
 
 
 
