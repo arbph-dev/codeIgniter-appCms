@@ -1,6 +1,8 @@
 <?php
 // app/Controllers/Api/Adresse.php
 //
+// 2026-09-01-003 ajout ban_id Orbis et Zealot
+//
 // Routes (groupe 'api') :
 //   $routes->get   ('adresse',        'Api\Adresse::index');
 //   $routes->get   ('adresse/like',   'Api\Adresse::like');      // ← avant (:num)
@@ -200,7 +202,7 @@ class Adresse extends ResourceController
     private function buildPayload(array $body, ?array $cp, bool $isUpdate = false): array
     {
         $data = array_intersect_key($body, array_flip([
-            'complement', 'voienumero', 'voierpt', 'voietype_id',
+            'ban_id','complement', 'voienumero', 'voierpt', 'voietype_id',
             'voiecharniere', 'voienom', 'infodistribution',
             'codepostal_id', 'acheminement', 'latitude', 'longitude', 'precision',
         ]));
