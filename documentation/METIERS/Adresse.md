@@ -37,9 +37,14 @@
 
 
 ### backend
-app/Controllers/Api/Adresse.php
-app/Models/AdresseModel.php
+- [app/Controllers/Api/Adresse.php](/)
+- [app/Models/AdresseModel.php](/)
+- Enums
+    - [app/Enums/Charniere.php](/old/app/Enums/Charniere.php)
+    - [app/Enums/GeocodePrecision.php](/old/app/Enums/GeocodePrecision.php)
+    - [app/Enums/IndiceRepetition.php](/old/app/Enums/IndiceRepetition.php)
 
+#### app/Models/AdresseModel.php
 ```php
     public function withRelations(): static
     {
