@@ -16,9 +16,12 @@ Projet en cours
 - Workbench Js
 - Serveur CodeIgniter
 - API
-	- [2026-08-30](/project/daily/2026-08-30.md) : Refactor Organisation Entreprises Etablissements pour Orbis
-	- [2026-08-31-001-Etablissement](/project/daily/2026-08-31-001-Etablissement.md)
-
+	- Zealot
+		- [2026-08-30](/project/daily/2026-08-30.md) : Refactor Organisation Entreprises Etablissements pour Orbis
+		- [2026-08-31-001-Etablissement](/project/daily/2026-08-31-001-Etablissement.md)
+	- Publique
+ 		- [insee_note](/documentation/API/public/insee_note.md)
+   		- [poligraph](/documentation/API/public/poligraph.md)
 ---
 
 # [Orbis / Couche 3](/project/daily/2026-09-01.md)
