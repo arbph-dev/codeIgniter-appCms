@@ -2,19 +2,22 @@
 
 https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/TASKS.md
 
+Projet en cours
+- Orbis (python)
+- Workbench Js
+- Serveur CodeIgniter
 
 ---
 
 # 2026-09-01
+[Orbis / Couche 3](/project/daily/2026-09-01.md)
+- slug, forme_juridique, dates, méthodes dynamiques
+	
+[Orbis / Couche 5 / Étape 4](/project/daily/2026-09-01-001.md)
+- push Zealot (attach)
 
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-01.md
-	Couche 3 — slug, forme_juridique, dates, méthodes dynamiques
-
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-01-001.md
-	Étape 4 — push Zealot (attach)
-
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-01-002.md
-	Point d’étape — Orbis couche 5 & pipeline Entreprise
+[Orbis / Couche 5 / Etat et évolutions](/project/daily/2026-09-01-002.md)
+- Point Orbis couche 5 & pipeline Entreprise
 
 ---
 
