@@ -28,8 +28,6 @@ Projet en cours
 
 ---
 
-[](/)
-
 # [2026-08-31](/project/daily/2026-08-31.md)
 
 [2026-08-31-001](/project/daily/2026-08-31-001-Etablissement.md)
