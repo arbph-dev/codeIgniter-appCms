@@ -32,3 +32,87 @@
 | adresses | 1          | idx_voietype_id   | 1            | voietype_id   | A         | 2           | _NULL_   | _NULL_ | YES  | BTREE      |         |               | YES     | _NULL_     |
 | adresses | 1          | idx_lat_lng       | 1            | latitude      | A         | 6           | _NULL_   | _NULL_ | YES  | BTREE      |         |               | YES     | _NULL_     |
 | adresses | 1          | idx_lat_lng       | 2            | longitude     | A         | 6           | _NULL_   | _NULL_ | YES  | BTREE      |         |               | YES     | _NULL_     |
+
+
+
+
+### backend
+app/Controllers/Api/Adresse.php
+app/Models/AdresseModel.php
+
+```php
+    public function withRelations(): static
+    {
+        return $this
+            ->select('
+                adresses.*,
+                tv.nom        AS voietype_nom,
+                cp.codepostal AS cp_codepostal,
+                cp.commune    AS cp_commune
+            ')
+            ->join('type_voies    tv', 'tv.id = adresses.voietype_id',  'left')
+            ->join('codes_postaux cp', 'cp.id = adresses.codepostal_id', 'left');
+    }
+```
+
+### Routes 
+```
+//   $routes->get   ('adresse',        'Adresse::index');
+//   $routes->get   ('adresse/like',   'Adresse::like');      // ← avant (:num)
+//   $routes->get   ('adresse/(:num)', 'Adresse::show/$1');
+//   $routes->post  ('adresse',        'Adresse::create');
+//   $routes->put   ('adresse/(:num)', 'Adresse::update/$1');
+//   $routes->delete('adresse/(:num)', 'Adresse::delete/$1');
+```
+
+### Frontend
+
+\assets\js\features\adresse\adresse.controller.js"
+\assets\js\features\adresse\adresse.form.js"
+\assets\js\features\adresse\adresse.renderer.js"
+\assets\js\features\adresse\adresse.service.js"
+\assets\js\features\adresse\adresse.store.js"
+\assets\js\features\adresse\index.js"
+
+### Notes
+Avant adresse il faut résoudre 
+codepostal_id via : GET /codepostal?codepostal=29000
+voietype_id  via : GET /typevoie/like (autocomplete) ou GET /typevoie/1 (select) 
+
+
+## Relations
+
+codepostal_id -> [[Z/METIERS/geographie/code postaux]]
+relation 1 adresse a un unique codepostal ; mais un codepostal peut appartenir à plusieurs adresse
+1 codepostal vers n adresse la clef est dans adresse
+
+voietype_id[[Z/METIERS/geographie/Type Voie]]
+
+Enum
+ - [[Z/METIERS/geographie/Charniere]]  : entre type et nom de voie :  de la 
+-  [[Z/METIERS/geographie/GeocodePrecision]] : précision de l'adresse
+-  [[Z/METIERS/geographie/IndiceRepetition]] : indice de répétition dans la voie 
+
+
+
+
+## Frontend JS
+### index.js
+```php
+/* ================================================================
+   SNIPPETS D'INTÉGRATION
+   ================================================================
+
+   ── 1. index.php — import ────────────────────────────────────────
+   ── 2. index.php — window.addEventListener('load', ...) ─────────
+   ── 3. Cms.php — article ─────────────────────────────────────────
+   ── 4. Routes.php (groupe api) ───────────────────────────────────
+   ── 5. Enums PHP — copier dans app/Enums/ ────────────────────────
+   ⚠ Vérifier que PHP >= 8.1 sur OVH (requis pour les enums natifs).
+   ================================================================ */
+```
+### adresse.controller.js
+### adresse.form.js
+### adresse.renderer.js
+### adresse.service.js
+### adresse.store.js
