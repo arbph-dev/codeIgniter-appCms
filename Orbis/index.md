@@ -24,7 +24,15 @@ client/agrégateur Python multi-API, avec authentification factorisée, credenti
 │     EncryptionProvider → NoEncryption | FernetEncryption         │
 └──────────────────────────────────────────────────────────────────┘
 ```
-
+- [Orbis / Index](/Orbis/index.md) Orbis (python)
+  - [Orbis / Couche 3](/project/daily/2026-09-01.md)
+  - [Orbis / Couche 5 / definition](/project/daily/2026-08-30-001-Orbis.md) 
+  - [Orbis / Couche 5 / Étape 1](/project/daily/2026-08-30-002.md)
+  - [Orbis / Couche 5 / Étape 2](/project/daily/2026-08-31-003.md) : Découpage en 3 modules + layer5.py mince. Scoring intégré à l’étape 2, colonnes M/V/G.-
+  - [Orbis / Couche 5 / Étape 3](/project/daily/2026-08-31-004.md)
+  - [Orbis / Couche 5 / Étape 4](/project/daily/2026-09-01-001.md)
+  - [Orbis / Couche 5 / Etat et évolutions](/project/daily/2026-09-01-002.md)
+  - [Orbis / Client API / Adresse (Zealot)](/project/daily/2026-09-01-003.md)
 
 ## structure
 
