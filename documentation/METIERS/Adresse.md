@@ -37,12 +37,20 @@
 
 
 # Backend
+## Fichiers
+
 - [app/Controllers/Api/Adresse.php](/old/app/Controllers/Api/Adresse.php)
 - [app/Models/AdresseModel.php](/old/app/Models/AdresseModel.php)
 - Enums
     - [app/Enums/Charniere.php](/old/app/Enums/Charniere.php)
     - [app/Enums/GeocodePrecision.php](/old/app/Enums/GeocodePrecision.php)
     - [app/Enums/IndiceRepetition.php](/old/app/Enums/IndiceRepetition.php)
+
+- Referentiels
+    - [app/Controllers/Api/CodePostal.php](/old/app/Controllers/Api/CodePostal.php)
+    - [app/Controllers/Api/TypeVoie.php](/old/app/Controllers/Api/TypeVoie.php)
+
+
 
 #### app/Models/AdresseModel.php
 ```php
@@ -60,14 +68,15 @@
     }
 ```
 
-a voir aussi :
-- [app/Controllers/Api/Adresse.php](/old/app/Controllers/Api/Adresse.php)
-- [app/Controllers/Api/CodePostal.php](/old/app/Controllers/Api/CodePostal.php)
-- [app/Controllers/Api/TypeVoie.php](/old/app/Controllers/Api/TypeVoie.php)
+## API
+- [API/Adresse](/documentation/API/index.md#adresse)
+- [API/Codepostal](/documentation/API/index.md#codepostal)
+- [API/Typevoie](/documentation/API/index.md#typevoie)
 
 
 
-### Routes 
+
+## Routes 
 ```
 $routes->get   ('adresse/like',   'Adresse::like');      // ← avant (:num)
 $routes->get   ('adresse',        'Adresse::index');
