@@ -1,3 +1,65 @@
+
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/TASKS.md
+
+
+---
+
+# 2026-09-01
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-01.md
+	Couche 3 — slug, forme_juridique, dates, méthodes dynamiques
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-01-001.md
+	Étape 4 — push Zealot (attach)
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-01-002.md
+	Point d’étape — Orbis couche 5 & pipeline Entreprise
+
+---
+
+# 2026-08-31
+
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-31.md
+	2026-08-31-001
+	Serveur Zealot / Domaine Organisation / API
+		https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-31-001-Etablissement.md
+
+	2026-08-31-002
+		Étape 2 — Recherche INSEE (WorkingMemory)
+	2026-08-31-003
+		Découpage en 3 modules + layer5.py mince.
+		Scoring intégré à l’étape 2, colonnes M/V/G.
+	2026-08-31-004
+		Étape 3 — Qualifier + intégrer SIRENE (local)
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-31-001-Etablissement.md
+
+---
+
+# 2026-08-30
+
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-30.md
+	Refactor Organisation Entreprises Etablissements pour Orbis
+		a rapprocher de https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-31-001-Etablissement.md
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-30-001-Orbis.md
+	Couche 5
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-30-002.md
+	Couche 5 — qualification / enrichissement (stub).
+
+
+
+
+
+
+
+
+
+
 # 2026-08-22
 
 ## Reprise de la documentation
