@@ -77,6 +77,25 @@ client/agrégateur Python multi-API, avec authentification factorisée, credenti
 - transformation/
   - [mapper.py](/Orbis/transformation/mapper.py)
 
+
+
+
+| Path | File | couche | notes |
+| --- | ---| ---| --- |
+| /Orbis/cli/layer5/ | __init__.py | ---| --- |
+| /Orbis/cli/layer5/ | etapes.py | ---| --- |
+| /Orbis/cli/layer5/ | scoring.py | ---| --- |
+
+
+| Path | File | couche | notes |
+| --- | ---| ---| --- |
+| /Orbis/cli/layer5/ | [__init__.py](/Orbis/cli/layer5/__init__.py) | ---| --- |
+| /Orbis/cli/layer5/ | [etapes.py](/Orbis/cli/layer5/etapes.py) | ---| --- |
+| /Orbis/cli/layer5/ | [scoring.py](/Orbis/cli/layer5/scoring) | ---| --- |
+
+
+
+
 ----
 # Travaux
 - simplification des fichiers
