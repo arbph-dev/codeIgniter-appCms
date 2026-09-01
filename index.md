@@ -12,7 +12,7 @@ Projet en cours
 - Workbench Js
 - Serveur CodeIgniter
 - API
-	- [2026-08-31-001](/project/daily/2026-08-31-001-Etablissement.md)
+	- [2026-08-31-001-Etablissement](/project/daily/2026-08-31-001-Etablissement.md)
 
 ---
 
