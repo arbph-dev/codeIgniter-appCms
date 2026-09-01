@@ -1,6 +1,6 @@
 # Données
 
-## Strucutre
+## Structure
 - `DESCRIBE adresses` systématique avant tout nouveau fichier
 
 | Field            | Type                                     | Null | Key | Default | Extra          |
