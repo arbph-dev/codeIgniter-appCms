@@ -69,12 +69,24 @@ a voir aussi :
 
 ### Routes 
 ```
-//   $routes->get   ('adresse',        'Adresse::index');
-//   $routes->get   ('adresse/like',   'Adresse::like');      // ← avant (:num)
-//   $routes->get   ('adresse/(:num)', 'Adresse::show/$1');
-//   $routes->post  ('adresse',        'Adresse::create');
-//   $routes->put   ('adresse/(:num)', 'Adresse::update/$1');
-//   $routes->delete('adresse/(:num)', 'Adresse::delete/$1');
+$routes->get   ('adresse/like',   'Adresse::like');      // ← avant (:num)
+$routes->get   ('adresse',        'Adresse::index');
+$routes->get   ('adresse/(:num)', 'Adresse::show/$1');
+$routes->post  ('adresse',        'Adresse::create');
+$routes->put   ('adresse/(:num)', 'Adresse::update/$1');
+$routes->delete('adresse/(:num)', 'Adresse::delete/$1');
+
+$routes->get   ('typevoie/like',   'TypeVoie::like');    // ← avant (:num)
+$routes->get   ('typevoie',        'TypeVoie::index');
+$routes->get   ('typevoie/(:num)', 'TypeVoie::show/$1');
+$routes->post  ('typevoie',        'TypeVoie::create');
+$routes->put   ('typevoie/(:num)', 'TypeVoie::update/$1');
+$routes->delete('typevoie/(:num)', 'TypeVoie::delete/$1');
+
+$routes->get('codepostal',        'CodePostal::index');
+$routes->get('codepostal/like',   'CodePostal::like');   // ← avant (:num)
+$routes->get('codepostal/(:num)', 'CodePostal::show/$1');
+// ⚠ Pas de POST/PUT/DELETE — référentiel en lecture seule.
 ```
 
 ### Frontend
