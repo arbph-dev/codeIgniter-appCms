@@ -22,7 +22,7 @@
 | updated_at       | timestamp                                | YES  |     | _NULL_  |                |
 
 ## Index
-
+- La PK est id bigint unsigned, codepostal_id et voietype_id sont indexés, et latitude/longitude disposent de l'index composite idx_lat_lng.
 - `SHOW INDEX FROM adresses` pour identifier FK non contraintes et patterns d'accès
 
 | Table    | Non_unique | Key_name          | Seq_in_index | Column_name   | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
