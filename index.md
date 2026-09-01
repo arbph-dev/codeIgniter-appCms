@@ -5,6 +5,7 @@ https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/TASKS.md
 Projet en cours
 - Orbis (python)
   - [Orbis / Couche 3](/project/daily/2026-09-01.md)
+  - [Orbis / Couche 5 / Étape 2](/project/daily/2026-08-31-003.md) : Découpage en 3 modules + layer5.py mince. Scoring intégré à l’étape 2, colonnes M/V/G.- 
   - [Orbis / Couche 5 / Étape 4](/project/daily/2026-09-01-001.md)
   - [Orbis / Couche 5 / Etat et évolutions](/project/daily/2026-09-01-002.md)
 - referentiels
@@ -16,15 +17,13 @@ Projet en cours
 
 ---
 
-# 2026-09-01
-[Orbis / Couche 3](/project/daily/2026-09-01.md)
-- slug, forme_juridique, dates, méthodes dynamiques
-	
-[Orbis / Couche 5 / Étape 4](/project/daily/2026-09-01-001.md)
-- push Zealot (attach)
-
-[Orbis / Couche 5 / Etat et évolutions](/project/daily/2026-09-01-002.md)
-- Point Orbis couche 5 & pipeline Entreprise
+# [Orbis / Couche 3](/project/daily/2026-09-01.md)
+- [Orbis / Couche 3](/project/daily/2026-09-01.md)
+	- slug, forme_juridique, dates, méthodes dynamiques
+- [Orbis / Couche 5 / Étape 4](/project/daily/2026-09-01-001.md)
+	- push Zealot (attach)
+- [Orbis / Couche 5 / Etat et évolutions](/project/daily/2026-09-01-002.md)
+	- Point Orbis couche 5 & pipeline Entreprise
 
 ---
 
