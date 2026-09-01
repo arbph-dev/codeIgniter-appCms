@@ -37,16 +37,7 @@ client/agrégateur Python multi-API, avec authentification factorisée, credenti
   - [__init__.py](/Orbis/cli/__init__.py)
   - [menu.py](/Orbis/cli/menu.py)
   - [presentation.py](/Orbis/cli/presentation.py)
-  - menus\
-    - [__init__.py](/Orbis/cli/menus/__init__.py)
-    - [ban.py](/Orbis/cli/menus/ban.py)
-    - [credentials.py](/Orbis/cli/menus/credentials.py)
-    - [inpi.py](/Orbis/cli/menus/inpi.py)
-    - [insee.py](/Orbis/cli/menus/insee.py)
-    - [omdb.py](/Orbis/cli/menus/omdb.py)
-    - [openlibrary.py](/Orbis/cli/menus/openlibrary.py)
-    - [personne.py](/Orbis/cli/menus/personne.py)
-    - [poligraph.py](/Orbis/cli/menus/poligraph.py)
+
 - core\
   - [__init__.py](/Orbis/cli/menus/__init__.py)
   - [json_store.py](/Orbis/cli/menus/json_store.py)
@@ -85,10 +76,16 @@ client/agrégateur Python multi-API, avec authentification factorisée, credenti
 | /cli/layer5/ | [etapes.py](/Orbis/cli/layer5/etapes.py) | 5 | --- |
 | /cli/layer5/ | [scoring.py](/Orbis/cli/layer5/scoring.py) | 5 | --- |
 | /cli/layer5/ | [working_memory.py](/Orbis/cli/layer5/working_memory.py) | 5 | --- |
+| /cli/menus/ | [__init__.py](/Orbis/cli/menus/__init__.py) | x | --- |
+| /cli/menus/ | [ban.py](/Orbis/cli/menus/ban.py) |  | --- |
+| /cli/menus/ | [credentials.py](/Orbis/cli/menus/credentials.py) |  | --- |
+| /cli/menus/ | [inpi.py](/Orbis/cli/menus/inpi.py) |  | --- |
+| /cli/menus/ | [insee.py](/Orbis/cli/menus/insee.py) |  | --- |
 | /cli/menus/ | [layer5.py](/Orbis/cli/menus/layer5.py) | 5 | --- |
-
-
-
+| /cli/menus/ | [omdb.py](/Orbis/cli/menus/omdb.py) |  | --- |
+| /cli/menus/ | [openlibrary.py](/Orbis/cli/menus/openlibrary.py) |  | --- |
+| /cli/menus/ | [personne.py](/Orbis/cli/menus/personne.py) |  | --- |
+| /cli/menus/ | [poligraph.py](/Orbis/cli/menus/poligraph.py) |  | --- |
 
 ----
 # Travaux
