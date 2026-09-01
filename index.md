@@ -30,15 +30,15 @@ Projet en cours
 
 # [2026-08-31](/project/daily/2026-08-31.md)
 
-[2026-08-31-001](/project/daily/2026-08-31-001-Etablissement.md)
-- Serveur Zealot / Domaine Organisation / API
-[2026-08-31-002](/project/daily/2026-08-31-002.md)
-- Étape 2 — Recherche INSEE (WorkingMemory)
-[2026-08-31-003](/project/daily/2026-08-31-003.md)
-- Découpage en 3 modules + layer5.py mince.
-- Scoring intégré à l’étape 2, colonnes M/V/G.
-[2026-08-31-004](/project/daily/2026-08-31-004.md)
-- Étape 3 — Qualifier + intégrer SIRENE (local)
+- [2026-08-31-001](/project/daily/2026-08-31-001-Etablissement.md)
+	- Serveur Zealot / Domaine Organisation / API
+- [2026-08-31-002](/project/daily/2026-08-31-002.md)
+	- Étape 2 — Recherche INSEE (WorkingMemory)
+- [2026-08-31-003](/project/daily/2026-08-31-003.md)
+	- Découpage en 3 modules + layer5.py mince.
+	- Scoring intégré à l’étape 2, colonnes M/V/G.
+- [2026-08-31-004](/project/daily/2026-08-31-004.md)
+	- Étape 3 — Qualifier + intégrer SIRENE (local)
 
 
 
