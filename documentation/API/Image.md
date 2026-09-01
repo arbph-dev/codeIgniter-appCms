@@ -3,8 +3,25 @@
 
 ## images
 
+| Field      | Type                                   | Null | Key | Default           | Extra                                         |
+| ---------- | -------------------------------------- | ---- | --- | ----------------- | --------------------------------------------- |
+| id         | int unsigned                           | NO   | PRI | _NULL_            | auto_increment                                |
+| user_id    | int unsigned                           | NO   | MUL | _NULL_            |                                               |
+| width      | mediumint unsigned                     | NO   |     | 0                 |                                               |
+| height     | mediumint unsigned                     | NO   |     | 0                 |                                               |
+| ratio      | decimal(6,3)                           | NO   |     | 0.000             |                                               |
+| extension  | varchar(10)                            | NO   |     | _NULL_            |                                               |
+| size_ko    | decimal(8,2)                           | NO   |     | 0.00              |                                               |
+| path       | varchar(255)                           | NO   | UNI | _NULL_            |                                               |
+| filename   | varchar(255)                           | NO   |     | _NULL_            |                                               |
+| alt        | text                                   | YES  |     | _NULL_            |                                               |
+| status     | enum('pending','validated','rejected') | NO   | MUL | pending           |                                               |
+| created_at | timestamp                              | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED                             |
+| updated_at | timestamp                              | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
+
+
 ```sql
--- Images
+-- Images / OBSOLETE
 CREATE TABLE images (
     id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     path        VARCHAR(500) NOT NULL,
