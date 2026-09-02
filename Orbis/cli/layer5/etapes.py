@@ -473,7 +473,96 @@ def _prompt_choose_or_fetch(rec: WMRecord, insee_client: InseeClient):
         console.print(f"[red]Parse INSEE: {e}[/]")
         return None
 
+# ── Étape 4 — Push Zealot (attach) ──────────────────────────────────
+# cli/layer5/etapes.py
 
+def etape4_push_zealot(ent_client: "EntrepriseClient") -> None:
+    """
+    Opérations étape 4 :
+      [1] Filtrer WM : status=saved + local_id + siren
+      [2] Charger EntrepriseModel local (repository)
+      [3] POST /organisation/{id}/entreprise  (attach)
+      [4] status=pushed  (ou error si échec)
+
+    Prérequis serveur :
+      - route POST organisation/(:num)/entreprise
+      - EntrepriseService::attachToOrganisation
+    """
+    from persistence.db import get_engine, init_db, get_session
+    from persistence.repository import EntrepriseRepository
+
+    console.print(Panel(
+        "[bold]Étape 4 — Push Zealot[/]\n"
+        "  1. Records status=saved (local_id + siren)\n"
+        "  2. Lecture modèle local\n"
+        "  3. attach_to_organisation (POST)\n"
+        "  4. status=pushed",
+        title="Plan",
+        style="dim",
+    ))
+
+    to_push = [
+        r for r in WorkingMemory.records
+        if r.status == "saved" and r.local_id and r.siren
+    ]
+    if not to_push:
+        console.print("[yellow]Aucun record saved à pousser.[/]")
+        return
+
+    engine = get_engine()
+    init_db(engine)
+    session = get_session(engine)
+    repo = EntrepriseRepository(session)
+
+    try:
+        for rec in to_push:
+            model = repo.get_by_id(rec.local_id)
+            if not model:
+                console.print(
+                    f"[yellow]org#{rec.organisation_id} — "
+                    f"local_id={rec.local_id} introuvable, skip[/]"
+                )
+                continue
+
+            # Payload aligné sur EntrepriseService::attachToOrganisation
+            #  - siren      → organisations.siren
+            #  - siret      → etablissements (siège, si fourni)
+            #  - codenaf_id / forme_juridique_id / capital → entreprises
+            body = {
+                "siren": model.siren,
+                "codenaf_id": model.naf,
+                "forme_juridique_id": model.forme_juridique,
+            }
+            if model.siret_siege:
+                body["siret"] = model.siret_siege
+            if model.capital is not None:
+                body["capital"] = model.capital
+
+            console.print(
+                f"[dim]→ POST /organisation/{rec.organisation_id}/entreprise  "
+                f"siren={model.siren}  siret={model.siret_siege or '—'}[/]"
+            )
+
+            try:
+                # EntrepriseClient.attach_to_organisation(org_id, **fields)
+                # Adapte le nom exact si ton client expose attach() autrement.
+                result = ent_client.attach_to_organisation(
+                    rec.organisation_id,
+                    **{k: v for k, v in body.items() if v is not None},
+                )
+                rec.status = "pushed"
+                console.print(
+                    f"[green]✓ org#{rec.organisation_id} poussé "
+                    f"({(result or {}).get('id') or 'ok'})[/]"
+                )
+            except Exception as e:
+                console.print(f"[red]Push org#{rec.organisation_id}: {e}[/]")
+                rec.status = "push_error"
+    finally:
+        session.close()
+
+    n_ok = sum(1 for r in WorkingMemory.records if r.status == "pushed")
+    console.print(f"[dim]Étape 4 terminée — {n_ok} attach réussi(s).[/]")
 # ── Affichage WM ────────────────────────────────────────────────────
 
 def show_wm() -> None:
