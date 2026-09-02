@@ -9,6 +9,17 @@ Clients :
     services.api.codepostal_client.CodePostalClient
 
 BAN n'est volontairement pas utilisé ici.
+
+
+sauvegarder JSON : 
+_menu_adresses
+- LISTE     
+- FICHE
+- AUTOCOMPLÉTION
+- CREATE    
+- UPDATE    
+
+
 """
 
 from __future__ import annotations
@@ -22,6 +33,11 @@ from services.auth import CredentialsStore
 from services.api.adresse_client import AdresseClient
 from services.api.typevoie_client import TypeVoieClient
 from services.api.codepostal_client import CodePostalClient
+
+# BAN volontairement branché ici pour « Créer depuis BAN » uniquement
+from services.api.BanClient import BanClient  # adapte le chemin si besoin
+from acquisition.sources import AdresseBan
+from services.api.adresse_from_ban import create_adresse_from_ban
 
 from cli.menu import menu, get_auth
 from cli.presentation import sauvegarder, voir_detail
@@ -45,6 +61,7 @@ def _menu_adresses(client: AdresseClient) -> None:
                 "Fiche adresse",
                 "Autocomplétion",
                 "Créer une adresse",
+                "Créer depuis BAN",
                 "Modifier une adresse",
                 "Supprimer une adresse",
             ],
@@ -69,7 +86,7 @@ def _menu_adresses(client: AdresseClient) -> None:
                 page=1,
                 per_page=20,
             )
-
+            # Sauvegarde après un appel API. Retourne le nom du fichier.
             sauvegarder(
                 data,
                 "zealot_adresse",
@@ -305,12 +322,17 @@ def _menu_adresses(client: AdresseClient) -> None:
                 console.print(
                     "[red]Échec de création.[/]"
                 )
-
         # ------------------------------------------------------------------
-        # 5 — UPDATE
+        # 5 — CREATE DEPUIS BAN
         # ------------------------------------------------------------------
-
         elif choix == "5":
+            _create_from_ban(client)
+        
+        # ------------------------------------------------------------------
+        # 6 — UPDATE
+        # ------------------------------------------------------------------
+
+        elif choix == "6":
 
             id_ = IntPrompt.ask("ID adresse")
 
@@ -371,20 +393,16 @@ def _menu_adresses(client: AdresseClient) -> None:
             )
 
             if data:
-                console.print(
-                    "[green]✓ Adresse modifiée.[/]"
-                )
+                console.print( "[green]✓ Adresse modifiée.[/]")
                 voir_detail(data)
             else:
-                console.print(
-                    "[red]Échec de modification.[/]"
-                )
+                console.print( "[red]Échec de modification.[/]" )
 
         # ------------------------------------------------------------------
-        # 6 — DELETE
+        # 7 — DELETE
         # ------------------------------------------------------------------
 
-        elif choix == "6":
+        elif choix == "7":
 
             id_ = IntPrompt.ask("ID adresse")
 
@@ -731,6 +749,115 @@ def _menu_codepostal(client: CodePostalClient) -> None:
                 continue
 
             voir_detail(data)
+
+
+# ============================================================================
+# _create_from_ban
+# ============================================================================
+
+
+def _create_from_ban(adresse_client: AdresseClient) -> None:
+    """
+    1. Auth BAN + Zealot déjà ok côté menu parent
+    2. BanClient.search → choix user
+    3. resolve CP / type voie → POST /adresse
+    """
+    store = CredentialsStore()
+    # auth_ban = get_auth(store, "ban")  # ou la clé réelle CredentialsStore
+    auth_z = get_auth(store, "zealot")
+    store.close()
+    #if not auth_ban or not auth_z:
+    if not auth_z:
+        return
+
+    # Adapte la construction BanClient à ton projet
+    # ban_client = BanClient(auth=auth_ban)  # ou BanClient() si sans auth
+    ban_client = BanClient()   # API publique, pas d'auth
+    cp_client = CodePostalClient(auth=auth_z)
+    tv_client = TypeVoieClient(auth=auth_z)
+
+    q = Prompt.ask("Adresse BAN (texte libre)").strip()
+    if len(q) < 3:
+        console.print("[yellow]Requête trop courte.[/]")
+        return
+
+    # Adapte selon BanClient.search : list[dict] ou list[AdresseBan]
+    raw_results = ban_client.search(q, limit=8)
+    if not raw_results:
+        console.print("[yellow]Aucun résultat BAN.[/]")
+        return
+
+    bans: list[AdresseBan] = []
+    for r in raw_results:
+        if isinstance(r, AdresseBan):
+            bans.append(r)
+        else:
+            bans.append(AdresseBan.from_parsed(r))
+
+    table = Table(title=f"BAN — {q!r}", show_lines=True)
+    table.add_column("#", style="dim", width=4)
+    table.add_column("Score", width=6)
+    table.add_column("Label", width=55)
+    table.add_column("ban_id", width=20)
+    for i, b in enumerate(bans, 1):
+        table.add_row(
+            str(i),
+            f"{b.score:.2f}" if b.score is not None else "",
+            b.label or "",
+            b.ban_id or "",
+        )
+    console.print(table)
+
+    choix = Prompt.ask("N° à importer", default="1")
+    if not choix.isdigit() or not (1 <= int(choix) <= len(bans)):
+        console.print("[yellow]Annulé.[/]")
+        return
+
+    ban = bans[int(choix) - 1]
+    dry = Confirm.ask("Dry-run (afficher payload sans POST) ?", default=False)
+
+    try:
+        result = create_adresse_from_ban(
+            ban,
+            adresse_client,
+            cp_client,
+            tv_client,
+            dry_run=dry,
+        )
+        
+        console.print("[bold]payload[/]")
+        for k, v in result["payload"].items():
+            console.print(f"  {k}: {v!r}")
+
+    except ValueError as e:
+        console.print(f"[red]{e}[/]")
+        return
+    except Exception as e:
+        console.print(f"[red]Erreur: {e}[/]")
+        return
+
+    console.print("[dim]payload:[/]")
+    voir_detail(result["payload"])
+
+    if dry:
+        console.print("[yellow]Dry-run — rien créé.[/]")
+        return
+
+    created = result.get("created")
+    sauvegarder(created, "zealot_adresse", "create_from_ban", result["payload"])
+    if created:
+        console.print(
+            f"[green]✓ Adresse créée id={created.get('id')} "
+            f"ban_id={result['payload'].get('ban_id')}[/]"
+        )
+        voir_detail(created)
+    else:
+        console.print("[red]Échec POST /adresse.[/]")
+
+
+
+
+
 
 
 # ============================================================================
