@@ -8,9 +8,11 @@ import re
 import unicodedata
 
 from rich.console import Console
-from rich.prompt import Prompt
+from rich.prompt import Prompt, Confirm # 2026-09-02-002
 from rich.table import Table
 from rich.panel import Panel
+
+
 
 from services.auth import CredentialsStore
 from services.api.organisation_client import OrganisationClient
@@ -20,8 +22,8 @@ from acquisition.sources import OrganisationZealot, EntrepriseInsee
 from cli.menu import get_auth
 from cli.layer5.working_memory import WorkingMemory, WMRecord
 from cli.layer5.scoring import score_record
-
-# 2026-08-31-004
+from cli.layer5.insee_enrich import enrich_candidates_siege # 2026-09-02-002
+from cli.layer5.text_utils import normalize_insee_denom # 2026-09-02-002
 from transformation.mapper import EntrepriseMapper
 from persistence.db import get_engine, init_db, get_session  # adapte si noms différents
 from persistence.repository import EntrepriseRepository
@@ -35,17 +37,7 @@ TYPES_REQUIRING_ENTREPRISE = {1}  # 1 = Entreprise
 
 
 # ── Helpers requête INSEE ───────────────────────────────────────────
-
-def _normalize_insee_denom(nom: str) -> str:
-    """Minuscules → ASCII approx → MAJUSCULES, apostrophes neutralisées."""
-    s = (nom or "").strip()
-    s = unicodedata.normalize("NFKD", s)
-    s = "".join(c for c in s if not unicodedata.combining(c))
-    s = s.upper()
-    s = s.replace("'", " ").replace("’", " ")
-    s = re.sub(r"\s+", " ", s).strip()
-    return s
-
+# def _normalize_insee_denom => normalize_insee_denom ( cli.layer5.text_utils )
 
 def build_denomination_query(nom: str) -> str:
     """
@@ -53,7 +45,7 @@ def build_denomination_query(nom: str) -> str:
       periode(denominationUniteLegale:"AISE BREIZH")
       periode(denominationUniteLegale:GAZ)
     """
-    denom = _normalize_insee_denom(nom)
+    denom = normalize_insee_denom(nom)
     if not denom:
         return ""
     if " " in denom:
@@ -175,7 +167,6 @@ def etape1_scan( org_client: OrganisationClient , ent_client: EntrepriseClient )
 
 
 # ── Étape 2 — INSEE + scoring ───────────────────────────────────────
-
 def etape2_insee() -> None:
     if not WorkingMemory.records:
         console.print("[yellow]WorkingMemory vide — lancer l'étape 1 d'abord.[/]")
@@ -189,15 +180,32 @@ def etape2_insee() -> None:
 
     insee = InseeClient(auth=auth)
     max_per_org = int(Prompt.ask("Max candidats INSEE par org", default="5"))
-    _run_etape2(insee, max_per_org)
+    enrich_siege = Confirm.ask(
+        "Enrichir candidats via SIRET siège (CP/commune, +appels INSEE) ?",
+        default=True,
+    )
+    max_enrich = min(3, max_per_org)
+    if enrich_siege:
+        max_enrich = int(Prompt.ask(
+            "Max enrichissements SIRET par org",
+            default=str(max_enrich),
+        ))
+    _run_etape2(insee, max_per_org, enrich_siege=enrich_siege, max_enrich=max_enrich)
 
 
-def _run_etape2(insee: InseeClient, max_per_org: int = 5) -> None:
+def _run_etape2(
+    insee: InseeClient,
+    max_per_org: int = 5,
+    *,
+    enrich_siege: bool = True,
+    max_enrich: int = 3,
+) -> None:
     """
     [1] Parcourir WM
     [2] Requête Lucene periode(denominationUniteLegale:…)
     [3] search_siren
     [4] EntrepriseInsee.from_api
+    [4b] enrich SIRET siège → localisation (optionnel)
     [5] score_record → M/V/G + scored trié
     [6] Affichage
     """
@@ -207,6 +215,7 @@ def _run_etape2(insee: InseeClient, max_per_org: int = 5) -> None:
         "  2. Requête Lucene periode(denominationUniteLegale:…)\n"
         "  3. search_siren (nombre limité)\n"
         "  4. EntrepriseInsee.from_api\n"
+        "  4b. enrich SIRET siège (si activé)\n"
         "  5. score_record (M/V/G + ranked)\n"
         "  6. Affichage",
         title="Plan",
@@ -230,12 +239,12 @@ def _run_etape2(insee: InseeClient, max_per_org: int = 5) -> None:
             score_record(rec)
             summary.add_row(
                 str(i), str(rec.organisation_id), "—", "0",
-                f"M{rec.match_pct} V{rec.veracity_pct} G{rec.global_pct}",
+                f"M{rec.match_pct}(min{rec.match_min}/moy{rec.match_moy}) V{rec.veracity_pct} G{rec.global_pct}",
                 "",
             )
             continue
 
-        denom = _normalize_insee_denom(nom)
+        denom = normalize_insee_denom(nom)
         q = build_denomination_query(nom)
         if not q:
             rec.insee_candidates = []
@@ -244,7 +253,13 @@ def _run_etape2(insee: InseeClient, max_per_org: int = 5) -> None:
             continue
 
         console.print(f"[dim]→ org#{rec.organisation_id}  q={q!r}[/]")
-        data = insee.search_siren(q, nombre=max_per_org)
+        try:
+            data = insee.search_siren(q, nombre=max_per_org)
+        except Exception as e:
+            console.print(f"[red]  INSEE search_siren échec org#{rec.organisation_id}: {e}[/]")
+            data = None
+            rec.status = "error"
+            # on continue quand même le scoring (candidates vide) plutôt que de tout arrêter
 
         candidates: list[EntrepriseInsee] = []
         if data:
@@ -254,7 +269,6 @@ def _run_etape2(insee: InseeClient, max_per_org: int = 5) -> None:
                 except Exception as e:
                     console.print(f"[yellow]  parse skip: {e}[/]")
 
-        # Fallback : retirer articles / mots trop courts
         if not candidates and " " in denom:
             tokens = [
                 t for t in denom.split()
@@ -272,6 +286,15 @@ def _run_etape2(insee: InseeClient, max_per_org: int = 5) -> None:
                         except Exception:
                             pass
 
+        if enrich_siege and candidates:
+            console.print(f"[dim]  enrich SIRET siège (max {max_enrich})…[/]")
+            candidates = enrich_candidates_siege(
+                insee,
+                candidates,
+                max_enrich=max_enrich,
+                nombre_siret=20,
+            )
+
         rec.insee_candidates = candidates
         rec.status = "searched"
         score_record(rec)
@@ -279,10 +302,13 @@ def _run_etape2(insee: InseeClient, max_per_org: int = 5) -> None:
         top = ""
         if rec.scored:
             s0 = rec.scored[0]
+            loc = getattr(s0.insee, "localisation", None) or ""
             top = (
                 f"{s0.score_pct}% {s0.insee.siren} "
-                f"{(s0.insee.denomination or '')[:28]}"
+                f"{(s0.insee.denomination or '')[:22]}"
             )
+            if loc:
+                top += f" [{loc[:12]}]"
         summary.add_row(
             str(i),
             str(rec.organisation_id),
@@ -296,7 +322,6 @@ def _run_etape2(insee: InseeClient, max_per_org: int = 5) -> None:
     console.print(
         "[dim]Étape 2 OK. Ensuite : étape 3 — qualification (choix / saisie SIREN).[/]"
     )
-
 # --- Etape 3 ----------------------------------------
 
 def etape3_qualify_and_save() -> None:
@@ -565,6 +590,11 @@ def etape4_push_zealot(ent_client: "EntrepriseClient") -> None:
     console.print(f"[dim]Étape 4 terminée — {n_ok} attach réussi(s).[/]")
 # ── Affichage WM ────────────────────────────────────────────────────
 
+
+
+
+
+
 def show_wm() -> None:
     if not WorkingMemory.records:
         console.print("[dim]WorkingMemory vide.[/]")
@@ -577,14 +607,17 @@ def show_wm() -> None:
     )
     for r in WorkingMemory.records:
         console.print(
-            f"  org#{r.organisation_id}  {r.nom!r}  "
-            f"siren={r.siren or '—'}  status={r.status}  "
-            f"M{r.match_pct} V{r.veracity_pct} G{r.global_pct}"
+            f"  org#{r.organisation_id} {r.nom!r} "
+            f"siren={r.siren or '—'} status={r.status} "
+            f"M{r.match_pct}(min{r.match_min}/moy{r.match_moy}/max{r.match_max}) "
+            f"V{r.veracity_pct} G{r.global_pct}"
         )
+        # 2026-09-02-002 - afficher loc
         for s in (r.scored or [])[:3]:
+            loc = getattr(s.insee, "localisation", None) or "—"
             console.print(
                 f"      · {s.score_pct:3d}%  {s.insee.siren}  "
                 f"{s.insee.denomination!r}  "
                 f"naf={s.insee.naf or '—'}  etat={s.insee.etat or '—'}  "
-                f"{s.detail}"
-            )
+                f"loc={loc}  {s.detail}"
+            )            
