@@ -16,9 +16,17 @@ from cli.layer5.etapes import show_wm
 from cli.layer5.working_memory import WorkingMemory, WMRecord, CandidateScore
 from cli.layer5.scoring import score_record, SCORE_MAX
 
-"""
 from cli.layer5.etapes import etape1_scan, etape2_insee, etape3_qualify_and_save , show_wm
-
+"""
+# 2026-08-31-005
+from cli.layer5 import (
+    WorkingMemory,
+    etape1_scan,
+    etape2_insee,
+    etape3_qualify_and_save,
+    etape4_push_zealot,
+    show_wm,
+)
 
 console = Console()
 
@@ -38,6 +46,7 @@ def menu_layer5() -> None:
             "Étape 1 — Scan orphelines + WorkingMemory",
             "Étape 2 — Recherche INSEE + scoring M/V/G",
             "Étape 3 — Qualifier + intégrer SIRENE (local)", # 2026-08-31-004
+            "Étape 4 — Push Zealot (attach)",# 2026-08-31-005
             "Afficher WorkingMemory",
             "Vider WorkingMemory",
         ])
@@ -50,7 +59,9 @@ def menu_layer5() -> None:
         elif choix == "3":
             etape3_qualify_and_save() # 2026-08-31-004 
         elif choix == "4":
+            etape4_push_zealot(ent_client) # 2026-08-31-005        
+        elif choix == "5":
             show_wm()
-        elif choix == "5":            
+        elif choix == "6":            
             WorkingMemory.clear()
             console.print("[dim]WorkingMemory vidée.[/]")
