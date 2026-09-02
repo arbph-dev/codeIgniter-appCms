@@ -1,9 +1,11 @@
 # cli/layer5/scoring.py
+# 2026-09-02-002
+
 from __future__ import annotations
 
 import re
 import unicodedata
-from typing import Any
+from typing import Any, Optional
 
 from cli.layer5.working_memory import WMRecord, CandidateScore
 
@@ -47,6 +49,36 @@ def score_nom(org_nom: str, cand_nom: str | None) -> float:
     return W_NOM * factor
 
 
+def _extract_cp(text: Optional[str]) -> Optional[str]:
+    if not text:
+        return None
+    m = re.search(r"\b(\d{5})\b", str(text))
+    return m.group(1) if m else None
+
+
+def _extract_commune(text: Optional[str]) -> Optional[str]:
+    if not text:
+        return None
+    text = str(text).strip()
+    m = re.search(r"\b\d{5}\s+(.+)$", text)
+    if m:
+        return m.group(1).strip().upper()
+    return text.upper()
+
+
+def score_loc(org_loc: Optional[str], cand_loc: Optional[str]) -> float:
+    """0..W_LOC — CP exact → plein ; commune seule → demi."""
+    if not org_loc or not cand_loc:
+        return 0.0
+    cp_o, cp_c = _extract_cp(org_loc), _extract_cp(cand_loc)
+    if cp_o and cp_c and cp_o == cp_c:
+        return float(W_LOC)
+    com_o, com_c = _extract_commune(org_loc), _extract_commune(cand_loc)
+    if com_o and com_c and (com_o == com_c or com_o in com_c or com_c in com_o):
+        return float(W_LOC) * 0.5
+    return 0.0
+
+
 def score_candidate(rec: WMRecord, cand: Any) -> CandidateScore:
     detail: dict = {}
     total = 0.0
@@ -66,8 +98,11 @@ def score_candidate(rec: WMRecord, cand: Any) -> CandidateScore:
     detail["siren"] = s_siren
     total += s_siren
 
-    detail["localisation"] = 0.0  # stub
-    total += 0.0
+    # localisation ×4 (cand.localisation via enrich SIRET siège)
+    cand_loc = getattr(cand, "localisation", None)
+    s_loc = score_loc(rec.localisation, cand_loc)
+    detail["localisation"] = round(s_loc, 2)
+    total += s_loc
 
     s_naf = 0.0
     if rec.naf and getattr(cand, "naf", None):
