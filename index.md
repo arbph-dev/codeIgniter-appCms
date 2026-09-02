@@ -22,7 +22,7 @@ Projet en cours
 		- [2026-08-31-001-Etablissement](/project/daily/2026-08-31-001-Etablissement.md)
   		- [Adresse](/documentation/METIERS/Adresse.md)
     		-  mise a jour documentation pour création client **Orbis** [2026-09-01-003](/project/daily/2026-09-01-003.md) 
-  		- [Image](/documentation/API/Image.md)
+  		- [Image](/documentation/API/Image.md) intégration [Orbis](/project/daily/2026-09-01-004.md)
   - Publique
  		- [insee_note](/documentation/API/public/insee_note.md)
    		- [poligraph](/documentation/API/public/poligraph.md)
