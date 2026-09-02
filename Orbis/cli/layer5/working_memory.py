@@ -32,9 +32,15 @@ class WMRecord:
     scored: list = field(default_factory=list)
     chosen: Optional[CandidateScore] = None
     Pythonlocal_id: Optional[int] = None                    # 2026-08-31-004 - PK SQLAlchemy    
-    match_pct: int = 0
+    
+    match_pct: int = 0        # score du TOP candidat
+    match_min: int = 0
+    match_max: int = 0
+    match_moy: int = 0
+    
     veracity_pct: int = 0
     global_pct: int = 0
+    
 
 
 class WorkingMemory:
