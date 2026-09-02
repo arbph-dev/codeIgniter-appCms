@@ -249,3 +249,37 @@ class TypeVoieClient(BaseApiClient):
         )
 
         return data is not None
+
+
+
+    def resolve_id(self, nom: Optional[str]) -> Optional[int]:
+        """
+        Libellé BAN (ex. "Rue", "Avenue") → type_voies.id
+
+        Compare en majuscules, exact puis préfixe.
+        """
+        if not nom or not str(nom).strip():
+            return None
+
+        target = str(nom).strip().upper()
+
+        # Cache simple sur l'instance
+        if not hasattr(self, "_cache_all"):
+            self._cache_all = self.list_all(max_results=500) or []
+
+        exact = None
+        prefix = None
+        for row in self._cache_all:
+            n = (row.get("nom") or "").strip().upper()
+            if not n:
+                continue
+            if n == target:
+                exact = int(row["id"])
+                break
+            if n.startswith(target) or target.startswith(n):
+                if prefix is None:
+                    prefix = int(row["id"])
+
+        if exact is not None:
+            return exact
+        return prefix
