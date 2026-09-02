@@ -1,5 +1,7 @@
 # cli/layer5/scoring.py
-# 2026-09-02-002
+# 2026-09-02-002 - retirer : _norm_upper(), _tokens()
+
+
 
 from __future__ import annotations
 
@@ -8,6 +10,7 @@ import unicodedata
 from typing import Any, Optional
 
 from cli.layer5.working_memory import WMRecord, CandidateScore
+from cli.layer5.text_utils import norm_upper,tokens
 
 W_NOM = 4
 W_SIREN = 8
@@ -17,21 +20,11 @@ W_EXTRA = 1
 SCORE_MAX = W_NOM + W_SIREN + W_LOC + W_NAF + W_EXTRA + W_EXTRA  # 20
 
 
-def _norm_upper(s: str) -> str:
-    s = unicodedata.normalize("NFKD", s or "")
-    s = "".join(c for c in s if not unicodedata.combining(c))
-    s = s.upper().replace("'", " ").replace("’", " ")
-    return re.sub(r"\s+", " ", s).strip()
-
-
-def _tokens(s: str) -> list[str]:
-    return [t for t in _norm_upper(s).split() if t]
-
 
 def score_nom(org_nom: str, cand_nom: str | None) -> float:
     if not org_nom or not cand_nom:
         return 0.0
-    to, tc = _tokens(org_nom), _tokens(cand_nom)
+    to, tc = tokens(org_nom), tokens(cand_nom)
     if not to or not tc:
         return 0.0
     nm, np_ = len(to), len(tc)
@@ -44,7 +37,7 @@ def score_nom(org_nom: str, cand_nom: str | None) -> float:
     union = len(set(to) | set(tc)) or 1
     jacc = inter / union
 
-    exact = 1.0 if _norm_upper(org_nom) == _norm_upper(cand_nom) else 0.0
+    exact = 1.0 if norm_upper(org_nom) == norm_upper(cand_nom) else 0.0
     factor = max(exact, 0.5 * len_factor + 0.5 * jacc)
     return W_NOM * factor
 
@@ -127,16 +120,19 @@ def score_candidate(rec: WMRecord, cand: Any) -> CandidateScore:
     pct = int(round(100.0 * total / SCORE_MAX))
     return CandidateScore(insee=cand, score_raw=total, score_pct=pct, detail=detail)
 
-
 def score_record(rec: WMRecord) -> None:
     scored = [score_candidate(rec, c) for c in rec.insee_candidates]
     scored.sort(key=lambda x: x.score_pct, reverse=True)
     rec.scored = scored
 
     if scored:
-        rec.match_pct = int(round(sum(s.score_pct for s in scored) / len(scored)))
+        pcts = [s.score_pct for s in scored]
+        rec.match_pct = pcts[0]                      # top, plus la moyenne
+        rec.match_max = pcts[0]                       # == top (liste triée desc)
+        rec.match_min = min(pcts)
+        rec.match_moy = int(round(sum(pcts) / len(pcts)))
     else:
-        rec.match_pct = 0
+        rec.match_pct = rec.match_min = rec.match_max = rec.match_moy = 0
 
     v = 0.0
     if rec.siren or (rec.siret and len(re.sub(r"\D", "", rec.siret or "")) >= 9):
@@ -144,4 +140,4 @@ def score_record(rec: WMRecord) -> None:
     if scored:
         v += 2.0 / 3.0
     rec.veracity_pct = int(round(100.0 * v))
-    rec.global_pct = int(round((rec.match_pct * 2 + rec.veracity_pct) / 3))
+    rec.global_pct = int(round((rec.match_pct * 2 + rec.veracity_pct) / 3))    
