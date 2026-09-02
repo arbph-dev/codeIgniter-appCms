@@ -18,7 +18,8 @@ from cli.menus.ban          import menu_ban
 from cli.menus.credentials  import menu_credentials
 from cli.menus.entreprise   import menu_entreprise
 from cli.menus.organisation import menu_organisation
-
+from cli.menus.adresse      import menu_adresse
+from cli.menus.image        import menu_image
 from cli.menus.layer5       import menu_layer5
 
 console = Console()
@@ -30,10 +31,12 @@ MENU_PRINCIPAL = [
     "OMDB Films",
     "OpenLibrary Livres",
     "Poligraph",
+    "Adresses (zealot)",
     "Adresses BAN",
     "Credentials",
     "Entreprises (zealot)",
     "Organisations (zealot)",
+    "Images (zealot)",
     "Couche 5 — Enrichissement",
 ]
 
@@ -44,11 +47,13 @@ HANDLERS = {
     "4"     : menu_omdb,
     "5"     : menu_openlibrary,
     "6"     : menu_poligraph,
-    "7"     : menu_ban,
-    "8"     : menu_credentials,
-    "9"     : menu_entreprise,
-    "10"    : menu_organisation,
-    "11"    : menu_layer5,   # ajuster le numéro
+    "7"     : menu_adresse,
+    "8"     : menu_ban,
+    "9"     : menu_credentials,
+    "10"    : menu_entreprise,
+    "11"    : menu_organisation,
+    "12"    : menu_image,
+    "13"    : menu_layer5,   # ajuster le numéro
 }
 
 
