@@ -42,7 +42,9 @@ class EntrepriseInsee:
     siret_siege:       Optional[str]       # siren + nic_siege (calculé)
     economie_sociale:  Optional[bool]      # economieSocialeSolidaireUniteLegale
     statut_diffusion:  Optional[str]       # statutDiffusionUniteLegale : O / P / N
-
+    # 2026-09-02-002 - couche 5 — rempli via search_siret (siège), pas par from_api 
+    localisation:      Optional[str] = None   # "29000 Quimper"
+    
     @classmethod
     def from_api(cls, data: dict) -> "EntrepriseInsee":
         periodes = data.get("periodesUniteLegale", [{}])
