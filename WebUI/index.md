@@ -136,9 +136,9 @@ le css associé
 # Améliorations
 employer balises : H1/H2/H3
 
-Pour créer un lien d'ancrage ciblant un élément <h1> 
-- attribuez un id unique à la balise <h1> (ou au conteneur <div>) 
-- utilisez un lien hypertexte avec un hachereau (#) suivi de cet identifiant. 
+Pour créer un lien d'ancrage ciblant un élément `<h1>` 
+- attribuez un id unique à la balise `<h1>` (ou au conteneur `<div>`) 
+- utilisez un lien hypertexte avec un hachereau `#` suivi de cet identifiant. 
 
 Exemple de code :
 
