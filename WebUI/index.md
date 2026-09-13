@@ -1,4 +1,6 @@
 **Notes** : button ajouter type button
+Sidebar / a.closebtn : remplacer X, times par un font awesone + style modifier couleur 
+
 
 Trois fichiers récents a revoir pour extraction
 
@@ -38,6 +40,76 @@ header#header
 ```
 
 
+## Sidebar
+
+Sidebar doit etre généré par script
+button.nav-toggle => button caché sur pc
+        
+
+
+css classes
+- closebtn
+- nav-article
+- nav-header-row
+- nav-title
+- nav-toggle
+- nav-toc
+
+css elements
+
+a voir en ligne 
+  /* 2026-09-13  */
+  .nav-article.open .nav-toc {
+    display: block;
+  }
+
+
+```
+  nav#sidebar 
+    > a.closebtn 
+    > div.nav-article
+      > div.nav-header-row 
+        > a.nav-title 
+        > button.nav-toggle
+      > ul.nav-toc
+        > li
+          > a ( panel / tab 0 )
+          > ul
+            > li
+              > a ( panel / tab 0 - Sub tab 0 )
+              > ul
+            > li
+              > a ( panel / tab 0 - Sub tab 1 )
+              > ul
+            > li
+              > a ( panel / tab 0 - Sub tab 2 )
+              > ul
+        > li
+          > a ( panel / tab 1 )
+          > ul
+            > li
+              > a ( panel / tab 1 - Sub tab 0 )
+              > ul
+            > li
+              > a ( panel / tab 1 - Sub tab 1 )
+              > ul
+            > li
+              > a ( panel / tab 1 - Sub tab 2 )
+              > ul                  
+        > li
+          > a ( panel / tab 2 )
+          > ul
+            > li
+              > a ( panel / tab 2 - Sub tab 0 )
+              > ul
+            > li
+              > a ( panel / tab 2 - Sub tab 1 )
+              > ul
+            > li
+              > a (  panel / tab 2 - Sub tab 2 )
+              > ul
+```
+
 ## Panels / Onglets
 
 le css associé
@@ -72,5 +144,38 @@ le css associé
 </div>   
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Améliorations
 employer balises : H1/H2/H3
+
+
+Pour créer un lien d'ancrage ciblant un élément <h1> 
+attribuez un id unique à la balise <h1> (ou au conteneur <div>) 
+utilisez un lien hypertexte avec un hachereau (#) suivi de cet identifiant.
+
+Exemple de code :
+
+<!-- Lien déclencheur -->
+<a href="#section-titre">Aller au titre</a>
+
+<!-- Cible -->
+<div>
+  <h1 id="section-titre">Mon Titre</h1>
+</div>
+
+
