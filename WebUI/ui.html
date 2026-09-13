@@ -1,465 +1,134 @@
+<!-- 
+    2026-09-09 : modificaton 
+  
+    2026-09-10 : voir pour supprimer les ul vide dans le menu nav ligne 66 et suivantes
+  -->
 <!DOCTYPE html>
 <html lang="fr" data-theme="marine">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>
-        Automates industriels communicants — comparaison et caractéristiques
-    </title>
-
-    <meta
-        name="description"
-        content="Comparatif d'automates et contrôleurs industriels communicants : Schneider Modicon M221, WAGO, Crouzet Millenium EVO, Siemens LOGO! 8 et LACROIX Sofrel YDRIX."
-    >
-
-    <meta
-        name="robots"
-        content="index, follow"
-    >
-
-    <link
-        rel="stylesheet"
-        href="/assets/css/uistyle.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Automates industriels - comparaison et caractéristiques</title>
+    <meta name="description" content="Comparatif d'automates et contrôleurs industriels communicants : Schneider Modicon M221, WAGO, Crouzet Millenium EVO, Siemens LOGO! 8 et LACROIX Sofrel YDRIX.">
+    <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="/assets/css/uistyle.css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-
 <body>
-
-
-    <!-- ================================================================
-         HEADER
-         ================================================================ -->
-
+    <!-- ====   HEADER ================================================================ -->
     <header id="header">
-
         <div class="title-layout">
-
-            <h1 id="appTitle">
-                Automates industriels communicants
-            </h1>
-
-            <span id="appSubtitle">
-                Comparaison, caractéristiques techniques et avis
-            </span>
-
+            <h1 id="appTitle">Automates industriels communicants</h1>
+            <span id="appSubtitle">Comparaison, caractéristiques techniques et avis</span>
         </div>
-
 
         <div class="header-actions">
-
-            <button
-                class="rwdnav"
-                type="button"
-                onclick="openNav()"
-                aria-label="Ouvrir le menu"
-            >
-                <i
-                    class="fa fa-bars"
-                    aria-hidden="true"
-                ></i>
+            <button class="rwdnav" type="button" onclick="openNav()" aria-label="Ouvrir le menu">
+                <i class="fa fa-bars" aria-hidden="true"></i>
             </button>
-
-
-            <button
-                id="themeBtn"
-                type="button"
-            >
-                Thème nature
-            </button>
-
-
-            <button
-                id="fullscreenBtn"
-                type="button"
-            >
-                Plein écran
-            </button>
-
+            <button id="themeBtn" type="button">Thème nature</button>
+            <button id="fullscreenBtn" type="button">Plein écran</button>
         </div>
-
     </header>
+    <!-- ==== SIDEBAR ============================================================== 
+    on va devoir 
+        initiliser ref dom sur stack
 
-
-    <!-- ================================================================
-         SIDEBAR
-         ================================================================ -->
+    -->
 
     <nav id="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" aria-label="Fermer le menu">&times;</a>
 
-        <a
-            href="javascript:void(0)"
-            class="closebtn"
-            onclick="closeNav()"
-            aria-label="Fermer le menu"
-        >
-            &times;
-        </a>
-
-
-        <div
-            class="nav-article"
-            data-article-id="automates"
-        >
+        <div class="nav-article" data-article-id="automates">
 
             <div class="nav-header-row">
-
-                <a
-                    href="javascript:void(0)"
-                    class="nav-title active"
-                >
-                    <i
-                        class="fa fa-fw fa-cogs"
-                        aria-hidden="true"
-                    ></i>
+                <a href="javascript:void(0)" class="nav-title active">
+                    <i class="fa fa-fw fa-cogs" aria-hidden="true" ></i>
                     Automates
                 </a>
-
-
-                <button
-                    class="nav-toggle"
-                    type="button"
-                    aria-label="Développer le menu Automates"
-                    aria-expanded="false"
-                >
+                <button class="nav-toggle" type="button" aria-label="Développer le menu Automates" aria-expanded="false">
                     ›
                 </button>
-
             </div>
 
-
             <ul class="nav-toc">
-
-                <!-- ====================================================
-                     0 — SCHNEIDER
-                     ==================================================== -->
-
+                <!-- === Panel / Onglet 0 — SCHNEIDER ================== -->
                 <li>
-
-                    <a
-                        href="javascript:void(0)"
-                        data-target-id="0"
-                    >
-                        Schneider Modicon M221
-                    </a>
-
+                    <a href="javascript:void(0)" data-target-id="0" >Schneider Modicon M221</a>
                     <ul>
-
                         <li>
-                            <a
-                                href="#presentation-0"
-                                data-tab-target="presentation-0"
-                            >
-                                Présentation
-                            </a>
+                            <a  href="#presentation-0" data-tab-target="presentation-0"
+                            >Présentation</a>
+                        </li>
+                        <li>
+                            <a  href="#caracteristiques-0" data-tab-target="caracteristiques-0">Caractéristiques</a>
                         </li>
 
                         <li>
-                            <a
-                                href="#caracteristiques-0"
-                                data-tab-target="caracteristiques-0"
-                            >
-                                Caractéristiques
-                            </a>
+                            <a href="#conclusion-0" data-tab-target="conclusion-0">Conclusion et avis</a>
                         </li>
-
-                        <li>
-                            <a
-                                href="#conclusion-0"
-                                data-tab-target="conclusion-0"
-                            >
-                                Conclusion et avis
-                            </a>
-                        </li>
-
                     </ul>
-
                 </li>
-
-
-                <!-- ====================================================
-                     1 — WAGO
-                     ==================================================== -->
-
+                <!-- === Panel / Onglet 1 — WAGO  ===================== -->
                 <li>
-
-                    <a
-                        href="javascript:void(0)"
-                        data-target-id="1"
-                    >
-                        WAGO
-                    </a>
-
+                    <a href="javascript:void(0)" data-target-id="1">WAGO</a>
                     <ul>
-
                         <li>
-                            <a
-                                href="#presentation-1"
-                                data-tab-target="presentation-1"
-                            >
-                                Présentation
-                            </a>
+                            <a href="#presentation-1" data-tab-target="presentation-1">Présentation</a>
                         </li>
-
                         <li>
-                            <a
-                                href="#caracteristiques-1"
-                                data-tab-target="caracteristiques-1"
-                            >
-                                Caractéristiques
-                            </a>
+                            <a href="#caracteristiques-1"  data-tab-target="caracteristiques-1">Caractéristiques</a>
                         </li>
-
                         <li>
-                            <a
-                                href="#conclusion-1"
-                                data-tab-target="conclusion-1"
-                            >
-                                Conclusion et avis
-                            </a>
+                            <a href="#conclusion-1" data-tab-target="conclusion-1">Conclusion et avis</a>
                         </li>
-
                     </ul>
-
                 </li>
-
-
-                <!-- ====================================================
-                     2 — CROUZET
-                     ==================================================== -->
-
+                <!-- ==== Panel / Onglet 2 — CROUZET  ====================== -->
                 <li>
-
-                    <a
-                        href="javascript:void(0)"
-                        data-target-id="2"
-                    >
-                        Crouzet Millenium EVO
-                    </a>
-
+                    <a href="javascript:void(0)" data-target-id="2">Crouzet Millenium EVO</a>
                     <ul>
-
                         <li>
-                            <a
-                                href="#presentation-2"
-                                data-tab-target="presentation-2"
-                            >
-                                Présentation
-                            </a>
+                            <a href="#presentation-2" data-tab-target="presentation-2">Présentation</a>
                         </li>
-
                         <li>
-                            <a
-                                href="#caracteristiques-2"
-                                data-tab-target="caracteristiques-2"
-                            >
-                                Caractéristiques
-                            </a>
+                            <a href="#caracteristiques-2" data-tab-target="caracteristiques-2">Caractéristiques</a>
                         </li>
-
                         <li>
-                            <a
-                                href="#conclusion-2"
-                                data-tab-target="conclusion-2"
-                            >
-                                Conclusion et avis
-                            </a>
+                            <a href="#conclusion-2" data-tab-target="conclusion-2">Conclusion et avis</a>
                         </li>
-
                     </ul>
-
                 </li>
-
-
-                <!-- ====================================================
-                     3 — SIEMENS
-                     ==================================================== -->
-
-                <li>
-
-                    <a
-                        href="javascript:void(0)"
-                        data-target-id="3"
-                    >
-                        Siemens LOGO! 8
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a
-                                href="#presentation-3"
-                                data-tab-target="presentation-3"
-                            >
-                                Présentation
-                            </a>
-                        </li>
-
-                        <li>
-                            <a
-                                href="#caracteristiques-3"
-                                data-tab-target="caracteristiques-3"
-                            >
-                                Caractéristiques
-                            </a>
-                        </li>
-
-                        <li>
-                            <a
-                                href="#conclusion-3"
-                                data-tab-target="conclusion-3"
-                            >
-                                Conclusion et avis
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
-
-                <!-- ====================================================
-                     4 — LACROIX SOFREL
-                     ==================================================== -->
-
-                <li>
-
-                    <a
-                        href="javascript:void(0)"
-                        data-target-id="4"
-                    >
-                        LACROIX Sofrel YDRIX
-                    </a>
-
-                    <ul>
-
-                        <li>
-                            <a
-                                href="#presentation-4"
-                                data-tab-target="presentation-4"
-                            >
-                                Présentation
-                            </a>
-                        </li>
-
-                        <li>
-                            <a
-                                href="#caracteristiques-4"
-                                data-tab-target="caracteristiques-4"
-                            >
-                                Caractéristiques
-                            </a>
-                        </li>
-
-                        <li>
-                            <a
-                                href="#conclusion-4"
-                                data-tab-target="conclusion-4"
-                            >
-                                Conclusion et avis
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </li>
-
             </ul>
-
         </div>
-
     </nav>
-
-
-    <!-- ================================================================
-         CONTENU PRINCIPAL
-         ================================================================ -->
-
+    <!-- ====  CONTENU PRINCIPAL    ========================== -->
     <main id="stack">
-
-
-        <!-- ============================================================
-             0 — SCHNEIDER MODICON M221
-             ============================================================ -->
-
-        <div
-            class="panel-card"
-            data-index="0"
-        >
-
-            <h2 class="panel-title">
-                Schneider Modicon M221
-            </h2>
-
-
+        <!-- ====  0 — SCHNEIDER MODICON M221 ===================== -->
+        <div class="panel-card" data-index="0">
+            <h2 class="panel-title">Schneider Modicon M221</h2>
             <p class="panel-description">
                 Le Modicon M221 est un contrôleur logique destiné aux
                 architectures d'automatisme communicantes simples. La gamme
                 existe en plusieurs configurations et peut recevoir des
                 modules d'extension d'E/S.
             </p>
-
-
             <div class="section-tab">
 
-
                 <div class="tab-headers">
-
-                    <button
-                        class="tab-btn active"
-                        type="button"
-                        data-tab="presentation-0"
-                    >
-                        Présentation
-                    </button>
-
-                    <button
-                        class="tab-btn"
-                        type="button"
-                        data-tab="caracteristiques-0"
-                    >
-                        Caractéristiques
-                    </button>
-
-                    <button
-                        class="tab-btn"
-                        type="button"
-                        data-tab="conclusion-0"
-                    >
-                        Conclusion
-                    </button>
-
+                    <button class="tab-btn active" type="button" data-tab="presentation-0">Présentation</button>
+                    <button class="tab-btn" type="button" data-tab="caracteristiques-0">Caractéristiques</button>
+                    <button class="tab-btn" type="button" data-tab="conclusion-0">Conclusion</button>
                 </div>
 
-
-                <div
-                    id="presentation-0"
-                    class="tab-content active"
-                >
-
-                    <h3>
-                        Présentation du Modicon M221
-                    </h3>
-
+                <div id="presentation-0" class="tab-content active">
+                    <h3>Présentation du Modicon M221</h3>
                     <p>
                         Le Modicon M221 de Schneider Electric est conçu pour
                         les applications d'automatisme qui nécessitent une
                         solution compacte, programmable et communicante.
                     </p>
-
                     <p>
                         Schneider indique notamment la présence d'un port
                         Ethernet, d'un port USB, d'une liaison série et de
@@ -467,7 +136,6 @@
                         D'autres E/S peuvent être ajoutées au moyen de
                         modules d'extension.
                     </p>
-
                     <p>
                         Le M221 constitue ainsi une solution intéressante
                         pour les petites machines, les installations
@@ -475,472 +143,221 @@
                         communication avec une supervision ou d'autres
                         équipements.
                     </p>
-
                 </div>
 
-
-                <div
-                    id="caracteristiques-0"
-                    class="tab-content"
-                >
-
-                    <h3>
-                        Caractéristiques techniques
-                    </h3>
-
+                <div id="caracteristiques-0" class="tab-content">
+                    <h3>Caractéristiques techniques</h3>
                     <table>
                         <tr>
                             <th>Entrées numériques</th>
-                            <td>
-                                Selon référence
-                            </td>
+                            <td>Selon référence</td>
                         </tr>
-
                         <tr>
                             <th>Sorties numériques</th>
-                            <td>
-                                Selon référence
-                            </td>
+                            <td>Selon référence</td>
                         </tr>
-
                         <tr>
                             <th>Entrées analogiques</th>
-                            <td>
-                                2 intégrées sur la gamme
-                            </td>
+                            <td>2 intégrées sur la gamme</td>
                         </tr>
-
                         <tr>
                             <th>Sorties analogiques</th>
-                            <td>
-                                Selon référence et extensions
-                            </td>
+                            <td>Selon référence et extensions</td>
                         </tr>
-
                         <tr>
                             <th>Ethernet</th>
-                            <td>
-                                1 port intégré
-                            </td>
+                            <td>1 port intégré</td>
                         </tr>
-
                         <tr>
                             <th>RS485 / liaison série</th>
-                            <td>
-                                Liaison série selon référence
-                            </td>
+                            <td>Liaison série selon référence</td>
                         </tr>
-
                         <tr>
                             <th>Communication</th>
-                            <td>
-                                Ethernet, Modbus selon configuration
-                            </td>
+                            <td>Ethernet, Modbus selon configuration</td>
                         </tr>
-
                         <tr>
                             <th>Logiciel</th>
-                            <td>
-                                EcoStruxure Machine Expert - Basic
-                            </td>
+                            <td>EcoStruxure Machine Expert - Basic</td>
                         </tr>
-
                     </table>
-
                 </div>
 
-
-                <div
-                    id="conclusion-0"
-                    class="tab-content"
-                >
-
-                    <h3>
-                        Conclusion et avis
-                    </h3>
-
+                <div id="conclusion-0" class="tab-content">
+                    <h3>Conclusion et avis</h3>
                     <p>
                         Le M221 est particulièrement adapté lorsque
                         l'installation demande davantage qu'un simple
                         relais programmable tout en restant dans une
                         architecture compacte.
                     </p>
-
                     <p>
                         Son intérêt principal réside dans son intégration
                         dans l'écosystème Schneider Electric et dans la
                         possibilité d'étendre les E/S selon les besoins.
                     </p>
-
                     <p>
                         Pour comparer plusieurs références, il faudra
                         distinguer précisément le nombre et le type d'E/S
                         intégrées à chaque variante.
                     </p>
-
                 </div>
-
-
             </div>
-
         </div>
+        <!-- === 1 — WAGO ========================================================================= -->
 
-
-        <!-- ============================================================
-             1 — WAGO
-             ============================================================ -->
-
-        <div
-            class="panel-card hidden"
-            data-index="1"
-        >
-
-            <h2 class="panel-title">
-                WAGO
-            </h2>
-
-
+        <div class="panel-card hidden" data-index="1">
+            <h2 class="panel-title">WAGO</h2>
             <p class="panel-description">
                 WAGO propose des solutions d'automatisme modulaires et
                 communicantes. La plateforme dépend fortement de la
                 référence du contrôleur et des modules d'E/S associés.
             </p>
 
-
             <div class="section-tab">
 
-
                 <div class="tab-headers">
-
-                    <button
-                        class="tab-btn active"
-                        type="button"
-                        data-tab="presentation-1"
-                    >
-                        Présentation
-                    </button>
-
-                    <button
-                        class="tab-btn"
-                        type="button"
-                        data-tab="caracteristiques-1"
-                    >
-                        Caractéristiques
-                    </button>
-
-                    <button
-                        class="tab-btn"
-                        type="button"
-                        data-tab="conclusion-1"
-                    >
-                        Conclusion
-                    </button>
-
+                    <button class="tab-btn active" type="button" data-tab="presentation-1">Présentation</button>
+                    <button class="tab-btn" type="button" data-tab="caracteristiques-1">Caractéristiques</button>
+                    <button class="tab-btn" type="button" data-tab="conclusion-1">Conclusion</button>
                 </div>
 
-
-                <div
-                    id="presentation-1"
-                    class="tab-content active"
-                >
-
-                    <h3>
-                        Présentation de la solution WAGO
-                    </h3>
-
+                <div id="presentation-1" class="tab-content active">
+                    <h3>Présentation de la solution WAGO</h3>
                     <p>
                         L'offre WAGO repose notamment sur une architecture
                         modulaire permettant d'associer contrôleur,
                         interfaces de communication et modules d'entrées /
                         sorties.
                     </p>
-
                     <p>
                         Cette philosophie est particulièrement intéressante
                         lorsqu'une installation doit évoluer progressivement
                         ou lorsqu'un grand nombre de signaux différents doit
                         être raccordé.
                     </p>
-
                     <p>
                         La référence 750-891 constitue par exemple un
                         contrôleur Modbus TCP avec deux interfaces Ethernet.
                     </p>
-
                 </div>
 
-
-                <div
-                    id="caracteristiques-1"
-                    class="tab-content"
-                >
-
-                    <h3>
-                        Caractéristiques techniques
-                    </h3>
-
+                <div id="caracteristiques-1" class="tab-content">
+                    <h3>Caractéristiques techniques</h3>
                     <table>
                         <tr>
                             <th>Entrées numériques</th>
-                            <td>
-                                Selon modules d'E/S
-                            </td>
+                            <td>Selon modules d'E/S</td>
                         </tr>
-
                         <tr>
                             <th>Sorties numériques</th>
-                            <td>
-                                Selon modules d'E/S
-                            </td>
+                            <td>Selon modules d'E/S</td>
                         </tr>
-
                         <tr>
                             <th>Entrées analogiques</th>
-                            <td>
-                                Selon modules d'E/S
-                            </td>
+                            <td>Selon modules d'E/S</td>
                         </tr>
-
                         <tr>
                             <th>Sorties analogiques</th>
-                            <td>
-                                Selon modules d'E/S
-                            </td>
+                            <td>Selon modules d'E/S</td>
                         </tr>
-
                         <tr>
                             <th>Ethernet</th>
-                            <td>
-                                Selon contrôleur ; 2 sur WAGO 750-891
-                            </td>
+                            <td>Selon contrôleur ; 2 sur WAGO 750-891</td>
                         </tr>
-
                         <tr>
                             <th>RS485</th>
-                            <td>
-                                Disponible par module d'interface
-                            </td>
+                            <td>Disponible par module d'interface</td>
                         </tr>
-
                         <tr>
                             <th>Modbus</th>
-                            <td>
-                                Modbus TCP / RTU selon configuration
-                            </td>
+                            <td>Modbus TCP / RTU selon configuration</td>
                         </tr>
-
                         <tr>
                             <th>Architecture</th>
-                            <td>
-                                Modulaire
-                            </td>
+                            <td>Modulaire</td>
                         </tr>
-
                     </table>
-
                 </div>
 
-
-                <div
-                    id="conclusion-1"
-                    class="tab-content"
-                >
-
-                    <h3>
-                        Conclusion et avis
-                    </h3>
-
+                <div id="conclusion-1" class="tab-content">
+                    <h3>Conclusion et avis</h3>
                     <p>
                         WAGO est particulièrement pertinent lorsqu'on
                         recherche une architecture flexible avec beaucoup
                         d'extensions d'E/S et plusieurs possibilités de
                         communication.
                     </p>
-
                     <p>
                         En contrepartie, la comparaison de prix et de
                         capacités doit être effectuée sur une configuration
                         complète et non uniquement sur le contrôleur.
                     </p>
-
                     <p>
                         Pour un futur comparateur, WAGO se prête donc bien à
                         une présentation par référence et par composition
                         de modules.
                     </p>
-
                 </div>
-
-
             </div>
-
         </div>
 
-
-        <!-- ============================================================
-             2 — CROUZET MILLENIUM EVO
-             ============================================================ -->
-
-        <div
-            class="panel-card hidden"
-            data-index="2"
-        >
-
-            <h2 class="panel-title">
-                Crouzet Millenium EVO
-            </h2>
-
-
+        <!-- === 2 — CROUZET MILLENIUM EVO ======================================================== -->
+        <div class="panel-card hidden" data-index="2">
+            <h2 class="panel-title">Crouzet Millenium EVO</h2>
             <p class="panel-description">
                 Le Millenium EVO est un contrôleur logique communicant
                 destiné aux petits projets d'automatisation, avec Ethernet,
                 Modbus, USB et Bluetooth selon la configuration.
             </p>
 
-
             <div class="section-tab">
 
-
                 <div class="tab-headers">
-
-                    <button
-                        class="tab-btn active"
-                        type="button"
-                        data-tab="presentation-2"
-                    >
-                        Présentation
-                    </button>
-
-                    <button
-                        class="tab-btn"
-                        type="button"
-                        data-tab="caracteristiques-2"
-                    >
-                        Caractéristiques
-                    </button>
-
-                    <button
-                        class="tab-btn"
-                        type="button"
-                        data-tab="conclusion-2"
-                    >
-                        Conclusion
-                    </button>
-
+                    <button class="tab-btn active" type="button" data-tab="presentation-2">Présentation</button>
+                    <button class="tab-btn" type="button" data-tab="caracteristiques-2">Caractéristiques</button>
+                    <button class="tab-btn" type="button" data-tab="conclusion-2">Conclusion</button>
                 </div>
 
-
-                <div
-                    id="presentation-2"
-                    class="tab-content active"
-                >
-
-                    <h3>
-                        Présentation du Millenium EVO
-                    </h3>
-
-                    <p>
-                        Crouzet présente le Millenium EVO comme un contrôleur
-                        logique communiquant destiné aux petits projets
-                        d'automatisation.
-                    </p>
-
-                    <p>
-                        La version Ethernet annoncée par Crouzet fonctionne
-                        en 24 V DC et intègre 16 entrées et 8 sorties. La
-                        gamme peut être étendue avec des modules d'E/S.
-                    </p>
-
-                    <p>
-                        Le système prend notamment en charge Ethernet et
-                        Modbus, ainsi que l'USB et le Bluetooth pour
-                        certaines opérations de configuration et de
-                        programmation.
-                    </p>
-
+                <div id="presentation-2" class="tab-content active">
+                    <h3>Présentation du Millenium EVO</h3>
+                    <p>Crouzet présente le Millenium EVO comme un contrôleur logique communiquant destiné aux petits projets d'automatisation.</p>
+                    <p>La version Ethernet annoncée par Crouzet fonctionne en 24 V DC et intègre 16 entrées et 8 sorties. La gamme peut être étendue avec des modules d'E/S.</p>
+                    <p>Le système prend notamment en charge Ethernet et Modbus, ainsi que l'USB et le Bluetooth pourcertaines opérations de configuration et de programmation.</p>
                 </div>
 
-
-                <div
-                    id="caracteristiques-2"
-                    class="tab-content"
-                >
-
-                    <h3>
-                        Caractéristiques techniques
-                    </h3>
-
+                <div id="caracteristiques-2" class="tab-content">
+                    <h3>Caractéristiques techniques</h3>
                     <table>
                         <tr>
-                            <th>Alimentation</th>
-                            <td>
-                                24 V DC
-                            </td>
+                            <th>Alimentation</th><td>24 V DC</td>
                         </tr>
-
                         <tr>
-                            <th>Entrées numériques</th>
-                            <td>
-                                16 sur la version Ethernet indiquée
-                            </td>
+                            <th>Entrées numériques</th><td>16 sur la version Ethernet indiquée</td>
                         </tr>
-
                         <tr>
-                            <th>Sorties numériques</th>
-                            <td>
-                                8 sur la version Ethernet indiquée
-                            </td>
+                            <th>Sorties numériques</th><td>8 sur la version Ethernet indiquée</td>
                         </tr>
-
                         <tr>
-                            <th>Extensions</th>
-                            <td>
-                                Modules d'extension disponibles
-                            </td>
+                            <th>Extensions</th><td>Modules d'extension disponibles</td>
                         </tr>
-
                         <tr>
-                            <th>Ethernet</th>
-                            <td>
-                                Oui
-                            </td>
+                            <th>Ethernet</th><td>Oui</td>
                         </tr>
-
                         <tr>
-                            <th>RS485</th>
-                            <td>
-                                Disponible via interface Modbus
-                            </td>
+                            <th>RS485</th><td>Disponible via interface Modbus</td>
                         </tr>
-
                         <tr>
-                            <th>Protocoles</th>
-                            <td>
-                                Ethernet, Modbus
-                            </td>
+                            <th>Protocoles</th><td>Ethernet, Modbus</td>
                         </tr>
-
                         <tr>
-                            <th>Logiciel</th>
-                            <td>
-                                Crouzet Soft
-                            </td>
+                            <th>Logiciel</th><td>Crouzet Soft</td>
                         </tr>
-
                     </table>
-
                 </div>
 
-
-                <div
-                    id="conclusion-2"
-                    class="tab-content"
-                >
-
-                    <h3>
-                        Conclusion et avis
-                    </h3>
-
+                <div id="conclusion-2" class="tab-content">
+                    <h3>Conclusion et avis</h3>
                     <p>
                         Le Millenium EVO est une solution intéressante pour
                         les applications compactes qui demandent une
@@ -948,455 +365,31 @@
                         sans passer immédiatement à un automate industriel
                         plus lourd.
                     </p>
-
                     <p>
                         Son format, son environnement de programmation et
                         ses possibilités de communication constituent ses
                         principaux avantages.
                     </p>
-
                     <p>
                         Pour une installation plus importante, il faut
                         naturellement comparer les possibilités d'extension
                         et le nombre réel d'E/S requis.
                     </p>
-
                 </div>
-
-
             </div>
-
         </div>
-
-
-        <!-- ============================================================
-             3 — SIEMENS LOGO! 8
-             ============================================================ -->
-
-        <div
-            class="panel-card hidden"
-            data-index="3"
-        >
-
-            <h2 class="panel-title">
-                Siemens LOGO! 8
-            </h2>
-
-
-            <p class="panel-description">
-                LOGO! 8 est un module logique Siemens destiné aux tâches de
-                nano-automatisation et disposant d'une communication
-                Ethernet intégrée.
-            </p>
-
-
-            <div class="section-tab">
-
-
-                <div class="tab-headers">
-
-                    <button
-                        class="tab-btn active"
-                        type="button"
-                        data-tab="presentation-3"
-                    >
-                        Présentation
-                    </button>
-
-                    <button
-                        class="tab-btn"
-                        type="button"
-                        data-tab="caracteristiques-3"
-                    >
-                        Caractéristiques
-                    </button>
-
-                    <button
-                        class="tab-btn"
-                        type="button"
-                        data-tab="conclusion-3"
-                    >
-                        Conclusion
-                    </button>
-
-                </div>
-
-
-                <div
-                    id="presentation-3"
-                    class="tab-content active"
-                >
-
-                    <h3>
-                        Présentation de LOGO! 8
-                    </h3>
-
-                    <p>
-                        Siemens positionne LOGO! comme un module logique
-                        destiné notamment aux tâches de nano-automatisation,
-                        à la construction mécanique et aux installations
-                        techniques.
-                    </p>
-
-                    <p>
-                        LOGO! 8 prend en charge la communication Ethernet
-                        TCP/IP et peut communiquer notamment avec d'autres
-                        équipements LOGO!, des systèmes SIMATIC et des
-                        équipements Modbus TCP/IP.
-                    </p>
-
-                    <p>
-                        L'approche de LOGO! reste orientée vers la simplicité
-                        de mise en œuvre et les applications d'automatisation
-                        de petite taille.
-                    </p>
-
-                </div>
-
-
-                <div
-                    id="caracteristiques-3"
-                    class="tab-content"
-                >
-
-                    <h3>
-                        Caractéristiques techniques
-                    </h3>
-
-                    <table>
-                        <tr>
-                            <th>Positionnement</th>
-                            <td>
-                                Nano-automatisation
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Ethernet</th>
-                            <td>
-                                Oui
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Communication</th>
-                            <td>
-                                TCP/IP Ethernet
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Modbus TCP</th>
-                            <td>
-                                Oui
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Connexions Ethernet</th>
-                            <td>
-                                Jusqu'à 16 connexions réseau selon le
-                                manuel LOGO! 8
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>E/S</th>
-                            <td>
-                                Selon le module Base et les extensions
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Programmation</th>
-                            <td>
-                                LOGO! Soft Comfort
-                            </td>
-                        </tr>
-
-                    </table>
-
-                </div>
-
-
-                <div
-                    id="conclusion-3"
-                    class="tab-content"
-                >
-
-                    <h3>
-                        Conclusion et avis
-                    </h3>
-
-                    <p>
-                        LOGO! 8 est particulièrement adapté aux applications
-                        où la simplicité de programmation et l'intégration
-                        dans un environnement Siemens sont prioritaires.
-                    </p>
-
-                    <p>
-                        Sa connectivité Ethernet lui permet d'être intégré
-                        dans des architectures modernes sans perdre
-                        l'approche simple propre aux modules logiques.
-                    </p>
-
-                    <p>
-                        Pour des besoins d'E/S ou de traitement plus
-                        importants, il faudra comparer cette solution avec
-                        une gamme d'automates plus complète.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-
-        <!-- ============================================================
-             4 — LACROIX SOFREL YDRIX
-             ============================================================ -->
-
-        <div
-            class="panel-card hidden"
-            data-index="4"
-        >
-
-            <h2 class="panel-title">
-                LACROIX Sofrel YDRIX
-            </h2>
-
-
-            <p class="panel-description">
-                YDRIX est une RTU destinée au contrôle, à l'automatisation
-                et à la télégestion, notamment dans les applications
-                hydrauliques et les installations distantes.
-            </p>
-
-
-            <div class="section-tab">
-
-
-                <div class="tab-headers">
-
-                    <button
-                        class="tab-btn active"
-                        type="button"
-                        data-tab="presentation-4"
-                    >
-                        Présentation
-                    </button>
-
-                    <button
-                        class="tab-btn"
-                        type="button"
-                        data-tab="caracteristiques-4"
-                    >
-                        Caractéristiques
-                    </button>
-
-                    <button
-                        class="tab-btn"
-                        type="button"
-                        data-tab="conclusion-4"
-                    >
-                        Conclusion
-                    </button>
-
-                </div>
-
-
-                <div
-                    id="presentation-4"
-                    class="tab-content active"
-                >
-
-                    <h3>
-                        Présentation de YDRIX
-                    </h3>
-
-                    <p>
-                        YDRIX de LACROIX Sofrel se situe davantage dans le
-                        domaine de la RTU et de la télégestion que dans celui
-                        du petit automate logique traditionnel.
-                    </p>
-
-                    <p>
-                        La solution combine acquisition d'informations,
-                        automatisation, communication réseau et fonctions
-                        de télégestion.
-                    </p>
-
-                    <p>
-                        Elle est particulièrement destinée aux installations
-                        distantes telles que les ouvrages hydrauliques, les
-                        stations de pompage et les équipements nécessitant
-                        une surveillance à distance.
-                    </p>
-
-                </div>
-
-
-                <div
-                    id="caracteristiques-4"
-                    class="tab-content"
-                >
-
-                    <h3>
-                        Caractéristiques techniques
-                    </h3>
-
-                    <table>
-                        <tr>
-                            <th>Entrées numériques</th>
-                            <td>
-                                6 intégrées
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Entrées analogiques</th>
-                            <td>
-                                2 intégrées
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Sorties numériques</th>
-                            <td>
-                                4 intégrées
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Sortie analogique</th>
-                            <td>
-                                1 sortie 0-20 mA
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Ethernet</th>
-                            <td>
-                                2 ports Ethernet LAN
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>RS485</th>
-                            <td>
-                                1 interface RS485 isolée
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Protocoles</th>
-                            <td>
-                                Modbus RTU, Modbus TCP, IEC 60870-5-104,
-                                DNP3 et autres selon configuration
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th>Extension</th>
-                            <td>
-                                Modules complémentaires d'E/S
-                            </td>
-                        </tr>
-
-                    </table>
-
-                </div>
-
-
-                <div
-                    id="conclusion-4"
-                    class="tab-content"
-                >
-
-                    <h3>
-                        Conclusion et avis
-                    </h3>
-
-                    <p>
-                        YDRIX est à considérer lorsqu'une installation
-                        nécessite simultanément acquisition, automatisation,
-                        communication et télégestion.
-                    </p>
-
-                    <p>
-                        Son équipement de communication et ses fonctions
-                        orientées télégestion le distinguent clairement d'un
-                        automate logique compact classique.
-                    </p>
-
-                    <p>
-                        Ce produit est donc particulièrement pertinent pour
-                        les installations réparties et les applications
-                        nécessitant une supervision distante.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-
     </main>
-
-
-    <!-- ================================================================
-         PAGINATION
-         ================================================================ -->
-
+    <!-- ====   PAGINATION  =============================================== -->
     <div class="pagination-buttons">
-
-        <button
-            class="primary-button switch-tab-btn"
-            type="button"
-            data-target-id="0"
-        >
-            Précédent
-        </button>
-
-
-        <button
-            class="primary-button switch-tab-btn"
-            type="button"
-            data-target-id="1"
-        >
-            Automate suivant
-        </button>
-
-
-        <button
-            class="primary-button switch-tab-btn"
-            type="button"
-            data-target-id="4"
-        >
-            Dernier automate
-        </button>
-
+        <button class="primary-button switch-tab-btn" type="button" data-target-id="0">Précédent</button>
+        <button class="primary-button switch-tab-btn" type="button" data-target-id="1">Automate suivant</button>
+        <button class="primary-button switch-tab-btn" type="button" data-target-id="2">Dernier automate</button>
     </div>
+    <!-- ====   FOOTER  ================================================ -->
 
+    <footer id="statusBar">Automate actif : Schneider Modicon M221</footer>
 
-    <!-- ================================================================
-         FOOTER
-         ================================================================ -->
-
-    <footer id="statusBar">
-        Automate actif : Schneider Modicon M221
-    </footer>
-
-
-    <script
-        type="module"
-        src="/assets/js/uiapp.js"
-    ></script>
-
+    <script type="module" src="/assets/js/uiapp.js"></script>
 
 </body>
 
