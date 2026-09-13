@@ -1,3 +1,5 @@
+**Notes** : button ajouter type button
+
 Trois fichiers récents a revoir pour extraction
 
 
@@ -19,8 +21,7 @@ header id="header"
 - header-actions
 
 
-**+** div.header-actions
-    button ajouter type button
+
 
 
 ```
@@ -32,7 +33,8 @@ header#header
     div.header-actions
         button.rwdnav
             i.fa fa-bars
-
+        button#themeBtn
+        button#fullscreenBtn
 ```
 
 
