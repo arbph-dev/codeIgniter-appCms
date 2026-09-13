@@ -7,12 +7,9 @@ Trois fichiers récents a revoir pour extraction
 
 # Structure du document
 
-
 ```
 header id="header"
-
-
-
+nav id="sidebar"
 
 ```
 ## Headers
@@ -21,10 +18,6 @@ header id="header"
 - appTitle
 - appSubtitle
 - header-actions
-
-
-
-
 
 ```
 header#header
@@ -39,15 +32,12 @@ header#header
         button#fullscreenBtn
 ```
 
-
 ## Sidebar
 
 Sidebar doit etre généré par script
-button.nav-toggle => button caché sur pc
-        
+- button.nav-toggle => button caché sur pc
 
-
-css classes
+### Classes css 
 - closebtn
 - nav-article
 - nav-header-row
@@ -55,14 +45,13 @@ css classes
 - nav-toggle
 - nav-toc
 
-css elements
+### Elements css 
 
-a voir en ligne 
-  /* 2026-09-13  */
+```css
   .nav-article.open .nav-toc {
     display: block;
   }
-
+```
 
 ```
   nav#sidebar 
@@ -121,7 +110,7 @@ le css associé
 - tab-btn et tab-btn active
 - tab-content et tab-content active
 
-```
+```html
 <div class="panel-card">
     <h2 class="panel-title">...</h2>
 
@@ -144,38 +133,21 @@ le css associé
 </div>   
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Améliorations
 employer balises : H1/H2/H3
 
-
 Pour créer un lien d'ancrage ciblant un élément <h1> 
-attribuez un id unique à la balise <h1> (ou au conteneur <div>) 
-utilisez un lien hypertexte avec un hachereau (#) suivi de cet identifiant.
+- attribuez un id unique à la balise <h1> (ou au conteneur <div>) 
+- utilisez un lien hypertexte avec un hachereau (#) suivi de cet identifiant.
 
 Exemple de code :
 
+```html
 <!-- Lien déclencheur -->
 <a href="#section-titre">Aller au titre</a>
-
 <!-- Cible -->
 <div>
   <h1 id="section-titre">Mon Titre</h1>
 </div>
-
+```
 
