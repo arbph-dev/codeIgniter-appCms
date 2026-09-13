@@ -1,0 +1,506 @@
+/* Définition des thèmes */
+:root[data-theme="marine"] {
+  --bg-main: #f0f4f8;
+  --bg-header: #1e293b;
+  --bg-sidebar: #0f172a;
+  --bg-card: #ffffff;
+  --bg-nav: #ffffff;  
+  --text-main: #334155;
+  --text-header: #f8fafc;
+  --text-sidebar: #f8fafc;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --border-color: #cbd5e1;
+
+}
+
+:root[data-theme="nature"] {
+  --bg-main: #f4f7f4;
+  --bg-header: #1b382b;
+  --bg-sidebar: #0f2319;
+  --bg-card: #ffffff;
+  --bg-nav: #ffffff;
+  --text-main: #27352a;
+  --text-header: #f0fdf4;
+  --text-sidebar: #f0fdf4;
+  --accent: #16a34a;
+  --accent-hover: #15803d;
+  --border-color: #bbf7d0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+}
+
+/* Header */
+#header {
+  height: 60px;
+  background-color: var(--bg-header);
+  color: var(--text-header);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 22px;
+}
+
+#appTitle { font-size: 1.1rem; font-weight: bold; }
+#appSubtitle { font-size: 0.8rem; opacity: 0.8; }
+
+.header-actions button {
+  padding: 6px 12px;
+  margin-left: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+
+/* Layout Principal */
+#contentLayout { flex: 1; display: flex; overflow: hidden; }
+
+
+/* =============================================================================
+   NAVIGATION — MOBILE FIRST
+============================================================================= */
+
+nav {
+  background-color: var(--bg-sidebar);
+
+  display: flex;
+  flex-direction: column;
+
+  inset: 0;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  position: fixed;
+
+  transform: translateX(-100%);
+  transition: transform .3s ease;
+
+  z-index: 1000;
+}
+
+
+nav {
+  color: var(--text-sidebar);
+}
+
+nav.open {
+  transform: translateX(0);
+}
+
+
+/* =============================================================================
+   FERMETURE MOBILE
+============================================================================= */
+
+nav a.closebtn {
+  align-self: flex-end;
+
+  padding: 8px 16px;
+
+  font-size: 2rem;
+  line-height: 1;
+
+  text-decoration: none;
+}
+
+
+/* =============================================================================
+   ARTICLE
+============================================================================= */
+
+.nav-article {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+.nav-article .nav-header-row {
+  display: flex;
+  align-items: stretch;
+
+  width: 100%;
+}
+
+
+/* =============================================================================
+   TITRE PRINCIPAL
+============================================================================= */
+
+.nav-article .nav-title {
+  flex: 1 1 auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  min-height: 48px;
+
+  padding: 12px 16px;
+
+  font-size: 17px;
+
+  color: inherit;
+  text-decoration: none;
+
+  transition:
+    background-color .2s ease,
+    color .2s ease;
+}
+
+.nav-article .nav-title:hover,
+.nav-article .nav-title.active {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+
+/* =============================================================================
+   BOUTON CHEVRON — MOBILE
+============================================================================= */
+
+.nav-article .nav-toggle {
+  flex: 0 0 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 48px;
+
+  background: transparent;
+  border: none;
+
+  color: inherit;
+
+  font-size: 1.5rem;
+
+  cursor: pointer;
+
+  line-height: 1;
+
+  transition:
+    transform .25s ease,
+    background-color .2s ease;
+}
+
+.nav-article .nav-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+}
+
+.nav-article.open .nav-toggle {
+  transform: rotate(90deg);
+}
+
+
+/* =============================================================================
+   TABLE DES MATIÈRES
+============================================================================= */
+
+.nav-article .nav-toc {
+  display: none;
+
+  padding: 0;
+  margin: 0;
+
+  list-style: none;
+}
+
+.nav-article.open .nav-toc {
+  display: block;
+}
+
+
+/* =============================================================================
+   LIENS DU TOC
+============================================================================= */
+
+.nav-article .nav-toc a {
+  display: block;
+
+  padding: 8px 16px 8px 24px;
+
+  font-size: 0.9em;
+
+  color: inherit;
+  text-decoration: none;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  transition:
+    background-color .2s ease,
+    color .2s ease;
+}
+
+.nav-article .nav-toc a:hover {
+  background-color: rgba(255, 255, 255, 0.10);
+}
+
+
+.nav-article .nav-toc ul {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.nav-article .nav-toc ul a {
+  padding-left: 36px;
+  font-size: 0.85em;
+}
+
+.nav-article .nav-toc ul ul a {
+  padding-left: 50px;
+
+  font-size: 0.8em;
+
+  opacity: 0.85;
+}
+
+
+/* =============================================================================
+   BOUTON HAMBURGER
+============================================================================= */
+
+.rwdnav {
+  text-align: right;
+}
+
+
+/* =============================================================================
+   DESKTOP
+============================================================================= */
+
+@media (min-width: 768px) {
+
+  nav {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    position: relative;
+
+    width: 100%;
+
+    overflow: visible;
+
+    transform: translateX(0);
+
+    z-index: 100;
+  }
+
+
+  nav a.closebtn {
+    display: none;
+  }
+
+
+  .nav-article {
+    position: relative;
+
+    flex-direction: row;
+    align-items: stretch;
+
+    width: auto;
+  }
+
+
+  .nav-article .nav-header-row {
+    height: 100%;
+  }
+
+
+  .nav-article .nav-title {
+    height: 100%;
+
+    white-space: nowrap;
+  }
+
+
+  .nav-article .nav-toggle {
+    display: none;
+  }
+
+
+  /* -------------------------------------------------------------------------
+     DROPDOWN
+  ------------------------------------------------------------------------- */
+
+  .nav-article .nav-toc {
+    display: none;
+
+    position: absolute;
+
+    top: 100%;
+    left: 0;
+
+    min-width: 260px;
+    max-height: 75vh;
+
+    overflow-y: auto;
+
+    background-color: var(--bg-sidebar);
+
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+
+    z-index: 200;
+  }
+
+
+  /*  plus de hover un click est nécessaire
+  .nav-article:hover .nav-toc {
+    display: block;
+  }
+  */
+
+  /* 2026-09-13  */
+  .nav-article.open .nav-toc {
+    display: block;
+  }
+
+
+
+
+  /* Hover visuel du menu principal */
+
+  .nav-article:hover .nav-title {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+
+
+  /* Liens dropdown */
+
+  .nav-article .nav-toc a {
+    padding: 8px 16px;
+
+    font-size: 0.88em;
+  }
+
+
+  .nav-article .nav-toc ul a {
+    padding-left: 30px;
+  }
+
+
+  .nav-article .nav-toc ul ul a {
+    padding-left: 46px;
+  }
+
+
+  .rwdnav {
+    display: none;
+  }
+}
+
+/* = DESKTOP END ========================================================================== */
+
+
+/* Zone d'affichage (Stack) */
+
+#stack {
+  flex: 1;
+  padding: 28px;
+  overflow-y: auto;
+}
+
+.panel-card {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 28px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.panel-card.hidden { display: none; }
+
+.panel-title { font-size: 1.5rem; }
+
+/* Styles des Onglets HTML (<details> ou boutons d'onglets) */
+.tab-headers {
+  display: flex;
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 14px;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tab-btn.active {
+  border-bottom-color: var(--accent);
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.tab-content { display: none; padding-top: 10px; }
+.tab-content.active { display: block; }
+
+/* Formulaires */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+input[type="text"], input[type="number"], select {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  width: 100%;
+  max-width: 300px;
+}
+
+
+.pagination-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+
+.primary-button {
+  padding: 10px 18px;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.primary-button:hover { background-color: var(--accent-hover); }
+
+/* Barre de statut */
+#statusBar {
+  height: 24px;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-color);
+  padding: 2px 12px;
+  font-size: 0.8rem;
+}
