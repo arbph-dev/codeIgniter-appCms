@@ -1,0 +1,1652 @@
+{
+  "_meta": {
+    "source": "inpi",
+    "endpoint": "search",
+    "params": {
+      "q": "thermes"
+    },
+    "timestamp": "2026-09-13T14:10:43",
+    "saved_at": "2026-09-13 14:10:43"
+  },
+  "data": {
+    "companies": [
+      {
+        "updatedAt": "2024-02-26T06:41:10+01:00",
+        "nombreRepresentantsActifs": 0,
+        "nombreEtablissementsOuverts": 0,
+        "id": "63dce6d1d1ff8689bd025cbb",
+        "formality": {
+          "siren": "026242180",
+          "indicateurStructureEtablissement": false,
+          "content": {
+            "natureCessation": "1",
+            "natureCreation": {
+              "dateCreation": "1962-12-25",
+              "formeJuridique": "1000",
+              "microEntreprise": false,
+              "relieeEntrepriseAgricole": false,
+              "entrepriseAgricole": false,
+              "eirl": false
+            },
+            "personnePhysique": {
+              "adresseEntreprise": {
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": false,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": false,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": false,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "22650",
+                  "commune": "BEAUSSAIS-SUR-MER",
+                  "codeInseeCommune": "22209",
+                  "voie": "BOURG"
+                }
+              },
+              "etablissementPrincipal": {
+                "descriptionEtablissement": {
+                  "rolePourEntreprise": "3",
+                  "siret": "02624218000011",
+                  "indicateurEtablissementPrincipal": true,
+                  "statutPourFormalite": "2",
+                  "codeApe": "6243",
+                  "etablissementValidated": false,
+                  "etablissementRdd": true
+                },
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": false,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": false,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": true,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "22650",
+                  "commune": "BEAUSSAIS-SUR-MER",
+                  "codeInseeCommune": "22209",
+                  "voie": "BOURG"
+                },
+                "activites": [
+                  {
+                    "activiteId": "ac93e002-2a12-4c7c-ba22-b7b7dfb85a2b",
+                    "indicateurPrincipal": true,
+                    "indicateurProlongement": false,
+                    "descriptionDetaillee": "Activité déduite de la reconstitution des données. Il vous est demandé de la reformuler.",
+                    "indicateurActiviteeApe": false,
+                    "rolePrincipalPourEntreprise": true,
+                    "codeApe": "6243",
+                    "activiteRattacheeEirl": false
+                  }
+                ]
+              },
+              "detailCessationEntreprise": {
+                "dateRadiation": "1986-06-03"
+              },
+              "identite": {
+                "adresseCorrespondancePresent": false,
+                "entreprise": {
+                  "siren": "026242180",
+                  "formeJuridique": "1000",
+                  "nicSiege": "00011",
+                  "codeApe": "6243",
+                  "dateImmat": "1962-12-25",
+                  "entrepriseValidated": false,
+                  "entrepriseRdd": true
+                },
+                "entrepreneur": {
+                  "descriptionPersonne": {
+                    "sirenPresent": false,
+                    "dateEffetRoleDeclarantPresent": false,
+                    "genrePresent": true,
+                    "titrePresent": false,
+                    "dateDeNaissancePresent": false,
+                    "paysNaissancePresent": false,
+                    "codePaysNaissancePresent": false,
+                    "lieuDeNaissancePresent": false,
+                    "codePostalNaissancePresent": false,
+                    "codeInseeGeographiquePresent": false,
+                    "situationMatrimonialePresent": false,
+                    "qualiteDeNonSedentaritePresent": false,
+                    "indicateurDeNonSedentaritePresent": false,
+                    "nom": "GAUTIER",
+                    "prenoms": [
+                      "MICHEL"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "diffusionINSEE": "O",
+          "typePersonne": "P",
+          "diffusionCommerciale": true,
+          "formeJuridique": "1000"
+        },
+        "siren": "026242180"
+      },
+      {
+        "updatedAt": "2024-02-26T06:41:00+01:00",
+        "nombreRepresentantsActifs": 0,
+        "nombreEtablissementsOuverts": 0,
+        "id": "63dce6cf823aa211f401e01b",
+        "formality": {
+          "siren": "026140400",
+          "indicateurStructureEtablissement": false,
+          "content": {
+            "natureCessation": "1",
+            "natureCreation": {
+              "dateCreation": "1961-12-25",
+              "formeJuridique": "1000",
+              "microEntreprise": false,
+              "relieeEntrepriseAgricole": false,
+              "entrepriseAgricole": false,
+              "eirl": false
+            },
+            "personnePhysique": {
+              "adresseEntreprise": {
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": false,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": false,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": false,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "22490",
+                  "commune": "PLESLIN-TRIGAVOU",
+                  "codeInseeCommune": "22190",
+                  "voie": "BELLE VUE"
+                }
+              },
+              "etablissementPrincipal": {
+                "descriptionEtablissement": {
+                  "rolePourEntreprise": "3",
+                  "siret": "02614040000016",
+                  "indicateurEtablissementPrincipal": true,
+                  "statutPourFormalite": "2",
+                  "codeApe": "6411",
+                  "etablissementValidated": false,
+                  "etablissementRdd": true
+                },
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": false,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": false,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": true,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "22490",
+                  "commune": "PLESLIN-TRIGAVOU",
+                  "codeInseeCommune": "22190",
+                  "voie": "BELLE VUE"
+                },
+                "activites": [
+                  {
+                    "activiteId": "ad21e931-58bb-4295-a811-0a8e50d3a118",
+                    "indicateurPrincipal": true,
+                    "indicateurProlongement": false,
+                    "descriptionDetaillee": "Activités de banque centrale",
+                    "indicateurActiviteeApe": true,
+                    "rolePrincipalPourEntreprise": true,
+                    "codeApe": "6411",
+                    "activiteRattacheeEirl": false
+                  }
+                ]
+              },
+              "detailCessationEntreprise": {
+                "dateRadiation": "1986-12-31"
+              },
+              "identite": {
+                "adresseCorrespondancePresent": false,
+                "entreprise": {
+                  "siren": "026140400",
+                  "formeJuridique": "1000",
+                  "nicSiege": "00016",
+                  "codeApe": "6411",
+                  "dateImmat": "1961-12-25",
+                  "entrepriseValidated": false,
+                  "entrepriseRdd": true
+                },
+                "entrepreneur": {
+                  "descriptionPersonne": {
+                    "sirenPresent": false,
+                    "dateEffetRoleDeclarantPresent": false,
+                    "genrePresent": true,
+                    "titrePresent": false,
+                    "dateDeNaissancePresent": false,
+                    "paysNaissancePresent": false,
+                    "codePaysNaissancePresent": false,
+                    "lieuDeNaissancePresent": false,
+                    "codePostalNaissancePresent": false,
+                    "codeInseeGeographiquePresent": false,
+                    "situationMatrimonialePresent": false,
+                    "qualiteDeNonSedentaritePresent": false,
+                    "indicateurDeNonSedentaritePresent": false,
+                    "nom": "SAUDRAIS",
+                    "prenoms": [
+                      "HENRI"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "diffusionINSEE": "O",
+          "typePersonne": "P",
+          "diffusionCommerciale": true,
+          "formeJuridique": "1000"
+        },
+        "siren": "026140400"
+      },
+      {
+        "updatedAt": "2024-02-26T06:41:22+01:00",
+        "nombreRepresentantsActifs": 0,
+        "nombreEtablissementsOuverts": 0,
+        "id": "63dce6d3474db94e7804a601",
+        "formality": {
+          "siren": "026520064",
+          "indicateurStructureEtablissement": false,
+          "content": {
+            "natureCessation": "1",
+            "natureCreation": {
+              "dateCreation": "1965-12-25",
+              "formeJuridique": "5499",
+              "microEntreprise": false,
+              "relieeEntrepriseAgricole": false,
+              "entrepriseAgricole": false,
+              "eirl": false
+            },
+            "personneMorale": {
+              "adresseEntreprise": {
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": true,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": true,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": false,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "47000",
+                  "commune": "AGEN",
+                  "codeInseeCommune": "47001",
+                  "typeVoie": "RUE",
+                  "voie": "DU NOUVION",
+                  "numVoie": "6"
+                }
+              },
+              "autresEtablissements": [
+                {
+                  "descriptionEtablissement": {
+                    "rolePourEntreprise": "11",
+                    "siret": "02652006400028",
+                    "indicateurEtablissementPrincipal": false,
+                    "statutPourFormalite": "2",
+                    "dateEffetFermeture": "1992-01-27",
+                    "codeApe": "511R",
+                    "etablissementValidated": false,
+                    "etablissementRdd": true
+                  },
+                  "adresse": {
+                    "roleAdressePresent": false,
+                    "codePostalPresent": true,
+                    "communePresent": true,
+                    "codeInseeCommunePresent": true,
+                    "typeVoiePresent": true,
+                    "voiePresent": true,
+                    "voieCodifieePresent": false,
+                    "numVoiePresent": true,
+                    "indiceRepetitionPresent": false,
+                    "distributionSpecialePresent": false,
+                    "communeAnciennePresent": false,
+                    "rgpdPresent": false,
+                    "datePriseEffetAdressePresent": false,
+                    "complementLocalisationPresent": false,
+                    "communeDeRattachementPresent": false,
+                    "caracteristiquesPresent": false,
+                    "indicateurValidationBANPresent": true,
+                    "cedexPresent": false,
+                    "pays": "FRANCE",
+                    "codePays": "FRA",
+                    "codePostal": "47000",
+                    "commune": "AGEN",
+                    "codeInseeCommune": "47001",
+                    "typeVoie": "RUE",
+                    "voie": "DU NOUVION",
+                    "numVoie": "6"
+                  },
+                  "activites": [
+                    {
+                      "activiteId": "df0ea161-db7b-4cfe-8fee-719130cf5fc7",
+                      "indicateurPrincipal": true,
+                      "indicateurProlongement": false,
+                      "dateDebut": "1992-01-27",
+                      "dateFin": "1992-01-27",
+                      "descriptionDetaillee": "Activité déduite de la reconstitution des données. Il vous est demandé de la reformuler.",
+                      "indicateurActiviteeApe": false,
+                      "rolePrincipalPourEntreprise": false,
+                      "codeApe": "511R",
+                      "activiteRattacheeEirl": false
+                    }
+                  ]
+                }
+              ],
+              "detailCessationEntreprise": {
+                "dateRadiation": "1992-01-27"
+              },
+              "identite": {
+                "entreprise": {
+                  "siren": "026520064",
+                  "denomination": "LAROUSSE DIFFUSION SUD OUEST",
+                  "formeJuridique": "5499",
+                  "nicSiege": "00028",
+                  "codeApe": "511R",
+                  "dateImmat": "1965-12-25",
+                  "entrepriseValidated": false,
+                  "entrepriseRdd": true
+                },
+                "description": {
+                  "indicateurOrigineFusionScission": false,
+                  "indicateurAssocieUnique": false,
+                  "indicateurAssocieUniqueDirigeant": false
+                }
+              }
+            }
+          },
+          "diffusionINSEE": "O",
+          "typePersonne": "M",
+          "diffusionCommerciale": true,
+          "formeJuridique": "5499"
+        },
+        "siren": "026520064"
+      },
+      {
+        "updatedAt": "2024-02-26T06:41:38+01:00",
+        "nombreRepresentantsActifs": 0,
+        "nombreEtablissementsOuverts": 0,
+        "id": "63dce6d5d1ff8689bd025d33",
+        "formality": {
+          "siren": "026650127",
+          "indicateurStructureEtablissement": false,
+          "content": {
+            "natureCessation": "1",
+            "natureCreation": {
+              "dateCreation": "1966-01-01",
+              "formeJuridique": "5499",
+              "microEntreprise": false,
+              "relieeEntrepriseAgricole": false,
+              "entrepriseAgricole": false,
+              "eirl": false
+            },
+            "personneMorale": {
+              "adresseEntreprise": {
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": true,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": true,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": true,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": false,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "22100",
+                  "commune": "DINAN",
+                  "codeInseeCommune": "22050",
+                  "typeVoie": "RUE",
+                  "voie": "CHATEAUBRIAND",
+                  "numVoie": "22",
+                  "distributionSpeciale": "BP 309"
+                }
+              },
+              "autresEtablissements": [
+                {
+                  "descriptionEtablissement": {
+                    "rolePourEntreprise": "11",
+                    "siret": "02665012700017",
+                    "indicateurEtablissementPrincipal": false,
+                    "statutPourFormalite": "2",
+                    "dateEffetFermeture": "2006-12-30",
+                    "codeApe": "851A",
+                    "etablissementValidated": false,
+                    "etablissementRdd": true
+                  },
+                  "adresse": {
+                    "roleAdressePresent": false,
+                    "codePostalPresent": true,
+                    "communePresent": true,
+                    "codeInseeCommunePresent": true,
+                    "typeVoiePresent": true,
+                    "voiePresent": true,
+                    "voieCodifieePresent": false,
+                    "numVoiePresent": true,
+                    "indiceRepetitionPresent": false,
+                    "distributionSpecialePresent": true,
+                    "communeAnciennePresent": false,
+                    "rgpdPresent": false,
+                    "datePriseEffetAdressePresent": false,
+                    "complementLocalisationPresent": false,
+                    "communeDeRattachementPresent": false,
+                    "caracteristiquesPresent": false,
+                    "indicateurValidationBANPresent": true,
+                    "cedexPresent": false,
+                    "pays": "FRANCE",
+                    "codePays": "FRA",
+                    "codePostal": "22100",
+                    "commune": "DINAN",
+                    "codeInseeCommune": "22050",
+                    "typeVoie": "RUE",
+                    "voie": "CHATEAUBRIAND",
+                    "numVoie": "22",
+                    "distributionSpeciale": "BP 309"
+                  },
+                  "activites": [
+                    {
+                      "activiteId": "7a6ac8ec-e4d8-4d10-9b80-1aae521f34dc",
+                      "indicateurPrincipal": true,
+                      "indicateurProlongement": false,
+                      "dateDebut": "1966-01-01",
+                      "dateFin": "2006-12-30",
+                      "descriptionDetaillee": "Activité déduite de la reconstitution des données. Il vous est demandé de la reformuler.",
+                      "indicateurActiviteeApe": false,
+                      "rolePrincipalPourEntreprise": false,
+                      "codeApe": "851A",
+                      "activiteRattacheeEirl": false
+                    }
+                  ]
+                }
+              ],
+              "detailCessationEntreprise": {
+                "dateRadiation": "2006-12-30"
+              },
+              "identite": {
+                "entreprise": {
+                  "siren": "026650127",
+                  "denomination": "CLINIQUE SAINT-LUC",
+                  "formeJuridique": "5499",
+                  "nicSiege": "00017",
+                  "codeApe": "851A",
+                  "dateImmat": "1966-01-01",
+                  "entrepriseValidated": false,
+                  "entrepriseRdd": true
+                },
+                "description": {
+                  "indicateurOrigineFusionScission": false,
+                  "indicateurAssocieUnique": false,
+                  "indicateurAssocieUniqueDirigeant": false
+                }
+              }
+            }
+          },
+          "diffusionINSEE": "O",
+          "typePersonne": "M",
+          "diffusionCommerciale": true,
+          "formeJuridique": "5499"
+        },
+        "siren": "026650127"
+      },
+      {
+        "updatedAt": "2024-02-26T06:41:23+01:00",
+        "nombreRepresentantsActifs": 0,
+        "nombreEtablissementsOuverts": 0,
+        "id": "63dce6d5823aa211f401e0a9",
+        "formality": {
+          "siren": "026510354",
+          "indicateurStructureEtablissement": false,
+          "content": {
+            "natureCessation": "1",
+            "natureCreation": {
+              "dateCreation": "1965-12-25",
+              "formeJuridique": "1000",
+              "microEntreprise": false,
+              "relieeEntrepriseAgricole": false,
+              "entrepriseAgricole": false,
+              "eirl": false
+            },
+            "personnePhysique": {
+              "adresseEntreprise": {
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": true,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": false,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": false,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "47270",
+                  "commune": "SAINT-CAPRAIS-DE-LERM",
+                  "codeInseeCommune": "47234",
+                  "typeVoie": "LD",
+                  "voie": "LAS MURAILLE"
+                }
+              },
+              "etablissementPrincipal": {
+                "descriptionEtablissement": {
+                  "rolePourEntreprise": "3",
+                  "siret": "02651035400017",
+                  "indicateurEtablissementPrincipal": true,
+                  "statutPourFormalite": "2",
+                  "codeApe": "0180",
+                  "etablissementValidated": false,
+                  "etablissementRdd": true
+                },
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": true,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": false,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": true,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "47270",
+                  "commune": "SAINT-CAPRAIS-DE-LERM",
+                  "codeInseeCommune": "47234",
+                  "typeVoie": "LD",
+                  "voie": "LAS MURAILLE"
+                },
+                "activites": [
+                  {
+                    "activiteId": "e39f0518-3ee8-49f8-bf85-98bf92f4fb28",
+                    "indicateurPrincipal": true,
+                    "indicateurProlongement": false,
+                    "descriptionDetaillee": "Activité déduite de la reconstitution des données. Il vous est demandé de la reformuler.",
+                    "indicateurActiviteeApe": false,
+                    "rolePrincipalPourEntreprise": true,
+                    "codeApe": "0180",
+                    "activiteRattacheeEirl": false
+                  }
+                ]
+              },
+              "detailCessationEntreprise": {
+                "dateRadiation": "1985-11-12"
+              },
+              "identite": {
+                "adresseCorrespondancePresent": false,
+                "entreprise": {
+                  "siren": "026510354",
+                  "formeJuridique": "1000",
+                  "nicSiege": "00017",
+                  "codeApe": "0180",
+                  "dateImmat": "1965-12-25",
+                  "entrepriseValidated": false,
+                  "entrepriseRdd": true
+                },
+                "entrepreneur": {
+                  "descriptionPersonne": {
+                    "sirenPresent": false,
+                    "dateEffetRoleDeclarantPresent": false,
+                    "genrePresent": true,
+                    "titrePresent": false,
+                    "dateDeNaissancePresent": false,
+                    "paysNaissancePresent": false,
+                    "codePaysNaissancePresent": false,
+                    "lieuDeNaissancePresent": false,
+                    "codePostalNaissancePresent": false,
+                    "codeInseeGeographiquePresent": false,
+                    "situationMatrimonialePresent": false,
+                    "qualiteDeNonSedentaritePresent": false,
+                    "indicateurDeNonSedentaritePresent": false,
+                    "nom": "LAPORTE",
+                    "prenoms": [
+                      "ANDRE"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "diffusionINSEE": "O",
+          "typePersonne": "P",
+          "diffusionCommerciale": true,
+          "formeJuridique": "1000"
+        },
+        "siren": "026510354"
+      },
+      {
+        "updatedAt": "2024-02-26T06:41:38+01:00",
+        "nombreRepresentantsActifs": 0,
+        "nombreEtablissementsOuverts": 0,
+        "id": "63dce6d5d1ff8689bd025d35",
+        "formality": {
+          "siren": "026670018",
+          "indicateurStructureEtablissement": false,
+          "content": {
+            "natureCessation": "1",
+            "natureCreation": {
+              "dateCreation": "1966-12-25",
+              "formeJuridique": "1000",
+              "microEntreprise": false,
+              "relieeEntrepriseAgricole": false,
+              "entrepriseAgricole": false,
+              "eirl": false
+            },
+            "personnePhysique": {
+              "adresseEntreprise": {
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": true,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": true,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": false,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "79000",
+                  "commune": "NIORT",
+                  "codeInseeCommune": "79191",
+                  "typeVoie": "AV",
+                  "voie": "ST JEAN D ANGELY",
+                  "numVoie": "3"
+                }
+              },
+              "etablissementPrincipal": {
+                "descriptionEtablissement": {
+                  "rolePourEntreprise": "3",
+                  "siret": "02667001800022",
+                  "indicateurEtablissementPrincipal": true,
+                  "statutPourFormalite": "2",
+                  "codeApe": "6704",
+                  "etablissementValidated": false,
+                  "etablissementRdd": true
+                },
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": true,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": true,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": true,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "79000",
+                  "commune": "NIORT",
+                  "codeInseeCommune": "79191",
+                  "typeVoie": "AV",
+                  "voie": "ST JEAN D ANGELY",
+                  "numVoie": "3"
+                },
+                "activites": [
+                  {
+                    "activiteId": "154bcb9d-aa3d-4c6d-bd41-e8dce9ffda5a",
+                    "indicateurPrincipal": true,
+                    "indicateurProlongement": false,
+                    "descriptionDetaillee": "Activité déduite de la reconstitution des données. Il vous est demandé de la reformuler.",
+                    "indicateurActiviteeApe": false,
+                    "rolePrincipalPourEntreprise": true,
+                    "codeApe": "6704",
+                    "activiteRattacheeEirl": false
+                  }
+                ]
+              },
+              "detailCessationEntreprise": {
+                "dateRadiation": "1986-03-01"
+              },
+              "identite": {
+                "adresseCorrespondancePresent": false,
+                "entreprise": {
+                  "siren": "026670018",
+                  "formeJuridique": "1000",
+                  "nicSiege": "00022",
+                  "codeApe": "6704",
+                  "dateImmat": "1966-12-25",
+                  "entrepriseValidated": false,
+                  "entrepriseRdd": true
+                },
+                "entrepreneur": {
+                  "descriptionPersonne": {
+                    "sirenPresent": false,
+                    "dateEffetRoleDeclarantPresent": false,
+                    "genrePresent": true,
+                    "titrePresent": false,
+                    "dateDeNaissancePresent": false,
+                    "paysNaissancePresent": false,
+                    "codePaysNaissancePresent": false,
+                    "lieuDeNaissancePresent": false,
+                    "codePostalNaissancePresent": false,
+                    "codeInseeGeographiquePresent": false,
+                    "situationMatrimonialePresent": false,
+                    "qualiteDeNonSedentaritePresent": false,
+                    "indicateurDeNonSedentaritePresent": false,
+                    "nom": "CLUZEAU",
+                    "prenoms": [
+                      "MICHEL"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "diffusionINSEE": "O",
+          "typePersonne": "P",
+          "diffusionCommerciale": true,
+          "formeJuridique": "1000"
+        },
+        "siren": "026670018"
+      },
+      {
+        "updatedAt": "2024-02-26T06:41:21+01:00",
+        "nombreRepresentantsActifs": 0,
+        "nombreEtablissementsOuverts": 0,
+        "id": "63dce6d32545939c2304dc85",
+        "formality": {
+          "siren": "026471367",
+          "indicateurStructureEtablissement": false,
+          "content": {
+            "natureCessation": "1",
+            "natureCreation": {
+              "dateCreation": "1964-12-25",
+              "formeJuridique": "1000",
+              "microEntreprise": false,
+              "relieeEntrepriseAgricole": false,
+              "entrepriseAgricole": false,
+              "eirl": false
+            },
+            "personnePhysique": {
+              "adresseEntreprise": {
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": true,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": true,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": false,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "79000",
+                  "commune": "NIORT",
+                  "codeInseeCommune": "79191",
+                  "typeVoie": "RUE",
+                  "voie": "SAINT JEAN",
+                  "numVoie": "8"
+                }
+              },
+              "etablissementPrincipal": {
+                "descriptionEtablissement": {
+                  "rolePourEntreprise": "3",
+                  "siret": "02647136700016",
+                  "indicateurEtablissementPrincipal": true,
+                  "statutPourFormalite": "2",
+                  "codeApe": "8121",
+                  "etablissementValidated": false,
+                  "etablissementRdd": true
+                },
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": true,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": true,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": true,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "79000",
+                  "commune": "NIORT",
+                  "codeInseeCommune": "79191",
+                  "typeVoie": "RUE",
+                  "voie": "SAINT JEAN",
+                  "numVoie": "8"
+                },
+                "activites": [
+                  {
+                    "activiteId": "9e217403-be9c-493e-83dd-5201f8bea027",
+                    "indicateurPrincipal": true,
+                    "indicateurProlongement": false,
+                    "descriptionDetaillee": "Nettoyage courant des bâtiments",
+                    "indicateurActiviteeApe": true,
+                    "rolePrincipalPourEntreprise": true,
+                    "codeApe": "8121",
+                    "activiteRattacheeEirl": false
+                  }
+                ]
+              },
+              "detailCessationEntreprise": {
+                "dateRadiation": "1986-07-28"
+              },
+              "identite": {
+                "adresseCorrespondancePresent": false,
+                "entreprise": {
+                  "siren": "026471367",
+                  "formeJuridique": "1000",
+                  "nicSiege": "00016",
+                  "codeApe": "8121",
+                  "dateImmat": "1964-12-25",
+                  "entrepriseValidated": false,
+                  "entrepriseRdd": true
+                },
+                "entrepreneur": {
+                  "descriptionPersonne": {
+                    "sirenPresent": false,
+                    "dateEffetRoleDeclarantPresent": false,
+                    "genrePresent": true,
+                    "titrePresent": false,
+                    "dateDeNaissancePresent": false,
+                    "paysNaissancePresent": false,
+                    "codePaysNaissancePresent": false,
+                    "lieuDeNaissancePresent": false,
+                    "codePostalNaissancePresent": false,
+                    "codeInseeGeographiquePresent": false,
+                    "situationMatrimonialePresent": false,
+                    "qualiteDeNonSedentaritePresent": false,
+                    "indicateurDeNonSedentaritePresent": false,
+                    "nom": "CHICOYNEAU",
+                    "prenoms": [
+                      "DE",
+                      "LAVALETTE",
+                      "C"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "diffusionINSEE": "O",
+          "typePersonne": "P",
+          "diffusionCommerciale": true,
+          "formeJuridique": "1000"
+        },
+        "siren": "026471367"
+      },
+      {
+        "updatedAt": "2024-02-26T06:41:39+01:00",
+        "nombreRepresentantsActifs": 0,
+        "nombreEtablissementsOuverts": 0,
+        "id": "63dce6d8474db94e7804a685",
+        "formality": {
+          "siren": "026550111",
+          "indicateurStructureEtablissement": false,
+          "content": {
+            "natureCessation": "1",
+            "natureCreation": {
+              "dateCreation": "1965-12-25",
+              "formeJuridique": "5599",
+              "microEntreprise": false,
+              "relieeEntrepriseAgricole": false,
+              "entrepriseAgricole": false,
+              "eirl": false
+            },
+            "personneMorale": {
+              "adresseEntreprise": {
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": true,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": true,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": false,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "22100",
+                  "commune": "DINAN",
+                  "codeInseeCommune": "22050",
+                  "typeVoie": "RUE",
+                  "voie": "DE L ABATTOIR",
+                  "numVoie": "9"
+                }
+              },
+              "autresEtablissements": [
+                {
+                  "descriptionEtablissement": {
+                    "rolePourEntreprise": "11",
+                    "siret": "02655011100012",
+                    "indicateurEtablissementPrincipal": false,
+                    "statutPourFormalite": "2",
+                    "dateEffetFermeture": "1987-12-15",
+                    "codeApe": "3501",
+                    "etablissementValidated": false,
+                    "etablissementRdd": true
+                  },
+                  "adresse": {
+                    "roleAdressePresent": false,
+                    "codePostalPresent": true,
+                    "communePresent": true,
+                    "codeInseeCommunePresent": true,
+                    "typeVoiePresent": true,
+                    "voiePresent": true,
+                    "voieCodifieePresent": false,
+                    "numVoiePresent": true,
+                    "indiceRepetitionPresent": false,
+                    "distributionSpecialePresent": false,
+                    "communeAnciennePresent": false,
+                    "rgpdPresent": false,
+                    "datePriseEffetAdressePresent": false,
+                    "complementLocalisationPresent": false,
+                    "communeDeRattachementPresent": false,
+                    "caracteristiquesPresent": false,
+                    "indicateurValidationBANPresent": true,
+                    "cedexPresent": false,
+                    "pays": "FRANCE",
+                    "codePays": "FRA",
+                    "codePostal": "22100",
+                    "commune": "DINAN",
+                    "codeInseeCommune": "22050",
+                    "typeVoie": "RUE",
+                    "voie": "DE L ABATTOIR",
+                    "numVoie": "9"
+                  },
+                  "activites": [
+                    {
+                      "activiteId": "792f71bd-83b6-45d9-8f37-9d1c0eccc203",
+                      "indicateurPrincipal": true,
+                      "indicateurProlongement": false,
+                      "dateDebut": "1987-12-15",
+                      "dateFin": "1987-12-15",
+                      "descriptionDetaillee": "Activité déduite de la reconstitution des données. Il vous est demandé de la reformuler.",
+                      "indicateurActiviteeApe": false,
+                      "rolePrincipalPourEntreprise": false,
+                      "codeApe": "3501",
+                      "activiteRattacheeEirl": false
+                    }
+                  ]
+                }
+              ],
+              "detailCessationEntreprise": {
+                "dateRadiation": "1989-10-31"
+              },
+              "identite": {
+                "entreprise": {
+                  "siren": "026550111",
+                  "denomination": "SA COOPER D ABATTAGE DINANNAIS",
+                  "formeJuridique": "5599",
+                  "nicSiege": "00012",
+                  "codeApe": "3501",
+                  "dateImmat": "1965-12-25",
+                  "entrepriseValidated": false,
+                  "entrepriseRdd": true
+                },
+                "description": {
+                  "indicateurOrigineFusionScission": false,
+                  "indicateurAssocieUnique": false,
+                  "indicateurAssocieUniqueDirigeant": false
+                }
+              }
+            }
+          },
+          "diffusionINSEE": "O",
+          "typePersonne": "M",
+          "diffusionCommerciale": true,
+          "formeJuridique": "5599"
+        },
+        "siren": "026550111"
+      },
+      {
+        "updatedAt": "2024-02-26T06:41:22+01:00",
+        "nombreRepresentantsActifs": 1,
+        "nombreEtablissementsOuverts": 0,
+        "id": "63dce6d3474db94e7804a607",
+        "formality": {
+          "siren": "026520171",
+          "indicateurStructureEtablissement": false,
+          "content": {
+            "natureCessation": "1",
+            "formeExerciceActivitePrincipale": "COMMERCIALE",
+            "natureCreation": {
+              "dateCreation": "1965-05-28",
+              "societeEtrangere": false,
+              "formeJuridique": "5710",
+              "microEntreprise": false,
+              "etablieEnFrance": true,
+              "salarieEnFrance": true,
+              "relieeEntrepriseAgricole": false,
+              "entrepriseAgricole": false,
+              "eirl": false
+            },
+            "personneMorale": {
+              "adresseEntreprise": {
+                "caracteristiques": {
+                  "ambulant": false,
+                  "domiciliataire": false
+                },
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": true,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": true,
+                  "indiceRepetitionPresent": true,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": true,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "47000",
+                  "commune": "AGEN",
+                  "codeInseeCommune": "47001",
+                  "typeVoie": "AV",
+                  "voie": "DE COLMAR",
+                  "numVoie": "1786",
+                  "indiceRepetition": "A",
+                  "caracteristiques": {
+                    "ambulant": false,
+                    "domiciliataire": false
+                  }
+                }
+              },
+              "autresEtablissements": [
+                {
+                  "descriptionEtablissement": {
+                    "rolePourEntreprise": "11",
+                    "pays": "FRANCE",
+                    "codePays": "FRA",
+                    "siret": "02652017100039",
+                    "activiteNonSedentaire": false,
+                    "indicateurEtablissementPrincipal": false,
+                    "statutPourFormalite": "1",
+                    "dateEffetFermeture": "2019-08-31",
+                    "codeApe": "7010Z",
+                    "etablissementValidated": false,
+                    "etablissementRdd": true
+                  },
+                  "adresse": {
+                    "roleAdressePresent": false,
+                    "codePostalPresent": true,
+                    "communePresent": true,
+                    "codeInseeCommunePresent": true,
+                    "typeVoiePresent": true,
+                    "voiePresent": true,
+                    "voieCodifieePresent": false,
+                    "numVoiePresent": true,
+                    "indiceRepetitionPresent": true,
+                    "distributionSpecialePresent": false,
+                    "communeAnciennePresent": false,
+                    "rgpdPresent": false,
+                    "datePriseEffetAdressePresent": false,
+                    "complementLocalisationPresent": false,
+                    "communeDeRattachementPresent": false,
+                    "caracteristiquesPresent": true,
+                    "indicateurValidationBANPresent": true,
+                    "cedexPresent": false,
+                    "pays": "FRANCE",
+                    "codePays": "FRA",
+                    "codePostal": "47000",
+                    "commune": "Agen",
+                    "codeInseeCommune": "47001",
+                    "typeVoie": "AV",
+                    "voie": " 1786A avenue de Colmar",
+                    "numVoie": "1786",
+                    "indiceRepetition": "A",
+                    "caracteristiques": {
+                      "ambulant": false,
+                      "domiciliataire": false
+                    }
+                  },
+                  "activites": [
+                    {
+                      "categoryCode": "07040601",
+                      "activiteId": "b32ae34f-69c9-4efe-a044-c635e4dbecee",
+                      "indicateurPrincipal": true,
+                      "indicateurProlongement": false,
+                      "dateDebut": "1965-05-07",
+                      "dateFin": "2019-11-21",
+                      "indicateurNonSedentaire": false,
+                      "formeExercice": "COMMERCIALE",
+                      "categorisationActivite1": "07",
+                      "categorisationActivite2": "04",
+                      "categorisationActivite3": "06",
+                      "categorisationActivite4": "01",
+                      "descriptionDetaillee": "Opérations de location, analyses, expertise, commercialisation de logiciels",
+                      "indicateurActiviteeApe": false,
+                      "indicateurArtisteAuteur": false,
+                      "indicateurMarinProfessionnel": false,
+                      "rolePrincipalPourEntreprise": true,
+                      "codeApe": "7010Z",
+                      "activiteRattacheeEirl": false,
+                      "origine": {
+                        "typeOrigine": "3",
+                        "autreOrigine": " - récédent propriétair - R GARRIGOU MAURICE NON INSCRIT AU RCS AGE"
+                      }
+                    }
+                  ],
+                  "registreAnterieur": {
+                    "raa": {
+                      "estPresent": false
+                    },
+                    "rnm": {
+                      "estPresent": false
+                    },
+                    "rncs": {
+                      "estPresent": true,
+                      "dateDebut": "1965-05-07T00:00:00+01:00"
+                    }
+                  }
+                },
+                {
+                  "descriptionEtablissement": {
+                    "rolePourEntreprise": "14",
+                    "siret": "02652017100021",
+                    "enseigne": "FUNERARIUM AGENAIS",
+                    "indicateurEtablissementPrincipal": false,
+                    "statutPourFormalite": "2",
+                    "dateEffetFermeture": "2002-09-23",
+                    "codeApe": "930H",
+                    "etablissementValidated": false,
+                    "etablissementRdd": true
+                  },
+                  "adresse": {
+                    "roleAdressePresent": false,
+                    "codePostalPresent": true,
+                    "communePresent": true,
+                    "codeInseeCommunePresent": true,
+                    "typeVoiePresent": true,
+                    "voiePresent": true,
+                    "voieCodifieePresent": false,
+                    "numVoiePresent": true,
+                    "indiceRepetitionPresent": false,
+                    "distributionSpecialePresent": false,
+                    "communeAnciennePresent": false,
+                    "rgpdPresent": false,
+                    "datePriseEffetAdressePresent": false,
+                    "complementLocalisationPresent": false,
+                    "communeDeRattachementPresent": false,
+                    "caracteristiquesPresent": false,
+                    "indicateurValidationBANPresent": true,
+                    "cedexPresent": false,
+                    "pays": "FRANCE",
+                    "codePays": "FRA",
+                    "codePostal": "47000",
+                    "commune": "AGEN",
+                    "codeInseeCommune": "47001",
+                    "typeVoie": "CRS",
+                    "voie": "DU NEUVIEME DE LIGNE",
+                    "numVoie": "6"
+                  },
+                  "activites": [
+                    {
+                      "activiteId": "b0e49162-4cb2-4157-9220-01108f45f420",
+                      "indicateurPrincipal": true,
+                      "indicateurProlongement": false,
+                      "dateDebut": "1900-01-01",
+                      "dateFin": "2002-09-23",
+                      "descriptionDetaillee": "Activité déduite de la reconstitution des données. Il vous est demandé de la reformuler.",
+                      "indicateurActiviteeApe": false,
+                      "rolePrincipalPourEntreprise": false,
+                      "codeApe": "930H",
+                      "activiteRattacheeEirl": false
+                    }
+                  ]
+                }
+              ],
+              "detailCessationEntreprise": {
+                "dateEffet": "2019-11-21",
+                "dateRadiation": "2019-11-21"
+              },
+              "composition": {
+                "pouvoirs": [
+                  {
+                    "roleEntreprise": "40",
+                    "typeDePersonne": "INDIVIDU",
+                    "indicateurActifAgricole": false,
+                    "representantId": "30632643-bf65-437d-bd18-cf879780936b",
+                    "individu": {
+                      "descriptionPersonne": {
+                        "sirenPresent": false,
+                        "dateEffetRoleDeclarantPresent": false,
+                        "genrePresent": false,
+                        "titrePresent": false,
+                        "dateDeNaissance": "1943-03",
+                        "dateDeNaissancePresent": true,
+                        "paysNaissancePresent": false,
+                        "codePaysNaissancePresent": false,
+                        "lieuDeNaissancePresent": false,
+                        "codePostalNaissancePresent": false,
+                        "codeInseeGeographiquePresent": false,
+                        "situationMatrimonialePresent": true,
+                        "qualiteDeNonSedentaritePresent": false,
+                        "indicateurDeNonSedentaritePresent": false,
+                        "role": "40",
+                        "nom": "NAEL",
+                        "prenoms": [
+                          "JEAN-YVES"
+                        ]
+                      },
+                      "adresseDomicile": {
+                        "roleAdressePresent": false,
+                        "codePostalPresent": true,
+                        "communePresent": true,
+                        "codeInseeCommunePresent": true,
+                        "typeVoiePresent": false,
+                        "voiePresent": true,
+                        "voieCodifieePresent": false,
+                        "numVoiePresent": false,
+                        "indiceRepetitionPresent": false,
+                        "distributionSpecialePresent": false,
+                        "communeAnciennePresent": false,
+                        "rgpdPresent": false,
+                        "datePriseEffetAdressePresent": false,
+                        "complementLocalisationPresent": false,
+                        "communeDeRattachementPresent": false,
+                        "caracteristiquesPresent": false,
+                        "indicateurValidationBANPresent": true,
+                        "cedexPresent": false,
+                        "pays": "FRANCE",
+                        "codePays": "FRA",
+                        "codePostal": "47510",
+                        "commune": "Foulayronnes",
+                        "codeInseeCommune": "47100"
+                      }
+                    }
+                  }
+                ]
+              },
+              "observations": {
+                "rcs": [
+                  {
+                    "numObservation": "1133",
+                    "dateAjout": "1989-07-07",
+                    "texte": " Report de l'assemblée générale Ord.de Mr le Prsdt en date du 30.06.89. Jusqu'au 31.10.89. À compter du 30/06/89 ",
+                    "dateGreffe": "2016-08-29",
+                    "etatObs": "Ajout",
+                    "dateDerModif": "2017-05-04"
+                  },
+                  {
+                    "numObservation": "1300",
+                    "dateAjout": "1994-06-21",
+                    "texte": " Ordonnance de Monsieur le président du tribunal de commerce d'Agen en date du 20.06.1994 Prorogeant Jusqu'au 30.11.1994 le délai au cours duquel la société devra tenir son assemblée ordinaire statuant sur le dernier exercice clos ",
+                    "dateGreffe": "2016-08-29",
+                    "etatObs": "Ajout",
+                    "dateDerModif": "2017-05-04"
+                  },
+                  {
+                    "numObservation": "1485",
+                    "dateAjout": "1995-07-24",
+                    "texte": " Ordonnance de Monsieur le président du tribunal de commerce d'Agen en date du 12/07/1995 Prorogeant Jusqu'au 30/11/1995, la tenue de l'assemblée ordinaire devant statuer sur les comptes clos au 31.12.1994 ",
+                    "dateGreffe": "2016-08-29",
+                    "etatObs": "Ajout",
+                    "dateDerModif": "2017-05-04"
+                  },
+                  {
+                    "numObservation": "1684",
+                    "dateAjout": "2001-06-07",
+                    "texte": " Nom commercial : Funérarium agenais Date d'effet : 31/05/2001 ",
+                    "dateGreffe": "2016-08-29",
+                    "etatObs": "Ajout",
+                    "dateDerModif": "2017-05-04"
+                  },
+                  {
+                    "numObservation": "1522",
+                    "dateAjout": "2002-07-09",
+                    "texte": " Ordonnance de Monsieur le président du tribunal de commerce d'Agen en date du 05/07/02 Prorogeant Jusqu'au 30/09/02 le délai au cours duquel la société devra REUNIR l'assemblée devant statuer sur les derniers comptes clos ",
+                    "dateGreffe": "2016-08-29",
+                    "etatObs": "Ajout",
+                    "dateDerModif": "2017-05-04"
+                  },
+                  {
+                    "numObservation": "5019",
+                    "dateAjout": "2019-05-27",
+                    "texte": " Dissolution amiable de la société à compter du 31/12/2018 Liquidateur : NAEL Jean-Yves Le siège de la liquidation est fixé à : 1786 avenue de Colmar 47000 Agen Journal d'annonces légales : La Vie Economique en date du 30/01/2019 ",
+                    "dateGreffe": "2019-05-27",
+                    "etatObs": "Ajout",
+                    "dateDerModif": "2019-05-28"
+                  },
+                  {
+                    "numObservation": "11014",
+                    "dateAjout": "2019-11-21",
+                    "texte": " Radiation du RCS le 21/11/2019 avec effet au 31/08/2019 La vie économique du 25.09.2019 ",
+                    "dateGreffe": "2019-11-21",
+                    "etatObs": "Ajout",
+                    "dateDerModif": "2019-11-22"
+                  }
+                ]
+              },
+              "identite": {
+                "entreprise": {
+                  "siren": "026520171",
+                  "denomination": "NET ANALYSE EXPERTISE LOGIQUE",
+                  "formeJuridique": "5710",
+                  "nicSiege": "00039",
+                  "codeApe": "7010Z",
+                  "dateImmat": "1965-05-28",
+                  "entrepriseValidated": false,
+                  "entrepriseRdd": true
+                },
+                "description": {
+                  "sigle": "NAEL",
+                  "duree": 90,
+                  "dateClotureExerciceSocial": "3112",
+                  "ess": false,
+                  "capitalVariable": false,
+                  "montantCapital": 40000.0,
+                  "deviseCapital": "EUR",
+                  "indicateurOrigineFusionScission": false,
+                  "indicateurAssocieUnique": false,
+                  "indicateurAssocieUniqueDirigeant": false
+                }
+              }
+            },
+            "registreAnterieur": {
+              "raa": {
+                "estPresent": false
+              },
+              "rnm": {
+                "estPresent": false
+              },
+              "rncs": {
+                "estPresent": true,
+                "dateImmatriculation": "1965-05-28T00:00:00+01:00",
+                "dateRadiation": "2019-11-21T00:00:00+01:00"
+              }
+            }
+          },
+          "diffusionINSEE": "O",
+          "typePersonne": "M",
+          "diffusionCommerciale": true,
+          "formeJuridique": "5710"
+        },
+        "siren": "026520171"
+      },
+      {
+        "updatedAt": "2024-02-26T06:41:45+01:00",
+        "nombreRepresentantsActifs": 0,
+        "nombreEtablissementsOuverts": 0,
+        "id": "63dce6d7474db94e7804a665",
+        "formality": {
+          "siren": "026541342",
+          "indicateurStructureEtablissement": false,
+          "content": {
+            "natureCessation": "1",
+            "natureCreation": {
+              "dateCreation": "1965-12-25",
+              "formeJuridique": "1000",
+              "microEntreprise": false,
+              "relieeEntrepriseAgricole": false,
+              "entrepriseAgricole": false,
+              "eirl": false
+            },
+            "personnePhysique": {
+              "adresseEntreprise": {
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": false,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": false,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": false,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "22690",
+                  "commune": "PLEUDIHEN-SUR-RANCE",
+                  "codeInseeCommune": "22197",
+                  "voie": "BOURG"
+                }
+              },
+              "etablissementPrincipal": {
+                "descriptionEtablissement": {
+                  "rolePourEntreprise": "3",
+                  "siret": "02654134200015",
+                  "indicateurEtablissementPrincipal": true,
+                  "statutPourFormalite": "2",
+                  "codeApe": "3840",
+                  "etablissementValidated": false,
+                  "etablissementRdd": true
+                },
+                "adresse": {
+                  "roleAdressePresent": false,
+                  "codePostalPresent": true,
+                  "communePresent": true,
+                  "codeInseeCommunePresent": true,
+                  "typeVoiePresent": false,
+                  "voiePresent": true,
+                  "voieCodifieePresent": false,
+                  "numVoiePresent": false,
+                  "indiceRepetitionPresent": false,
+                  "distributionSpecialePresent": false,
+                  "communeAnciennePresent": false,
+                  "rgpdPresent": false,
+                  "datePriseEffetAdressePresent": false,
+                  "complementLocalisationPresent": false,
+                  "communeDeRattachementPresent": false,
+                  "caracteristiquesPresent": true,
+                  "indicateurValidationBANPresent": true,
+                  "cedexPresent": false,
+                  "pays": "FRANCE",
+                  "codePays": "FRA",
+                  "codePostal": "22690",
+                  "commune": "PLEUDIHEN-SUR-RANCE",
+                  "codeInseeCommune": "22197",
+                  "voie": "BOURG"
+                },
+                "activites": [
+                  {
+                    "activiteId": "fea58cff-95e1-461f-94b2-cfb059e8d7ae",
+                    "indicateurPrincipal": true,
+                    "indicateurProlongement": false,
+                    "descriptionDetaillee": "Activité déduite de la reconstitution des données. Il vous est demandé de la reformuler.",
+                    "indicateurActiviteeApe": false,
+                    "rolePrincipalPourEntreprise": true,
+                    "codeApe": "3840",
+                    "activiteRattacheeEirl": false
+                  }
+                ]
+              },
+              "detailCessationEntreprise": {
+                "dateRadiation": "1985-09-30"
+              },
+              "identite": {
+                "adresseCorrespondancePresent": false,
+                "entreprise": {
+                  "siren": "026541342",
+                  "formeJuridique": "1000",
+                  "nicSiege": "00015",
+                  "codeApe": "3840",
+                  "dateImmat": "1965-12-25",
+                  "entrepriseValidated": false,
+                  "entrepriseRdd": true
+                },
+                "entrepreneur": {
+                  "descriptionPersonne": {
+                    "sirenPresent": false,
+                    "dateEffetRoleDeclarantPresent": false,
+                    "genrePresent": true,
+                    "titrePresent": false,
+                    "dateDeNaissancePresent": false,
+                    "paysNaissancePresent": false,
+                    "codePaysNaissancePresent": false,
+                    "lieuDeNaissancePresent": false,
+                    "codePostalNaissancePresent": false,
+                    "codeInseeGeographiquePresent": false,
+                    "situationMatrimonialePresent": false,
+                    "qualiteDeNonSedentaritePresent": false,
+                    "indicateurDeNonSedentaritePresent": false,
+                    "nom": "CHAILLOT",
+                    "prenoms": [
+                      "JEAN"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "diffusionINSEE": "O",
+          "typePersonne": "P",
+          "diffusionCommerciale": true,
+          "formeJuridique": "1000"
+        },
+        "siren": "026541342"
+      }
+    ],
+    "total": 10
+  }
+}
