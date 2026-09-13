@@ -1,10 +1,39 @@
 Trois fichiers récents a revoir pour extraction
 
 
-# Structure 
+# Structure du document
+
+
+```
+header id="header"
 
 
 
+
+```
+## Headers
+
+- title-layout
+- appTitle
+- appSubtitle
+- header-actions
+
+
+**+** div.header-actions
+    button ajouter type button
+
+
+```
+header#header
+    div.title-layout
+        h1.appTitle
+        span.appSubtitle
+        
+    div.header-actions
+        button.rwdnav
+            i.fa fa-bars
+
+```
 
 
 ## Panels / Onglets
