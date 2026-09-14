@@ -20,7 +20,8 @@ from cli.menus.entreprise   import menu_entreprise
 from cli.menus.organisation import menu_organisation
 from cli.menus.adresse      import menu_adresse
 from cli.menus.image        import menu_image
-from cli.menus.layer5       import menu_layer5
+from cli.menus.etablissement    import menu_etablissement
+from cli.menus.layer5           import menu_layer5
 
 console = Console()
 
@@ -37,6 +38,7 @@ MENU_PRINCIPAL = [
     "Entreprises (zealot)",
     "Organisations (zealot)",
     "Images (zealot)",
+    "Établissements (zealot)",
     "Couche 5 — Enrichissement",
 ]
 
@@ -53,7 +55,8 @@ HANDLERS = {
     "10"    : menu_entreprise,
     "11"    : menu_organisation,
     "12"    : menu_image,
-    "13"    : menu_layer5,   # ajuster le numéro
+    "13"    : menu_etablissement,
+    "14"    : menu_layer5,   # ajuster le numéro
 }
 
 
