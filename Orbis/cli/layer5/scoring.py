@@ -66,6 +66,14 @@ def score_loc(org_loc: Optional[str], cand_loc: Optional[str]) -> float:
     cp_o, cp_c = _extract_cp(org_loc), _extract_cp(cand_loc)
     if cp_o and cp_c and cp_o == cp_c:
         return float(W_LOC)
+    
+    # département : org "29" ou "29xxx" vs cand "29120"
+    dept_o = cp_o[:2] if cp_o else (org_loc.strip()[:2] if org_loc.strip().isdigit() else None)
+    dept_c = cp_c[:2] if cp_c else None
+    if dept_o and dept_c and len(dept_o) == 2 and dept_o == dept_c:
+        return float(W_LOC) * 0.5
+    
+    # commune 
     com_o, com_c = _extract_commune(org_loc), _extract_commune(cand_loc)
     if com_o and com_c and (com_o == com_c or com_o in com_c or com_c in com_o):
         return float(W_LOC) * 0.5
