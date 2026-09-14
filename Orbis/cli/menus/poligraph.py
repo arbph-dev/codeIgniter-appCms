@@ -27,14 +27,17 @@ def menu_poligraph() -> None:
     client = PoligraphClient()
 
     while True:
-        choix = menu("Poligraph", [
-            "Recherche / liste politiques",
-            "Fiche politique",
-            "Affaires judiciaires",
-            "Partis politiques",
-            "Élections",
-            "Résolution poligraphId",
-        ])
+        choix = menu(
+            "Poligraph",
+            [
+                "Liste des politiques",
+                "Fiche politique",
+                "Affaires judiciaires",
+                "Partis politiques",
+                "Élections",
+                "Résolution poligraphId",
+            ],
+        )
 
         if choix == "0":
             break
@@ -44,43 +47,43 @@ def menu_poligraph() -> None:
         # --------------------------------------------------------------
 
         elif choix == "1":
-            q = Prompt.ask(
-                "Recherche",
-                default="",
-            )
-
-            # Pour l'instant on transmet q comme filtre.
-            # Le nom exact du paramètre devra être confirmé sur
-            # l'endpoint réel Poligraph.
             data = client.list_politiques(
                 page=1,
                 limit=20,
-                q=q or None,
             )
 
             sauvegarder(
                 data,
                 "poligraph",
                 "list_politiques",
-                {"q": q},
+                {
+                    "page": 1,
+                    "limit": 20,
+                },
             )
 
             if not data:
-                console.print("[yellow]Aucun résultat.[/]")
+                console.print(
+                    "[yellow]Aucun résultat.[/]"
+                )
                 continue
 
             items = data.get("data", [])
+            pagination = data.get("pagination", {})
 
             if items:
                 t = Table(
-                    title=f"Poligraph — politiques ({len(items)})",
+                    title=(
+                        "Poligraph — politiques "
+                        f"({len(items)}/{pagination.get('total', '?')})"
+                    ),
                     show_lines=True,
                 )
 
                 t.add_column(
-                    "poligraphId",
+                    "ID",
                     style="cyan",
-                    width=16,
+                    width=26,
                 )
                 t.add_column(
                     "Nom",
@@ -93,19 +96,39 @@ def menu_poligraph() -> None:
                     width=35,
                 )
 
-                for p in items:
+                for politique in items:
                     t.add_row(
-                        str(p.get("poligraphId") or ""),
-                        (
-                            p.get("name")
-                            or p.get("nom")
-                            or p.get("fullName")
+                        str(
+                            politique.get("id")
                             or ""
                         ),
-                        str(p.get("slug") or ""),
+                        (
+                            politique.get("fullName")
+                            or politique.get("name")
+                            or politique.get("nom")
+                            or ""
+                        ),
+                        str(
+                            politique.get("slug")
+                            or ""
+                        ),
                     )
 
                 console.print(t)
+
+            else:
+                console.print(
+                    "[yellow]Aucun résultat.[/]"
+                )
+
+            if pagination:
+                console.print(
+                    "[dim]"
+                    f"Page {pagination.get('page', '?')} / "
+                    f"{pagination.get('totalPages', '?')} — "
+                    f"{pagination.get('total', '?')} politiques"
+                    "[/]"
+                )
 
             voir_detail(data)
 
@@ -114,23 +137,18 @@ def menu_poligraph() -> None:
         # --------------------------------------------------------------
 
         elif choix == "2":
+            console.print("[dim]Saisir un slug complet : ex jean-luc-abalain.[/]")
+            
             slug = Prompt.ask("Slug politique")
 
             data = client.get_politique(slug)
 
-            sauvegarder(
-                data,
-                "poligraph",
-                "get_politique",
-                {"slug": slug},
-            )
+            sauvegarder( data, "poligraph", "get_politique", {"slug": slug} )
 
             if data:
                 voir_detail(data)
             else:
-                console.print(
-                    "[yellow]Politique introuvable.[/]"
-                )
+                console.print("[yellow]Politique introuvable.[/]")
 
         # --------------------------------------------------------------
         # 3 — AFFAIRES
@@ -190,9 +208,9 @@ def menu_poligraph() -> None:
                 )
 
                 t.add_column(
-                    "poligraphId",
+                    "ID",
                     style="cyan",
-                    width=16,
+                    width=26,
                 )
                 t.add_column(
                     "Titre",
@@ -203,7 +221,7 @@ def menu_poligraph() -> None:
                 for affaire in items:
                     t.add_row(
                         str(
-                            affaire.get("poligraphId")
+                            affaire.get("id")
                             or ""
                         ),
                         (
@@ -250,9 +268,9 @@ def menu_poligraph() -> None:
                 )
 
                 t.add_column(
-                    "poligraphId",
+                    "ID",
                     style="cyan",
-                    width=16,
+                    width=26,
                 )
                 t.add_column(
                     "Nom",
@@ -268,7 +286,7 @@ def menu_poligraph() -> None:
                 for parti in items:
                     t.add_row(
                         str(
-                            parti.get("poligraphId")
+                            parti.get("id")
                             or ""
                         ),
                         (
@@ -318,9 +336,9 @@ def menu_poligraph() -> None:
                 )
 
                 t.add_column(
-                    "poligraphId",
+                    "ID",
                     style="cyan",
-                    width=16,
+                    width=26,
                 )
                 t.add_column(
                     "Nom",
@@ -336,7 +354,7 @@ def menu_poligraph() -> None:
                 for election in items:
                     t.add_row(
                         str(
-                            election.get("poligraphId")
+                            election.get("id")
                             or ""
                         ),
                         (
