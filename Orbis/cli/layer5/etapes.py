@@ -190,6 +190,16 @@ def etape2_insee() -> None:
             "Max enrichissements SIRET par org",
             default=str(max_enrich),
         ))
+
+    loc_hint = Prompt.ask( "Filtre loc org (CP 5 chiffres ou dép. 2 chiffres, vide = aucun)", default="" ).strip()
+    if loc_hint:
+        if loc_hint.isdigit() and len(loc_hint) == 2:
+            # 29 → indiquer "29xxx" pour score commune/département
+            loc_hint = f"{loc_hint}000-{loc_hint}999"  # ou stocker dept seulement
+        for rec in WorkingMemory.records:
+            if not rec.localisation:
+                rec.localisation = loc_hint
+
     _run_etape2(insee, max_per_org, enrich_siege=enrich_siege, max_enrich=max_enrich)
 
 
