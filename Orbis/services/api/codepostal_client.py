@@ -136,6 +136,41 @@ class CodePostalClient(BaseApiClient):
             per_page=per_page,
         )
 
+    # 2026-09-02 - pour resolution BAN
+    def resolve_id( self, codepostal: str, commune: Optional[str] = None ) -> Optional[int]:
+        """
+        codepostal BAN (+ commune optionnelle) → codes_postaux.id
+
+        Un même CP peut couvrir plusieurs communes : si commune est
+        fournie, on privilégie le match sur le libellé commune.
+        """
+        codepostal = (codepostal or "").strip()
+        if not codepostal:
+            return None
+
+        data = self.find_by_codepostal(codepostal, per_page=50)
+        items = (data or {}).get("data") or []
+
+        if not items:
+            # fallback like
+            items = self.like(codepostal, len_=20)
+            items = [
+                r for r in items
+                if str(r.get("codepostal") or "") == codepostal
+            ]
+
+        if not items:
+            return None
+
+        if commune:
+            target = commune.strip().upper()
+            for row in items:
+                c = (row.get("commune") or "").strip().upper()
+                if c == target or target in c or c in target:
+                    return int(row["id"])
+
+        return int(items[0]["id"])
+
     def like(
         self,
         q: str,
