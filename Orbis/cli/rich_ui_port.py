@@ -59,7 +59,11 @@ class RichUIPort:
         for col in columns:
             table.add_column(col)
         for row in rows:
-            table.add_row(*[str(row.get(col, "") or "") for col in columns])
+            values = []
+            for col in columns:
+                v = row.get(col, "")
+                values.append("" if v is None else str(v))
+            table.add_row(*values)
         self.console.print(table)
 
     def show_detail(self, data: Any) -> None:
