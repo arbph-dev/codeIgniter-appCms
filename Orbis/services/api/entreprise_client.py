@@ -199,16 +199,29 @@ class EntrepriseClient(BaseApiClient):
         result = self._request("DELETE", f"/entreprise/{id_}")
         return result is not None
     
-
+    """    
     def attach_to_organisation(self, org_id: int, **kwargs) -> Optional[dict]:
-        """
+
         POST /organisation/:id/entreprise
         Rattache une extension entreprise à une organisation existante.
         Ne crée PAS une nouvelle org.
 
         kwargs : siren, siret, adresse_id, codenaf_id, forme_juridique_id,
                  capital, effectif_min, effectif_max, …
-        """
+
         data = self.post(f"/organisation/{org_id}/entreprise", kwargs)
         self._save(data, "attach", {"org_id": org_id, **kwargs})
         return (data or {}).get("data")
+    """
+
+    def attach_to_organisation(self, organisation_id: int, **payload) -> dict | None:
+            """
+            POST /organisation/{id}/entreprise
+            Rattache une extension entreprise (+ siège si siret) à une org existante.
+            """
+            # json=payload devient donc data=payload 
+            # data = self.post(f"/organisation/{organisation_id}/entreprise", json=payload)
+            data = self.post(f"/organisation/{organisation_id}/entreprise", data=payload)
+
+            self._save(data, "attach", {"organisation_id": organisation_id})
+            return (data or {}).get("data") if isinstance(data, dict) else data
