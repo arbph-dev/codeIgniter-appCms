@@ -1,23 +1,41 @@
 # cli/menus/adresse.py
-
 """
 Menu Adresse Zealot.
-
 Clients :
     services.api.adresse_client.AdresseClient
     services.api.typevoie_client.TypeVoieClient
     services.api.codepostal_client.CodePostalClient
 
-BAN n'est volontairement pas utilisé ici.
-
-
 sauvegarder JSON : 
-_menu_adresses
-- LISTE     
-- FICHE
-- AUTOCOMPLÉTION
-- CREATE    
-- UPDATE    
+_menu_adresses : LISTE , FICHE , AUTOCOMPLÉTION , CREATE , UPDATE    
+
+
+_menu_adresses(client: AdresseClient)
+    Menu , item 1 - "Adresses"
+            1 - "Lister / rechercher",
+            2 - "Fiche adresse",
+            3 - "Autocomplétion",
+            4 - "Créer une adresse",
+            5 - "Créer depuis BAN", #5
+            6 - "Modifier une adresse",
+            7 - "Supprimer une adresse",
+
+_menu_typevoie(client: TypeVoieClient)
+
+_menu_codepostal(client: CodePostalClient)
+
+
+_create_from_ban(adresse_client: AdresseClient)
+    # creation adresse zealot
+        result = create_adresse_from_ban( ban, adresse_client, cp_client, tv_client, dry_run=dry)
+
+menu_adresse()                                      
+    Point d'entrée appelé par main.py.
+        "Zealot — Adresses",
+            1 - "Adresses", appel _menu_adresses(adresse_client) 
+                adresse_client est initialisé, puis passé en argument
+            2 - "Types de voie",
+            3 - "Codes postaux",
 
 
 """
@@ -57,11 +75,11 @@ def _menu_adresses(client: AdresseClient) -> None:
         choix = menu(
             "Zealot — Adresses",
             [
-                "Lister / rechercher",
+                "Lister / rechercher", # 
                 "Fiche adresse",
                 "Autocomplétion",
                 "Créer une adresse",
-                "Créer depuis BAN",
+                "Créer depuis BAN", #5
                 "Modifier une adresse",
                 "Supprimer une adresse",
             ],
@@ -71,78 +89,51 @@ def _menu_adresses(client: AdresseClient) -> None:
             return
 
         # ------------------------------------------------------------------
-        # 1 — LISTE
+        # 1 — LISTE Lister / rechercher
         # ------------------------------------------------------------------
 
         if choix == "1":
 
-            q = Prompt.ask(
-                "Recherche",
-                default="",
-            ).strip()
+            q = Prompt.ask( "Recherche", default="",).strip()
+            
+            # services.api.adresse_client AdresseClient
+            # client fait la requete avec la saisie du prompt q
+            # data contient la réponse
+            data = client.list( q=q or None, page=1, per_page=20 )
 
-            data = client.list(
-                q=q or None,
-                page=1,
-                per_page=20,
-            )
             # Sauvegarde après un appel API. Retourne le nom du fichier.
-            sauvegarder(
-                data,
-                "zealot_adresse",
-                "list",
-                {
-                    "q": q,
-                    "page": 1,
-                    "per_page": 20,
-                },
-            )
+            sauvegarder( data, "zealot_adresse", "list", { "q": q , "page": 1 , "per_page": 20 } )
 
-            if not data:
-                console.print(
-                    "[yellow]Aucun résultat.[/]"
-                )
+            # Traitement de la reponse
+            if not data: # check
+                console.print( "[yellow]Aucun résultat.[/]")
                 continue
-
+            
+            # Extraction dataS et metadataS
             items = data.get("data", [])
             pager = data.get("pager", {})
-
+            
+            # Traitement data dans la reponse
             if not items:
-                console.print(
-                    "[yellow]Aucune adresse trouvée.[/]"
-                )
+                console.print("[yellow]Aucune adresse trouvée.[/]")
                 continue
-
-            table = Table(
-                title="Zealot — Adresses",
-                show_lines=True,
-            )
-
-            table.add_column(
-                "ID",
-                style="cyan",
-                width=8,
-            )
-            table.add_column(
-                "Adresse",
-                width=50,
-            )
-            table.add_column(
-                "CP",
-                width=8,
-            )
-            table.add_column(
-                "Commune",
-                width=25,
-            )
-
-            for item in items:
-
+            
+            # UI - construction tableau
+            table = Table( title="Zealot — Adresses", show_lines=True,)
+            # header 4 colonnes
+            table.add_column( "ID"          , style="cyan"      , width=8 )
+            table.add_column( "Adresse"     , width=50  )
+            table.add_column( "CP"          , width=8   )
+            table.add_column( "Commune"     , width=25  )
+            
+            
+            for item in items: # Parcours des data de la reponse
+                # MISE EN FORME
                 numero = item.get("voienumero") or ""
                 type_voie = item.get("voietype_nom") or ""
                 nom = item.get("voienom") or ""
                 complement = item.get("complement") or ""
-
+                # Construit une chaine "12 Rue Paix"
                 adresse = " ".join(
                     part
                     for part in [
@@ -152,22 +143,26 @@ def _menu_adresses(client: AdresseClient) -> None:
                     ]
                     if part
                 )
-
+                
+                # Ajoute a adresse "12 Rue Paix"
+                # le complement  =>  "12 Rue Paix Bat A Apt 11"
                 if complement:
                     adresse += f" {complement}"
-
+                
+                # AJOUT AU TABLEAU    
+                # Ajoute la ligne de data  mise en forme
                 table.add_row(
                     str(item.get("id") or ""),
                     adresse,
                     str(item.get("cp_codepostal") or ""),
                     str(item.get("cp_commune") or ""),
                 )
-
+                # FIn de boucle for item in items: / Parcours des data de la reponse
+            
+            # Affiche le tableau
             console.print(table)
-
-            console.print(
-                f"[dim]Total : {pager.get('total', '?')}[/]"
-            )
+            # Affiche le nombre de dataS
+            console.print( f"[dim]Total : {pager.get('total', '?')}[/]" )
 
         # ------------------------------------------------------------------
         # 2 — FICHE
@@ -770,8 +765,6 @@ def _create_from_ban(adresse_client: AdresseClient) -> None:
     if not auth_z:
         return
 
-    # Adapte la construction BanClient à ton projet
-    # ban_client = BanClient(auth=auth_ban)  # ou BanClient() si sans auth
     ban_client = BanClient()   # API publique, pas d'auth
     cp_client = CodePostalClient(auth=auth_z)
     tv_client = TypeVoieClient(auth=auth_z)
@@ -817,13 +810,8 @@ def _create_from_ban(adresse_client: AdresseClient) -> None:
     dry = Confirm.ask("Dry-run (afficher payload sans POST) ?", default=False)
 
     try:
-        result = create_adresse_from_ban(
-            ban,
-            adresse_client,
-            cp_client,
-            tv_client,
-            dry_run=dry,
-        )
+        # creation adresse zealot
+        result = create_adresse_from_ban( ban, adresse_client, cp_client, tv_client, dry_run=dry)
         
         console.print("[bold]payload[/]")
         for k, v in result["payload"].items():
@@ -862,19 +850,12 @@ def _create_from_ban(adresse_client: AdresseClient) -> None:
 
 # ============================================================================
 # Menu principal Adresse
+# menu_adresse()                Point d'entrée appelé par main.py.
 # ============================================================================
 
 def menu_adresse() -> None:
-    """
-    Point d'entrée appelé par main.py.
-    """
-
     store = CredentialsStore()
-
-    auth = get_auth(
-        store,
-        "zealot",
-    )
+    auth = get_auth( store, "zealot" )
 
     store.close()
 
