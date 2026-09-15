@@ -1,5 +1,6 @@
 "use strict"
 import { bus } from '/assets/js/core/eventBus.js'
+import { byId, byName , qs , qsa } from '/assets/js/core/domhelper.js'
 
 // variables gloables
 
@@ -7,21 +8,28 @@ import { bus } from '/assets/js/core/eventBus.js'
 let pages = ["Tableau de bord", "Paramètres", "Diagnostic"]
 let currentTheme = "marine"
 
-let stack = null
+let _main = null
+let _menu = null
+let _footer = null
+let _footer_status = null
+//let _header = null
+//let _header_actions = null
+let _header_actions_btn_fullscreen = null
+let _header_actions_btn_theme = null
+
+
+
 let sidebarList = null
 let panels = null
 let sidebar = null
 let panelLinks = null
-let statusBar = null
-let themeBtn = null
-let fullscreenBtn = null
 
 // Gestion du thème
 function themeSwitch(){
   currentTheme = currentTheme === "marine" ? "nature" : "marine";
   //document.documentElement.setAttribute("data-theme", currentTheme);
   document.documentElement.dataset.theme = currentTheme;  
-  themeBtn.textContent = currentTheme === "marine" ? "Thème nature" : "Thème marine";
+  _header_actions_btn_theme.textContent = currentTheme === "marine" ? "Thème nature" : "Thème marine";
 }
 
 
@@ -36,31 +44,9 @@ function themeSwitch(){
         <li data-index="2">Diagnostic</li>
 */   
 function tabSwitch(e) {
-  
 
   if (e.target.tagName === "LI") {
     const index = parseInt(e.target.dataset.index, 10)
-    
-    console.log(e.target.parentElement.nodeName) // The nodeName property returns the name of a node:
-    console.log(e.target.parentElement.id) //The id property sets or returns the value of an element's id attribute.
-    console.log(e.target.parentElement.className) //The className property sets or returns an element's class attribute.
-    console.log(e.target.parentElement.classList) // classList property returns (DOMTokenList) the CSS classnames of an element
-  /*
-  classList Properties and Methods
-    add() Adds one or more tokens to the list
-    contains()  Returns true if the list contains a class
-    entries() Returns an Iterator with key/value pairs from the list
-    forEach() Executes a callback function for each token in the list
-    item()  Returns the token at a specified index
-    keys()  Returns an Iterator with the keys in the list
-    length  Returns the number of tokens in the list
-    remove()  Removes one or more tokens from the list
-    replace() Replaces a token in the list
-    supports()  Returns true if a token is one of an attribute's supported tokens
-    toggle()  Toggles between tokens in the list
-    value Returns the token list as a string
-    values()  Returns an Iterator with the values in the list
-  */
     switchTab(index)
   }
 }
@@ -70,25 +56,15 @@ function tabSwitch(e) {
 
 function switchTab(index) {
   //const items = sidebarList.querySelectorAll("li");
-  const panels = stack.querySelectorAll(".panel-card");
+  const panels = _main.querySelectorAll(".panel-card");
 
   sidebarList.forEach((item, i) => { item.classList.toggle("active", i === index)  })
 
   panels.forEach((panel, i) => { panel.classList.toggle("hidden", i !== index) })
 
-  statusBar.textContent = `Onglet actif : ${pages[index]}`;
+  statusWrite( `Onglet actif : ${pages[index]}` )
 }
 
-/* OBSOLETE
-function fullscreenSwitch(){
-  if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen();
-  } 
-  else {
-    if (document.exitFullscreen) { document.exitFullscreen(); }
-  }
-}
-*/
 async function fullscreenSwitch() {
   try {
     if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
@@ -98,38 +74,60 @@ async function fullscreenSwitch() {
 }
 
 
+// https://developer.mozilla.org/fr/docs/Web/API/HTML_DOM_API
+function typeofObj( Obj ){
+  let str = null
+  if ( Obj instanceof HTMLButtonElement   ) { return "HTMLButtonElement  " }
+  if ( Obj instanceof HTMLCollection ) { return "HTMLCollection" }
+  if ( Obj instanceof HTMLDivElement ) { return "HTMLDivElement" }
+  if ( Obj instanceof HTMLElement ) { return "HTMLElement" }
+  return "Object"
+}
+
+
+
 
 function setPageRef(){
+  
+  _main = byName("main")[0]
+  console.log( typeofObj(_main) )
 
-  stack = document.getElementById("stack")
 
-
-  // nav-article 
-  /* nav#sidebar > div.nav-article > div.nav-header-row > a.nav-title */
-  // sidebarList = document.getElementById("sidebarList"); //document.querySelector("#sidebar > div > div > a") 
-  // sidebarList = document.querySelectorAll(".nav-article ")
   sidebarList = document.querySelectorAll("nav#sidebar > div.nav-article > div.nav-header-row > a.nav-title")
   console.log(sidebarList[0].innerText)
 
-// ligne 12 - 13
-  sidebar = document.getElementById("sidebar")
+  sidebar = byId("sidebar", document)
+  _menu = byName( "nav", document )[0]
 
   // let panelLinks = null
   sidebarList = document.querySelectorAll("ul.nav-toc > li > a")
 
-  statusBar = document.getElementById("statusBar")
-  themeBtn = document.getElementById("themeBtn")
-  fullscreenBtn = document.getElementById("fullscreenBtn")
+  _footer = byName("footer" , document )[0]
+  _footer_status = qs( "div#statusBar" , _footer ) //console.log(_footer_status)
+  
+  _header_actions_btn_fullscreen = qs( "header#header > div.header-actions > button#fullscreenBtn") 
+  _header_actions_btn_theme = qs( "header#header > div.header-actions > button#themeBtn")
 
-  if (!stack || !sidebar) {
-    console.error("uiapp.js : #stack ou #sidebar introuvable");
+
+  if (!_main || !sidebar) {
+    console.error("uiapp.js : main ou #sidebar introuvable");
     return;
   }
 
-  panels = stack.querySelectorAll(".panel-card");
+  panels = _main.querySelectorAll(".panel-card");
 
-
+  console.log("--- Building nav----")
   
+  console.log("--- 2026-09-14-000 : intégration domhelper ----")
+  console.log(_main)
+  console.log(_menu)
+  console.log(_footer)
+
+
+  console.log(_header_actions_btn_fullscreen)
+  console.log(_header_actions_btn_theme)
+
+
 }
 
 
@@ -222,6 +220,14 @@ function initPagination() {
 
 }
 
+function statusWrite( textContent ){
+    if (_footer_status){ 
+      _footer_status.textContent = textContent 
+    }
+    else{
+        console.log("STATUS :: " + textContent)
+    }    
+}
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -234,8 +240,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initTabsButtonNaviagtion()
   initPagination()
 
-  themeBtn.addEventListener("click", themeSwitch );// Gestion du thème - click header
-  fullscreenBtn.addEventListener("click", fullscreenSwitch );// Gestion du plein écran
+  _header_actions_btn_theme.addEventListener("click", themeSwitch );// Gestion du thème - click header
+  _header_actions_btn_fullscreen.addEventListener("click", fullscreenSwitch );// Gestion du plein écran
 
 
 }) //document.addEventListener("DOMContentLoaded", () => {
