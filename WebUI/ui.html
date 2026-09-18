@@ -33,75 +33,16 @@
     </header>
     <!-- ==== SIDEBAR ============================================================== 
     on va devoir 
-        initiliser ref dom sur stack
+        initialiser ref dom sur stack
 
+
+        
     -->
 
     <nav id="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" aria-label="Fermer le menu">&times;</a>
 
-        <div class="nav-article" data-article-id="automates">
 
-            <div class="nav-header-row">
-                <a href="javascript:void(0)" class="nav-title active">
-                    <i class="fa fa-fw fa-cogs" aria-hidden="true" ></i>
-                    Automates
-                </a>
-                <button class="nav-toggle" type="button" aria-label="Développer le menu Automates" aria-expanded="false">
-                    ›
-                </button>
-            </div>
-
-            <ul class="nav-toc">
-                <!-- === Panel / Onglet 0 — SCHNEIDER ================== -->
-                <li>
-                    <a href="javascript:void(0)" data-target-id="0" >Schneider Modicon M221</a>
-                    <ul>
-                        <li>
-                            <a  href="#presentation-0" data-tab-target="presentation-0"
-                            >Présentation</a>
-                        </li>
-                        <li>
-                            <a  href="#caracteristiques-0" data-tab-target="caracteristiques-0">Caractéristiques</a>
-                        </li>
-
-                        <li>
-                            <a href="#conclusion-0" data-tab-target="conclusion-0">Conclusion et avis</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- === Panel / Onglet 1 — WAGO  ===================== -->
-                <li>
-                    <a href="javascript:void(0)" data-target-id="1">WAGO</a>
-                    <ul>
-                        <li>
-                            <a href="#presentation-1" data-tab-target="presentation-1">Présentation</a>
-                        </li>
-                        <li>
-                            <a href="#caracteristiques-1"  data-tab-target="caracteristiques-1">Caractéristiques</a>
-                        </li>
-                        <li>
-                            <a href="#conclusion-1" data-tab-target="conclusion-1">Conclusion et avis</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- ==== Panel / Onglet 2 — CROUZET  ====================== -->
-                <li>
-                    <a href="javascript:void(0)" data-target-id="2">Crouzet Millenium EVO</a>
-                    <ul>
-                        <li>
-                            <a href="#presentation-2" data-tab-target="presentation-2">Présentation</a>
-                        </li>
-                        <li>
-                            <a href="#caracteristiques-2" data-tab-target="caracteristiques-2">Caractéristiques</a>
-                        </li>
-                        <li>
-                            <a href="#conclusion-2" data-tab-target="conclusion-2">Conclusion et avis</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
     </nav>
     <!-- ====  CONTENU PRINCIPAL    ========================== -->
     <main id="stack">
@@ -117,11 +58,7 @@
             </p>
             <div class="section-tab">
 
-                <div class="tab-headers">
-                    <button class="tab-btn active" type="button" data-tab="presentation-0">Présentation</button>
-                    <button class="tab-btn" type="button" data-tab="caracteristiques-0">Caractéristiques</button>
-                    <button class="tab-btn" type="button" data-tab="conclusion-0">Conclusion</button>
-                </div>
+                <div class="tab-headers"></div>
 
                 <div id="presentation-0" class="tab-content active">
                     <h3>Présentation du Modicon M221</h3>
@@ -203,6 +140,36 @@
                         intégrées à chaque variante.
                     </p>
                 </div>
+
+
+                <!-- 
+                <div id="test-0" class="tab-content">
+                    <h3>Test</h3>
+                    <div id="mermaid_grf1">
+                        <pre class="mermaid" id="mmG1">
+                            gantt
+                            dateFormat  YYYY-MM-DD
+        
+                            section Clickable
+                            Visit mermaidjs, read documentation         :active, cl1, 2025-08-22, 2d
+                            Print arguments         :cl2, after cl1, 3d
+                            Print task              :cl3, after cl2, 3d
+        
+                            click cl1 href "https://mermaidjs.github.io/"
+                            click cl2 call mermaid_printArguments("test1", "test2", 3)
+                            click cl3 call window.mermaid_printTask(cl3)
+                        </pre>
+    
+                        <button 
+                        id="executeButton"
+                        name="executeButton" 
+                        onclick="mermaid_Run('mmG1')"
+                        >Exécuter
+                        </button>                  
+                    </div>
+                </div>
+                -->
+
             </div>
         </div>
 
@@ -218,11 +185,7 @@
 
             <div class="section-tab">
 
-                <div class="tab-headers">
-                    <button class="tab-btn active" type="button" data-tab="presentation-1">Présentation</button>
-                    <button class="tab-btn" type="button" data-tab="caracteristiques-1">Caractéristiques</button>
-                    <button class="tab-btn" type="button" data-tab="conclusion-1">Conclusion</button>
-                </div>
+                <div class="tab-headers"></div>
 
                 <div id="presentation-1" class="tab-content active">
                     <h3>Présentation de la solution WAGO</h3>
@@ -315,11 +278,7 @@
 
             <div class="section-tab">
 
-                <div class="tab-headers">
-                    <button class="tab-btn active" type="button" data-tab="presentation-2">Présentation</button>
-                    <button class="tab-btn" type="button" data-tab="caracteristiques-2">Caractéristiques</button>
-                    <button class="tab-btn" type="button" data-tab="conclusion-2">Conclusion</button>
-                </div>
+                <div class="tab-headers"></div>
 
                 <div id="presentation-2" class="tab-content active">
                     <h3>Présentation du Millenium EVO</h3>
@@ -381,12 +340,8 @@
             </div>
         </div>
     </main>
-    <!-- ====   PAGINATION  =============================================== -->
-    <div class="pagination-buttons">
-        <button class="primary-button switch-tab-btn" type="button" data-target-id="0">Précédent</button>
-        <button class="primary-button switch-tab-btn" type="button" data-target-id="1">Automate suivant</button>
-        <button class="primary-button switch-tab-btn" type="button" data-target-id="2">Dernier automate</button>
-    </div>
+
+    <div class="pagination-buttons"></div>
     <!-- ====   FOOTER  ================================================ -->
 
     <footer>
