@@ -1,29 +1,34 @@
 "use strict"
 import { bus } from '/assets/js/core/eventBus.js'
-import { byId, byName , qs , qsa } from '/assets/js/core/domhelper.js'
+import { byId, byName , qs , qsa , create } from '/assets/js/core/domhelper.js'
 
 // variables gloables
 
 //onglet
 let pages = ["Tableau de bord", "Paramètres", "Diagnostic"]
+let _pages = []
 let currentTheme = "marine"
 
 let _main = null
 let _menu = null
+let _menu_list = null
 let _footer = null
 let _footer_status = null
 //let _header = null
 //let _header_actions = null
 let _header_actions_btn_fullscreen = null
 let _header_actions_btn_theme = null
+let _main_panels = null
+
+let _currentPanel = 0 //par defaut voir le code html 
+let _currentSection = 0
 
 
-
-let sidebarList = null
 let panels = null
 let sidebar = null
 let panelLinks = null
 
+/*  ======================================================================================================================  */
 // Gestion du thème
 function themeSwitch(){
   currentTheme = currentTheme === "marine" ? "nature" : "marine";
@@ -32,39 +37,33 @@ function themeSwitch(){
   _header_actions_btn_theme.textContent = currentTheme === "marine" ? "Thème nature" : "Thème marine";
 }
 
+/*  ======================================================================================================================  */
 
-// handlers Event
-// Gestion onglets depuis menu
-// traduit event en index
-/*
+function switchPanel(index) {
 
-      <ul id="sidebarList">
-        <li class="active" data-index="0">Tableau de bord</li>
-        <li data-index="1">Paramètres</li>
-        <li data-index="2">Diagnostic</li>
-*/   
-function tabSwitch(e) {
+  _main_panels.forEach((panel, i) => { panel.classList.toggle("hidden", i !== index) })
 
-  if (e.target.tagName === "LI") {
-    const index = parseInt(e.target.dataset.index, 10)
-    switchTab(index)
-  }
-}
-
-//-------------------------------------------------------------------------------------------------
-// Changement d'onglet de navigation
-
-function switchTab(index) {
-  //const items = sidebarList.querySelectorAll("li");
-  const panels = _main.querySelectorAll(".panel-card");
-
-  sidebarList.forEach((item, i) => { item.classList.toggle("active", i === index)  })
-
-  panels.forEach((panel, i) => { panel.classList.toggle("hidden", i !== index) })
+  _currentPanel = index
 
   statusWrite( `Onglet actif : ${pages[index]}` )
 }
+/*  ======================================================================================================================  */
+function switchSection(index) {
+  // voir pour assigner les variables : panel_Sections et panel_header_Buttons
+  let panel_Sections = qsa( "div.section-tab > div.tab-content" , _main_panels[_currentPanel] )
+  let panel_header_Buttons = qsa( "div.section-tab > div.tab-headers > button.tab-btn", _main_panels[_currentPanel] )
 
+  panel_Sections.forEach( c => c.classList.remove("active") )
+  panel_header_Buttons.forEach( b => b.classList.remove("active") )
+
+  panel_Sections[index].classList.add("active")
+  panel_header_Buttons[index].classList.add("active")
+  
+  _currentSection = index
+  
+}
+
+/*  ======================================================================================================================  */
 async function fullscreenSwitch() {
   try {
     if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
@@ -73,65 +72,233 @@ async function fullscreenSwitch() {
   catch (e) { console.warn("Plein écran indisponible :", e);}
 }
 
-
+/*  ======================================================================================================================  */
 // https://developer.mozilla.org/fr/docs/Web/API/HTML_DOM_API
 function typeofObj( Obj ){
-  let str = null
-  if ( Obj instanceof HTMLButtonElement   ) { return "HTMLButtonElement  " }
-  if ( Obj instanceof HTMLCollection ) { return "HTMLCollection" }
-  if ( Obj instanceof HTMLDivElement ) { return "HTMLDivElement" }
-  if ( Obj instanceof HTMLElement ) { return "HTMLElement" }
-  return "Object"
+
+  if (Obj != null && Obj != undefined){
+    
+    if ( Obj instanceof HTMLButtonElement   ) { return "HTMLButtonElement  " }
+    if ( Obj instanceof HTMLCollection ) { return "HTMLCollection" }
+    if ( Obj instanceof HTMLDivElement ) { return "HTMLDivElement" }
+    if ( Obj instanceof HTMLElement ) { return "HTMLElement" }
+    if ( Obj instanceof Array ) { return "Array" }
+
+    return typeof Obj
+  }
+  return "null"
+  
+}
+
+/*  ======================================================================================================================  */
+function readPage(){
+
+  let articleObj = null  
+  let panelSections = null
+  let strTemp = null
+
+  if (!_main || !sidebar) { console.error("uiapp.js : main ou #sidebar introuvable"); return false}
+  
+  _main_panels = qsa("div.panel-card" , _main )  
+  console.log("----- Reading page structure -------") // on extrait les informations de la page
+  
+  _main_panels.forEach((  panel , index ) => {
+
+    if ( !panel.classList.contains("hidden") ) { _currentPanel = index }
+
+    strTemp = qs( "h2.panel-title" , panel).innerText
+    //console.log( index + " : " +strTemp)
+
+    panelSections = qsa( "div.section-tab  > div.tab-content > h3" , panel )
+
+    articleObj = { index , title : strTemp , sections : [] } // constuire un objet
+    _pages.push( articleObj )
+
+    panelSections.forEach((  section , sindex ) => { 
+      _pages[ index ].sections.push( section.innerText ) 
+    })      
+
+  })
+
+  return true
+
+}
+
+/*  ======================================================================================================================  */
+function initPagination(){
+  let buttonTemp = null
+  let pagination_buttons = null
+
+  console.log("----- Adding pagination buttons -------") // on construit la pagination depuis _pages
+
+  pagination_buttons = qs( "div.pagination-buttons" , document )   // reference sur element   
+  
+  _pages.forEach((  panel , index ) => { 
+
+    buttonTemp = create( 'button', { type: 'button', class: 'primary-button switch-tab-btn', text: panel.title } )
+    buttonTemp.addEventListener('click', () => switchPanel(index) )
+
+    pagination_buttons.appendChild( buttonTemp )
+
+  })
+
+}
+/*  ======================================================================================================================  */
+function initNavigation(){
+  
+  let buttonTemp = null
+  //on ajoute dans chaque panel la barrre de navigations panel
+  _pages.forEach((  panel , index ) => { 
+
+    let panel_header = qs( "div.section-tab > div.tab-headers" , _main_panels[index] )   // reference sur element 
+  
+    _pages[ index ].sections.forEach(( section , sindex) => {
+     
+      if (sindex === 0 ){ //par defaut le bouton 0 est actif 
+        buttonTemp = create( 'button', { type: 'button', class: 'tab-btn active', text: section } )
+      }
+      else{
+        buttonTemp = create( 'button', { type: 'button', class: 'tab-btn', text: section } )
+      }
+      
+      panel_header.appendChild( buttonTemp )
+      buttonTemp.addEventListener('click', () => { switchSection(sindex) })
+
+    })
+
+  })
+
 }
 
 
-
-
-function setPageRef(){
+/*
+panel.sections.forEach(( section , sindex) => {
   
+  
+  })
+
+  if (sindex === 0 ){ //par defaut le bouton 0 est actif 
+  buttonTemp = create( 'li', { text: section } )
+}
+else{
+  buttonTemp = create( 'button', { type: 'button', class: 'tab-btn', text: section } )
+}
+ul.nav-toc > li 
+
+buttonTemp.addEventListener('click', () => { switchSection(sindex) })  
+*/
+
+function openMenuPanel(index) {
+
+  const menuPanels = qsa('.nav-article', _menu_list)
+
+  menuPanels.forEach((panel, i) => {
+      panel.classList.toggle('open', i === index)
+  })
+
+  //switchPanel(index)
+}
+
+
+function initMenu(){
+
+  _pages.forEach((  panel , index ) => { 
+    const menu_panel = create('div', { class: 'nav-article' })
+    const menu_panel_item = create('div', { class: 'nav-header-row  primary-button'  , text: panel.title  })
+    const menu_panel_item_button = create('button', { class: 'nav-toggle', type: 'button' })
+    menu_panel_item_button.setAttribute( 'aria-expanded', false)
+    const menu_panel_item_i = create('i', { class: 'fa fa-fw fa-cogs' }) 
+
+    const sub_menu = create( 'ul', { class: 'nav-toc'}) // ****
+
+    
+    panel.sections.forEach(( section , sindex) => {
+      const subitem  = create( 'li', { text: section } )
+      sub_menu.appendChild(subitem)
+
+      subitem.addEventListener('click', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        
+        switchPanel(index)
+        switchSection(sindex)
+
+
+        if (window.innerWidth > 768){
+          menu_panel.classList.remove('open')
+        }
+        else{ 
+          closeSidebar() 
+        }           
+      })
+
+
+    })
+
+
+
+
+    menu_panel_item_button.appendChild(menu_panel_item_i)
+    menu_panel_item.appendChild(menu_panel_item_button)
+    menu_panel.appendChild(menu_panel_item)
+    menu_panel.appendChild(sub_menu)
+  
+    _menu_list.appendChild(menu_panel)
+
+
+    menu_panel.addEventListener('click', () => {
+      console.log(`menu clic panel : ${index}`)
+
+      openMenuPanel(index)
+
+    })
+
+
+  })
+}
+
+/*  ======================================================================================================================  */
+function setPageRef(){
+
   _main = byName("main")[0]
-  console.log( typeofObj(_main) )
-
-
-  sidebarList = document.querySelectorAll("nav#sidebar > div.nav-article > div.nav-header-row > a.nav-title")
-  console.log(sidebarList[0].innerText)
+  
 
   sidebar = byId("sidebar", document)
   _menu = byName( "nav", document )[0]
+  
+  _menu_list = qs( "nav#sidebar" , document )
+  //_menu_list = qs( "nav#sidebar > div.nav-article > ul.nav-toc", document )
+  // _menu_list = qs( "div.nav-article > ul.nav-toc", _menu )
 
-  // let panelLinks = null
-  sidebarList = document.querySelectorAll("ul.nav-toc > li > a")
+  // console.log( _menu_list )
+  console.log( typeofObj(_menu_list ) )
 
   _footer = byName("footer" , document )[0]
-  _footer_status = qs( "div#statusBar" , _footer ) //console.log(_footer_status)
+  _footer_status = qs( "div#statusBar" , _footer )
   
-  _header_actions_btn_fullscreen = qs( "header#header > div.header-actions > button#fullscreenBtn") 
+  _header_actions_btn_fullscreen = qs( "header#header > div.header-actions > button#fullscreenBtn")
+  _header_actions_btn_fullscreen.addEventListener("click", fullscreenSwitch );// Gestion du plein écran
+
   _header_actions_btn_theme = qs( "header#header > div.header-actions > button#themeBtn")
+  _header_actions_btn_theme.addEventListener("click", themeSwitch );// Gestion du thème - click header
 
-
-  if (!_main || !sidebar) {
-    console.error("uiapp.js : main ou #sidebar introuvable");
-    return;
-  }
-
-  panels = _main.querySelectorAll(".panel-card");
-
-  console.log("--- Building nav----")
+  if ( !readPage() ) { return }
   
-  console.log("--- 2026-09-14-000 : intégration domhelper ----")
-  console.log(_main)
-  console.log(_menu)
-  console.log(_footer)
+  initPagination()    
+
+  initNavigation()
+
+  initMenu()
 
 
-  console.log(_header_actions_btn_fullscreen)
-  console.log(_header_actions_btn_theme)
+
+
+
 
 
 }
 
-
-
+/*  ======================================================================================================================  */
 function openSidebar() { sidebar.classList.add("open") }
 
 function closeSidebar() { sidebar.classList.remove("open") }
@@ -143,82 +310,12 @@ function initSidebar() {
     window.closeNav = () => { bus.publish('sidebar:close') }
 }
 
+/*  ======================================================================================================================  */
+
 /*gestion des menus "articles" pour le moment un seul article */
-function initArticlesNavigation() {
-
-  document.querySelectorAll('nav#sidebar > div.nav-article > div.nav-header-row').forEach((button) => {
-    button.addEventListener('click', () => {
-      const article = button.closest('.nav-article');
-      const isOpen = article.classList.toggle('open');
-      button.setAttribute( 'aria-expanded', isOpen ? 'true' : 'false' );
-    });
-  });
-
-}
-
-function initArticleTabsNavigation() {
-
-  document.querySelectorAll('ul.nav-toc > li > a').forEach((button) => {
-
-    button.addEventListener('click', () => {
-      const index = parseInt(button.dataset.targetId, 10)
-      console.log(button.innerText + " " + index)
-      switchTab(index)
-      
 
 
-      if (window.innerWidth > 768){                                         // pour pc
-        const article = button.closest('.nav-article'); 
-        const isOpen = article.classList.toggle('open');
-        button.setAttribute( 'aria-expanded', isOpen ? 'true' : 'false' );
-      }
-      else{ closeSidebar() }                                                // pour mobile
-    })      
-
-  })
-
-}
-
-
-// Événement sur les boutons des sous-onglets 
-function initTabsButtonNaviagtion(){
-
-  document.querySelectorAll("div.panel-card").forEach((card) => {
-
-    const tabBtns = card.querySelectorAll("div.section-tab > div.tab-headers > button.tab-btn ");
-    
-    tabBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-    
-        card.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-        card.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-        
-        btn.classList.add("active");
-        card.querySelector(`#${btn.dataset.tab}`).classList.add("active");
-
-      });
-    
-    });
-
-  })
-
-}
-
-
-
-function initPagination() {
-
-  document.querySelectorAll("div.pagination-buttons > button.switch-tab-btn").forEach((button) => {
-
-    button.addEventListener("click", () => { 
-      const index = parseInt(button.dataset.targetId, 10)
-      switchTab(index); //switchPanel
-    });
-
-  
-  })
-
-}
+/*  ======================================================================================================================  */
 
 function statusWrite( textContent ){
     if (_footer_status){ 
@@ -233,15 +330,9 @@ function statusWrite( textContent ){
 document.addEventListener("DOMContentLoaded", () => {
 
   setPageRef() //definit les references aux elements dom
-
   initSidebar() // event + bus handlers 
-  initArticlesNavigation()
-  initArticleTabsNavigation()
-  initTabsButtonNaviagtion()
-  initPagination()
 
-  _header_actions_btn_theme.addEventListener("click", themeSwitch );// Gestion du thème - click header
-  _header_actions_btn_fullscreen.addEventListener("click", fullscreenSwitch );// Gestion du plein écran
+
 
 
 }) //document.addEventListener("DOMContentLoaded", () => {
