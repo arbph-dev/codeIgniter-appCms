@@ -141,34 +141,77 @@
                     </p>
                 </div>
 
-
-                <!-- 
                 <div id="test-0" class="tab-content">
-                    <h3>Test</h3>
+                    <h3>test-0</h3>
                     <div id="mermaid_grf1">
                         <pre class="mermaid" id="mmG1">
-                            gantt
-                            dateFormat  YYYY-MM-DD
-        
-                            section Clickable
-                            Visit mermaidjs, read documentation         :active, cl1, 2025-08-22, 2d
-                            Print arguments         :cl2, after cl1, 3d
-                            Print task              :cl3, after cl2, 3d
-        
-                            click cl1 href "https://mermaidjs.github.io/"
-                            click cl2 call mermaid_printArguments("test1", "test2", 3)
-                            click cl3 call window.mermaid_printTask(cl3)
+                            sequenceDiagram
+                            autonumber
+                            
+                            participant window.load
+                            participant eventBus.forms
+                            box Purple features mot
+                            participant mot.form.js
+                            participant mot.controller.js
+                            participant mot.service.js
+                            participant mot.renderer.js
+                            end
+                            participant window.validateForm
+                            participant ui
+                            
+                            rect rgb(191, 223, 255)
+                                window.load--)mot.form.js: initMotForm()
+                                mot.form.js->>eventBus.forms : souscrit a forms:submit
+                                note right of window.load: Initialisation.
+                                
+                                window.load--)mot.controller.js: initMotController()  
+                                mot.controller.js->>eventBus.forms : souscrit a forms:search
+                            
+                                window.load--)mot.renderer.js : initMotRenderer()
+                                mot.renderer.js->>eventBus.forms : souscrit a mot:loading
+                                mot.renderer.js->>eventBus.forms : souscrit a mot:loaded
+                                mot.renderer.js->>eventBus.forms : souscrit a mot:error
+                            end
+                            
+                            rect rgb(255, 223, 191)
+                                note left of ui: Validation formulaire
+                                ui--)window.validateForm: evt submit src motForm  
+                                window.validateForm->>eventBus.forms : publie forms:submit
+                                eventBus.forms->>+mot.form.js : forms:submit
+                                mot.form.js-->mot.form.js : validation
+                            end
+                            
+                            rect rgb(191, 223, 255)
+                                mot.form.js->>-eventBus.forms : publie forms:search
+                                eventBus.forms->>mot.controller.js: forms:search
+                            end
+                            
+                            rect rgb(255, 223, 191)
+                                mot.controller.js->>eventBus.forms : publie mot:loading 1
+                                eventBus.forms->>+mot.renderer.js : mot:loading
+                                mot.renderer.js--)-ui : affichage chargement
+                            end
+                            
+                            rect rgb(191, 223, 255)	
+                                note left of mot.service.js : requete
+                                mot.controller.js->>+mot.service.js : fetch()
+                                mot.service.js-->mot.service.js : response
+                                mot.service.js->>-mot.controller.js :result
+                                mot.controller.js->>eventBus.forms : publie mot:loaded
+                                eventBus.forms->>+mot.renderer.js: mot:loaded
+                                mot.controller.js->>eventBus.forms : publie mot:loading 0
+                            end
+                            
+                            rect rgb(255, 223, 191)
+                                mot.renderer.js--)-ui : affichage des données en tableau
+                            end
                         </pre>
-    
-                        <button 
-                        id="executeButton"
-                        name="executeButton" 
-                        onclick="mermaid_Run('mmG1')"
-                        >Exécuter
-                        </button>                  
-                    </div>
+                      
+                        <button id="executeButton" name="executeButton" onclick="mermaid_Run('mmG1')">Exécuter</button>                  
+                      </div>
+
                 </div>
-                -->
+
 
             </div>
         </div>
