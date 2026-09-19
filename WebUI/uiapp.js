@@ -3,15 +3,11 @@ import { bus } from '/assets/js/core/eventBus.js'
 import { byId, byName , qs , qsa , create } from '/assets/js/core/domhelper.js'
 
 // variables gloables
-
-//onglet
-let pages = ["Tableau de bord", "Paramètres", "Diagnostic"]
 let _pages = []
 let currentTheme = "marine"
-
 let _main = null
 let _menu = null
-let _menu_list = null
+//let _menu_list = null
 let _footer = null
 let _footer_status = null
 //let _header = null
@@ -23,29 +19,22 @@ let _main_panels = null
 let _currentPanel = 0 //par defaut voir le code html 
 let _currentSection = 0
 
-
-let panels = null
 let sidebar = null
-let panelLinks = null
+
 
 /*  ======================================================================================================================  */
 // Gestion du thème
 function themeSwitch(){
   currentTheme = currentTheme === "marine" ? "nature" : "marine";
-  //document.documentElement.setAttribute("data-theme", currentTheme);
   document.documentElement.dataset.theme = currentTheme;  
   _header_actions_btn_theme.textContent = currentTheme === "marine" ? "Thème nature" : "Thème marine";
 }
 
 /*  ======================================================================================================================  */
-
 function switchPanel(index) {
-
   _main_panels.forEach((panel, i) => { panel.classList.toggle("hidden", i !== index) })
-
   _currentPanel = index
-
-  statusWrite( `Onglet actif : ${pages[index]}` )
+  statusWrite( `Onglet actif : ${_pages[index].title}` )
 }
 /*  ======================================================================================================================  */
 function switchSection(index) {
@@ -97,21 +86,19 @@ function readPage(){
   let panelSections = null
   let strTemp = null
 
-  if (!_main || !sidebar) { console.error("uiapp.js : main ou #sidebar introuvable"); return false}
+  if ( _main && _menu) { 
   
-  _main_panels = qsa("div.panel-card" , _main )  
-  console.log("----- Reading page structure -------") // on extrait les informations de la page
+  _main_panels = qsa("div.panel-card" , _main )  // on extrait les informations de la page
   
   _main_panels.forEach((  panel , index ) => {
 
     if ( !panel.classList.contains("hidden") ) { _currentPanel = index }
 
     strTemp = qs( "h2.panel-title" , panel).innerText
-    //console.log( index + " : " +strTemp)
-
     panelSections = qsa( "div.section-tab  > div.tab-content > h3" , panel )
 
     articleObj = { index , title : strTemp , sections : [] } // constuire un objet
+
     _pages.push( articleObj )
 
     panelSections.forEach((  section , sindex ) => { 
@@ -121,7 +108,7 @@ function readPage(){
   })
 
   return true
-
+  }
 }
 
 /*  ======================================================================================================================  */
@@ -170,36 +157,19 @@ function initNavigation(){
 
 }
 
-
-/*
-panel.sections.forEach(( section , sindex) => {
-  
-  
-  })
-
-  if (sindex === 0 ){ //par defaut le bouton 0 est actif 
-  buttonTemp = create( 'li', { text: section } )
-}
-else{
-  buttonTemp = create( 'button', { type: 'button', class: 'tab-btn', text: section } )
-}
-ul.nav-toc > li 
-
-buttonTemp.addEventListener('click', () => { switchSection(sindex) })  
-*/
-
+/*  ======================================================================================================================  */
 function openMenuPanel(index) {
 
-  const menuPanels = qsa('.nav-article', _menu_list)
+  const menuPanels = qsa('.nav-article', _menu )
 
-  menuPanels.forEach((panel, i) => {
-      panel.classList.toggle('open', i === index)
+  menuPanels.forEach((menupanel, i) => {
+    menupanel.classList.toggle('open', i === index)
   })
 
   //switchPanel(index)
 }
 
-
+/*  ======================================================================================================================  */
 function initMenu(){
 
   _pages.forEach((  panel , index ) => { 
@@ -222,8 +192,6 @@ function initMenu(){
         
         switchPanel(index)
         switchSection(sindex)
-
-
         if (window.innerWidth > 768){
           menu_panel.classList.remove('open')
         }
@@ -232,27 +200,24 @@ function initMenu(){
         }           
       })
 
-
     })
-
-
-
 
     menu_panel_item_button.appendChild(menu_panel_item_i)
     menu_panel_item.appendChild(menu_panel_item_button)
     menu_panel.appendChild(menu_panel_item)
     menu_panel.appendChild(sub_menu)
   
-    _menu_list.appendChild(menu_panel)
-
+    _menu.appendChild(menu_panel)
 
     menu_panel.addEventListener('click', () => {
       console.log(`menu clic panel : ${index}`)
-
       openMenuPanel(index)
-
     })
 
+    menu_panel.addEventListener('mouseout', () => {
+      menu_panel.classList.toggle('open')
+    })
+    
 
   })
 }
@@ -261,17 +226,12 @@ function initMenu(){
 function setPageRef(){
 
   _main = byName("main")[0]
-  
-
-  sidebar = byId("sidebar", document)
+  // sidebar = byId("sidebar", document)
+  // _menu = byName( "nav", document )[0]
+  // _menu_list = qs( "nav#sidebar" , document )
   _menu = byName( "nav", document )[0]
-  
-  _menu_list = qs( "nav#sidebar" , document )
-  //_menu_list = qs( "nav#sidebar > div.nav-article > ul.nav-toc", document )
-  // _menu_list = qs( "div.nav-article > ul.nav-toc", _menu )
 
-  // console.log( _menu_list )
-  console.log( typeofObj(_menu_list ) )
+  console.log( typeofObj( _menu ) )
 
   _footer = byName("footer" , document )[0]
   _footer_status = qs( "div#statusBar" , _footer )
@@ -285,23 +245,15 @@ function setPageRef(){
   if ( !readPage() ) { return }
   
   initPagination()    
-
   initNavigation()
-
   initMenu()
-
-
-
-
-
-
 
 }
 
 /*  ======================================================================================================================  */
-function openSidebar() { sidebar.classList.add("open") }
+function openSidebar() { _menu.classList.add("open") }
 
-function closeSidebar() { sidebar.classList.remove("open") }
+function closeSidebar() { _menu.classList.remove("open") }
 
 function initSidebar() {
     bus.subscribe('sidebar:open', openSidebar)
@@ -311,12 +263,6 @@ function initSidebar() {
 }
 
 /*  ======================================================================================================================  */
-
-/*gestion des menus "articles" pour le moment un seul article */
-
-
-/*  ======================================================================================================================  */
-
 function statusWrite( textContent ){
     if (_footer_status){ 
       _footer_status.textContent = textContent 
@@ -326,13 +272,8 @@ function statusWrite( textContent ){
     }    
 }
 
-
+/*  ======================================================================================================================  */
 document.addEventListener("DOMContentLoaded", () => {
-
   setPageRef() //definit les references aux elements dom
   initSidebar() // event + bus handlers 
-
-
-
-
-}) //document.addEventListener("DOMContentLoaded", () => {
+})
