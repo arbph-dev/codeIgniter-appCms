@@ -1,6 +1,7 @@
 "use strict"
 import { bus } from '/assets/js/core/eventBus.js'
 import { byId, byName , qs , qsa , create } from '/assets/js/core/domhelper.js'
+import { initMermaid } from '/assets/js/components/mermaid.js'
 
 // variables gloables
 let _pages = []
@@ -200,6 +201,14 @@ function initMenu(){
         }           
       })
 
+      /*
+      subitem.addEventListener('mouseout', (e) => {
+        if (window.innerWidth > 768){
+          menu_panel.classList.remove('open')
+        }
+      })
+      */
+
     })
 
     menu_panel_item_button.appendChild(menu_panel_item_i)
@@ -214,10 +223,14 @@ function initMenu(){
       openMenuPanel(index)
     })
 
-    menu_panel.addEventListener('mouseout', () => {
-      menu_panel.classList.toggle('open')
+    menu_panel.addEventListener('mouseleave', () => {
+      console.log(`leave menu : ${index}`)
+      if (window.innerWidth > 768){ menu_panel.classList.remove('open') }
     })
-    
+    /*
+      if (window.innerWidth > 768){ menu_panel.classList.remove('open') }
+
+    */
 
   })
 }
@@ -277,3 +290,9 @@ document.addEventListener("DOMContentLoaded", () => {
   setPageRef() //definit les references aux elements dom
   initSidebar() // event + bus handlers 
 })
+
+// onload 
+window.onload = (event) => {
+  initMermaid()
+} 
+  
