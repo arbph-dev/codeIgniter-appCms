@@ -62,3 +62,24 @@ class EventBus {
 }
 
 export const bus = new EventBus()
+ 
+// =============================================================================
+// Pont HTML inline → bus
+// =============================================================================
+// Iter007 : déplacé depuis /assets/js/cms/bootstrap.js vers ici.
+//
+// Utilisé par les renderers PHP qui génèrent des onclick inline, ex :
+//   CodeValRenderer   : onclick="window.eventBusPublish(event,'codeval:eval','CV_1')"
+//
+// Disponible dès que eventBus.js est importé par n'importe quel module,
+// indépendamment du bootstrap CMS — plus de couplage avec bootstrap.js.
+//
+// Signature : (evt, eventName, payload)
+//   evt       — événement DOM (ignoré, présent pour compatibilité onclick)
+//   eventName — nom de l'événement bus
+//   payload   — données transmises aux subscribers
+// =============================================================================
+ 
+window.eventBusPublish = (evt, eventName, payload = null) => {
+    bus.publish(eventName, payload)
+}
