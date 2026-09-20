@@ -23,8 +23,7 @@ repértorier besoin ui
 intégration des composants dans [https://zealot.fr/ui.html](https://zealot.fr/ui.html)
 
 #### callout
-- [ ] callout
-    /assets/js/components/callout_js.md 
+- [ ] [callout](/assets/js/components/callout_js.md)
 
 ```js
 import { initCallout } from '/assets/js/ihm/callout.js'
