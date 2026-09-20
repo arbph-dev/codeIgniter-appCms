@@ -41,8 +41,8 @@ pour le textaera utilise **api.PHYS.MoteurAsynchrone**
     sTemp = `Vitesse de synchronisme: ${moteurExemple.vitesseSynchronisme.toFixed(2)} RPM\n`;
     
     // Génération des données pour la courbe de couple
-    const donneesCouple = moteurExemple.genererCourbeCouple(20);
-    
+    // const donneesCouple = moteurExemple.genererCourbeCouple(20);
+    const donneesCouple = moteurExemple.genererCourbeCouple(100, -1.0, 1.0)
     // Affichage des premiers points de la courbe
     sTemp += "Premiers points de la courbe Couple-Vitesse:\n";
     donneesCouple.slice(0, 5).forEach(point => {
