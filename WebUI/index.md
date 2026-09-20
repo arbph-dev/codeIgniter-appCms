@@ -30,16 +30,19 @@ lister les ressources serveur : (/public)
 /assets/js/components/apex.js
   import { initApex } from '/assets/js/components/apex.js'
 
+
 /assets/js/components/codeval.js
   import { initCodeVal } from '/assets/js/components/codeval.js'
+[/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
 
 /assets/js/components/mermaid.js
   import { initMermaid } from '/assets/js/components/mermaid.js'
-
+[/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
 /assets/js/core/domhelper.js
   import { byId, byName , qs , qsa , create } from '/assets/js/core/domhelper.js'
-
+[/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
 /assets/js/core/eventBus.js
+[/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
 ```
 
 
@@ -52,7 +55,7 @@ repértorier besoin ui
 - voir [améliorations](#besoin_ui)
 intégration des composants
 - codeval et apex
-
+[/assets/js/components/apex_js.md](/assets/js/components/apex_js.md)
 
 ### codeval et apex
 - old/public/assets/js/plugins/apex.js
