@@ -109,8 +109,9 @@ const CHARTS = {
             {
                 name  : 'Couple',
                 title : 'Courbe Couple / Vitesse',
-                xaxis : { categories: data.map(p => p.vitesse), title: { text: 'Vitesse (RPM)' } },
-                yaxis : { title: { text: 'Couple (Nm)' } }
+                //xaxis : { categories: data.map(p => p.vitesse), title: { text: 'Vitesse (RPM)' } , min: 1200.0 },
+                xaxis : { categories: data.map(p => p.vitesse), title: { text: 'Vitesse (RPM)' }},
+                yaxis : { title: { text: 'Couple (Nm)' }, labels: { formatter: value => Number(value).toFixed(0) } }
             }
         )
     }
