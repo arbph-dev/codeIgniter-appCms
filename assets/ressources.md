@@ -6,7 +6,7 @@
 - [`/ui.html`](/assets/ui_html.md)
   - on utilise [/ui.html](/WebUI/index.md) pour les travaux en cours
 - /assets/css/
-  - uistyle.css
+  - [`uistyle.css`](/assets/css/uistyle_css.md)
 - /assets/js/
   - [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
 - /assets/js/components/
