@@ -1,3 +1,7 @@
+/*
+2026-09-20 : Ajout callout 
+*/
+
 /* Définition des thèmes */
 :root[data-theme="marine"] {
   --bg-main: #f0f4f8;
@@ -11,6 +15,15 @@
   --accent: #2563eb;
   --accent-hover: #1d4ed8;
   --border-color: #cbd5e1;
+
+  --col-danger           : #f01313;
+  --col-danger-secondary : #fdd8d0;
+  --col-info             : #0000ff;
+  --col-info-secondary   : #d0d8fd;
+  --col-note             : #0b9d14;
+  --col-note-secondary   : #d0f0da;        
+  --col-warning          : #f79503;
+  --col-warning-secondary: #fdf3d0;
 
 }
 
@@ -26,6 +39,15 @@
   --accent: #16a34a;
   --accent-hover: #15803d;
   --border-color: #bbf7d0;
+
+  --col-danger           : #f01313;
+  --col-danger-secondary : #fdd8d0;
+  --col-info             : #0000ff;
+  --col-info-secondary   : #d0d8fd;
+  --col-note             : #0b9d14;
+  --col-note-secondary   : #d0f0da;        
+  --col-warning          : #f79503;
+  --col-warning-secondary: #fdf3d0;  
 }
 
 * {
@@ -308,6 +330,89 @@ nav a.closebtn {
 .cp_codeval .scriptcode { display: block ; padding: 10px; }
 
 .cp_codeval .scriptcode textarea { height: 200px; width: 100%; overflow-y: auto; }
+
+
+/* ======   callout - Structure     ============================================== */
+
+.cp_callout {
+    border: 1px solid #5f5e5e;
+    margin: 1rem 0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.cp_callout_title {
+    display: block;
+    padding: 8px 12px;
+    font-weight: bold;
+}
+
+.cp_callout_content {
+    padding: 10px 12px;
+}
+
+/* ========= callout -    Variantes  ============================================ */
+
+/*  ---- info ---- */
+.cp_callout--info {
+    border-color: var(--col-info);
+}
+
+.cp_callout--info .cp_callout_title {
+    background: var(--col-info);
+    color: var(--col-info-secondary);
+}
+.cp_callout--info .cp_callout_content {
+    background: var(--col-info-secondary);
+    color: var(--col-info);
+}
+
+/* ---- warning ----- */
+
+.cp_callout--warning {
+    border-color: var(--col-warning);
+}
+.cp_callout--warning .cp_callout_title {
+    background  : var(--col-warning);
+    color       : var(--col-warning-secondary);
+}
+.cp_callout--warning .cp_callout_content {
+    background  : var(--col-warning-secondary);
+    color       : var(--col-warning);
+}
+
+/* ---- danger ----- */
+.cp_callout--danger {
+    border-color: var(--col-danger);
+}
+.cp_callout--danger .cp_callout_title {
+    background  : var(--col-danger);
+    color       : var(--col-danger-secondary);
+}
+.cp_callout--danger .cp_callout_content {
+    background  : var(--col-danger-secondary);
+    color       : var(--col-danger);
+}
+
+
+/* ---- tip ----- */
+.cp_callout--tip {
+    border-color: var(--col-note);
+}
+.cp_callout--tip .cp_callout_title {
+    background  : var(--col-note);
+    color       : var(--col-note-secondary);
+}
+.cp_callout--tip .cp_callout_content {
+    background  : var(--col-note-secondary);
+    color       : var(--col-note);
+}
+
+
+
+
+
+
 
 
 /* =============================================================================
