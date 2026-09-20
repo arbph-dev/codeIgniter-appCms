@@ -14,11 +14,8 @@
 - import apex
 - init initApex()
 
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/INDEX.md
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/INDEX.md#22-apex-charts-graphiques
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/components/apex.js
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/public/assets/js/plugins/apex.js - exemple avec 2 courbes moteur
-
+3. intégration
+On l'intègre simplement
 ```html
 <div id="APEX_LIGNE_1" class="cp_apex" data-chart="line"></div>
 <div id="APEX_BARRES_1" class="cp_apex" data-chart="bars"></div>
@@ -115,3 +112,11 @@ const CHARTS = {
 }
 
 ```
+
+# Ressources a compiler
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/INDEX.md
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/INDEX.md#22-apex-charts-graphiques
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/components/apex.js
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/public/assets/js/plugins/apex.js - exemple avec 2 courbes moteur
+
