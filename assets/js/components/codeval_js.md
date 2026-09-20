@@ -53,31 +53,15 @@ pour le textaera utilise **api.PHYS.MoteurAsynchrone**
 ```
 ## Interaction
 il faut maintenant gérer le graph
-```
-    const options = {
-        chart: { type: 'line', height: 350 },
-        series: [
-            { name: 'Couple', data: donneesCouple.map(point => point.couple) }
-        ],
-        xaxis: {
-            categories: donneesCouple.map(point => point.vitesse),
-            title: { text: 'Vitesse (RPM)' }
-        },
-        yaxis: { title: { text: 'Couple (Nm)' } },
-        title: { text: 'Comparaison des Courbes de Couple', align: 'left' }
-        };
-
-    var chart = new ApexCharts(domRef, options);
-    chart.render();
-
-```
-
-modifier [plot](/refactoring/assets/js/components/codeval.js#L34) ligne 34 de `/assets/js/components/codeval.js`
 
 
-textaera
+### Modifications
+- modifier [plot](/refactoring/assets/js/components/codeval.js#L34) ligne 34 de `/assets/js/components/codeval.js`
+
+- modifier le code du textaera [/assets/ui_html.md](/WebUI/ui.html)
 ```js
-    const donneesCouple = moteurExemple.genererCourbeCouple(20);
+    //const donneesCouple = moteurExemple.genererCourbeCouple(20);
+    const donneesCouple = moteurExemple.genererCourbeCouple(100, -1.0, 1.0)
     api.plot('APEX_LIGNE_3', { data: donneesCouple });
 ```
 
