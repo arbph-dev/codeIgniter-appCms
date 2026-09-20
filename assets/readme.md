@@ -22,6 +22,8 @@ repértorier besoin ui
 ### Intégration
 intégration des composants dans [https://zealot.fr/ui.html](https://zealot.fr/ui.html)
 
+#### leaflet
+- [leaflet](/documentation/COMPOSANTS/INDEX.md#51-leaflet-carte)
 
 #### wysedit
 - [ ] wysedit
