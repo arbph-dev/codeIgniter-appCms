@@ -60,7 +60,9 @@ function buildLineConfig(data = [], options = {})
 ### Builder
 ```js
 const CHARTS = {
-    line(payload = {}) { return buildLineConfig( payload.data ?? SAMPLE_LINE, payload.options ?? {} ) },
+  line(payload = {}) {
+    return buildLineConfig( payload.data ?? SAMPLE_LINE, payload.options ?? {} )
+  },
 ```
 ## type = bars
 ### Datas
@@ -84,7 +86,9 @@ function buildBarConfig(series = [], categories = [], options = {})
 
 ```js
 const CHARTS = {
-    bars(payload = {}) { return buildBarConfig( payload.series ?? SAMPLE_BARS , payload.categories ?? SAMPLE_CATEGORIES, payload.options ?? {}) },
+    bars(payload = {}) {
+      return buildBarConfig( payload.series ?? SAMPLE_BARS , payload.categories ?? SAMPLE_CATEGORIES, payload.options ?? {})
+    },
 ```
 
 ## type = moteurCouple
@@ -124,7 +128,7 @@ const CHARTS = {
                 yaxis : { title: { text: 'Couple (Nm)' } }
             }
         )
-    }
+    },
 }
 ```
 
