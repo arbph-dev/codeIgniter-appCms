@@ -35,9 +35,17 @@ Le fichier principal est [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
 
 
 ## Composants
-- [apex](/assets/js/components/apex_js.md)
-- [mermaid](/assets/js/components/mermaid_js.md)
-- [codeval](/assets/js/components/codeval_js.md)
-
-
-- /refactoring/assets/js/libs/physics.js
+- /ui.html
+- /assets/css/
+  - uistyle.css
+- /assets/js/
+  - [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
+- /assets/js/components/
+  - [apex.js](/assets/js/components/apex_js.md)
+  - [codeval.js](/assets/js/components/codeval_js.md)
+  - [mermaid.js](/assets/js/components/mermaid_js.md)
+- /assets/js/core/
+  - domhelper.js
+  - eventBus.js
+- /assets/js/libs/
+  - [/assets/js/libs/physics_js.md](/assets/js/libs/physics_js.md)
