@@ -76,28 +76,16 @@ modifier [plot](/refactoring/assets/js/components/codeval.js#L34) ligne 34 de `/
 
 
 textaera
-```
+```js
     const donneesCouple = moteurExemple.genererCourbeCouple(20);
-    api.plot('APEX_LIGNE_3', {
-	    data: donneesCouple
-	})
+    api.plot('APEX_LIGNE_3', { data: donneesCouple });
 ```
 
 modifier builder moteurCouple de [apex.js](/refactoring/assets/js/components/apex.js) => `formatter: value => Number(value).toFixed(0)`
-```
+
+```js
 // yaxis : { title: { text: 'Couple (Nm)' } }
 yaxis : { title: { text: 'Couple (Nm)' }, labels: { formatter: value => Number(value).toFixed(0) } }
-
-yaxis: {
-    title: {
-        text: 'Couple (Nm)'
-    },
-    labels: {
-        formatter: value => Number(value).toFixed(0)
-    }
-}
-
-
 ```
 
 
