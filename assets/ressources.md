@@ -4,7 +4,6 @@
 # Ressources serveur : (/public)
 
 - [`/ui.html`](/assets/ui_html.md)
-  - on utilise [/ui.html](/WebUI/index.md) pour les travaux en cours
 - /assets/css/
   - [`uistyle.css`](/assets/css/uistyle_css.md)
 - /assets/js/
@@ -28,7 +27,8 @@ Le fichier principal est [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
 - [`/ui.html`](/assets/ui_html.md)
   - on utilise [/ui.html](/WebUI/index.md) pour les travaux en cours
 - /assets/css/
-  - uistyle.css
+  - [`uistyle.css`](/assets/css/uistyle_css.md)
+    - on utilise [/WebUI/uistyle.css](/WebUI/uistyle.css) pour les travaux en cours
 - /assets/js/
   - [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
 
