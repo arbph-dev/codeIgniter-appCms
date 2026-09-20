@@ -1,17 +1,22 @@
 # codeval
 
 
+## utilisation
 
-
-
-utiliation
-
-il faut impérativement exploiter la constante **result**
-**result** est utilisé pour affihé le resultat du script
+il faut impérativement exploiter la constante **result**. **result** est utilisé pour affihé le resultat du script
 ```js
 const result = api.call()
 const result = api.call2('ali baba')
 ```
+
+modifier css
+- Le bloc code ne s'affiche qu'après 2 clics
+```css
+/* .cp_codeval .scriptcode { display: none; padding: 10px; } */
+.cp_codeval .scriptcode { display: block; padding: 10px; }
+```
+
+
 ## api
 expliquer utilisation api
 ```
@@ -90,6 +95,7 @@ on ajoute 4 classes
 - cp_codeval .scriptcode textarea
 
 - voir si besoin de cp_toolbar
+
 - modifier css
 ```css
 /* .cp_codeval .scriptcode { display: none; padding: 10px; } */
