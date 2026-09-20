@@ -21,33 +21,7 @@ méthode
 
 # Travaux
 ## a faire 
-lister les ressources serveur : (/public)
-```
-/ui.html
-/assets/css/uistyle.css
-/assets/js/uiapp.js
-
-/assets/js/components/apex.js
-  import { initApex } from '/assets/js/components/apex.js'
-
-
-/assets/js/components/codeval.js
-  import { initCodeVal } from '/assets/js/components/codeval.js'
-[/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
-
-/assets/js/components/mermaid.js
-  import { initMermaid } from '/assets/js/components/mermaid.js'
-[/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
-/assets/js/core/domhelper.js
-  import { byId, byName , qs , qsa , create } from '/assets/js/core/domhelper.js'
-[/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
-/assets/js/core/eventBus.js
-[/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
-```
-
-
-
-
+lister les ressources serveur : (/public) voir [/assets/readme.md](/assets/readme.md)
 
 ## en cours
 
