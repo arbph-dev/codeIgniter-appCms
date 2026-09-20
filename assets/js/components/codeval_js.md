@@ -2,27 +2,25 @@
 
 ## Historique
 
-### 2026-09-20-001 modifier css
-- Le bloc code ne s'affiche qu'après 2 clics
+### 2026-09-20-001 
+Modifier css car Le bloc code ne s'affiche qu'après 2 clics
 ```css
 /* .cp_codeval .scriptcode { display: none; padding: 10px; } */
 .cp_codeval .scriptcode { display: block; padding: 10px; }
 ```
-### 2026-09-20-002 Modifier plot
-- modifier [plot](/refactoring/assets/js/components/codeval.js#L34) ligne 34 de `/assets/js/components/codeval.js`
+### 2026-09-20-002 
+Modifier [plot](/refactoring/assets/js/components/codeval.js#L34) ligne 34 de `/assets/js/components/codeval.js`
 
-### 2026-09-20-002 Modifier code du textaera 
-Pour exploiter la nouvelle version de la fonction [plot](/refactoring/assets/js/components/codeval.js#L34)
+### 2026-09-20-003
+Modifier code du textaera pour exploiter la nouvelle version de la fonction [plot](/refactoring/assets/js/components/codeval.js#L34)
 - modifier le code du textaera [/assets/ui_html.md](/WebUI/ui.html)
 ```js
     //const donneesCouple = moteurExemple.genererCourbeCouple(20);
     const donneesCouple = moteurExemple.genererCourbeCouple(100, -1.0, 1.0)
     api.plot('APEX_LIGNE_3', { data: donneesCouple });
 ```
-### 2026-09-20-003 modifier builder moteurCouple
-Les libellés des valeurs de l'axe y comportaient des zéros inutiles après la virgule [apex.js](/refactoring/assets/js/components/apex.js)
-
-
+### 2026-09-20-004 
+Modifier builder moteurCouple car les libellés des valeurs de l'axe y comportaient des zéros inutiles après la virgule [apex.js](/refactoring/assets/js/components/apex.js)
 
 ```js
 // yaxis : { title: { text: 'Couple (Nm)' } }
@@ -98,11 +96,29 @@ pour le textaera utilise **api.PHYS.MoteurAsynchrone**
 
 
 # Interaction
-il faut maintenant gérer le graph
+il faut maintenant gérer le graph voir [2026-09-20-003](#2026-09-20-003)
+
+On doit pouvoir gérer cela avec : api.plot mais une modification a été necessaire [2026-09-20-002](#2026-09-20-002)
+```
+ plot  : (id, cfg)  => bus.publish('apex:render', { id, ...cfg })
+```
+url : 
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/components/codeval.js#L33
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/components/codeval.js
+
+il y a une zone apex reservée APEX_LIGNE_3
+```
+<div id="APEX_LIGNE_3" class="cp_apex" data-chart="moteurCouple"></div>
+```
+url : https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/ui.html#L249
 
 
 
 
+    min: 1200, max: 2400,
+    min: 2400, max: 1200,
+
+moteurExemple.genererCourbeCouple(100, -0.2, 1)
 
 
 ---
