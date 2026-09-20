@@ -13,6 +13,9 @@
     <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="/assets/css/uistyle.css" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 </head>
 
 <body>
@@ -47,8 +50,216 @@
     <!-- ====  CONTENU PRINCIPAL    ========================== -->
     <main id="stack">
 
-        <!-- ====  0 - SCHNEIDER MODICON M221 ===================== -->
+        <!-- ====  0 - COMPOSANTS JAVASCRIPT ===================== -->
         <div class="panel-card" data-index="0">
+
+            <h2 class="panel-title">Composants javascipt</h2>
+        
+            <p class="panel-description">
+            <b>2026-09-18</b> : On reprend l'intégration des composants dans un front pure html.<br/>
+            <b>2026-09-19</b> : On documente les points clefs avant intégration d'une api
+            </p>
+
+            <div class="section-tab">
+                <div class="tab-headers"></div>
+
+                <div id="mermaid-0" class="tab-content active">
+                    <h3>Mermaid</h3>
+                    <p>Mermaid fait partie de l'ecostyeme Obsidian</p>
+                    <p>On intégre des ressources pour les essais</p>
+                    <p>Revoir les graphiques disponible</p>
+
+                    <h4>test-0</h4>
+                    <div id="mermaid_grf1">
+                        <pre class="mermaid" id="mmG1">
+                            sequenceDiagram
+                            autonumber
+                            
+                            participant window.load
+                            participant eventBus.forms
+                            box Purple features mot
+                            participant mot.form.js
+                            participant mot.controller.js
+                            participant mot.service.js
+                            participant mot.renderer.js
+                            end
+                            participant window.validateForm
+                            participant ui
+                            
+                            rect rgb(191, 223, 255)
+                                window.load--)mot.form.js: initMotForm()
+                                mot.form.js->>eventBus.forms : souscrit a forms:submit
+                                note right of window.load: Initialisation.
+                                
+                                window.load--)mot.controller.js: initMotController()  
+                                mot.controller.js->>eventBus.forms : souscrit a forms:search
+                            
+                                window.load--)mot.renderer.js : initMotRenderer()
+                                mot.renderer.js->>eventBus.forms : souscrit a mot:loading
+                                mot.renderer.js->>eventBus.forms : souscrit a mot:loaded
+                                mot.renderer.js->>eventBus.forms : souscrit a mot:error
+                            end
+                            
+                            rect rgb(255, 223, 191)
+                                note left of ui: Validation formulaire
+                                ui--)window.validateForm: evt submit src motForm  
+                                window.validateForm->>eventBus.forms : publie forms:submit
+                                eventBus.forms->>+mot.form.js : forms:submit
+                                mot.form.js-->mot.form.js : validation
+                            end
+                            
+                            rect rgb(191, 223, 255)
+                                mot.form.js->>-eventBus.forms : publie forms:search
+                                eventBus.forms->>mot.controller.js: forms:search
+                            end
+                            
+                            rect rgb(255, 223, 191)
+                                mot.controller.js->>eventBus.forms : publie mot:loading 1
+                                eventBus.forms->>+mot.renderer.js : mot:loading
+                                mot.renderer.js--)-ui : affichage chargement
+                            end
+                            
+                            rect rgb(191, 223, 255)	
+                                note left of mot.service.js : requete
+                                mot.controller.js->>+mot.service.js : fetch()
+                                mot.service.js-->mot.service.js : response
+                                mot.service.js->>-mot.controller.js :result
+                                mot.controller.js->>eventBus.forms : publie mot:loaded
+                                eventBus.forms->>+mot.renderer.js: mot:loaded
+                                mot.controller.js->>eventBus.forms : publie mot:loading 0
+                            end
+                            
+                            rect rgb(255, 223, 191)
+                                mot.renderer.js--)-ui : affichage des données en tableau
+                            end
+                        </pre>
+                      
+                        <button id="executeButton" name="executeButton" onclick="mermaid_Run('mmG1')">Exécuter</button>
+
+
+                    </div>                    
+                </div>
+
+                <div id="apex-0" class="tab-content">
+                  <h3>Apex</h3>
+                    <p>Revoir les graphiques disponible</p>
+                  
+                    <h4>line</h4>
+                    <div id="APEX_LIGNE_1" class="cp_apex" data-chart="line"></div>
+
+                    <h4>line</h4>
+                    <div id="APEX_LIGNE_2" class="cp_apex" data-chart="moteurCouple"></div>
+
+                </div>
+
+                <div id="codeval-0" class="tab-content">
+                    <h3>Codeval</h3>
+                        <p>proposer des exemples avec api</p>
+                    
+                        <h4>Correction volume gaz</h4>
+                        On dispose des index compteurs IDX1 et IDX2.<br/>   
+                        On connait P2 pression et T2 température du gaz distribué<br/>
+                        On a des conditions de référence P1 et T1<br/>
+                        <br/>
+                        On ramène le volume distribué à un volume normal. F est le facteur de conversion pour retrouver le volume corrigé 
+                        <div id="CODEVAL_CVG5" class="cp_codeval">
+                            <div id="CODEVAL_CVG5_SCRIPTCODE" class="scriptcode">
+                                <textarea rows="14">
+        const P2_rel_bar = 0.3
+        const P2_abs_bar = P2_rel_bar + 1
+        const P2_abs_pa = P2_abs_bar * 101325
+        const P1_abs_pa = 101325
+        const T2_degc = 20
+        const T1_K = 288.15
+        const T2_K = T2_degc + 273.15
+        const IDX1 = 2500420
+        const IDX2 = 2500620
+        const V2 = IDX2 - IDX1
+        const F = ( P2_abs_pa / P1_abs_pa ) * ( T1_K / T2_K)
+        const V1 = V2 * F
+        const result = "Volume corrigé = " + V1 + " Nm3 ; F = " + F
+                                </textarea>
+                            </div>
+                        
+                            <div id="CODEVAL_CVG5_RESULT" class="result"></div>
+                        
+                            <div class="cp_toolbar">
+                                <button onclick="window.eventBusPublish(event,'codeval:toggle','CVG5')">
+                                    Show
+                                </button>
+                        
+                                <button onclick="window.eventBusPublish(event,'codeval:eval','CVG5')">
+                                    Run
+                                </button>
+                            </div>
+                        </div>
+    
+                </div>
+
+                <div id="apex-codeval-0" class="tab-content">
+                    <h3>Apex et Codeval</h3>
+                      <p>Lier script et rendu graphique</p>
+                    
+                      <h4>Moteur asynchrone</h4>
+                      <div id="CODEVAL_MS1" class="cp_codeval">
+                        <div id="CODEVAL_MS1_SCRIPTCODE" class="scriptcode">
+                            <textarea rows="32">
+    let sTemp = null
+
+    const moteurExemple = new api.PHYS.MoteurAsynchrone(
+        1500, // Puissance nominale (W) - Exemple: 1.5 kW
+        230, // Tension nominale (V)
+        50, // Fréquence (Hz)
+        4, // Nombre de pôles (ex: 4 pôles pour 1500 RPM à 50Hz)
+        0.5, // Resistance Stator (Ω)
+        1.0, // Reactance Stator (Ω)
+        0.4, // Resistance Rotor (Ω)
+        0.9 // Reactance Rotor (Ω)
+    );
+    
+    // Affichage de la vitesse de synchronisme
+    sTemp = `Vitesse de synchronisme: ${moteurExemple.vitesseSynchronisme.toFixed(2)} RPM\n`;
+    
+    // Génération des données pour la courbe de couple
+    const donneesCouple = moteurExemple.genererCourbeCouple(20);
+    
+    // Affichage des premiers points de la courbe
+    sTemp += "Premiers points de la courbe Couple-Vitesse:\n";
+    donneesCouple.slice(0, 5).forEach(point => {
+        sTemp += `Vitesse: ${point.vitesse.toFixed(2)} RPM, Couple: ${point.couple.toFixed(2)} Nm\n`;
+    });
+    const result = sTemp; 
+                            </textarea>
+                        </div>
+                    
+                        <div id="CODEVAL_MS1_RESULT" class="result"></div>
+                    
+                        <div class="cp_toolbar">
+                            <button onclick="window.eventBusPublish(event,'codeval:toggle','MS1')">
+                                Show
+                            </button>
+                    
+                            <button onclick="window.eventBusPublish(event,'codeval:eval','MS1')">
+                                Run
+                            </button>
+                        </div>
+                    </div>                      
+
+                      <h4>line</h4>
+                      <div id="APEX_LIGNE_3" class="cp_apex" data-chart="moteurCouple"></div>
+  
+                </div>
+
+
+            </div>
+
+
+
+
+        </div>
+
+        <!-- ====  0 - SCHNEIDER MODICON M221 ===================== -->
+        <div class="panel-card hidden" data-index="1">
             <h2 class="panel-title">Schneider Modicon M221</h2>
             <p class="panel-description">
                 Le Modicon M221 est un contrôleur logique destiné aux
@@ -212,13 +423,16 @@
 
                 </div>
 
-
+                <div id="test-0" class="tab-content">
+                    <h3>test-0</h3>
+                    <div id="APEX_LIGNE_1" class="cp_apex" data-chart="line"></div>
+                </div>                    
             </div>
         </div>
 
         <!-- ==== 1 - WAGO ========================================================================= -->
 
-        <div class="panel-card hidden" data-index="1">
+        <div class="panel-card hidden" data-index="2">
             <h2 class="panel-title">WAGO</h2>
             <p class="panel-description">
                 WAGO propose des solutions d'automatisme modulaires et
@@ -311,7 +525,7 @@
         </div>
 
         <!-- === 2 - CROUZET MILLENIUM EVO ======================================================== -->
-        <div class="panel-card hidden" data-index="2">
+        <div class="panel-card hidden" data-index="3">
             <h2 class="panel-title">Crouzet Millenium EVO</h2>
             <p class="panel-description">
                 Le Millenium EVO est un contrôleur logique communicant
