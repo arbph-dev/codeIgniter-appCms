@@ -30,6 +30,9 @@ Les libellés des valeurs de l'axe y comportaient des zéros inutiles après la 
 
 # A expliquer
 
+le repository des types : https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/components/apex.js#L82-L118
+
+
 ## type = line
 
 ### Datas
@@ -86,7 +89,7 @@ const CHARTS = {
 
 ## type = moteurCouple
 
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/components/apex.js#L82-L118
+
 
 ### Datas
 
@@ -101,29 +104,14 @@ const SAMPLE_MOTEUR = [
     { vitesse:4000, couple:138 }
 ]
 ```
+### Configuration
+moteurCouple utilise la configuration line buildLineConfig
 
+
+### Builder
 
 ```js
-
 const CHARTS = {
-
-    line(payload = {})
-    {
-        return buildLineConfig(
-            payload.data    ?? SAMPLE_LINE,
-            payload.options ?? {}
-        )
-    },
-
-    bars(payload = {})
-    {
-        return buildBarConfig(
-            payload.series      ?? SAMPLE_BARS,
-            payload.categories  ?? SAMPLE_CATEGORIES,
-            payload.options     ?? {}
-        )
-    },
-
     moteurCouple(payload = {})
     {
         const data = payload.data ?? SAMPLE_MOTEUR
@@ -138,7 +126,6 @@ const CHARTS = {
         )
     }
 }
-
 ```
 
 # Ressources a compiler
