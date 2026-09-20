@@ -19,6 +19,8 @@ on reprend les couleurs définis pour les themes
 
 ## js
 ```js
+import { initCodeVal } from '/assets/js/components/codeval.js'
+
 window.onload = (event) => {
   ...
   initCodeVal()
