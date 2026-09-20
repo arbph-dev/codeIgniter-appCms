@@ -2,6 +2,8 @@
 import { bus } from '/assets/js/core/eventBus.js'
 import { byId, byName , qs , qsa , create } from '/assets/js/core/domhelper.js'
 import { initMermaid } from '/assets/js/components/mermaid.js'
+import { initApex } from '/assets/js/components/apex.js'
+import { initCodeVal } from '/assets/js/components/codeval.js'
 
 // variables gloables
 let _pages = []
@@ -294,5 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // onload 
 window.onload = (event) => {
   initMermaid()
+  initApex()
+  initCodeVal()
 } 
   
