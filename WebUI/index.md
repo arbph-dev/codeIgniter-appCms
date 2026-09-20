@@ -6,15 +6,46 @@ Pour séparer les parties frontend et backend on utilise le serveur pour
 Trois fichiers sont les piliers de l'évolution 
 - [/WebUI/ui.html](/WebUI/ui.html)
 - [/WebUI/uiapp.js](/WebUI/uiapp.js) path serveur : (/public) /assets/js/uiapp.js
-- [/WebUI/uistyle.css](/WebUI/uistyle.css)
+- [/WebUI/uistyle.css](/WebUI/uistyle.css) path serveur : (/public) /assets/css/uistyle.css
 
 [Orbis](/Orbis/index.md) reste en soutien pour réaliser des jeux de données via d'autres sources
 
 **Important**
-On va préparer la version final du repository
+On va préparer la version final du repository pour un backup serveur et un nettoyage avant publication
+
+méthode
+- chaque fichier employé est listé dans une note annexe [/assets/ressources.md](/assets/ressources.md)
+- chaque fonction importé doit être répertorié et expliqué si besoin
+  - exemple `/assets/js/uiapp.js` => [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
 
 
 # Travaux
+## a faire 
+lister les ressources serveur : (/public)
+```
+/ui.html
+/assets/css/uistyle.css
+/assets/js/uiapp.js
+
+/assets/js/components/apex.js
+  import { initApex } from '/assets/js/components/apex.js'
+
+/assets/js/components/codeval.js
+  import { initCodeVal } from '/assets/js/components/codeval.js'
+
+/assets/js/components/mermaid.js
+  import { initMermaid } from '/assets/js/components/mermaid.js'
+
+/assets/js/core/domhelper.js
+  import { byId, byName , qs , qsa , create } from '/assets/js/core/domhelper.js'
+
+/assets/js/core/eventBus.js
+```
+
+
+
+
+
 ## en cours
 
 repértorier besoin ui
@@ -53,6 +84,11 @@ Exemple de code :
 
 ## terminé
 interface ui (base)
+
+intégration composants
+- apex
+- mermaid
+- codeval
 
 
 
