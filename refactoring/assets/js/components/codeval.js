@@ -30,7 +30,26 @@ const availableApi = {
     call  : ()         => call(),
     call2 : (data)     => call2(data),
     PHYS,
-    plot  : (id, cfg)  => bus.publish('apex:render', { id, ...cfg })
+    /* plot  : (id, cfg)  => bus.publish('apex:render', { id, ...cfg }) */
+    plot: (id, cfg = {}) => {
+        const el = byId(id)
+        if (!el) {
+            console.warn(`[codeval] container #${id} introuvable`)
+            return
+        }
+    
+        const type = el.dataset.chart
+        if (!type) {
+            console.warn(`[codeval] data-chart absent sur #${id}`)
+            return
+        }
+    
+        bus.publish('apex:render', {
+            id,
+            type,
+            payload: cfg
+        })
+    }    
 }
 
 function runUserCode(code, api = {}) {
