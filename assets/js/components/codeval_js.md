@@ -83,7 +83,7 @@ textaera
 	})
 ```
 
-modifier builder moteurCouple de apex.js => `formatter: value => Number(value).toFixed(0)`
+modifier builder moteurCouple de [apex.js](/refactoring/assets/js/components/apex.js) => `formatter: value => Number(value).toFixed(0)`
 ```
 // yaxis : { title: { text: 'Couple (Nm)' } }
 yaxis : { title: { text: 'Couple (Nm)' }, labels: { formatter: value => Number(value).toFixed(0) } }
