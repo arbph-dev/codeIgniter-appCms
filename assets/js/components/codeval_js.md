@@ -2,11 +2,31 @@
 
 ## Historique
 
-### 2026-09-20 modifier css
+### 2026-09-20-001 modifier css
 - Le bloc code ne s'affiche qu'après 2 clics
 ```css
 /* .cp_codeval .scriptcode { display: none; padding: 10px; } */
 .cp_codeval .scriptcode { display: block; padding: 10px; }
+```
+### 2026-09-20-002 Modifier plot
+- modifier [plot](/refactoring/assets/js/components/codeval.js#L34) ligne 34 de `/assets/js/components/codeval.js`
+
+### 2026-09-20-002 Modifier code du textaera 
+Pour exploiter la nouvelle version de la fonction [plot](/refactoring/assets/js/components/codeval.js#L34)
+- modifier le code du textaera [/assets/ui_html.md](/WebUI/ui.html)
+```js
+    //const donneesCouple = moteurExemple.genererCourbeCouple(20);
+    const donneesCouple = moteurExemple.genererCourbeCouple(100, -1.0, 1.0)
+    api.plot('APEX_LIGNE_3', { data: donneesCouple });
+```
+### 2026-09-20-003 modifier builder moteurCouple
+Les libellés des valeurs de l'axe y comportaient des zéros inutiles après la virgule [apex.js](/refactoring/assets/js/components/apex.js)
+
+
+
+```js
+// yaxis : { title: { text: 'Couple (Nm)' } }
+yaxis : { title: { text: 'Couple (Nm)' }, labels: { formatter: value => Number(value).toFixed(0) } }
 ```
 
 
@@ -81,24 +101,6 @@ pour le textaera utilise **api.PHYS.MoteurAsynchrone**
 il faut maintenant gérer le graph
 
 
-### Modifications
-- modifier [plot](/refactoring/assets/js/components/codeval.js#L34) ligne 34 de `/assets/js/components/codeval.js`
-
-- modifier le code du textaera [/assets/ui_html.md](/WebUI/ui.html)
-```js
-    //const donneesCouple = moteurExemple.genererCourbeCouple(20);
-    const donneesCouple = moteurExemple.genererCourbeCouple(100, -1.0, 1.0)
-    api.plot('APEX_LIGNE_3', { data: donneesCouple });
-```
-
-- modifier builder moteurCouple de [apex.js](/refactoring/assets/js/components/apex.js)
-
-Les libellés des valeurs de l'axe y comportaient des zéros inutiles
-
-```js
-// yaxis : { title: { text: 'Couple (Nm)' } }
-yaxis : { title: { text: 'Couple (Nm)' }, labels: { formatter: value => Number(value).toFixed(0) } }
-```
 
 
 
