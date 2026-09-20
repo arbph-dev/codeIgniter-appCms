@@ -21,10 +21,6 @@ repértorier besoin ui
 
 ### Intégration
 intégration des composants dans [https://zealot.fr/ui.html](https://zealot.fr/ui.html)
-- apex
-  [/assets/js/components/apex_js.md](/assets/js/components/apex_js.md)
-- codeval et apex
-  [/assets/js/components/apex_js.md](/assets/js/components/apex_js.md)
 
 
 #### template html
@@ -100,6 +96,8 @@ Exemple de code :
 interface ui (base)
 
 intégration composants
-- apex
+- apex [/assets/js/components/apex_js.md](/assets/js/components/apex_js.md)
+- codeval [/assets/js/components/apex_js.md](/assets/js/components/apex_js.md)
+- codeval et apex [/assets/js/components/apex_js.md](/assets/js/components/apex_js.md)
 - mermaid
-- codeval
+
