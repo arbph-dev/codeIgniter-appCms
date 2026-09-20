@@ -1,4 +1,10 @@
-lister les ressources serveur : (/public)
+- chaque fichier employé est listé dans une note annexe [/assets/ressources.md](/assets/ressources.md)
+
+- chaque fonction importée doit être répertorié et expliqué si besoin
+  - exemple `/assets/js/uiapp.js` => [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
+
+# Ressources serveur : (/public)
+
 ```
 /ui.html
 /assets/css/uistyle.css
@@ -18,3 +24,8 @@ lister les ressources serveur : (/public)
 
 /assets/js/core/eventBus.js
 ```
+
+[/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
+
+
+## [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
