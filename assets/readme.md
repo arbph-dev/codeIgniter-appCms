@@ -28,8 +28,7 @@ intégration des composants dans [https://zealot.fr/ui.html](https://zealot.fr/u
 
 
 ### codeval et apex
-- old/public/assets/js/plugins/apex.js
-
+- [interaction](/assets/js/components/codeval_js.md#interaction)
 
 ### Améliorations
 #### employer balises : H1/H2/H3
