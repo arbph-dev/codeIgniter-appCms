@@ -106,19 +106,10 @@ url :
 https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/components/codeval.js#L33
 https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/components/codeval.js
 
-il y a une zone apex reservée APEX_LIGNE_3
+il y a une zone apex reservée APEX_LIGNE_3 voir : https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/ui.html#L249
 ```
 <div id="APEX_LIGNE_3" class="cp_apex" data-chart="moteurCouple"></div>
 ```
-url : https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/ui.html#L249
-
-
-
-
-    min: 1200, max: 2400,
-    min: 2400, max: 1200,
-
-moteurExemple.genererCourbeCouple(100, -0.2, 1)
 
 
 ---
