@@ -18,55 +18,30 @@ $titleHtml = $title ? "<strong class=\"cp_callout_title\">{$title}</strong>\n   
 </div>
 ```
 
-Code généré
-```html
-<div id="CO_1" class="cp_callout cp_callout--info" data-callout-init="1">
-    <strong class="cp_callout_title" style="cursor: pointer;">Attention</strong>
-    <div class="cp_callout_content" style="display: block;">Ceci est un callout de test de type <strong>info</strong>.2026-07-07 : Mise en production. Ajouter initCallout dans le bootstrap</div>
-</div>
-```
-```
-<div id="CO_2" class="cp_callout cp_callout--warning" data-callout-init="1">
-    <strong class="cp_callout_title" style="cursor: pointer;">Attention</strong>
-    <div class="cp_callout_content" style="display: block;">Ceci est un callout de test de type <strong>warning</strong>.2026-07-07 : Mise en production. Ajouter initCallout dans le bootstrap</div>
-</div>
-
-<div id="CO_3" class="cp_callout cp_callout--danger" data-callout-init="1">
-    <strong class="cp_callout_title" style="cursor: pointer;">Attention</strong>
-    <div class="cp_callout_content" style="display: block;">Ceci est un callout de test de type <strong>danger</strong>.2026-07-07 : Mise en production. Ajouter initCallout dans le bootstrap</div>
-</div>
-
-<div id="CO_4" class="cp_callout cp_callout--tip" data-callout-init="1">
-    <strong class="cp_callout_title" style="cursor: pointer;">Attention</strong>
-    <div class="cp_callout_content" style="display: block;">Ceci est un callout de test de type <strong>tip</strong>.2026-07-07 : Mise en production. Ajouter initCallout dans le bootstrap</div>
-</div>
-
-```
-
 modifier le code html [/WebUI/ui.html](/WebUI/ui.html)
 
-```
+```html
                 <div id="callout-0" class="tab-content">
                   <h3>Callout</h3>
                     <p>4 types disponibles</p>
                   
                     <h4>info</h4>
-					<div id="CO_1" class="cp_callout cp_callout--info" data-callout-init="1">
+					<div id="CO_1" class="cp_callout cp_callout--info">
 					    <strong class="cp_callout_title" style="cursor: pointer;">Attention</strong>
 					    <div class="cp_callout_content" style="display: block;">Ceci est un callout de test de type <strong>info</strong>.2026-07-07 : Mise en production. Ajouter initCallout dans le bootstrap</div>
 					</div>
 					<h4>warning</h4>
-					<div id="CO_2" class="cp_callout cp_callout--warning" data-callout-init="1">
+					<div id="CO_2" class="cp_callout cp_callout--warning">
 					    <strong class="cp_callout_title" style="cursor: pointer;">Attention</strong>
 					    <div class="cp_callout_content" style="display: block;">Ceci est un callout de test de type <strong>warning</strong>.2026-07-07 : Mise en production. Ajouter initCallout dans le bootstrap</div>
 					</div>
 					<h4>danger</h4>
-					<div id="CO_3" class="cp_callout cp_callout--danger" data-callout-init="1">
+					<div id="CO_3" class="cp_callout cp_callout--danger">
 					    <strong class="cp_callout_title" style="cursor: pointer;">Attention</strong>
 					    <div class="cp_callout_content" style="display: block;">Ceci est un callout de test de type <strong>danger</strong>.2026-07-07 : Mise en production. Ajouter initCallout dans le bootstrap</div>
 					</div>
 					<h4>tip</h4>
-					<div id="CO_4" class="cp_callout cp_callout--tip" data-callout-init="1">
+					<div id="CO_4" class="cp_callout cp_callout--tip">
 					    <strong class="cp_callout_title" style="cursor: pointer;">Attention</strong>
 					    <div class="cp_callout_content" style="display: block;">Ceci est un callout de test de type <strong>tip</strong>.2026-07-07 : Mise en production. Ajouter initCallout dans le bootstrap</div>
 					</div>
