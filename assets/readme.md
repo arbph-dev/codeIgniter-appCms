@@ -27,7 +27,7 @@ intégration des composants dans [https://zealot.fr/ui.html](https://zealot.fr/u
 - [leaflet](/assets/js/components/leaflet_js.md)
 
 dependances
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/6f5a8a97958ed37ddb4902ba48d4841ed513e793/old/app/Views/cms/index.php#L21
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/6f5a8a97958ed37ddb4902ba48d4841ed513e793/old/app/Views/cms/index.php#L21:29
 
 
 #### wysedit
