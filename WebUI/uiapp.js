@@ -4,6 +4,7 @@ import { byId, byName , qs , qsa , create } from '/assets/js/core/domhelper.js'
 import { initMermaid } from '/assets/js/components/mermaid.js'
 import { initApex } from '/assets/js/components/apex.js'
 import { initCodeVal } from '/assets/js/components/codeval.js'
+import { initCallout} from '/assets/js/components/callout.js'
 
 // variables gloables
 let _pages = []
@@ -298,5 +299,6 @@ window.onload = (event) => {
   initMermaid()
   initApex()
   initCodeVal()
+  initCallout()
 } 
   
