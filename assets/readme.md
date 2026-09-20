@@ -66,8 +66,7 @@ a modifier
 
 
 
-### codeval et apex
-- [interaction](/assets/js/components/codeval_js.md#interaction)
+
 
 ### Améliorations
 #### employer balises : H1/H2/H3
@@ -99,6 +98,6 @@ interface ui (base)
 intégration composants
 - [apex](/assets/js/components/apex_js.md)
 - [codeval](/assets/js/components/apex_js.md)
-- [codeval et apex](/assets/js/components/apex_js.md)
+- [codeval et apex](/assets/js/components/codeval_js.md#interaction)
 - [mermaid](/assets/js/components/mermaid_js.md)
 
