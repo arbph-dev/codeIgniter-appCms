@@ -30,3 +30,7 @@
 
 ## Application
 Le fichier principal est [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
+
+
+## Composants
+[/assets/js/components/apex_js.md](/assets/js/components/apex_js.md)
