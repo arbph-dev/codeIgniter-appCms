@@ -40,7 +40,7 @@ Le fichier principal est [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
 
 ## core
 - /assets/js/core/
-  - [`domhelper.js`](/assets/core/domhelper_js.md)
+  - [`domhelper.js`](/assets/js/core/domhelper_js.md)
     - la source [`/refactoring/assets/js/core/domhelper.js`](/refactoring/assets/js/core/domhelper.js)
   - [`eventBus.js`](/assets/core/eventBus_js.md)
     - source : [`/refactoring/assets/js/core/eventBus.js`](/refactoring/assets/js/core/eventBus.js)
