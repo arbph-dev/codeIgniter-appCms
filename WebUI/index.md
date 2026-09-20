@@ -96,7 +96,7 @@ intégration composants
 
 
 ---
-a revoir
+a déplacer dans [`assets/readme.md`](/assets/readme.md)
 ---
 
 # Structure du document
