@@ -86,15 +86,8 @@ yaxis : { title: { text: 'Couple (Nm)' }, labels: { formatter: value => Number(v
 
 ## css
 on reprend les couleurs définis pour les themes 
-
-on ajoute 4 classes
-- `cp_codeval`
-- `cp_codeval .titre`
-- `cp_codeval .result`
-- `cp_codeval .scriptcode`
-- `cp_codeval .scriptcode textarea`
-
-voir si besoin de `cp_toolbar`
+- on ajoute 4 classes
+- voir si besoin de `cp_toolbar`
 
 
 ## js
