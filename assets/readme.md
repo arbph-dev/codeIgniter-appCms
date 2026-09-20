@@ -1,7 +1,7 @@
 Consulter [/ui.html](/WebUI/index.md)
 
 
-- /ui.html
+- [`/ui.html`](/assets/ui_html.md)
 - /assets/css/
   - uistyle.css
 - /assets/js/
