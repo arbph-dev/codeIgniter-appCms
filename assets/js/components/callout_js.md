@@ -1,22 +1,11 @@
 on reprend le code existant
 
-[/project/daily/2026-09-05.md](/project/daily/2026-09-05.md)
-[/refactoring/assets/js/components/callout.js](/refactoring/assets/js/components/callout.js)
+- [/project/daily/2026-09-05.md](/project/daily/2026-09-05.md)
+- [/refactoring/assets/js/components/callout.js](/refactoring/assets/js/components/callout.js)
 
 
 
 ## html
-voir les types
-
-```php
-private const TYPES = ['info', 'warning', 'danger', 'tip'];
-
-$titleHtml = $title ? "<strong class=\"cp_callout_title\">{$title}</strong>\n    " : '';
-
-<div id="{$id}" class="cp_callout cp_callout--{$type}">
-    {$titleHtml}<div class="cp_callout_content">{$content}</div>
-</div>
-```
 
 modifier le code html [/WebUI/ui.html](/WebUI/ui.html)
 
