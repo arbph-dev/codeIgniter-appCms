@@ -8,17 +8,20 @@ utiliation
 
 il faut impérativement exploiter la constante **result**
 **result** est utilisé pour affihé le resultat du script
-
+```js
 const result = api.call()
 const result = api.call2('ali baba')
-
-gere api  voir 
+```
+## api
+expliquer utilisation api
+```
 import * as PHYS from '/assets/js/libs/physics.js'
-    
     PHYS,
     plot  : (id, cfg)  => bus.publish('apex:render', { id, ...cfg })
+```
 
-
+### MoteurAsynchrone
+pour le textaera utilise **api.PHYS.MoteurAsynchrone**
 
 ```js
     let sTemp = null
@@ -48,8 +51,8 @@ import * as PHYS from '/assets/js/libs/physics.js'
     const result = sTemp;                           
 
 ```
-
-il faut maintenant gérer le greaph
+## Interaction
+il faut maintenant gérer le graph
 ```
     const options = {
         chart: { type: 'line', height: 350 },
@@ -76,7 +79,7 @@ il faut maintenant gérer le greaph
 
 
 
-### css
+## css
 on reprend les couleurs définis pour les themes 
 
 on ajoute 4 classes
@@ -96,7 +99,7 @@ on ajoute 4 classes
 
 
 
-### js
+## js
 ```js
 window.onload = (event) => {
   ...
@@ -105,7 +108,9 @@ window.onload = (event) => {
 }
 ```
 
-code a récupérer et intégrer
+## code textaera
+code a insérer dans textaera
+a récupérer et intégrer
 
 ```
     <section>
