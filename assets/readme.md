@@ -1,28 +1,18 @@
 
 
+# ressources serveur : (/public)
 
-- [`/ui.html`](/assets/ui_html.md) on utilise [/ui.html](/WebUI/index.md) pour les travaux en cours
-- /assets/css/
-  - uistyle.css
-- /assets/js/
-  - [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
-- /assets/js/components/
-  - [apex.js](/assets/js/components/apex_js.md)
-  - [codeval.js](/assets/js/components/codeval_js.md)
-  - [mermaid.js](/assets/js/components/mermaid_js.md)
-- /assets/js/core/
-  - domhelper.js
+[`assets/ressources.md`](/assets/ressources.md)
 
 
-méthode
-- chaque fichier employé est listé dans une note annexe [/assets/ressources.md](/assets/ressources.md)
-- chaque fonction importé doit être répertorié et expliqué si besoin
-  - exemple `/assets/js/uiapp.js` => [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
 
 
 # Travaux
-## a faire 
-lister les ressources serveur : (/public) voir [/assets/readme.md](/assets/readme.md)
+
+## méthode
+- chaque fichier employé est listé dans une note annexe [/assets/ressources.md](/assets/ressources.md)
+- chaque fonction importé doit être répertorié et expliqué si besoin
+- lister les ressources serveur : (/public) voir [/assets/readme.md](/assets/readme.md)
 
 ## en cours
 
