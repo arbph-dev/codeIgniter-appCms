@@ -27,8 +27,9 @@ intégration des composants dans [https://zealot.fr/ui.html](https://zealot.fr/u
 on definit le template html
 
 a modifier 
-div class="panel-card" data-index="0"
-h2 class="panel-title" TITRE
+- div class="panel-card" data-index="0"
+- h2 class="panel-title" TITRE
+
 
 ```html
 <!-- ====  0 - COMPOSANTS JAVASCRIPT ===================== -->
