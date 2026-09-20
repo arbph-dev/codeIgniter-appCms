@@ -1,15 +1,8 @@
 # codeval
 
+## Historique
 
-## utilisation
-
-il faut impérativement exploiter la constante **result**. **result** est utilisé pour affihé le resultat du script
-```js
-const result = api.call()
-const result = api.call2('ali baba')
-```
-
-modifier css
+### 2026-09-20 modifier css
 - Le bloc code ne s'affiche qu'après 2 clics
 ```css
 /* .cp_codeval .scriptcode { display: none; padding: 10px; } */
@@ -17,7 +10,31 @@ modifier css
 ```
 
 
-## api
+# Exploitation
+
+## css
+on reprend les couleurs définis pour les themes 
+- on ajoute 4 classes
+- voir si besoin de `cp_toolbar`
+
+## js
+```js
+window.onload = (event) => {
+  ...
+  initCodeVal()
+  ...
+}
+```
+
+## code textaera
+il faut impérativement exploiter la constante **result**. **result** est utilisé pour affihé le resultat du script
+```js
+const result = api.call()
+const result = api.call2('ali baba')
+```
+
+
+# api
 expliquer utilisation api
 ```
 import * as PHYS from '/assets/js/libs/physics.js'
@@ -25,7 +42,7 @@ import * as PHYS from '/assets/js/libs/physics.js'
     plot  : (id, cfg)  => bus.publish('apex:render', { id, ...cfg })
 ```
 
-### MoteurAsynchrone
+## MoteurAsynchrone
 pour le textaera utilise **api.PHYS.MoteurAsynchrone**
 
 ```js
@@ -84,20 +101,7 @@ yaxis : { title: { text: 'Couple (Nm)' }, labels: { formatter: value => Number(v
 
 ---
 
-## css
-on reprend les couleurs définis pour les themes 
-- on ajoute 4 classes
-- voir si besoin de `cp_toolbar`
 
-
-## js
-```js
-window.onload = (event) => {
-  ...
-  initCodeVal()
-  ...
-}
-```
 
 ## code textaera
 code a insérer dans textaera
