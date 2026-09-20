@@ -1,8 +1,8 @@
 
-- [doc composant leaflet](/documentation/COMPOSANTS/INDEX.md#51-leaflet-carte)
+- doc : [composant leaflet](/documentation/COMPOSANTS/INDEX.md#51-leaflet-carte)
+- source : [/assets/js/components/leaflet.js](/assets/js/components/leaflet.js)
 
-
-dependances
+## dependances
 - [app/Views/cms/index.php - ligne21](/old/app/Views/cms/index.php)
 
 a inclure dans 
@@ -18,8 +18,65 @@ a inclure dans
     <script src="/assets/js/plugins/GpPluginLeaflet.js"></script>
 ```
 
+## js
+```
+import { initLeaflet }  from '/assets/js/components/leaflet.js'
 
-css
+initLeaflet()   
+```
+
+## Html
+
+
+
+
+
+
+
+
+
+
+```
+
+        $id   = $descriptor->get('id', uniqid('MAP_'));
+        $lat  = $descriptor->get('lat', 47.82);
+        $lng  = $descriptor->get('lng', -4.30);
+        $zoom = $descriptor->get('zoom', 11);
+
+        return <<<HTML
+<div
+    id="{$id}"
+    class="cp_leaflet"
+    data-lat="{$lat}"
+    data-lng="{$lng}"
+    data-zoom="{$zoom}">
+</div>
+<div id="MAP_1" class="cp_leaflet" data-lat="47.82" data-lng="-4.3" data-zoom="11" tabindex="0" style="position: relative;">
+<div id="MAP_1" class="cp_leaflet" data-lat="47.82" data-lng="-4.3" data-zoom="11" tabindex="0" style="position: relative;">
+
+
+                        // ── Leaflet ──────────────────────────────
+                        [ //  section
+                        'id'    => 24,
+                        'title' => 'Leaflet',
+                        'parts' => [
+                            [
+                                'id'      => 34,
+                                'title'   => 'Leaflet',
+                                'content' => '<div class="leafletContainer">
+                                                <div id="leafletMap"></div>
+                                                <div id="leafletInfo">Some text</div>
+                                            </div>',
+
+                                'aside'   => '<button id="testLeafelt" name="testLeafelt" onclick="testLeafelt()">testLeafelt</button>'
+                            ] // end part
+                        ] // end parts
+                        ],  // end section
+```
+
+
+
+## css
 
 ```css
             /* leaflet ---------------------------------------------------------------- */
