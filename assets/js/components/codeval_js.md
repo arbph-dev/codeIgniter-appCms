@@ -72,12 +72,34 @@ il faut maintenant gérer le graph
 
 ```
 
+modifier plot ligne 33 de /assets/js/components/codeval.js
+
+textaera
+```
+    const donneesCouple = moteurExemple.genererCourbeCouple(20);
+    api.plot('APEX_LIGNE_3', {
+	    data: donneesCouple
+	})
+```
+
+modifier builder moteurCouple de apex.js => `formatter: value => Number(value).toFixed(0)`
+```
+yaxis: {
+    title: {
+        text: 'Couple (Nm)'
+    },
+    labels: {
+        formatter: value => Number(value).toFixed(0)
+    }
+}
+
+
+```
 
 
 
 
-
-
+---
 
 ## css
 on reprend les couleurs définis pour les themes 
