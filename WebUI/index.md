@@ -1,9 +1,50 @@
-**Notes** : button ajouter type button
-Sidebar / a.closebtn : remplacer X, times par un font awesone + style modifier couleur 
+Le refactoring du projet touche a sa fin.
+Pour séparer les parties frontend et backend on utilise le serveur pour
+- les pages html, ressources images
+- les apis
+
+Trois fichiers sont les piliers de l'évolution 
+- [/WebUI/ui.html](/WebUI/ui.html)
+- [/WebUI/uiapp.js](/WebUI/uiapp.js) path serveur : (/public) /assets/js/uiapp.js
+- [/WebUI/uistyle.css](/WebUI/uistyle.css)
+
+# Travaux
+## en cours
+codeval et apex
+- old/public/assets/js/plugins/apex.js
+
+repértorier besoin ui
+- login
+- icone
+- auth
+- api workbench
+
+### Améliorations
+employer balises : H1/H2/H3
+
+Pour créer un lien d'ancrage ciblant un élément `<h1>` 
+- attribuez un id unique à la balise `<h1>` (ou au conteneur `<div>`) 
+- utilisez un lien hypertexte avec un hachereau `#` suivi de cet identifiant. 
+
+Exemple de code :
+
+```html
+<a href="#section-titre">Aller au titre</a>
+
+<div>
+  <h1 id="section-titre">Mon Titre</h1>
+</div>
+```
 
 
-Trois fichiers récents a revoir pour extraction
+## terminé
+interface ui (base)
 
+
+
+---
+a revoir
+---
 
 # Structure du document
 
@@ -67,36 +108,6 @@ Sidebar doit etre généré par script
             > li
               > a ( panel / tab 0 - Sub tab 0 )
               > ul
-            > li
-              > a ( panel / tab 0 - Sub tab 1 )
-              > ul
-            > li
-              > a ( panel / tab 0 - Sub tab 2 )
-              > ul
-        > li
-          > a ( panel / tab 1 )
-          > ul
-            > li
-              > a ( panel / tab 1 - Sub tab 0 )
-              > ul
-            > li
-              > a ( panel / tab 1 - Sub tab 1 )
-              > ul
-            > li
-              > a ( panel / tab 1 - Sub tab 2 )
-              > ul                  
-        > li
-          > a ( panel / tab 2 )
-          > ul
-            > li
-              > a ( panel / tab 2 - Sub tab 0 )
-              > ul
-            > li
-              > a ( panel / tab 2 - Sub tab 1 )
-              > ul
-            > li
-              > a (  panel / tab 2 - Sub tab 2 )
-              > ul
 ```
 
 ## Panels / Onglets
@@ -133,20 +144,5 @@ le css associé
 </div>   
 ```
 
-# Améliorations
-employer balises : H1/H2/H3
 
-Pour créer un lien d'ancrage ciblant un élément `<h1>` 
-- attribuez un id unique à la balise `<h1>` (ou au conteneur `<div>`) 
-- utilisez un lien hypertexte avec un hachereau `#` suivi de cet identifiant. 
-
-Exemple de code :
-
-```html
-<a href="#section-titre">Aller au titre</a>
-
-<div>
-  <h1 id="section-titre">Mon Titre</h1>
-</div>
-```
 
