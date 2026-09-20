@@ -10,17 +10,19 @@ Trois fichiers sont les piliers de l'évolution
 
 # Travaux
 ## en cours
-codeval et apex
-- old/public/assets/js/plugins/apex.js
 
 repértorier besoin ui
-- login
-- icone
-- auth
-- api workbench
+- voir [améliorations](#besoin_ui]
+intégration des composants
+- codeval et apex
+
+
+### codeval et apex
+- old/public/assets/js/plugins/apex.js
+
 
 ### Améliorations
-employer balises : H1/H2/H3
+#### employer balises : H1/H2/H3
 
 Pour créer un lien d'ancrage ciblant un élément `<h1>` 
 - attribuez un id unique à la balise `<h1>` (ou au conteneur `<div>`) 
@@ -35,6 +37,12 @@ Exemple de code :
   <h1 id="section-titre">Mon Titre</h1>
 </div>
 ```
+
+#### besoin_ui
+- login
+- icone
+- auth
+- api workbench
 
 
 ## terminé
