@@ -23,11 +23,7 @@ repértorier besoin ui
 intégration des composants dans [https://zealot.fr/ui.html](https://zealot.fr/ui.html)
 
 #### leaflet
-- [doc composant leaflet](/documentation/COMPOSANTS/INDEX.md#51-leaflet-carte)
 - [leaflet](/assets/js/components/leaflet_js.md)
-
-dependances
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/6f5a8a97958ed37ddb4902ba48d4841ed513e793/old/app/Views/cms/index.php#L21:29
 
 
 #### wysedit
