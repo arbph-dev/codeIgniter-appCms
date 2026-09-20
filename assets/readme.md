@@ -22,14 +22,8 @@ repértorier besoin ui
 ### Intégration
 intégration des composants dans [https://zealot.fr/ui.html](https://zealot.fr/ui.html)
 
-#### callout
-- [ ] [callout](/assets/js/components/callout_js.md)
 
-```js
-import { initCallout } from '/assets/js/ihm/callout.js'
-```
-
-#### callout
+#### wysedit
 - [ ] wysedit
     /assets/js/components/wysedit_js.md 
 
@@ -119,4 +113,6 @@ intégration composants
 - [codeval](/assets/js/components/apex_js.md)
 - [codeval et apex](/assets/js/components/codeval_js.md#interaction)
 - [mermaid](/assets/js/components/mermaid_js.md)
+- [callout](/assets/js/components/callout_js.md)
+
 
