@@ -72,7 +72,8 @@ il faut maintenant gérer le graph
 
 ```
 
-modifier plot ligne 33 de /assets/js/components/codeval.js
+modifier [plot](/refactoring/assets/js/components/codeval.js#L34) ligne 34 de `/assets/js/components/codeval.js`
+
 
 textaera
 ```
