@@ -65,7 +65,9 @@ il faut maintenant gérer le graph
     api.plot('APEX_LIGNE_3', { data: donneesCouple });
 ```
 
-modifier builder moteurCouple de [apex.js](/refactoring/assets/js/components/apex.js) => `formatter: value => Number(value).toFixed(0)`
+- modifier builder moteurCouple de [apex.js](/refactoring/assets/js/components/apex.js)
+
+Les libellés des valeurs de l'axe y comportaient des zéros inutiles
 
 ```js
 // yaxis : { title: { text: 'Couple (Nm)' } }
