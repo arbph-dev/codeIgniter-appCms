@@ -16,11 +16,16 @@
 
 ## en cours
 
-repértorier besoin ui
+repértorier besoin ui 
 - voir [améliorations](#besoin_ui)
-intégration des composants
+
+intégration des composants dans [https://zealot.fr/ui.html](https://zealot.fr/ui.html)
+- apex
+  [/assets/js/components/apex_js.md](/assets/js/components/apex_js.md)
 - codeval et apex
-[/assets/js/components/apex_js.md](/assets/js/components/apex_js.md)
+  [/assets/js/components/apex_js.md](/assets/js/components/apex_js.md)
+
+
 
 ### codeval et apex
 - old/public/assets/js/plugins/apex.js
