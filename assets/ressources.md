@@ -25,7 +25,8 @@
 /assets/js/core/eventBus.js
 ```
 
-[/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
 
 
-## [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
+
+## Application
+Le fichier principal est [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
