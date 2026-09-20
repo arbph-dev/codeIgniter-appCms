@@ -4,7 +4,7 @@
 # historique
 
 ## codeval
-pour intégrer le composant on ajoute 4 classes
+pour intégrer le composant on ajoute 4 classes dans [/assets/css/uistyle.css](/WebUI/uistyle.css#L291)
 - `cp_codeval`
 - `cp_codeval .titre`
 - `cp_codeval .result`
