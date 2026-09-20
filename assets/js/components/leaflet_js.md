@@ -51,8 +51,18 @@ initLeaflet()
     data-lng="{$lng}"
     data-zoom="{$zoom}">
 </div>
+
 <div id="MAP_1" class="cp_leaflet" data-lat="47.82" data-lng="-4.3" data-zoom="11" tabindex="0" style="position: relative;">
 <div id="MAP_1" class="cp_leaflet" data-lat="47.82" data-lng="-4.3" data-zoom="11" tabindex="0" style="position: relative;">
+
+essai : https://zealot.fr/cms/article/test-art
+on visualise le code
+```html
+<div class="cms_part_content">
+        <div id="MAP_1" class="cp_leaflet" data-lat="47.82" data-lng="-4.3" data-zoom="11">
+	</div>
+</div>
+```
 
 
                         // ── Leaflet ──────────────────────────────
@@ -79,7 +89,11 @@ initLeaflet()
 ## css
 
 ```css
-            /* leaflet ---------------------------------------------------------------- */
+
+/* /refactoring/assets/css/components/leaflet.css ------------------------------------------------ */
+
+.cp_leaflet { width:100%; height:400px; }
+/* autre ?? ------------------------------------------------ */
             .leafletContainer{  display: flex;  flex-direction: column; }
 
             #leafletMap{
