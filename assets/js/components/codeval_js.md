@@ -177,8 +177,8 @@ window.eventBusPublish = (evt, eventName, payload = null) => {
 ```
 
 ## Ressources
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/codeval_notes.md
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/INDEX.md
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/INDEX.md#21-codeval-interpréteur-javascript
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/components/codeval.js
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/codeval_notes.md
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/INDEX.md
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/INDEX.md#21-codeval-interpréteur-javascript
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/components/codeval.js
 
