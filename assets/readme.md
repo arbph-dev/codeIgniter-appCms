@@ -22,6 +22,26 @@ repértorier besoin ui
 ### Intégration
 intégration des composants dans [https://zealot.fr/ui.html](https://zealot.fr/ui.html)
 
+#### callout
+- [ ] callout
+    /assets/js/components/callout_js.md 
+
+```js
+import { initCallout } from '/assets/js/ihm/callout.js'
+```
+
+#### callout
+- [ ] wysedit
+    /assets/js/components/wysedit_js.md 
+
+```js
+import { initWysedit } from '/assets/js/ihm/wysedit.js'
+```
+#### vox
+
+- [ ] vox voir https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/vox.md
+
+
 
 #### template html
 on definit le template html
