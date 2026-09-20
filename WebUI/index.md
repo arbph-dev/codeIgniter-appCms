@@ -8,6 +8,12 @@ Trois fichiers sont les piliers de l'évolution
 - [/WebUI/uiapp.js](/WebUI/uiapp.js) path serveur : (/public) /assets/js/uiapp.js
 - [/WebUI/uistyle.css](/WebUI/uistyle.css)
 
+[Orbis](/Orbis/index.md) reste en soutien pour réaliser des jeux de données via d'autres sources
+
+**Important**
+On va préparer la version final du repository
+
+
 # Travaux
 ## en cours
 
