@@ -285,6 +285,30 @@ nav a.closebtn {
   text-align: right;
 }
 
+/* =============================================================================
+   COMPOSANTS 
+============================================================================= */
+.cp_codeval { 
+
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  overflow: hidden; 
+  display: block;
+}
+
+.cp_codeval .titre { 
+  background-color: var(--accent);
+  color: var(--text-header);
+  cursor: pointer;
+  padding: 10px; 
+}
+
+.cp_codeval .result { display: none; padding: 10px; }
+
+.cp_codeval .scriptcode { display: block ; padding: 10px; }
+
+.cp_codeval .scriptcode textarea { height: 200px; width: 100%; overflow-y: auto; }
+
 
 /* =============================================================================
    DESKTOP
