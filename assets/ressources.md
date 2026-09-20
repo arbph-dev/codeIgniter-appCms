@@ -23,6 +23,8 @@
   import { byId, byName , qs , qsa , create } from '/assets/js/core/domhelper.js'
 
 /assets/js/core/eventBus.js
+
+/assets/js/libs/physics.js
 ```
 
 
