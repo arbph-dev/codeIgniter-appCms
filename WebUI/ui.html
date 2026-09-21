@@ -15,6 +15,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
+    <!-- Leaflet -->    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="/assets/css/GpPluginLeaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-tilelayer-wmts@1.0.0/dist/leaflet-tilelayer-wmts.js"></script>
+    <!-- Extension Géoplateforme pour Leaflet -->
+    <script src="/assets/js/plugins/GpPluginLeaflet.js"></script>
 
 </head>
 
@@ -62,8 +70,17 @@
 
             <div class="section-tab">
                 <div class="tab-headers"></div>
+                
+                <div id="apex-0" class="tab-content active">
+                    <h3>Apex</h3>
+                      <p>Revoir les graphiques disponible</p>
+                    
+                      <h4>line</h4>
+                      <div id="APEX_LIGNE_1" class="cp_apex" data-chart="line"></div>
+  
+                </div>
 
-                <div id="mermaid-0" class="tab-content active">
+                <div id="mermaid-0" class="tab-content">
                     <h3>Mermaid</h3>
                     <p>Mermaid fait partie de l'ecostyeme Obsidian</p>
                     <p>On intégre des ressources pour les essais</p>
@@ -140,12 +157,9 @@
                     </div>                    
                 </div>
 
-                <div id="apex-0" class="tab-content">
+                <div id="apex-1" class="tab-content">
                   <h3>Apex</h3>
                     <p>Revoir les graphiques disponible</p>
-                  
-                    <h4>line</h4>
-                    <div id="APEX_LIGNE_1" class="cp_apex" data-chart="line"></div>
 
                     <h4>line</h4>
                     <div id="APEX_LIGNE_2" class="cp_apex" data-chart="moteurCouple"></div>
@@ -279,6 +293,18 @@
                       </div>
   
                 </div>                
+
+                <div id="leaflet-0" class="tab-content">
+                    <h3>Leaflet</h3>
+                        <p>cartographie</p>
+                    
+                        <h4>carte 1</h4>
+                        <div id="MAP_1" class="cp_leaflet" data-lat="47.82" data-lng="-4.3" data-zoom="14"></div>
+
+                        <button onclick="window.leafletList()">Liste</button>
+
+                        
+                </div>
 
             </div>
 
@@ -550,6 +576,81 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="panel-card hidden" data-index="4">
+            <h2 class="panel-title">Actualités</h2>
+            <p class="panel-description">
+                Evolution du refactoring
+            </p>
+
+            <div class="section-tab">
+
+                <div class="tab-headers"></div>
+
+                <div id="daily-0" class="tab-content active">
+                    <h3>Travaux en cours</h3>
+                    <p>2026-09-20 : intégration du refactoring</p>
+
+                    <ul>
+                        <li><a href="https://github.com/arbph-dev/codeIgniter-appCms/tree/main/assets">/assets/</a></li>
+                        <li><a href="https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/js/components/apex_js.md">/assets/js/components/apex_js.md</a></li>
+                        <li><a href="https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/js/components/leaflet_js.md">/assets/js/components/leaflet_js.md</a></li>
+                    </ul>
+                        
+                    <ul>
+                        <li><a href="https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/index.md">/WebUI/index.md</a></li>
+                    </ul>
+                        
+                </div>
+
+                <div id="note-leaflet-0" class="tab-content">
+                    <h3>Note leaflet</h3>
+                    <p>Le composant est fonctionnel</p>
+                    <ul>
+                        <li><a href="https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/js/components/leaflet_js.md">/assets/js/components/leaflet_js.md</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>        
+        <!-- === N - Template ======================================================== 
+        replace 
+        - N
+        - TITLE
+        - DESCRIPTION
+            <div id="SECTION_ID" class="tab-content active">
+                <h3>SECTION_TITLE</h3>
+
+        <div class="panel-card hidden" data-index="N">
+            <h2 class="panel-title">TITLE</h2>
+            <p class="panel-description">
+                DESCRIPTION
+            </p>
+
+            <div class="section-tab">
+
+                <div class="tab-headers"></div>
+
+                <div id="presentation-2" class="tab-content active">
+                    <h3>Présentation du Millenium EVO</h3>
+                    <p></p>
+                </div>
+
+                <div id="caracteristiques-2" class="tab-content">
+                    <h3>Caractéristiques techniques</h3>
+                    <p></p>
+                </div>
+
+                <div id="conclusion-2" class="tab-content">
+                    <h3>Conclusion et avis</h3>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+
+        -->
+
     </main>
 
     <div class="pagination-buttons"></div>
