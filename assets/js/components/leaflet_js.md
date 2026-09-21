@@ -2,7 +2,19 @@
 - doc : [composant leaflet](/documentation/COMPOSANTS/INDEX.md#51-leaflet-carte)
 - source : [/assets/js/components/leaflet.js](/assets/js/components/leaflet.js)
 
-mise au point
+**mise au point**
+Leaflet doit être initialise lorsque le container est visible sinon il bug
+
+```js
+function switchSection(index) {
+	...
+  panel_Sections[index].classList.add("active")
+  panel_header_Buttons[index].classList.add("active")
+  // passe element a afficher, si il contient une carte leaflet elle est initialisée a l'affichage sinon leaflet plante
+  initLeaflet(panel_Sections[index])
+	...
+```
+
 ```
     panelSections = qsa( "div.section-tab  > div.tab-content > h3" , panel )
 
@@ -15,6 +27,13 @@ window.leafletUpdate  = (id, payload = {}) => bus.publish('leaflet:update',  { i
 window.leafletDestroy = id                 => bus.publish('leaflet:destroy',  id)
 window.leafletList    = ()                 => bus.publish('leaflet:list')
 
+/*--------------------------------------------------------------------------*/
+
+const MAP_ID       = 'wb_adresse_map'
+const DEFAULT_LAT  = 47.82
+const DEFAULT_LNG  = -4.30
+const DEFAULT_ZOOM = 10
+const DETAIL_ZOOM  = 14
 
 bus.publish('leaflet:render', {
     id      : 'wb_adresse_map',
