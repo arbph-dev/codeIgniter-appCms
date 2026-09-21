@@ -2,6 +2,21 @@
 - doc : [composant leaflet](/documentation/COMPOSANTS/INDEX.md#51-leaflet-carte)
 - source : [/assets/js/components/leaflet.js](/assets/js/components/leaflet.js)
 
+mise au point
+```
+    panelSections = qsa( "div.section-tab  > div.tab-content > h3" , panel )
+
+ *  · qsa('.cp_leaflet', root)  — scan ciblé sur root (domhelper supporte déjà root)
+
+initLeaflet( root )
+
+window.leafletRender  = (id, payload = {}) => bus.publish('leaflet:render',  { id, type: 'osm', payload })
+window.leafletUpdate  = (id, payload = {}) => bus.publish('leaflet:update',  { id, payload })
+window.leafletDestroy = id                 => bus.publish('leaflet:destroy',  id)
+window.leafletList    = ()                 => bus.publish('leaflet:list')
+
+```
+
 ## dependances
 - [app/Views/cms/index.php - ligne21](/old/app/Views/cms/index.php)
 
@@ -28,15 +43,19 @@ initLeaflet()
 ## Html
 
 
-
-
-
-
-
-
-
-
 ```
+        <div id="leaflet-0" class="tab-content">
+            <h3>Leaflet</h3>
+                <p>cartographie</p>
+            
+                <h4>carte 1</h4>
+				<div id="MAP_1" class="cp_leaflet" data-lat="47.82" data-lng="-4.3" data-zoom="11"></div>
+
+        </div>
+
+
+
+
 
         $id   = $descriptor->get('id', uniqid('MAP_'));
         $lat  = $descriptor->get('lat', 47.82);
