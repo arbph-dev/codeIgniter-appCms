@@ -5,6 +5,7 @@ import { initMermaid } from '/assets/js/components/mermaid.js'
 import { initApex } from '/assets/js/components/apex.js'
 import { initCodeVal } from '/assets/js/components/codeval.js'
 import { initCallout} from '/assets/js/components/callout.js'
+import { initLeaflet }  from '/assets/js/components/leaflet.js'
 
 // variables gloables
 let _pages = []
@@ -51,7 +52,9 @@ function switchSection(index) {
 
   panel_Sections[index].classList.add("active")
   panel_header_Buttons[index].classList.add("active")
-  
+  // passe element a afficher, si il contient une carte leaflet elle est initialisé a l'afficahge sinon leaflet plante
+  initLeaflet(panel_Sections[index])
+
   _currentSection = index
   
 }
@@ -288,7 +291,9 @@ function statusWrite( textContent ){
     }    
 }
 
-/*  ======================================================================================================================  */
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
   setPageRef() //definit les references aux elements dom
   initSidebar() // event + bus handlers 
@@ -300,5 +305,6 @@ window.onload = (event) => {
   initApex()
   initCodeVal()
   initCallout()
+  //initLeaflet()
 } 
   
