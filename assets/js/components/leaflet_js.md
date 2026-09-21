@@ -2,49 +2,13 @@
 - doc : [composant leaflet](/documentation/COMPOSANTS/INDEX.md#51-leaflet-carte)
 - source : [/assets/js/components/leaflet.js](/assets/js/components/leaflet.js)
 
-**mise au point**
-Leaflet doit être initialise lorsque le container est visible sinon il bug
 
-```js
-function switchSection(index) {
-	...
-  panel_Sections[index].classList.add("active")
-  panel_header_Buttons[index].classList.add("active")
-  // passe element a afficher, si il contient une carte leaflet elle est initialisée a l'affichage sinon leaflet plante
-  initLeaflet(panel_Sections[index])
-	...
-```
 
 ```
-    panelSections = qsa( "div.section-tab  > div.tab-content > h3" , panel )
-
- *  · qsa('.cp_leaflet', root)  — scan ciblé sur root (domhelper supporte déjà root)
-
-initLeaflet( root )
-
 window.leafletRender  = (id, payload = {}) => bus.publish('leaflet:render',  { id, type: 'osm', payload })
 window.leafletUpdate  = (id, payload = {}) => bus.publish('leaflet:update',  { id, payload })
 window.leafletDestroy = id                 => bus.publish('leaflet:destroy',  id)
 window.leafletList    = ()                 => bus.publish('leaflet:list')
-
-/*--------------------------------------------------------------------------*/
-
-const MAP_ID       = 'wb_adresse_map'
-const DEFAULT_LAT  = 47.82
-const DEFAULT_LNG  = -4.30
-const DEFAULT_ZOOM = 10
-const DETAIL_ZOOM  = 14
-
-bus.publish('leaflet:render', {
-    id      : 'wb_adresse_map',
-    type    : 'osm',
-    payload : {
-        lat  : parseFloat(adresse.latitude)  || DEFAULT_LAT,
-        lng  : parseFloat(adresse.longitude) || DEFAULT_LNG,
-        zoom : adresse.latitude ? 14 : 10,
-    }
-})
-
 ```
 
 ## dependances
@@ -67,13 +31,27 @@ a inclure dans
 ```
 import { initLeaflet }  from '/assets/js/components/leaflet.js'
 
-initLeaflet()   
+// initLeaflet()
+/*non il faut que le container soit visible */
 ```
 
+**mise au point**
+Leaflet doit être initialise lorsque le container est visible sinon il bug
+
+dans uiapp.js
+```js
+function switchSection(index) {
+	...
+  panel_Sections[index].classList.add("active")
+  panel_header_Buttons[index].classList.add("active")
+  // passe element a afficher, si il contient une carte leaflet elle est initialisée a l'affichage sinon leaflet plante
+  initLeaflet(panel_Sections[index])
+	...
+```
 ## Html
 
 
-```
+```html
         <div id="leaflet-0" class="tab-content">
             <h3>Leaflet</h3>
                 <p>cartographie</p>
@@ -82,57 +60,14 @@ initLeaflet()
 				<div id="MAP_1" class="cp_leaflet" data-lat="47.82" data-lng="-4.3" data-zoom="11"></div>
 
         </div>
+```
 
-
-
-
-
-        $id   = $descriptor->get('id', uniqid('MAP_'));
-        $lat  = $descriptor->get('lat', 47.82);
-        $lng  = $descriptor->get('lng', -4.30);
-        $zoom = $descriptor->get('zoom', 11);
-
-        return <<<HTML
-<div
-    id="{$id}"
-    class="cp_leaflet"
-    data-lat="{$lat}"
-    data-lng="{$lng}"
-    data-zoom="{$zoom}">
-</div>
-
-<div id="MAP_1" class="cp_leaflet" data-lat="47.82" data-lng="-4.3" data-zoom="11" tabindex="0" style="position: relative;">
-<div id="MAP_1" class="cp_leaflet" data-lat="47.82" data-lng="-4.3" data-zoom="11" tabindex="0" style="position: relative;">
-
-essai : https://zealot.fr/cms/article/test-art
-on visualise le code
-```html
+```
 <div class="cms_part_content">
         <div id="MAP_1" class="cp_leaflet" data-lat="47.82" data-lng="-4.3" data-zoom="11">
 	</div>
 </div>
 ```
-
-
-                        // ── Leaflet ──────────────────────────────
-                        [ //  section
-                        'id'    => 24,
-                        'title' => 'Leaflet',
-                        'parts' => [
-                            [
-                                'id'      => 34,
-                                'title'   => 'Leaflet',
-                                'content' => '<div class="leafletContainer">
-                                                <div id="leafletMap"></div>
-                                                <div id="leafletInfo">Some text</div>
-                                            </div>',
-
-                                'aside'   => '<button id="testLeafelt" name="testLeafelt" onclick="testLeafelt()">testLeafelt</button>'
-                            ] // end part
-                        ] // end parts
-                        ],  // end section
-```
-
 
 
 ## css
