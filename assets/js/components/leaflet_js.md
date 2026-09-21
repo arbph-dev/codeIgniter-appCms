@@ -94,6 +94,42 @@ function switchSection(index) {
             }
 ```
 
+# Code
+
+a voir markers
+```
+
+    this.markers = []
+    // API Publique
+    addMarker(lat, lng, options = {}) {
+        const marker = window.L.marker([lat, lng])
+        
+        if (options.popup) {
+            marker.bindPopup(options.popup)
+        }
+        
+        marker.addTo(this.map)
+        this.markers.push(marker)
+        
+        return marker
+    }
+    
+    clearMarkers() {
+        this.markers.forEach(marker => marker.remove())
+        this.markers = []
+    }
+    
+    fitBounds(markers) {
+        if (markers.length > 0) {
+            const group = window.L.featureGroup(markers)
+            this.map.fitBounds(group.getBounds())
+        }
+    }
+```
+
+
+
+
 Pour éviter la bidouille on a modifier uiapp.js, ce code pourra servir
 
 ```
