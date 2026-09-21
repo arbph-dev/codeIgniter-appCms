@@ -93,3 +93,39 @@ function switchSection(index) {
                 height: 10vh;
             }
 ```
+
+Pour éviter la bidouille on a modifier uiapp.js, ce code pourra servir
+
+```
+/*  ======================================================================================================================  
+Pour éviter la bidouille on a ajouter : ligne 55
+  function switchSection(index) {
+  ...
+    initLeaflet(panel_Sections[index])
+  ...    
+
+
+ function LeafTestbus(){
+
+  const MAP_ID       = 'MAP_1'
+  const DEFAULT_LAT  = 47.82
+  const DEFAULT_LNG  = -4.30
+  const DEFAULT_ZOOM = 10
+  const DETAIL_ZOOM  = 14
+
+  bus.publish('leaflet:render', {
+      id      : MAP_ID,
+      type    : 'osm',
+      payload : {
+          lat  : DEFAULT_LAT,
+          lng  : DEFAULT_LNG,
+          //lng  : parseFloat(adresse.longitude) || DEFAULT_LNG,
+          zoom : DEFAULT_ZOOM,
+      }
+  })
+  //window.leafletRender  = (id, payload = {})
+}
+
+window.LeafTest = LeafTestbus
+*/
+```
