@@ -15,6 +15,17 @@ window.leafletUpdate  = (id, payload = {}) => bus.publish('leaflet:update',  { i
 window.leafletDestroy = id                 => bus.publish('leaflet:destroy',  id)
 window.leafletList    = ()                 => bus.publish('leaflet:list')
 
+
+bus.publish('leaflet:render', {
+    id      : 'wb_adresse_map',
+    type    : 'osm',
+    payload : {
+        lat  : parseFloat(adresse.latitude)  || DEFAULT_LAT,
+        lng  : parseFloat(adresse.longitude) || DEFAULT_LNG,
+        zoom : adresse.latitude ? 14 : 10,
+    }
+})
+
 ```
 
 ## dependances
