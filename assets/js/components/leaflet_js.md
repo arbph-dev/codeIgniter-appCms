@@ -3,7 +3,34 @@
 - source : [/assets/js/components/leaflet.js](/assets/js/components/leaflet.js)
 
 ## Historique
-2026-09-23 : Modifier leaflet.js et AdresseWorkbench.js
+
+
+# 2026-09-20
+## Leaflet
+Le composant est fontionnel et intégré, l'ajout de AdresseWorkbench interfere
+
+```html
+<div class="panel-card" data-index="0">
+               <div id="leaflet-0" class="tab-content">
+                    <h3>Leaflet</h3>
+                        <p>cartographie</p>
+                        <h4>carte 1</h4>
+                        <div id="MAP_1" class="cp_leaflet" data-lat="47.82" data-lng="-4.3" data-zoom="14"></div>
+```
+- AdresseWorkbench.js - ligne 69 appel initLeaflet
+- AdresseListPanel.js utilise le bus (a détailler) sur un clic dans la liste des adresses
+
+```js
+  //AdresseWorkbench.js - ligne 69
+  async bootstrap()
+    {
+        // 1. Leaflet — guard _initialized empêche le double abonnement
+        initLeaflet()
+```
+
+
+
+### 2026-09-23 : Modifier leaflet.js et AdresseWorkbench.js
 - [project/daily/2026-09-22-002.md](/project/daily/2026-09-22-002.md)
 - '/assets/js/components/leaflet.js'
 - '/assets/js/ui/workbench/adresse/AdresseWorkbench.js'
