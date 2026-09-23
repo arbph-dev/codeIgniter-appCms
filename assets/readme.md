@@ -35,6 +35,44 @@ import { initWysedit } from '/assets/js/ihm/wysedit.js'
 
 - [ ] vox voir https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/vox.md
 
+Le fichier de vue génère l'HTML suivant (exemple) :
+
+```html
+<div class="vox-component" data-lang="<?= $lang ?>" data-rate="<?= $rate ?>"
+     data-pitch="<?= $pitch ?>" data-volume="<?= $volume ?>">
+  <textarea id="VOX_TEXT" style="display:none;"><?= esc($text) ?></textarea>
+  <div id="<?= esc($statusId) ?>" class="vox-status">—</div>
+  <button class="vox-play-btn" onclick="window.eventBusPublish(event,'vox:start',
+        { targetId:'VOX_TEXT', statusId:'<?= esc($statusId) ?>' })">
+    ▶ Écouter
+  </button>
+</div>
+```
+
+On garde :
+- un <textarea> caché (display:none) contenant le texte (pour qu'il soit présent dans le DOM)
+- un <div> avec l'id=$statusId pour afficher le retour de Vox (initialement un tiret « — »)
+- Un bouton Écouter qui publie vox:start sur le bus, ciblant VOX_TEXT et statusId.
+
+Cette vue minimale permet au JS client de fonctionner comme avant. 
+
+on stylise ou classe les éléments selon besoin (CSS vox-component, vox-status etc.). 
+
+Si le texte doit être indexé pour le SEO, on peut également le placer en clair dans la page
+
+
+| Fichier/Source | Responsabilité | État actuel | Nouveau livrable |
+|---|---|---|---|
+| Cms.php (article Vox) | Prototype de dialogue vocal et contrôles UI | Texte en dur, boutons JS | Vu comme référence, ne sera plus utilisé directement |
+| old/public/js/core/vox.js | Logique de synthèse : parse, queue, utterance | Ancien module monolithique | Réinjectée partiellement dans JS modernisé |
+| old/public/js/core/vox.renderer.js | Mise à jour du DOM (statu texte, surlignage) | Existant, réutilisable | Migré et adapté |
+| old/public/js/core/vox.listen.js | Reconnaissance vocale | Indépendant | Documenté, peut être réutilisé ultérieurement |
+| app/Views/components/vox.php | À créer : template HTML du composant | — | HTML du composant (textarea caché, div status, bouton) |
+| VoxRenderer.php | À créer : classe Renderer côté serveur | — | Lit le descriptor, rend la vue vox.php |
+| ComponentRegistry | Enregistrement du composant | Contient (probablement) référence | Ajouter l'entrée 'vox'=>VoxComponent |
+
+
+
 
 
 #### template html
