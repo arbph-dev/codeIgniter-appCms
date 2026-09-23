@@ -19,19 +19,19 @@
 repértorier besoin ui 
 - voir [améliorations](#besoin_ui)
 
-### Intégration
+# Intégration
 intégration des composants dans [https://zealot.fr/ui.html](https://zealot.fr/ui.html)
 
 
 
 
-#### wysedit
+## wysedit
 - [ ] [wysedit.js](/assets/js/components/wysedit_js.md) 
 
 ```js
 import { initWysedit } from '/assets/js/ihm/wysedit.js'
 ```
-#### vox
+## vox
 
 - [ ] vox voir https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/vox.md
 
@@ -48,7 +48,6 @@ Le fichier de vue génère l'HTML suivant (exemple) :
   </button>
 </div>
 ```
-
 On garde :
 - un <textarea> caché (display:none) contenant le texte (pour qu'il soit présent dans le DOM)
 - un <div> avec l'id=$statusId pour afficher le retour de Vox (initialement un tiret « — »)
@@ -59,6 +58,36 @@ Cette vue minimale permet au JS client de fonctionner comme avant.
 on stylise ou classe les éléments selon besoin (CSS vox-component, vox-status etc.). 
 
 Si le texte doit être indexé pour le SEO, on peut également le placer en clair dans la page
+```html
+<section>
+     <h2 id="tab9--composant-vox">Composant vox</h2>
+     <div>
+          <div>
+             <h3 id="tab9--synthse-vocale-event-bus">Synthèse vocale (event bus)</h3>
+             <textarea class="cp_voxzone_textarea" id="TXT_VOX_1" rows="8">
+               Juliette: Bonjour, je suis Juliette.
+               Romeo: Bonjour, je suis Roméo.
+             </textarea>
+             <br><br>	
+             <div id="VOX_STATUS">—</div>			
+          </div>
+          <aside>
+               <button onclick="window.eventBusPublish(event, 'vox:speak', { targetId:'TXT_VOX_1', statusId:'VOX_STATUS' })">Lire</button>
+               <button onclick="window.eventBusPublish(event,'vox:pause')">Pause</button>
+               <button onclick="window.eventBusPublish( event, 'vox:resume' )">Resume</button>
+               <button onclick="window.eventBusPublish( event, 'vox:stop' )">Stop</button>
+               <br><br>
+               <label>Rate</label><input type="range" min="0.5" max="2" step="0.1" value="0.9" onchange="window.eventBusPublish( event, 'vox:rate',{value:this.value})">	
+               <br><br>
+               <label>Volume</label><input type="range" min="0" max="1" step="0.1" value="1" onchange="window.eventBusPublish( event,'vox:volume',{ value:this.value })">	
+               <br><br>
+               <button onclick="window.eventBusPublish( event,'vox:getVoices')">Configurer les voix</button>
+               <h3 id="tab9--voix-disponibles">Voix disponibles</h3>  
+               <div id="VOX_VOICES_LIST"></div>
+          </aside>	            
+     </div>
+</section>
+```
 
 
 | Fichier/Source | Responsabilité | État actuel | Nouveau livrable |
@@ -75,7 +104,7 @@ Si le texte doit être indexé pour le SEO, on peut également le placer en clai
 
 
 
-#### template html
+# template html
 on definit le template html
 
 a modifier 
@@ -120,8 +149,8 @@ a modifier
 
 
 
-### Améliorations
-#### employer balises : H1/H2/H3
+# Améliorations
+## employer balises : H1/H2/H3
 
 Pour créer un lien d'ancrage ciblant un élément `<h1>` 
 - attribuez un id unique à la balise `<h1>` (ou au conteneur `<div>`) 
@@ -137,23 +166,25 @@ Exemple de code :
 </div>
 ```
 
-#### besoin_ui
+## besoin_ui
 - icone
 
 - api workbench
 
 
-## terminé
-interface ui (base)
+# terminé
 
-intégration composants
+## interface ui (base)
+
+## intégration composants
 - [apex](/assets/js/components/apex_js.md)
 - [codeval](/assets/js/components/apex_js.md)
 - [codeval et apex](/assets/js/components/codeval_js.md#interaction)
 - [mermaid](/assets/js/components/mermaid_js.md)
 - [callout](/assets/js/components/callout_js.md)
 - [leaflet](/assets/js/components/leaflet_js.md)
-intégration workbench
+
+## intégration workbench
 - [X] [auth](/assets/js/auth.md)
 - [X] [AdresseWorkbench.js](/assets/js/ui/workbench/adresse/AdresseWorkbench_js.md)
 
