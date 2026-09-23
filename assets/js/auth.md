@@ -7,6 +7,18 @@ pour gérer auth on doit ajouter des éléments dans la structure `<div class="h
 - [AuthPanelBase.js](#AuthPanelBase.js)
 - [PanelBase.js](#PanelBase.js)
 - [ToolbarAuthPanel.js](#ToolbarAuthPanel.js)
+- [auth.controller.js](auth.controller.js)
+
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/js/auth.md
+
+
+/refactoring/assets/js/wbapp.js#L12
+
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-18.md
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-21-002.md
+
 
 #### AuthPanelBase.js
 gere le bus
@@ -39,14 +51,19 @@ class AuthPanelBase
     func destroy
 ```
 #### PanelBase.js
-js : /assets/js/ui/workbench/core/PanelBase.js 
-    - github : https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/ui/workbench/core/PanelBase.js
+js : [/assets/js/ui/workbench/core/PanelBase.js](/refactoring/assets/js/ui/workbench/core/PanelBase.js)
+    
     import { createPanelStyles } from '/assets/js/ui/workbench/core/PanelStyles.js'
 
 
 #### ToolbarAuthPanel.js
+construit le formulaire (DOM) et les barres user
 
-`/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js` construit le formulaire (DOM) et les barres user
+js : [assets/js/ui/workbench/auth/ToolbarAuthPanel.js](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
+    
+- import AuthPanelBase from '/assets/js/ui/workbench/core/AuthPanelBase.js'
+- import { create }    from '/assets/js/core/domhelper.js'
+    
 ```
 classToolbarAuthPanel
     func constructor
@@ -54,19 +71,16 @@ classToolbarAuthPanel
     func _buildGuestForm
     func _buildUserBar
 ```
-- js : /assets/js/ui/workbench/auth/ToolbarAuthPanel.js 
-    - github : https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js
-    import AuthPanelBase from '/assets/js/ui/workbench/core/AuthPanelBase.js' 
-    import { create }    from '/assets/js/core/domhelper.js'
 
+
+#### auth.controller.js
 `/assets/js/features/auth/auth.controller.js`
 gere la logique métier
 
-js: /assets/js/features/auth/auth.controller.js 
-    - github : https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/public/assets/js/features/auth/auth.controller.js
-    import { bus }  from '../../core/eventBus.js'
-    import { authStore } from './auth.store.js'
-    import { fetchLogin, fetchMe, fetchLogout } from './auth.service.js'
+js: [/assets/js/features/auth/auth.controller.js](/old/public/assets/js/features/auth/auth.controller.js)
+- import { bus }  from '../../core/eventBus.js'
+- import { authStore } from './auth.store.js'
+- import { fetchLogin, fetchMe, fetchLogout } from './auth.service.js'
 
 
 
