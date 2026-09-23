@@ -22,8 +22,7 @@ repértorier besoin ui
 ### Intégration
 intégration des composants dans [https://zealot.fr/ui.html](https://zealot.fr/ui.html)
 
-#### leaflet
-- [leaflet](/assets/js/components/leaflet_js.md)
+
 
 
 #### wysedit
@@ -116,6 +115,7 @@ intégration composants
 - [codeval et apex](/assets/js/components/codeval_js.md#interaction)
 - [mermaid](/assets/js/components/mermaid_js.md)
 - [callout](/assets/js/components/callout_js.md)
+- [leaflet](/assets/js/components/leaflet_js.md)
 intégration workbench
 - [X] [auth](/assets/js/auth.md)
 - [X] [AdresseWorkbench.js](/assets/js/ui/workbench/adresse/AdresseWorkbench_js.md)
