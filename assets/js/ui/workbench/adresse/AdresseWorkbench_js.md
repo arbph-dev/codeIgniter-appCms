@@ -36,3 +36,6 @@ fichiers :
                      ├── détail
                      └── carte
   ```
+
+## Historique
+voir https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/js/components/leaflet_js.md#historique
