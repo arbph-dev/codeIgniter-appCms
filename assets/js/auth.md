@@ -5,7 +5,8 @@
 
 pour gérer auth on doit ajouter des éléments dans la structure `<div class="header-auth"></div>`
 - [AuthPanelBase.js](#AuthPanelBase.js)
-
+- [PanelBase.js](#PanelBase.js)
+- [ToolbarAuthPanel.js](#ToolbarAuthPanel.js)
 
 #### AuthPanelBase.js
 gere le bus
@@ -41,8 +42,9 @@ class AuthPanelBase
 js : /assets/js/ui/workbench/core/PanelBase.js 
     - github : https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/ui/workbench/core/PanelBase.js
     import { createPanelStyles } from '/assets/js/ui/workbench/core/PanelStyles.js'
-#### ToolbarAuthPanel.js
 
+
+#### ToolbarAuthPanel.js
 
 `/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js` construit le formulaire (DOM) et les barres user
 ```
