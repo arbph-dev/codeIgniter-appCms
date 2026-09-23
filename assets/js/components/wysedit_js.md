@@ -1,7 +1,7 @@
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/components/wysedit.js
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/css/components/wysedit.css
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/components/wysedit.js
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/css/components/wysedit.css
 
-/refactoring/assets/css/components/wysedit.css
+
 
 
 ```html
