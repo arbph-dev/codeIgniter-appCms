@@ -41,6 +41,10 @@
             <button id="themeBtn" type="button">Thème nature</button>
             <button id="fullscreenBtn" type="button">Plein écran</button>
         </div>
+
+        <div class="header-auth">
+            
+        </div>
     </header>
     <!-- ==== SIDEBAR ============================================================== 
     on va devoir 
@@ -590,11 +594,17 @@
 
                 <div id="daily-0" class="tab-content active">
                     <h3>Travaux en cours</h3>
-                    <p>2026-09-20 : intégration du refactoring</p>
 
+                    <p>2026-09-22 : Workbench</p>
+                        
+                    <p>2026-09-21 : Authentification</p>
+
+
+                    <p>2026-09-20 : intégration du refactoring</p>
                     <ul>
                         <li><a href="https://github.com/arbph-dev/codeIgniter-appCms/tree/main/assets">/assets/</a></li>
                         <li><a href="https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/js/components/apex_js.md">/assets/js/components/apex_js.md</a></li>
+                        <li><a href="https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/js/components/codeval_js.md">/assets/js/components/codeval_js.md</a></li>
                         <li><a href="https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/js/components/leaflet_js.md">/assets/js/components/leaflet_js.md</a></li>
                     </ul>
                         
@@ -613,7 +623,32 @@
                 </div>
 
             </div>
-        </div>        
+        </div>
+
+        <div class="panel-card hidden" data-index="5">
+
+            <h2 class="panel-title">Adresses</h2>
+        
+            <p class="panel-description">
+                Recherche et consultation des adresses.
+            </p>
+
+
+            <div class="section-tab">
+
+                <div class="tab-headers"></div>
+                
+                <div id="adresses-0" class="tab-content active">
+                    <h3>Travaux en cours</h3>
+                </div>
+
+                <div id="adresses-1" class="tab-content">
+                    <h3>Travaux en cours</h3>
+                    <div id="adresse-workbench" class="workbench" data-workbench="adresse"></div>
+                </div>                    
+            </div> 
+        
+        </div>                
         <!-- === N - Template ======================================================== 
         replace 
         - N
