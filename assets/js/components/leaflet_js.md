@@ -7,6 +7,96 @@
 - '/assets/js/components/leaflet.js'
 - '/assets/js/ui/workbench/adresse/AdresseWorkbench.js'
 
+On extrait les bus.subscribe(...) dans initLeafletEngine() et on ajoute ensureLeaflet().
+```js
+/* ====  5. INDEX	===== */
+let _initialized = false   // guard : bus souscrit une seule fois
+/**
+ * Initialise uniquement le moteur Leaflet :
+ * - abonnement aux événements du bus
+ * - aucune recherche dans le DOM
+ * - aucune création de carte
+ * Utile pour les Workbench dont les cartes sont créées explicitement via leaflet:render.
+ */
+function initLeafletEngine()
+{
+    if (_initialized) return
+
+    bus.subscribe('leaflet:render', ({ id, type, payload = {} }) => {
+        const builder = MAPS[type]
+        if (!builder) {
+            console.warn(`[leaflet] type inconnu "${type}"`)
+            return
+        }
+        renderMap(id, builder(payload))
+    })
+
+    bus.subscribe('leaflet:update', ({ id, payload = {} }) =>
+        updateMap(id, buildOsmConfig(payload))
+    )
+
+    bus.subscribe('leaflet:destroy', id =>
+        destroyMap(id)
+    )
+
+    bus.subscribe('leaflet:list', () =>
+        listMaps()
+    )
+
+    _initialized = true
+    console.log('[leaflet] initialisé')
+}
+
+
+/**
+ * Garantit que le moteur Leaflet est initialisé.
+ *
+ * IMPORTANT :
+ * cette fonction ne scanne pas le DOM et ne crée aucune carte.
+ */
+export function ensureLeaflet()
+{
+    initLeafletEngine()
+}
+
+
+/**
+ * Initialise Leaflet puis découvre les cartes statiques
+ * présentes dans root.
+ *
+ * Compatibilité descendante :
+ * initLeaflet() continue donc à fonctionner comme auparavant.
+ */
+export function initLeaflet(root = document)
+{
+    initLeafletEngine()
+    bootstrapFromDOM(root)
+}
+```
+
+Avant : 
+- initLeaflet() provoquait :abonnement bus + scan DOM + création éventuelle des cartes
+
+Maintenant : 
+- `ensureLeaflet()` provoque uniquement : abonnement bus 
+- `initLeaflet(section)` continue de provoquer : abonnement bus si nécessaire + scan de section + rendu des .cp_leaflet
+
+Aucune modification nécessaire dans uiapp.js.
+
+Dans AdresseWorkbench.js, on pourra temporairement remplacer : `import { initLeaflet } from '/assets/js/components/leaflet.js'` / `initLeaflet()`
+
+par : `import { ensureLeaflet } from '/assets/js/components/leaflet.js'` / `ensureLeaflet()`
+
+Le Workbench pourra alors s'initialiser sans demander à Leaflet de créer une carte dans un conteneur caché.
+
+Les cartes statiques doivent, elles, continuer à passer par : `initLeaflet(panel_Sections[index])`
+
+
+
+
+
+
+
 ## dependances
 - [app/Views/cms/index.php - ligne21](/old/app/Views/cms/index.php)
 
