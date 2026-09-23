@@ -2,14 +2,10 @@
 - doc : [composant leaflet](/documentation/COMPOSANTS/INDEX.md#51-leaflet-carte)
 - source : [/assets/js/components/leaflet.js](/assets/js/components/leaflet.js)
 
-
-
-```
-window.leafletRender  = (id, payload = {}) => bus.publish('leaflet:render',  { id, type: 'osm', payload })
-window.leafletUpdate  = (id, payload = {}) => bus.publish('leaflet:update',  { id, payload })
-window.leafletDestroy = id                 => bus.publish('leaflet:destroy',  id)
-window.leafletList    = ()                 => bus.publish('leaflet:list')
-```
+## Historique
+2026-09-23 : Modifier leaflet.js et AdresseWorkbench.js
+- '/assets/js/components/leaflet.js'
+- '/assets/js/ui/workbench/adresse/AdresseWorkbench.js'
 
 ## dependances
 - [app/Views/cms/index.php - ligne21](/old/app/Views/cms/index.php)
@@ -48,6 +44,17 @@ function switchSection(index) {
   initLeaflet(panel_Sections[index])
 	...
 ```
+
+```
+window.leafletRender  = (id, payload = {}) => bus.publish('leaflet:render',  { id, type: 'osm', payload })
+window.leafletUpdate  = (id, payload = {}) => bus.publish('leaflet:update',  { id, payload })
+window.leafletDestroy = id                 => bus.publish('leaflet:destroy',  id)
+window.leafletList    = ()                 => bus.publish('leaflet:list')
+```
+
+
+
+
 ## Html
 
 
