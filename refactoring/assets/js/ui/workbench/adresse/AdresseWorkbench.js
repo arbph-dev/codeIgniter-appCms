@@ -17,7 +17,9 @@ import AdresseListPanel    from './AdresseListPanel.js'
 import AdresseDetailPanel  from './AdresseDetailPanel.js'
 import MapPanel            from './MapPanel.js'
 
-import { initLeaflet }        from '/assets/js/components/leaflet.js'
+// import { initLeaflet }        from '/assets/js/components/leaflet.js'
+import { ensureLeaflet } from '/assets/js/components/leaflet.js'
+
 import { RelationPickerDialog } from '/assets/js/ui/shared/RelationPickerDialog.js'
 
 import {
@@ -66,7 +68,9 @@ export class AdresseWorkbench extends WorkbenchBase
     async bootstrap()
     {
         // 1. Leaflet — guard _initialized empêche le double abonnement
-        initLeaflet()
+        ensureLeaflet()
+        //initLeaflet()
+
 
         // 2. Dialogs relation — insérés dans body avant le montage des panels
         //    (Form.js publie dialog:show dès que render() est appelé)
