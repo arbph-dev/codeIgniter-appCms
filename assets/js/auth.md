@@ -9,16 +9,11 @@ pour gérer auth on doit ajouter des éléments dans la structure `<div class="h
 - [ToolbarAuthPanel.js](#ToolbarAuthPanel.js)
 - [auth.controller.js](auth.controller.js)
 
-
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/js/auth.md
-
-
+```
 /refactoring/assets/js/wbapp.js#L12
-
-
 https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-08-18.md
 https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-21-002.md
-
+```
 
 #### AuthPanelBase.js
 gere le bus
