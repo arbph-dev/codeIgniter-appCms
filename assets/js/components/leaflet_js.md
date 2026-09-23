@@ -4,7 +4,7 @@
 
 ## Historique
 2026-09-23 : Modifier leaflet.js et AdresseWorkbench.js
-- [project/daily/2026-09-22-002.md](project/daily/2026-09-22-002.md)
+- [project/daily/2026-09-22-002.md](/project/daily/2026-09-22-002.md)
 - '/assets/js/components/leaflet.js'
 - '/assets/js/ui/workbench/adresse/AdresseWorkbench.js'
 
