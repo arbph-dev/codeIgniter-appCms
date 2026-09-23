@@ -26,8 +26,7 @@ intégration des composants dans [https://zealot.fr/ui.html](https://zealot.fr/u
 
 
 #### wysedit
-- [ ] wysedit
-    /assets/js/components/wysedit_js.md 
+- [ ] [wysedit.js](/assets/js/components/wysedit_js.md) 
 
 ```js
 import { initWysedit } from '/assets/js/ihm/wysedit.js'
