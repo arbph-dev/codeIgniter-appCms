@@ -6,6 +6,12 @@ import { initApex } from '/assets/js/components/apex.js'
 import { initCodeVal } from '/assets/js/components/codeval.js'
 import { initCallout} from '/assets/js/components/callout.js'
 import { initLeaflet }  from '/assets/js/components/leaflet.js'
+//2026-09-22-000 ajout de auth
+import { initAuthController } from '/assets/js/features/auth/auth.controller.js'
+import ToolbarAuthPanel       from '/assets/js/ui/workbench/auth/ToolbarAuthPanel.js'
+import AdresseWorkbench from '/assets/js/ui/workbench/adresse/AdresseWorkbench.js'
+
+
 
 // variables gloables
 let _pages = []
@@ -25,7 +31,7 @@ let _currentPanel = 0 //par defaut voir le code html
 let _currentSection = 0
 
 let sidebar = null
-
+let adresseWorkbench = null
 
 /*  ======================================================================================================================  */
 // Gestion du thème
@@ -291,6 +297,31 @@ function statusWrite( textContent ){
     }    
 }
 
+async function mountApplication()
+{
+  console.log('Auth success; app can run')
+
+  adresseWorkbench = new AdresseWorkbench({ id: 'adresse',name: 'Adresse'})
+
+  await adresseWorkbench.init('#adresse-workbench')
+}
+function noAuth()
+{
+  console.log("Auht fails; app cannot run")
+}
+
+
+function boot()
+{
+    initAuthController()
+    new ToolbarAuthPanel().init()
+
+    bus.subscribe('auth:success', () => mountApplication() )
+    bus.subscribe('auth:guest',   () => noAuth())
+
+    bus.publish('auth:check')
+}
+
 
 
 
@@ -306,5 +337,6 @@ window.onload = (event) => {
   initCodeVal()
   initCallout()
   //initLeaflet()
+  boot()
 } 
   
