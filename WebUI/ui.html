@@ -1,7 +1,7 @@
 <!-- 
     2026-09-09 : modificaton 
-  
     2026-09-10 : voir pour supprimer les ul vide dans le menu nav ligne 66 et suivantes
+    2026-09-23 : intégrtion vox ligne 316 
   -->
 <!DOCTYPE html>
 <html lang="fr" data-theme="marine">
@@ -23,6 +23,9 @@
     <script src="https://unpkg.com/leaflet-tilelayer-wmts@1.0.0/dist/leaflet-tilelayer-wmts.js"></script>
     <!-- Extension Géoplateforme pour Leaflet -->
     <script src="/assets/js/plugins/GpPluginLeaflet.js"></script>
+
+
+
 
 </head>
 
@@ -309,6 +312,68 @@
 
                         
                 </div>
+
+                <div id="vox-0" class="tab-content">
+                    <h3>Vox</h3>
+                        <p>Synthèse vocale (event bus)</p>
+                       
+                        <div>
+                           <textarea class="cp_voxzone_textarea" id="TXT_VOX_1" rows="8">
+Juliette: Bonjour, je suis Juliette.
+Romeo: Bonjour, je suis Roméo.
+                           </textarea>
+                           <br><br>	
+                           <div id="VOX_STATUS">—</div>			
+                        </div>
+                        <aside>
+                             <button onclick="window.eventBusPublish(event, 'vox:speak', { targetId:'TXT_VOX_1', statusId:'VOX_STATUS' })">Lire</button>
+                             <button onclick="window.eventBusPublish(event,'vox:pause')">Pause</button>
+                             <button onclick="window.eventBusPublish( event, 'vox:resume' )">Resume</button>
+                             <button onclick="window.eventBusPublish( event, 'vox:stop' )">Stop</button>
+                             <br><br>
+                             <label>Rate</label><input type="range" min="0.5" max="2" step="0.1" value="0.9" onchange="window.eventBusPublish( event, 'vox:rate',{value:this.value})">	
+                             <br><br>
+                             <label>Volume</label><input type="range" min="0" max="1" step="0.1" value="1" onchange="window.eventBusPublish( event,'vox:volume',{ value:this.value })">	
+                             <br><br>
+                             <button onclick="window.eventBusPublish( event,'vox:getVoices')">Configurer les voix</button>
+                             <h3>Voix disponibles</h3>  
+                             <div id="VOX_VOICES_LIST"></div>
+                        </aside>
+
+                        
+                </div>
+
+                
+                <div id="scene-0" class="tab-content">
+                    <div class="cp_scene" style="background-image: url('https://picsum.photos/seed/verona/1200/500');">
+                        <div class="cp_actor cp_actor--left" data-alias="Romeo">
+                            <img src="https://picsum.photos/seed/romeo/300/450" alt="Roméo — Frank Dicksee 1884">
+                            <span class="cp_actor__name">Roméo</span>
+                        </div>
+
+                        <div class="cp_actor cp_actor--right" data-alias="Juliette">
+                            <img src="https://picsum.photos/seed/juliette/300/450" alt="Juliette — Waterhouse 1898">
+                            <span class="cp_actor__name">Juliette</span>
+                        </div>
+
+                        <div id="VOX_RJ_STATUS" class="cp_scene__subtitles"></div>
+                    </div>
+
+                    <h3>Balcon de Vérone</h3>
+                    <textarea class="cp_voxzone_textarea2" id="TXT_VOX_RJ" rows="10">
+Juliette: Roméo, Roméo, pourquoi es-tu Roméo ?
+Romeo: Mon nom, chère sainte, est une haine pour moi.
+Juliette: Ni murs ni profondeur ne sauraient m'arrêter.
+Romeo: Je suis plus en danger de ton regard que de vingt épées.
+                    </textarea>
+                    <br>
+                    <button onclick="window.eventBusPublish(event, 'vox:speak', { targetId:'TXT_VOX_RJ', statusId:'VOX_RJ_STATUS' })">▶ Lire</button>
+                    <button onclick="window.eventBusPublish(event, 'vox:pause')">⏸ Pause</button>
+                    <button onclick="window.eventBusPublish(event, 'vox:resume')">▶▶ Resume</button>
+                    <button onclick="window.eventBusPublish(event, 'vox:stop')">⏹ Stop</button>
+                    <br><br>
+                </div>
+
 
             </div>
 
