@@ -444,6 +444,124 @@ nav a.closebtn {
 
 }
 
+
+/* --------------------------------------------------------------- */
+
+/*-------------------------------------------------*/
+.cp_voxzone_textarea {
+  width: 100%;
+  min-height: 150px;
+  font-family: monospace;
+  font-size: 1em;
+  margin-top: 1em;
+}
+
+.cp_voxzone_textarea2 {
+  background: rgba(255, 255, 255, 0.92);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  border-radius: 6px;
+  padding: .8rem;
+}
+
+.cp_scene {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  min-height: 420px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 1rem;
+}
+.cp_scene::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 0;
+}
+
+.cp_actor {
+  position: relative;
+  z-index: 1;
+}
+.cp_actor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 220px;
+}
+
+.cp_actor img {
+  max-height: 320px;
+  object-fit: contain;
+  filter: drop-shadow(2px 4px 8px rgba(0,0,0,.7));
+}
+
+.cp_actor__name {
+  color: #fff;
+  font-style: italic;
+  text-shadow: 1px 1px 4px #000;
+  margin-top: .4rem;
+}
+
+/* flip Juliette pour qu'elle "regarde" Roméo */
+.cp_actor--right img { transform: scaleX(-1); }
+
+/* Transition douce sur toutes les propriétés visuelles des acteurs */
+.cp_actor img { transition: filter 0.35s ease; }
+.cp_actor__name { transition: color 0.35s ease, text-shadow 0.35s ease, font-weight 0s; }
+
+/* ── Acteur en train de parler : géré par vox.renderer.js ─────────────────── */
+/*    bus event vox:start → setActorSpeaking(alias) → toggle .cp_actor--speaking */
+.cp_actor--speaking img {
+  filter:
+    drop-shadow(0 0 18px rgba(255, 204, 0, 0.90))
+    drop-shadow(0 0  8px rgba(255, 160, 0, 0.60))
+    drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.70));
+}
+
+.cp_actor--speaking .cp_actor__name {
+  color       : #ffcc00;
+  font-weight : bold;
+  text-shadow :
+      0 0 10px rgba(255, 204, 0, 0.70),
+      1px 1px 4px #000;
+}            
+.cp_scene__subtitles {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  padding: .5rem 1rem;
+  border-radius: 6px;
+  min-height: 2.5rem;
+  z-index: 2;
+}
+
+/* le mot en cours mis en rouge par vox.js */
+.cp_scene__subtitles span {
+  color: #ffcc00;
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
 /* ------------------------------------------------------------ */
 .workbench {
   width: 100%;
