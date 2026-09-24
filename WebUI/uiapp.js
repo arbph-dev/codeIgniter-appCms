@@ -11,7 +11,12 @@ import { initAuthController } from '/assets/js/features/auth/auth.controller.js'
 import ToolbarAuthPanel       from '/assets/js/ui/workbench/auth/ToolbarAuthPanel.js'
 import AdresseWorkbench from '/assets/js/ui/workbench/adresse/AdresseWorkbench.js'
 
+//2026-09-23-001 ajout de vox
+import { initVoxBus } from '/assets/js/core/vox.js'
+import { initVoxRenderer } from '/assets/js/core/vox.renderer.js'
 
+//2026-09-23-002 ajout de vox
+import { initSceneBg }     from '/assets/js/ihm/cp_scene_bg.js'
 
 // variables gloables
 let _pages = []
@@ -336,6 +341,12 @@ window.onload = (event) => {
   initApex()
   initCodeVal()
   initCallout()
+
+  initVoxRenderer()
+  initVoxBus()
+  
+  initSceneBg()
+
   //initLeaflet()
   boot()
 } 
