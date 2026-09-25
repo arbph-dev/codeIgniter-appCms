@@ -33,7 +33,7 @@ import { initWysedit } from '/assets/js/ihm/wysedit.js'
 ```
 ## vox
 
-- [ ] vox voir https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/vox.md
+- [X] vox voir https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/vox.md
 
 Le fichier de vue génère l'HTML suivant (exemple) :
 
