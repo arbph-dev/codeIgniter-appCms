@@ -33,7 +33,20 @@ import { initWysedit } from '/assets/js/ihm/wysedit.js'
 ```
 ## vox
 
-- [X] vox voir https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/vox.md
+- [X] vox
+- [X] cp_scene_bg
+voir https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/COMPOSANTS/vox.md
+
+```js
+//2026-09-23-001 ajout de vox
+import { initVoxBus } from '/assets/js/core/vox.js'
+import { initVoxRenderer } from '/assets/js/core/vox.renderer.js'
+```
+
+```js
+//2026-09-23-002 ajout de vox
+import { initSceneBg }     from '/assets/js/ihm/cp_scene_bg.js'
+```
 
 Le fichier de vue génère l'HTML suivant (exemple) :
 
