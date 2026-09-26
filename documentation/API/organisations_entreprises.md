@@ -1,23 +1,27 @@
 # Workflows domaine Organisation
 
-## Fichiers : 
+## Termes
+### SIRET
+Description : identifiant de l’établissement (14 chiffres)
+Structure : SIREN + NIC
+Exemple : 12345678901234
+Règle : les 9 premiers chiffres = SIREN ; les 5 derniers = NIC
+
+
+
+### siège
+Description : établissement principal de l’entreprise
+Règle : is_siege = 1 garantit un seul siège par organisation
+Correspond à “établissement principal / head office”
+
+
+
+## EntrepriseService
+### app/Services/EntrepriseService.php
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Services/EntrepriseService.php
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/app/Controllers/Api/Organisation.php
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/app/Models/OrganisationModel.php
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Controllers/Api/Entreprise.php
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Models/EntrepriseModel.php
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Controllers/Api/Etablissement.php
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Models/EtablissementModel.php
 
-## Entreprise
-
-- Controllers/Api/Entreprise
-- App/Models/EntrepriseModel
-  - func withRelations
-  - func suggest
-
-
-### `EntrepriseService::createWithOrganisation()`
+#### __construct
+#### `EntrepriseService::createWithOrganisation()`
 Workflow de création complète sans organisation existante
 - crée une nouvelle organisation
 - crée l’entreprise associée.
@@ -25,8 +29,7 @@ Workflow de création complète sans organisation existante
 Usage dans le fichier : cas “créer org + ent” quand l’organisation n’existe pas.
 - Exemple d’usage : `POST /api/entreprise`
 
-
-### `EntrepriseService::attachToOrganisation()`
+#### `EntrepriseService::attachToOrganisation()`
 rattache une entreprise à une organisation déjà existante, éventuellement avec adresse.
 
 Usage : `POST /org/:id/entreprise`
@@ -36,7 +39,9 @@ Vérifications mentionnées :
 - pas d’entreprise déjà rattachée
 - éventuellement enrichir l’organisation
 
-### `EntrepriseService::ensureSiege()`
+#### update
+
+#### `EntrepriseService::ensureSiege()`
 Garantit qu’il y a un établissement principal (“siège”) pour l’entreprise/organisation.
 
 Usage : création ou mise à jour du siège social
@@ -46,175 +51,89 @@ créer ou mettre à jour le siège
 vérifier cohérence SIRET/SIREN
 relier l’adresse
 
-Cas documentés :
-si org + ent sans établissement
-si org + ent + adresse
-si org + ent + siège existant
+#### findBySiren
+
+#### find
+
+#### filterOrg
+
+#### filterEnt
+
+#### loadFull
+
+## organisations
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/app/Controllers/Api/Organisation.php
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/app/Models/OrganisationModel.php
+### champs
+- id
+- nom : Nom de l’organisation, de l’entreprise ou de l’établissement
+- slug
+- organisation_type_id
+- adresse_id : Identifiant d’une adresse.Liaison vers la table adresses
+- siren : Le SIREN donné dans une requête API ou un modèle
 
 
-Model insert
-
-Description : opération de création d’un établissement en base sans logique métier supplémentaire.
-Usage : cas “entreprise existante + création d’établissement secondaire”.
-
-upsert
-
-Description : créer si absent, mettre à jour si présent.
-Utilisé pour le siège dans certains workflows.
-Variables / indicateurs métier
-
-Ces variables sont des “flags” ou des conditions utilisées dans les matrices de décision.
-- Org : organisation existe-t-elle ? ✅ = oui, ❌ = non
-- Ent : entreprise existe-t-elle ?  ✅ = oui, ❌ = non
-Adr
-
-Signification : adresse existe-t-elle ?
-Valeurs : ✅ = oui, ❌ = non
-Etab
-
-Signification : établissement existe-t-il ?
-Valeurs : ✅ = oui, ❌ = non
-SIREN
-
+### Variables
+#### SIREN
 Description : identifiant de l’organisation (9 chiffres)
 Porté par : organisations.siren
 Exemple : 123456789
-SIRET
 
-Description : identifiant de l’établissement (14 chiffres)
-Structure : SIREN + NIC
-Exemple : 12345678901234
-Règle : les 9 premiers chiffres = SIREN ; les 5 derniers = NIC
-NIC
 
-Description : derniers 5 chiffres du SIRET
-Dérivé automatiquement à partir du SIRET
-Exemple : dans 12345678901234, le NIC est 01234
-siège
+## Entreprise
 
-Description : établissement principal de l’entreprise
-Règle : is_siege = 1 garantit un seul siège par organisation
-Correspond à “établissement principal / head office”
-is_siege
+### Controllers/Api/Entreprise
+  - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Controllers/Api/Entreprise.php
 
-Variable booléenne / numérique
-Valeur : 1 = siège, 0 = établissement secondaire
-organisation_id
+### App/Models/EntrepriseModel
+  - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Models/EntrepriseModel.php
+  - func withRelations
+  - func suggest
 
-Identifiant de l’organisation
-Clé étrangère dans les modèles d’entreprise / établissement
-entreprise_id
-
-Identifiant de l’entreprise
-Clé étrangère dans l’établissement
-adresse_id
-
-Identifiant d’une adresse
-Liaison vers la table adresses
-codenaf_id
-
-Code NAF
-Exemple : "6202A"
-forme_juridique_id
-
-Identifiant ou code de forme juridique
-Exemple : "SAS"
-capital
-
-Capital social de l’entreprise
-Exemple : 50000
-nom
-
-Nom de l’organisation, de l’entreprise ou de l’établissement
-siret
-
-Le SIRET donné dans une requête API ou un modèle
-siren
-
-Le SIREN donné dans une requête API ou un modèle
-Champs de requête / payloads mentionnés
-Ces éléments sont utilisés dans les exemples JSON :
-
-nom
-organisation_type_id
-siren
-codenaf_id
-forme_juridique_id
-adresse_id
-capital
-organisation_id
-siret
-is_siege
-etablissement
-entreprise
-organisation
-Paramètres / variables de logique de route
-Les endpoints font référence à des variables de route :
-
-/api/entreprise
-
-création d’une entreprise, éventuellement avec organisation
-/org/:id/entreprise
-
-création d’une entreprise rattachée à une organisation existante
-/api/etablissement
-
-création d’un établissement
-/org/:id/etablissement
-
-création ou mise à jour spécifique du siège
-Variables de structure de données (modèles)
-Le document donne aussi le schéma relationnel. 
-
-## variables / entités :
-### organisations
-champs : id , nom ,slug ,organisation_type_id , adresse_id ,siren ,etc.
-
-entreprises
-
+### champs
 id
-organisation_id
-siret
-codenaf_id
-forme_juridique_id
-capital
+organisation_id : Identifiant de l’organisation. Clé étrangère dans les modèles d’entreprise / établissement
+siret : Le SIRET donné dans une requête API ou un modèle
+codenaf_id : Code NAF.Exemple : "6202A"
+forme_juridique_id : Identifiant ou code de forme juridique.Exemple : "SAS"
+capital : Capital social de l’entreprise.Exemple : 50000
 etc.
-etablissements
 
-id
-entreprise_id
-siret
-nic
-nom
-is_siege
-adresse_id
+### variables
+
+## etablissements
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Controllers/Api/Etablissement.php
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Models/EtablissementModel.php
+
+### champs
+- id
+- entreprise_id : Identifiant de l’entreprise.Clé étrangère dans l’établissemententreprise_id
+- siret : Le SIRET donné dans une requête API ou un modèle
+- nic : 5 derniers  chiffres du SIRET. Dérivé automatiquement à partir du SIRET. Exemple : dans 12345678901234, le NIC est 01234
+- nom : Nom de l’organisation, de l’entreprise ou de l’établissement
+- is_siege : Variable booléenne / numérique. Valeur : 1 = siège, 0 = établissement secondaire
+- adresse_id : Identifiant d’une adresse.Liaison vers la table adresses
 etc.
-service_types
 
-id
-code
-label
-services
+### variables
 
-id
-entreprise_id
-service_type_id
-nom
-responsable_id
-actif
-Conclusion
-Dans ce fichier, les “fonctions” principales sont :
+## service_types
 
-createWithOrganisation()
-attachToOrganisation()
-ensureSiege()
-Et les “variables clés” sont :
+### champs
+id,code,label
 
-Org, Ent, Adr, Etab
-SIREN, SIRET, NIC
-is_siege
-organisation_id, entreprise_id, adresse_id
-siren, siret, nom, codenaf_id, forme_juridique_id, capital
+### variables
+
+## services
+### variables
+
+### champs
+id,entreprise_id,service_type_id,nom,responsable_id,actif
+
+
+---
+
+
 ## création
 ### Préalables & Points clés
 - Aspect	Règle
@@ -449,14 +368,16 @@ Réponse (201) : Siège créé/mis à jour avec ligne4 enrichie
 
 ## 📋 Lecture : Endpoints GET
 Ressource	Endpoint Standard	Cas d'usage	Paramètres
-- Organisations
+
+Organisations
   - GET /api/organisations
     - Lister toutes les organisations	?page=1&limit=50&search=...
   - GET /api/organisations/:id
     - Récupérer une organisation	:id = organisation.id
   - GET /api/organisations?siren=123456789
     - Chercher par SIREN	?siren=CHAR(9)
-- Entreprises
+
+Entreprises
   - GET /api/entreprises
     - Lister toutes les entreprises	?page=1&limit=50
   - GET /api/entreprises/:id
@@ -465,7 +386,8 @@ Ressource	Endpoint Standard	Cas d'usage	Paramètres
     - Entreprise d'une organisation	:id = organisation.id
   - GET /api/entreprises?siret=12345678901234
     - Chercher par SIRET	?siret=CHAR(14)
-- Établissements
+
+Établissements
   - GET /api/etablissements
     - Lister tous les établissements	?page=1&limit=50
   - GET /api/etablissements/:id
@@ -476,7 +398,8 @@ Ressource	Endpoint Standard	Cas d'usage	Paramètres
     - Chercher par SIRET	?siret=CHAR(14)
   - GET /api/etablissements/siege/:entrepriseId
     - Siège d'une entreprise	:entrepriseId = entreprise.id
-- Services
+
+Services
   - GET /api/services
     - Lister tous les services	?page=1&limit=50
   - GET /api/services/:id
@@ -486,23 +409,49 @@ Ressource	Endpoint Standard	Cas d'usage	Paramètres
 
 ## 📋 Mise à jour : Endpoints PUT / PATCH
 
-- Organisation
+Organisation
 - PUT /api/organisations/:id
   - Mettre à jour organisation complète	PUT	{nom, slug, organisation_type_id, description, site_web, email, adresse_id, logo_id, cover_id, siren, rna, ...}
-PATCH /api/organisations/:id	Mettre à jour partiellement	PATCH	{nom?, adresse_id?, siren?, ...}
-Entreprise	PUT /api/entreprises/:id	Mettre à jour entreprise complète	PUT	{siren, codenaf_id, forme_juridique_id, capital, effectif_min, effectif_max}
-PATCH /api/entreprises/:id	Mettre à jour partiellement	PATCH	{codenaf_id?, capital?, ...}
-Établissement	PUT /api/etablissements/:id	Mettre à jour établissement complet	PUT	{siret, nom, is_siege, actif, adresse_id}
-PATCH /api/etablissements/:id	Mettre à jour partiellement	PATCH	{nom?, adresse_id?, actif?, ...}
-PATCH /api/etablissements/:id/siege	Changer le siège principal	PATCH	{is_siege: 0/1}
-Service	PUT /api/services/:id	Mettre à jour service complet	PUT	{nom, service_type_id, responsable_id, actif}
-PATCH /api/services/:id	Mettre à jour partiellement	PATCH	{nom?, actif?, ...}
-Suppression : Endpoints DELETE
-Ressource	Endpoint	Cas d'usage	Impact
-Établissement	DELETE /api/etablissements/:id	Supprimer un établissement secondaire	Soft-delete ou hard-delete selon config
-Service	DELETE /api/services/:id	Supprimer un service	Soft-delete (flag actif=0)
-Entreprise	DELETE /api/entreprises/:id	Supprimer une entreprise (cascade organisation)	Cascade : supprime organisations (FK CASCADE)
-Organisation	DELETE /api/organisations/:id	Supprimer une organisation	Soft-delete si deleted_at existe
+- PATCH /api/organisations/:id
+  - Mettre à jour partiellement	PATCH	{nom?, adresse_id?, siren?, ...}
+
+Entreprise
+- PUT /api/entreprises/:id
+- Mettre à jour entreprise complète	PUT	{siren, codenaf_id, forme_juridique_id, capital, effectif_min, effectif_max}
+- PATCH /api/entreprises/:id
+- Mettre à jour partiellement	PATCH	{codenaf_id?, capital?, ...}
+
+Établissement
+- PUT /api/etablissements/:id
+  - Mettre à jour établissement complet	PUT	{siret, nom, is_siege, actif, adresse_id}
+- PATCH /api/etablissements/:id
+  - Mettre à jour partiellement	PATCH	{nom?, adresse_id?, actif?, ...}
+- PATCH /api/etablissements/:id/siege
+  - Changer le siège principal	PATCH	{is_siege: 0/1}
+
+Service
+- PUT /api/services/:id
+  - Mettre à jour service complet	PUT	{nom, service_type_id, responsable_id, actif}
+- PATCH /api/services/:id
+  - Mettre à jour partiellement	PATCH	{nom?, actif?, ...}
+
+## 📋 Suppression : Endpoints DELETE
+
+Établissement	
+- DELETE /api/etablissements/:id
+  - Supprimer un établissement secondaire	Soft-delete ou hard-delete selon config
+
+Service
+- DELETE /api/services/:id
+  - Supprimer un service	Soft-delete (flag actif=0)
+
+Entreprise
+- DELETE /api/entreprises/:id
+  - Supprimer une entreprise (cascade organisation)	Cascade : supprime organisations (FK CASCADE)
+
+Organisation
+- DELETE /api/organisations/:id
+  - Supprimer une organisation	Soft-delete si deleted_at existe
 
 ### 1️⃣ Mettre à jour une organisation
 ```
