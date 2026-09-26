@@ -139,6 +139,7 @@ utilisation actuelle des user shield
 	- champs : id, name, created_at
 - project_members
 	- champs : project_id, user_id, role (ex : 'manager', 'editor', 'reader')
+ 	- recuperer ProfileClient avec user_id
 - tasks
  	- ajout champs : project_id
 
