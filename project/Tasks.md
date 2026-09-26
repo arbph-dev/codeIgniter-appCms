@@ -123,9 +123,15 @@ modèle de données
 	- [ ] https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-003.md#111---tasks
  - [ ] Apres validation du model tasks supprimer Fichier : 2025-01-01-000001_create_taches.sql
 
+# [`2026-09-26-005`](/project/daily/2026-09-26-005.md)
+utilisation actuelle des user shield
+- [ ] Valider me
+- [ ] Supprimer profile route et controller
+
 # [`2026-09-26-006`](/project/daily/2026-09-26-006.md)
 - [ ] Valider ajout des tables : projects , project_members
 - [ ] relation projets - Organisation/entreprise/Etablissement , user - personne
+	- peu d'intérêt sans telephone
 - [ ] voir possibilité de trouver: user - Etablissement avec user - personne et personne - Organisation/entreprise/Etablissement
 
 - projects 
