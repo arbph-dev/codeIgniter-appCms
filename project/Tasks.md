@@ -17,7 +17,7 @@ priorité
 	- on commence par : GET /api/auth/me
  	- voir [app/Controllers/Api/AuthController.php](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/app/Controllers/Api/AuthController.php)
   	- ajouter getUser si useradmin AuthController.php pour gérer liste des users
-  		- [app/Controllers/Admin.php](old/app/Controllers/Admin.php)
+  		- [app/Controllers/Admin.php](/old/app/Controllers/Admin.php)
   	 	- [app/Views/cms/admin.php](/old/app/Views/cms/admin.php)
 
 Objectif :
