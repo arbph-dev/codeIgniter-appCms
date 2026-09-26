@@ -118,3 +118,76 @@ DESCRIBE users;
 
 
 
+# 2026-09-26-009
+
+## modules liés
+- relation
+	- relations
+	- relation_types          (référentiel, pas de FK)
+
+    /**
+     * POST /api/relations
+     *
+     * Payload minimal :
+     * {
+     *   "relation_type_id": 3,
+     *   "source_type": "personne",
+     *   "source_id": 12,
+     *   "target_type": "organisation",
+     *   "target_id": 5,
+     *   "etablissement_id": 7   ← optionnel, bascule target sur etablissement
+     * }
+     */
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Controllers/Api/Relations.php
+https://github.com/arbph-dev/codeIgniter-appCms/blob/c939bed9cd4d2e40fe044fb491af56e34362ba15/refactoring/app/Controllers/Api/Relations.php#L112
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/documentation/METIERS/PERSONNES/relations.md
+
+`personnes` se lient à `organisations` : elles peuvent donc être liées à une entreprise **ou** une association sans distinction
+ 
+une personne peut être :
+- **dirigeant** d'une entreprise => relation_type = administrateur
+- **adhérent** d'une association =>	relation_type = membre
+
+```
+créer une VIEW : view_personne_timeline
+qui fusionne :parcours,distinctions,publications,engagements.
+Très utile pour générer automatiquement une biographie chronologique.
+```
+
+```
+Une propriété vivant BOOLEAN DEFAULT TRUE,
+se déduit automatiquement des dates
+- si connues
+- sinon BOOLEAN doit devenir tri state 0 non vivan, 1 oui vivant, -1 INCONNU vivant
+```
+
+## Structure
+
+| Field                | Type                        | Null | Key | Default | Extra          |
+| -------------------- | --------------------------- | ---- | --- | ------- | -------------- |
+| id                   | bigint unsigned             | NO   | PRI | _NULL_  | auto_increment |
+| nom                  | varchar(255)                | NO   | MUL | _NULL_  |                |
+| prenoms              | varchar(255)                | NO   | MUL | _NULL_  |                |
+| nom_complet          | varchar(512)                | NO   | MUL | _NULL_  |                |
+| nom_naissance        | varchar(255)                | YES  |     | _NULL_  |                |
+| civilite             | varchar(20)                 | YES  |     | _NULL_  |                |
+| sexe                 | char(1)                     | YES  |     | _NULL_  |                |
+| date_naissance       | date                        | YES  | MUL | _NULL_  |                |
+| precision_naissance  | enum('annee','mois','jour') | YES  |     | _NULL_  |                |
+| naissance_adresse_id | bigint unsigned             | YES  | MUL | _NULL_  |                |
+| date_deces           | date                        | YES  |     | _NULL_  |                |
+| precision_deces      | enum('annee','mois','jour') | YES  |     | _NULL_  |                |
+| deces_adresse_id     | bigint unsigned             | YES  | MUL | _NULL_  |                |
+| nationalite          | varchar(120)                | YES  |     | _NULL_  |                |
+| bio                  | text                        | YES  |     | _NULL_  |                |
+| detail               | longtext                    | YES  |     | _NULL_  |                |
+| slug                 | varchar(255)                | YES  | UNI | _NULL_  |                |
+| source               | varchar(100)                | YES  |     | _NULL_  |                |
+| quality_score        | tinyint unsigned            | YES  |     | _NULL_  |                |
+| verified_at          | datetime                    | YES  |     | _NULL_  |                |
+| verified_by          | int unsigned                | YES  | MUL | _NULL_  |                |
+| merge_into_id        | bigint unsigned             | YES  | MUL | _NULL_  |                |
+| created_at           | datetime                    | YES  |     | _NULL_  |                |
+| updated_at           | datetime                    | YES  |     | _NULL_  |                |
+| deleted_at           | datetime                    | YES  |     | _NULL_  |                |
