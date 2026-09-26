@@ -125,11 +125,12 @@ DESCRIBE users;
 - relations
 - relation_types (référentiel, pas de FK)
 
-```js
+```json
 /**
  * POST /api/relations
  *
  * Payload minimal :
+ * "etablissement_id": 7   ← optionnel, bascule target sur etablissement
 */
  {
     "relation_type_id": 3,
@@ -137,7 +138,7 @@ DESCRIBE users;
     "source_id": 12,
     "target_type": "organisation",
     "target_id": 5,
-    "etablissement_id": 7   ← optionnel, bascule target sur etablissement
+    "etablissement_id": 7
   }
  
 ```
