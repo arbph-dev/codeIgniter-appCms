@@ -129,12 +129,13 @@ utilisation actuelle des user shield
 - [ ] Supprimer profile route et controller
 
 # [`2026-09-26-006`](/project/daily/2026-09-26-006.md)
-- [ ] Valider ajout des tables : projects , project_members
+- [ ] Valider ajout des tables : projects , project_members (necessaire pour ajuster les droits)
 - [-] relation projets - Organisation/entreprise/Etablissement , user - personne
 	- peu d'intérêt sans telephone
 - [ ] ProfileClient  avec tel fixe, mobile, index user_id userrelation ou id personne  et organisation
 - [ ] voir possibilité de trouver: user - Etablissement avec user - personne et personne - Organisation/entreprise/Etablissement
 
+## tables a ajouter
 - projects 
 	- champs : id, name, created_at
 - project_members
@@ -143,7 +144,9 @@ utilisation actuelle des user shield
 - tasks
  	- ajout champs : project_id
 
-
+## users
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-006.md#permissions_shield
+- [ ] Voir TaskPolicy
 
 # 2026-09-26-009
 
@@ -194,6 +197,8 @@ se déduit automatiquement des dates
 - sinon BOOLEAN doit devenir tri state 0 non vivan, 1 oui vivant, -1 INCONNU vivant
 ```
 
+# Personne
+La relation peut se faire avec un Profilclient
 ## Structure
 
 | Field                | Type                        | Null | Key | Default | Extra          |
