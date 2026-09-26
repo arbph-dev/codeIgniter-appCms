@@ -123,6 +123,19 @@ modèle de données
 	- [ ] https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-003.md#111---tasks
  - [ ] Apres validation du model tasks supprimer Fichier : 2025-01-01-000001_create_taches.sql
 
+# [`2026-09-26-006`](/project/daily/2026-09-26-006.md)
+- [ ] Valider ajout des tables : projects , project_members
+- [ ] relation projets - Organisation/entreprise/Etablissement , user - personne
+- [ ] voir possibilité de trouver: user - Etablissement avec user - personne et personne - Organisation/entreprise/Etablissement
+
+- projects 
+	- champs : id, name, created_at
+- project_members
+	- champs : project_id, user_id, role (ex : 'manager', 'editor', 'reader')
+- tasks
+ 	- ajout champs : project_id
+
+
 
 # 2026-09-26-009
 
