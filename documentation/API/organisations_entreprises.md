@@ -1,5 +1,239 @@
+# Workflows 
+## création pour le domaine Organisation
 
-Audit du module "entreprise"
+### Préalables & Points clés
+- Aspect	Règle
+  - Relation 1-1	1 organisation ↔ 0..1 entreprise (organisation_id UNIQUE)
+  - SIREN	Porté par organisations.siren
+  - SIRET	Uniquement sur etablissements (colonne propre)
+  - Siège	is_siege = 1 garantit un seul siège par organisation
+  - NIC	Dérivé du SIRET (derniers 5 chiffres)
+  - Cohérence	SIRET = SIREN (9 premiers chiffres) + NIC (5 derniers chiffres)
+
+### Résumé : Matrice de décision
+Scénario	Route	Logique	Service
+1. Org=❌ / Ent=❌ / Adr=❌	POST /api/entreprise	Créer org + ent	createWithOrganisation()
+2. Org=✅ / Ent=❌ / Adr=❌	POST /org/:id/entreprise	Attacher ent	attachToOrganisation()
+3. Org=❌ / Ent=❌ / Etab=❌	N/A (non recommandé)	—	—
+4. Org=✅ / Ent=❌ / Etab=❌	POST /org/:id/entreprise	Créer ent + siège	attachToOrganisation() + ensureSiege()
+5. Org=✅ / Ent=✅ / Etab=❌	POST /api/etablissement	Créer étab sec.	Model insert
+6. Org=❌ / Ent=❌ / Adr=✅	POST /api/entreprise	Créer org+ent+adr	createWithOrganisation()
+7. Org=✅ / Ent=❌ / Adr=✅	POST /org/:id/entreprise	Attacher ent+adr	attachToOrganisation()
+8. Org=❌ / Ent=❌ / Etab=❌ / Adr=✅	N/A (non recommandé)	—	—
+9. Org=✅ / Ent=❌ / Etab=❌ / Adr=✅	POST /org/:id/entreprise	Créer ent + siège + adr	attachToOrganisation() + ensureSiege()
+10. Org=✅ / Ent=✅ / Siège / Adr=✅	POST /org/:id/etablissement	Upsert siège + adr	ensureSiege()
+Votre code implémente déjà la plupart de ces workflows. Les cas problématiques (3, 8) nécessitent une organisation existante — la logique métier est cohérente.
+
+### WORKFLOWS SANS ADRESSE
+
+#### 1. Ajouter une entreprise sans organisation existante (pas d'adresse)
+Endpoint : POST /api/entreprise
+
+```json
+{
+  "nom": "Acme Corp",
+  "organisation_type_id": 1,
+  "siren": "123456789",
+  "codenaf_id": "6202A",
+  "forme_juridique_id": "SAS"
+}
+```
+Processus (dans EntrepriseService::createWithOrganisation) :
+
+✅ Créer la organisation (sans adresse_id)
+✅ Créer l'entreprise rattachée
+⏭️ Pas d'établissement (SIRET absent)
+Réponse (201 Created) :
+
+```json
+{
+  "id": 1,
+  "organisation_id": 1,
+  "nom": "Acme Corp",
+  "siren": "123456789",
+  "siege": null,
+  "...": "autres champs"
+}
+```
+
+#### 2. Ajouter une entreprise avec organisation existante (pas d'adresse)
+Endpoint : POST /api/organisation/{id}/entreprise
+
+```json
+{
+  "siren": "123456789",
+  "codenaf_id": "6202A",
+  "forme_juridique_id": "SAS",
+  "capital": 50000
+}
+```
+Processus (dans EntrepriseService::attachToOrganisation) :
+
+✅ Vérifier que l'organisation existe → exception si non trouvée
+✅ Vérifier qu'aucune entreprise n'y est déjà rattachée → exception si existe
+✅ Enrichir l'organisation (optionnel : siren, etc.)
+✅ Créer l'entreprise
+⏭️ Pas d'établissement (SIRET absent)
+Réponse (201 Created) : Idem scénario 1
+
+#### 3. Ajouter un établissement sans entreprise existante + sans organisation existante (pas d'adresse)
+Endpoint : POST /api/etablissement
+
+```json
+{
+  "organisation_id": null,
+  "siret": "12345678901234",
+  "nom": "Succursale Marseille",
+  "is_siege": 0
+}
+```
+⚠️ Problème identifié : L'EtablissementModel requiert organisation_id (NOT NULL). → Solution recommandée :
+
+Passer par l'API Entreprise (scénarios 1 ou 2) pour créer d'abord l'org+entreprise
+Puis créer les établissements secondaires via POST /api/etablissement
+Cas non recommandé : Les établissements ne doivent jamais exister sans entreprise.
+
+#### 4. Ajouter un établissement sans entreprise existante + avec organisation existante (pas d'adresse)
+Endpoint : POST /api/entreprise (créer d'abord l'entreprise)
+
+```json
+{
+  "organisation_id": 42,
+  "codenaf_id": "6202A",
+  "forme_juridique_id": "SAS",
+  "siret": "12345678901234"
+}
+```
+Processus :
+
+✅ attachToOrganisation(42, {...}) crée l'entreprise
+✅ ensureSiege() crée l'etablissement avec is_siege = 1
+Réponse (201) : Entreprise + siège
+
+#### 5. Ajouter un établissement avec entreprise existante + avec organisation existante (pas d'adresse)
+Endpoint : POST /api/etablissement
+
+```json
+{
+  "organisation_id": 42,
+  "siret": "12345678901235",
+  "nom": "Succursale Paris",
+  "is_siege": 0
+}
+```
+Processus :
+
+✅ Insérer directement l'etablissement (validation : organisation_id existe)
+✅ NIC auto-dérivé du SIRET
+Réponse (201) : Établissement secondaire créé
+
+### WORKFLOWS AVEC ADRESSE
+#### 6. Ajouter une entreprise sans organisation existante (avec adresse)
+Endpoint : POST /api/entreprise
+
+```json
+{
+  "nom": "Acme Corp",
+  "organisation_type_id": 1,
+  "siren": "123456789",
+  "adresse_id": 10,
+  "codenaf_id": "6202A",
+  "forme_juridique_id": "SAS"
+}
+```
+Processus (dans EntrepriseService::createWithOrganisation) :
+
+✅ Créer la organisation (avec adresse_id)
+✅ Créer l'entreprise rattachée
+⏭️ Pas d'établissement (SIRET absent)
+Réponse (201) :
+
+```json
+{
+  "id": 1,
+  "organisation_id": 1,
+  "nom": "Acme Corp",
+  "siren": "123456789",
+  "adresse_id": 10,
+  "ligne4": "123 Rue de Paris, 75001 PARIS",
+  "siege": null
+}
+```
+#### 7. Ajouter une entreprise avec organisation existante (avec adresse)
+Endpoint : POST /api/organisation/{id}/entreprise
+
+```json
+{
+  "siren": "123456789",
+  "adresse_id": 10,
+  "codenaf_id": "6202A",
+  "forme_juridique_id": "SAS"
+}
+```
+Processus :
+
+✅ Vérifier l'organisation existante
+✅ Optionnel : enrichir l'organisation (notamment adresse_id)
+✅ Créer l'entreprise
+Réponse (201) : Idem scénario 6
+
+#### 8. Ajouter un établissement sans entreprise existante + sans organisation existante (avec adresse)
+⚠️ Idem scénario 3 : Non recommandé. Passer par l'API Entreprise d'abord.
+
+#### 9. Ajouter un établissement sans entreprise existante + avec organisation existante (avec adresse)
+Endpoint : POST /api/organisation/{id}/entreprise
+
+```json
+{
+  "codenaf_id": "6202A",
+  "forme_juridique_id": "SAS",
+  "siret": "12345678901234",
+  "adresse_id": 10
+}
+```
+Processus :
+
+✅ attachToOrganisation() crée l'entreprise
+✅ ensureSiege() crée l'etablissement avec adresse_id
+Réponse (201) :
+
+```json
+{
+  "id": 1,
+  "organisation_id": 42,
+  "siret": "12345678901234",
+  "adresse_id": 10,
+  "ligne4": "123 Rue de Paris, 75001 PARIS",
+  "siege": {
+    "id": 100,
+    "siret": "12345678901234",
+    "is_siege": 1,
+    "adresse_id": 10
+  }
+}
+```
+#### 10. Ajouter un établissement avec entreprise existante + avec organisation existante (avec adresse)
+Endpoint : POST /api/organisation/{id}/etablissement (spécifique siège)
+
+```json
+{
+  "siret": "12345678901234",
+  "adresse_id": 10,
+  "nom": "Siège social"
+}
+```
+Processus (dans EntrepriseService::ensureSiege) :
+
+✅ Désactiver les autres sièges (is_siege = 0)
+✅ Créer/mettre à jour le siège (upsert sur SIRET)
+✅ Vérifier cohérence SIRET/SIREN
+✅ Relier l'adresse
+Réponse (201) : Siège créé/mis à jour avec ligne4 enrichie
+
+
+---
+
+# Audit du module "entreprise"
 
 Ce document servira de ressource 
 
