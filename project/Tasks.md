@@ -120,6 +120,7 @@ DESCRIBE users;
 # [`2026-09-26-003`](/project/daily/2026-09-26-003.md)
 modèle de données
 - [ ] Valider champ et index
+	- [ ] https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-003.md#111---tasks
 
 
 # 2026-09-26-009
