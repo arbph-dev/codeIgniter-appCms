@@ -1,6 +1,205 @@
-# Workflows 
-## création pour le domaine Organisation
+# Workflows domaine Organisation
 
+## Fonctions / méthodes
+### `EntrepriseService::createWithOrganisation()`
+Workflow de création complète sans organisation existante
+- crée une nouvelle organisation
+- crée l’entreprise associée.
+
+Usage dans le fichier : cas “créer org + ent” quand l’organisation n’existe pas.
+- Exemple d’usage : `POST /api/entreprise`
+
+
+### `EntrepriseService::attachToOrganisation()`
+rattache une entreprise à une organisation déjà existante, éventuellement avec adresse.
+
+Usage : `POST /org/:id/entreprise`
+
+Vérifications mentionnées :
+- organisation doit exister
+- pas d’entreprise déjà rattachée
+- éventuellement enrichir l’organisation
+
+### `EntrepriseService::ensureSiege()`
+Garantit qu’il y a un établissement principal (“siège”) pour l’entreprise/organisation.
+
+Usage : création ou mise à jour du siège social
+
+désactiver les autres sièges
+créer ou mettre à jour le siège
+vérifier cohérence SIRET/SIREN
+relier l’adresse
+
+Cas documentés :
+si org + ent sans établissement
+si org + ent + adresse
+si org + ent + siège existant
+
+
+Model insert
+
+Description : opération de création d’un établissement en base sans logique métier supplémentaire.
+Usage : cas “entreprise existante + création d’établissement secondaire”.
+
+upsert
+
+Description : créer si absent, mettre à jour si présent.
+Utilisé pour le siège dans certains workflows.
+Variables / indicateurs métier
+
+Ces variables sont des “flags” ou des conditions utilisées dans les matrices de décision.
+- Org : organisation existe-t-elle ? ✅ = oui, ❌ = non
+- Ent : entreprise existe-t-elle ?  ✅ = oui, ❌ = non
+Adr
+
+Signification : adresse existe-t-elle ?
+Valeurs : ✅ = oui, ❌ = non
+Etab
+
+Signification : établissement existe-t-il ?
+Valeurs : ✅ = oui, ❌ = non
+SIREN
+
+Description : identifiant de l’organisation (9 chiffres)
+Porté par : organisations.siren
+Exemple : 123456789
+SIRET
+
+Description : identifiant de l’établissement (14 chiffres)
+Structure : SIREN + NIC
+Exemple : 12345678901234
+Règle : les 9 premiers chiffres = SIREN ; les 5 derniers = NIC
+NIC
+
+Description : derniers 5 chiffres du SIRET
+Dérivé automatiquement à partir du SIRET
+Exemple : dans 12345678901234, le NIC est 01234
+siège
+
+Description : établissement principal de l’entreprise
+Règle : is_siege = 1 garantit un seul siège par organisation
+Correspond à “établissement principal / head office”
+is_siege
+
+Variable booléenne / numérique
+Valeur : 1 = siège, 0 = établissement secondaire
+organisation_id
+
+Identifiant de l’organisation
+Clé étrangère dans les modèles d’entreprise / établissement
+entreprise_id
+
+Identifiant de l’entreprise
+Clé étrangère dans l’établissement
+adresse_id
+
+Identifiant d’une adresse
+Liaison vers la table adresses
+codenaf_id
+
+Code NAF
+Exemple : "6202A"
+forme_juridique_id
+
+Identifiant ou code de forme juridique
+Exemple : "SAS"
+capital
+
+Capital social de l’entreprise
+Exemple : 50000
+nom
+
+Nom de l’organisation, de l’entreprise ou de l’établissement
+siret
+
+Le SIRET donné dans une requête API ou un modèle
+siren
+
+Le SIREN donné dans une requête API ou un modèle
+Champs de requête / payloads mentionnés
+Ces éléments sont utilisés dans les exemples JSON :
+
+nom
+organisation_type_id
+siren
+codenaf_id
+forme_juridique_id
+adresse_id
+capital
+organisation_id
+siret
+is_siege
+etablissement
+entreprise
+organisation
+Paramètres / variables de logique de route
+Les endpoints font référence à des variables de route :
+
+/api/entreprise
+
+création d’une entreprise, éventuellement avec organisation
+/org/:id/entreprise
+
+création d’une entreprise rattachée à une organisation existante
+/api/etablissement
+
+création d’un établissement
+/org/:id/etablissement
+
+création ou mise à jour spécifique du siège
+Variables de structure de données (modèles)
+Le document donne aussi le schéma relationnel. 
+
+## variables / entités :
+### organisations
+champs : id , nom ,slug ,organisation_type_id , adresse_id ,siren ,etc.
+
+entreprises
+
+id
+organisation_id
+siret
+codenaf_id
+forme_juridique_id
+capital
+etc.
+etablissements
+
+id
+entreprise_id
+siret
+nic
+nom
+is_siege
+adresse_id
+etc.
+service_types
+
+id
+code
+label
+services
+
+id
+entreprise_id
+service_type_id
+nom
+responsable_id
+actif
+Conclusion
+Dans ce fichier, les “fonctions” principales sont :
+
+createWithOrganisation()
+attachToOrganisation()
+ensureSiege()
+Et les “variables clés” sont :
+
+Org, Ent, Adr, Etab
+SIREN, SIRET, NIC
+is_siege
+organisation_id, entreprise_id, adresse_id
+siren, siret, nom, codenaf_id, forme_juridique_id, capital
+## création
 ### Préalables & Points clés
 - Aspect	Règle
   - Relation 1-1	1 organisation ↔ 0..1 entreprise (organisation_id UNIQUE)
@@ -232,33 +431,48 @@ Réponse (201) : Siège créé/mis à jour avec ligne4 enrichie
 
 ---
 
-📋 ENDPOINTS DOCUMENTÉS (CRÉATION UNIQUEMENT)
-Code
-POST /api/entreprise
-POST /org/:id/entreprise
-POST /api/etablissement
-POST /org/:id/etablissement
-❌ ENDPOINTS MANQUANTS (À DOCUMENTER)
-Lecture : Endpoints GET
+## 📋 Lecture : Endpoints GET
 Ressource	Endpoint Standard	Cas d'usage	Paramètres
-Organisations	GET /api/organisations	Lister toutes les organisations	?page=1&limit=50&search=...
-GET /api/organisations/:id	Récupérer une organisation	:id = organisation.id
-GET /api/organisations?siren=123456789	Chercher par SIREN	?siren=CHAR(9)
-Entreprises	GET /api/entreprises	Lister toutes les entreprises	?page=1&limit=50
-GET /api/entreprises/:id	Récupérer une entreprise	:id = entreprise.id
-GET /api/organisations/:id/entreprise	Entreprise d'une organisation	:id = organisation.id
-GET /api/entreprises?siret=12345678901234	Chercher par SIRET	?siret=CHAR(14)
-Établissements	GET /api/etablissements	Lister tous les établissements	?page=1&limit=50
-GET /api/etablissements/:id	Récupérer un établissement	:id = etablissement.id
-GET /api/entreprises/:id/etablissements	Établissements d'une entreprise	:id = entreprise.id
-GET /api/etablissements?siret=12345678901234	Chercher par SIRET	?siret=CHAR(14)
-GET /api/etablissements/siege/:entrepriseId	Siège d'une entreprise	:entrepriseId = entreprise.id
-Services	GET /api/services	Lister tous les services	?page=1&limit=50
-GET /api/services/:id	Récupérer un service	:id = service.id
-GET /api/entreprises/:id/services	Services d'une entreprise	:id = entreprise.id
-Mise à jour : Endpoints PUT / PATCH
-Ressource	Endpoint	Cas d'usage	Méthode	Payloads
-Organisation	PUT /api/organisations/:id	Mettre à jour organisation complète	PUT	{nom, slug, organisation_type_id, description, site_web, email, adresse_id, logo_id, cover_id, siren, rna, ...}
+- Organisations
+  - GET /api/organisations
+    - Lister toutes les organisations	?page=1&limit=50&search=...
+  - GET /api/organisations/:id
+    - Récupérer une organisation	:id = organisation.id
+  - GET /api/organisations?siren=123456789
+    - Chercher par SIREN	?siren=CHAR(9)
+- Entreprises
+  - GET /api/entreprises
+    - Lister toutes les entreprises	?page=1&limit=50
+  - GET /api/entreprises/:id
+    - Récupérer une entreprise	:id = entreprise.id
+  - GET /api/organisations/:id/entreprise
+    - Entreprise d'une organisation	:id = organisation.id
+  - GET /api/entreprises?siret=12345678901234
+    - Chercher par SIRET	?siret=CHAR(14)
+- Établissements
+  - GET /api/etablissements
+    - Lister tous les établissements	?page=1&limit=50
+  - GET /api/etablissements/:id
+    - Récupérer un établissement	:id = etablissement.id
+  - GET /api/entreprises/:id/etablissements
+    - Établissements d'une entreprise	:id = entreprise.id
+  - GET /api/etablissements?siret=12345678901234
+    - Chercher par SIRET	?siret=CHAR(14)
+  - GET /api/etablissements/siege/:entrepriseId
+    - Siège d'une entreprise	:entrepriseId = entreprise.id
+- Services
+  - GET /api/services
+    - Lister tous les services	?page=1&limit=50
+  - GET /api/services/:id
+  -   Récupérer un service	:id = service.id
+  - GET /api/entreprises/:id/services
+    - Services d'une entreprise	:id = entreprise.id
+
+## 📋 Mise à jour : Endpoints PUT / PATCH
+
+- Organisation
+- PUT /api/organisations/:id
+  - Mettre à jour organisation complète	PUT	{nom, slug, organisation_type_id, description, site_web, email, adresse_id, logo_id, cover_id, siren, rna, ...}
 PATCH /api/organisations/:id	Mettre à jour partiellement	PATCH	{nom?, adresse_id?, siren?, ...}
 Entreprise	PUT /api/entreprises/:id	Mettre à jour entreprise complète	PUT	{siren, codenaf_id, forme_juridique_id, capital, effectif_min, effectif_max}
 PATCH /api/entreprises/:id	Mettre à jour partiellement	PATCH	{codenaf_id?, capital?, ...}
@@ -273,13 +487,12 @@ Ressource	Endpoint	Cas d'usage	Impact
 Service	DELETE /api/services/:id	Supprimer un service	Soft-delete (flag actif=0)
 Entreprise	DELETE /api/entreprises/:id	Supprimer une entreprise (cascade organisation)	Cascade : supprime organisations (FK CASCADE)
 Organisation	DELETE /api/organisations/:id	Supprimer une organisation	Soft-delete si deleted_at existe
-📝 EXEMPLES DE MISE À JOUR
-1️⃣ Mettre à jour une organisation
-bash
+
+### 1️⃣ Mettre à jour une organisation
+```
 # Mise à jour complète
 PUT /api/organisations/1
 Content-Type: application/json
-
 {
   "nom": "Acme Corp - Nouvelle dénomination",
   "email": "contact@acme.fr",
@@ -288,9 +501,10 @@ Content-Type: application/json
   "logo_id": 5,
   "siren": "987654321"
 }
+```
 Réponse (200 OK) :
 
-JSON
+```
 {
   "id": 1,
   "nom": "Acme Corp - Nouvelle dénomination",
@@ -301,8 +515,9 @@ JSON
   "siren": "987654321",
   "updated_at": "2024-09-26T14:30:00Z"
 }
-2️⃣ Mettre à jour une entreprise
-bash
+```
+### 2️⃣ Mettre à jour une entreprise
+```
 # Mise à jour partielle
 PATCH /api/entreprises/1
 Content-Type: application/json
@@ -313,9 +528,10 @@ Content-Type: application/json
   "effectif_max": 50,
   "codenaf_id": "6202B"
 }
+```
 Réponse (200 OK) :
 
-JSON
+```
 {
   "id": 1,
   "organisation_id": 1,
@@ -326,8 +542,9 @@ JSON
   "codenaf_id": "6202B",
   "updated_at": "2024-09-26T14:35:00Z"
 }
-3️⃣ Mettre à jour un établissement
-bash
+```
+### 3️⃣ Mettre à jour un établissement
+```
 # Mise à jour du siège principal
 PATCH /api/etablissements/100
 Content-Type: application/json
@@ -337,9 +554,10 @@ Content-Type: application/json
   "adresse_id": 20,
   "nom": "Siège social - 123 Rue Neuve"
 }
+```
 Réponse (200 OK) :
 
-JSON
+```
 {
   "id": 100,
   "entreprise_id": 1,
@@ -350,8 +568,9 @@ JSON
   "adresse_id": 20,
   "updated_at": "2024-09-26T14:40:00Z"
 }
-4️⃣ Changer le siège d'une entreprise
-bash
+```
+### 4️⃣ Changer le siège d'une entreprise
+```
 # Désactiver ancien siège + activer nouveau
 POST /api/organisations/1/etablissement/siege
 Content-Type: application/json
@@ -361,6 +580,7 @@ Content-Type: application/json
   "adresse_id": 25,
   "nom": "Nouveau siège"
 }
+```
 Logique interne :
 
 Récupère entreprise liée à org 1
@@ -369,7 +589,7 @@ Crée/active nouveau siège (is_siege = 1)
 Vérifie cohérence SIRET/SIREN
 Réponse (200 OK) :
 
-JSON
+```
 {
   "id": 101,
   "entreprise_id": 1,
@@ -384,9 +604,10 @@ JSON
   },
   "updated_at": "2024-09-26T14:45:00Z"
 }
-🔍 RECHERCHE / FILTRAGE
+```
+## 🔍 RECHERCHE / FILTRAGE
 Requêtes de lecture avec filtres
-bash
+```
 # Lister les organisations avec pagination
 GET /api/organisations?page=1&limit=20
 
@@ -407,7 +628,9 @@ GET /api/etablissements?siret=12345678901234
 
 # Lister les services d'une entreprise
 GET /api/entreprises/1/services?actif=1
+```
 ---
+
 
 # Audit du module "entreprise"
 
