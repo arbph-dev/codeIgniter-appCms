@@ -124,7 +124,7 @@ DESCRIBE users;
 - relation
 	- relations
 	- relation_types          (référentiel, pas de FK)
-
+```
     /**
      * POST /api/relations
      *
@@ -138,6 +138,7 @@ DESCRIBE users;
      *   "etablissement_id": 7   ← optionnel, bascule target sur etablissement
      * }
      */
+```
 https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Controllers/Api/Relations.php
 https://github.com/arbph-dev/codeIgniter-appCms/blob/c939bed9cd4d2e40fe044fb491af56e34362ba15/refactoring/app/Controllers/Api/Relations.php#L112
 
