@@ -121,6 +121,7 @@ DESCRIBE users;
 modèle de données
 - [ ] Valider champ et index
 	- [ ] https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-003.md#111---tasks
+ - [ ] Apres validation du model tasks supprimer Fichier : 2025-01-01-000001_create_taches.sql
 
 
 # 2026-09-26-009
