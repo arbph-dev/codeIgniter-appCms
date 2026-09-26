@@ -117,6 +117,10 @@ DESCRIBE users;
 | deleted_at     |  datetime     | YES  |     | _NULL_  |                |
 
 
+# [`2026-09-26-003`](/project/daily/2026-09-26-003.md)
+modèle de données
+- [ ] Valider champ et index
+
 
 # 2026-09-26-009
 
