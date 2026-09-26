@@ -14,6 +14,11 @@ priorité
  	- exploitation via systeme de task obsidian icon due, status etc..
   	- mermaid js
 - construire un mini dashboard admin dans ui.html / uiapp.js priorité - #1 voir [`2026-09-26-005`](/project/daily/2026-09-26-005.md)
+	- on commence par : GET /api/auth/me
+ 	- voir [app/Controllers/Api/AuthController.php](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/app/Controllers/Api/AuthController.php)
+  	- ajouter getUser si useradmin AuthController.php pour gérer liste des users
+  		- [app/Controllers/Admin.php](old/app/Controllers/Admin.php)
+  	 	- [app/Views/cms/admin.php](/old/app/Views/cms/admin.php)
 
 Objectif :
 - créer des users via register
