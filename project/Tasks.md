@@ -121,23 +121,25 @@ DESCRIBE users;
 # 2026-09-26-009
 
 ## modules liés
-- relation
-	- relations
-	- relation_types          (référentiel, pas de FK)
-```
-    /**
-     * POST /api/relations
-     *
-     * Payload minimal :
-     * {
-     *   "relation_type_id": 3,
-     *   "source_type": "personne",
-     *   "source_id": 12,
-     *   "target_type": "organisation",
-     *   "target_id": 5,
-     *   "etablissement_id": 7   ← optionnel, bascule target sur etablissement
-     * }
-     */
+### relation
+- relations
+- relation_types (référentiel, pas de FK)
+
+```js
+/**
+ * POST /api/relations
+ *
+ * Payload minimal :
+*/
+ {
+    "relation_type_id": 3,
+    "source_type": "personne",
+    "source_id": 12,
+    "target_type": "organisation",
+    "target_id": 5,
+    "etablissement_id": 7   ← optionnel, bascule target sur etablissement
+  }
+ 
 ```
 https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Controllers/Api/Relations.php
 https://github.com/arbph-dev/codeIgniter-appCms/blob/c939bed9cd4d2e40fe044fb491af56e34362ba15/refactoring/app/Controllers/Api/Relations.php#L112
