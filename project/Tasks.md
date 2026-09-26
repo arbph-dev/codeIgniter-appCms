@@ -39,7 +39,12 @@ Ressources
 - ebauche du projet : 
 	- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-002.md
 	- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-001.md
-- Note sur auth usage actuelle et futur : https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-005.md
+- Note sur auth usage actuelle et futur
+	- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-005.md
+ 	- Frontend - [Workbench](/documentation/WORKBENCH/ARCHITECTURE/authentification.md)
+  		- [auth.renderer.js](/old/public/assets/js/features/auth/auth.renderer.js)
+		- [auth.store.js](/old/public/assets/js/features/auth/auth.store.js)
+		- [Workbench - ToolbarAuthPanel](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
 - Note sur auth / register :
 	- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-005.md#post-apiauthregister
 	- https://shield.codeigniter.com/latest/references/authorization/#user-activation
