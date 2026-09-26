@@ -1,6 +1,7 @@
-### Définition des taches
+## Définition des taches
 
-champs
+### champs
+```
 id 	int 	PK
 planif_user_id 	int 	Lié au créateur/planificateur
 resp_user_id 	int 	Lié au responsable
@@ -11,9 +12,13 @@ date_debut 	date 	Pour Gantt
 date_fin 	date 	Pour Gantt
 priorite 	enum(basse, moyenne, haute) 	Optionnel
 progression 	int (0-100) 	Pour Gantt, tableau liste
+```
 
++ role voir ci dessous
++ personne_id => register
+	+  -> 2 création une personne et un user
 
-A définir
+### A définir
 user distinguer rôle et décrire les relation selon les rôles
 rôle
 	planificateur
