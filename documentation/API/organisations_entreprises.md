@@ -1,6 +1,6 @@
 # Workflows domaine Organisation
 
-fichiers : 
+## Fichiers : 
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Services/EntrepriseService.php
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/app/Controllers/Api/Organisation.php
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/app/Models/OrganisationModel.php
@@ -9,11 +9,14 @@ fichiers :
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Controllers/Api/Etablissement.php
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Models/EtablissementModel.php
 
-## Controllers
-(/Api/)Entreprise
+## Entreprise
+
+- Controllers/Api/Entreprise
+- App/Models/EntrepriseModel
+  - func withRelations
+  - func suggest
 
 
-## Fonctions / méthodes
 ### `EntrepriseService::createWithOrganisation()`
 Workflow de création complète sans organisation existante
 - crée une nouvelle organisation
