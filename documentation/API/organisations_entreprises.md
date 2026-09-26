@@ -230,7 +230,183 @@ Processus (dans EntrepriseService::ensureSiege) :
 ✅ Relier l'adresse
 Réponse (201) : Siège créé/mis à jour avec ligne4 enrichie
 
+---
 
+📋 ENDPOINTS DOCUMENTÉS (CRÉATION UNIQUEMENT)
+Code
+POST /api/entreprise
+POST /org/:id/entreprise
+POST /api/etablissement
+POST /org/:id/etablissement
+❌ ENDPOINTS MANQUANTS (À DOCUMENTER)
+Lecture : Endpoints GET
+Ressource	Endpoint Standard	Cas d'usage	Paramètres
+Organisations	GET /api/organisations	Lister toutes les organisations	?page=1&limit=50&search=...
+GET /api/organisations/:id	Récupérer une organisation	:id = organisation.id
+GET /api/organisations?siren=123456789	Chercher par SIREN	?siren=CHAR(9)
+Entreprises	GET /api/entreprises	Lister toutes les entreprises	?page=1&limit=50
+GET /api/entreprises/:id	Récupérer une entreprise	:id = entreprise.id
+GET /api/organisations/:id/entreprise	Entreprise d'une organisation	:id = organisation.id
+GET /api/entreprises?siret=12345678901234	Chercher par SIRET	?siret=CHAR(14)
+Établissements	GET /api/etablissements	Lister tous les établissements	?page=1&limit=50
+GET /api/etablissements/:id	Récupérer un établissement	:id = etablissement.id
+GET /api/entreprises/:id/etablissements	Établissements d'une entreprise	:id = entreprise.id
+GET /api/etablissements?siret=12345678901234	Chercher par SIRET	?siret=CHAR(14)
+GET /api/etablissements/siege/:entrepriseId	Siège d'une entreprise	:entrepriseId = entreprise.id
+Services	GET /api/services	Lister tous les services	?page=1&limit=50
+GET /api/services/:id	Récupérer un service	:id = service.id
+GET /api/entreprises/:id/services	Services d'une entreprise	:id = entreprise.id
+Mise à jour : Endpoints PUT / PATCH
+Ressource	Endpoint	Cas d'usage	Méthode	Payloads
+Organisation	PUT /api/organisations/:id	Mettre à jour organisation complète	PUT	{nom, slug, organisation_type_id, description, site_web, email, adresse_id, logo_id, cover_id, siren, rna, ...}
+PATCH /api/organisations/:id	Mettre à jour partiellement	PATCH	{nom?, adresse_id?, siren?, ...}
+Entreprise	PUT /api/entreprises/:id	Mettre à jour entreprise complète	PUT	{siren, codenaf_id, forme_juridique_id, capital, effectif_min, effectif_max}
+PATCH /api/entreprises/:id	Mettre à jour partiellement	PATCH	{codenaf_id?, capital?, ...}
+Établissement	PUT /api/etablissements/:id	Mettre à jour établissement complet	PUT	{siret, nom, is_siege, actif, adresse_id}
+PATCH /api/etablissements/:id	Mettre à jour partiellement	PATCH	{nom?, adresse_id?, actif?, ...}
+PATCH /api/etablissements/:id/siege	Changer le siège principal	PATCH	{is_siege: 0/1}
+Service	PUT /api/services/:id	Mettre à jour service complet	PUT	{nom, service_type_id, responsable_id, actif}
+PATCH /api/services/:id	Mettre à jour partiellement	PATCH	{nom?, actif?, ...}
+Suppression : Endpoints DELETE
+Ressource	Endpoint	Cas d'usage	Impact
+Établissement	DELETE /api/etablissements/:id	Supprimer un établissement secondaire	Soft-delete ou hard-delete selon config
+Service	DELETE /api/services/:id	Supprimer un service	Soft-delete (flag actif=0)
+Entreprise	DELETE /api/entreprises/:id	Supprimer une entreprise (cascade organisation)	Cascade : supprime organisations (FK CASCADE)
+Organisation	DELETE /api/organisations/:id	Supprimer une organisation	Soft-delete si deleted_at existe
+📝 EXEMPLES DE MISE À JOUR
+1️⃣ Mettre à jour une organisation
+bash
+# Mise à jour complète
+PUT /api/organisations/1
+Content-Type: application/json
+
+{
+  "nom": "Acme Corp - Nouvelle dénomination",
+  "email": "contact@acme.fr",
+  "telephone": "+33 1 23 45 67 89",
+  "adresse_id": 15,
+  "logo_id": 5,
+  "siren": "987654321"
+}
+Réponse (200 OK) :
+
+JSON
+{
+  "id": 1,
+  "nom": "Acme Corp - Nouvelle dénomination",
+  "email": "contact@acme.fr",
+  "telephone": "+33 1 23 45 67 89",
+  "adresse_id": 15,
+  "logo_id": 5,
+  "siren": "987654321",
+  "updated_at": "2024-09-26T14:30:00Z"
+}
+2️⃣ Mettre à jour une entreprise
+bash
+# Mise à jour partielle
+PATCH /api/entreprises/1
+Content-Type: application/json
+
+{
+  "capital": 100000,
+  "effectif_min": 10,
+  "effectif_max": 50,
+  "codenaf_id": "6202B"
+}
+Réponse (200 OK) :
+
+JSON
+{
+  "id": 1,
+  "organisation_id": 1,
+  "siren": "123456789",
+  "capital": 100000,
+  "effectif_min": 10,
+  "effectif_max": 50,
+  "codenaf_id": "6202B",
+  "updated_at": "2024-09-26T14:35:00Z"
+}
+3️⃣ Mettre à jour un établissement
+bash
+# Mise à jour du siège principal
+PATCH /api/etablissements/100
+Content-Type: application/json
+
+{
+  "is_siege": 1,
+  "adresse_id": 20,
+  "nom": "Siège social - 123 Rue Neuve"
+}
+Réponse (200 OK) :
+
+JSON
+{
+  "id": 100,
+  "entreprise_id": 1,
+  "siret": "12345678901234",
+  "nic": "01234",
+  "nom": "Siège social - 123 Rue Neuve",
+  "is_siege": 1,
+  "adresse_id": 20,
+  "updated_at": "2024-09-26T14:40:00Z"
+}
+4️⃣ Changer le siège d'une entreprise
+bash
+# Désactiver ancien siège + activer nouveau
+POST /api/organisations/1/etablissement/siege
+Content-Type: application/json
+
+{
+  "siret": "12345678901235",
+  "adresse_id": 25,
+  "nom": "Nouveau siège"
+}
+Logique interne :
+
+Récupère entreprise liée à org 1
+Désactive ancien siège (is_siege = 0)
+Crée/active nouveau siège (is_siege = 1)
+Vérifie cohérence SIRET/SIREN
+Réponse (200 OK) :
+
+JSON
+{
+  "id": 101,
+  "entreprise_id": 1,
+  "siret": "12345678901235",
+  "nic": "01235",
+  "is_siege": 1,
+  "adresse_id": 25,
+  "ancien_siege": {
+    "id": 100,
+    "siret": "12345678901234",
+    "is_siege": 0
+  },
+  "updated_at": "2024-09-26T14:45:00Z"
+}
+🔍 RECHERCHE / FILTRAGE
+Requêtes de lecture avec filtres
+bash
+# Lister les organisations avec pagination
+GET /api/organisations?page=1&limit=20
+
+# Chercher une organisation par SIREN
+GET /api/organisations?siren=123456789
+
+# Chercher une organisation par nom
+GET /api/organisations?search=Acme
+
+# Lister les entreprises d'un type spécifique
+GET /api/organisations?organisation_type_id=1&limit=50
+
+# Lister les établissements actifs d'une entreprise
+GET /api/entreprises/1/etablissements?actif=1
+
+# Chercher un établissement par SIRET
+GET /api/etablissements?siret=12345678901234
+
+# Lister les services d'une entreprise
+GET /api/entreprises/1/services?actif=1
 ---
 
 # Audit du module "entreprise"
