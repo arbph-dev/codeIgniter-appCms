@@ -1,19 +1,6 @@
 # Workflows domaine Organisation
 
-## Termes
-### SIRET
-Description : identifiant de l’établissement (14 chiffres)
-Structure : SIREN + NIC
-Exemple : 12345678901234
-Règle : les 9 premiers chiffres = SIREN ; les 5 derniers = NIC
-
-
-
-### siège
-Description : établissement principal de l’entreprise
-Règle : is_siege = 1 garantit un seul siège par organisation
-Correspond à “établissement principal / head office”
-
+**siège** Description : établissement principal de l’entreprise. Règle : is_siege = 1 garantit un seul siège par organisation. Correspond à “établissement principal / head office”
 
 
 ## EntrepriseService
@@ -100,6 +87,8 @@ capital : Capital social de l’entreprise.Exemple : 50000
 etc.
 
 ### variables
+#### SIRET
+Description : identifiant de l’établissement (14 chiffres). Structure : SIREN + NIC. Exemple : 12345678901234. Règle : les 9 premiers chiffres = SIREN ; les 5 derniers = NIC
 
 ## etablissements
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Controllers/Api/Etablissement.php
@@ -116,6 +105,8 @@ etc.
 etc.
 
 ### variables
+#### SIRET
+Description : identifiant de l’établissement (14 chiffres). Structure : SIREN + NIC. Exemple : 12345678901234. Règle : les 9 premiers chiffres = SIREN ; les 5 derniers = NIC
 
 ## service_types
 
