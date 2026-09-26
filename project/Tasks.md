@@ -130,8 +130,9 @@ utilisation actuelle des user shield
 
 # [`2026-09-26-006`](/project/daily/2026-09-26-006.md)
 - [ ] Valider ajout des tables : projects , project_members
-- [ ] relation projets - Organisation/entreprise/Etablissement , user - personne
+- [-] relation projets - Organisation/entreprise/Etablissement , user - personne
 	- peu d'intérêt sans telephone
+- [ ] ProfileClient  avec tel fixe, mobile, index user_id userrelation ou id personne  et organisation
 - [ ] voir possibilité de trouver: user - Etablissement avec user - personne et personne - Organisation/entreprise/Etablissement
 
 - projects 
