@@ -123,6 +123,7 @@ DESCRIBE users;
 ## modules liés
 ### relation
 - relations
+	- [`app/Models/RelationModel.php`](/refactoring/app/Models/RelationModel.php)
 - relation_types (référentiel, pas de FK)
 
 ```json
