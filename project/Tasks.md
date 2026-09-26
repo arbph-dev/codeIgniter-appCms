@@ -1,81 +1,24 @@
-## Définition des taches
 
-### champs
-```
-id 	int 	PK
-planif_user_id 	int 	Lié au créateur/planificateur
-resp_user_id 	int 	Lié au responsable
-titre 	string 	Nom de la tâche
-description 	text 	Détails
-statut 	enum(todo, doing, done) 	Pour le kanban
-date_debut 	date 	Pour Gantt
-date_fin 	date 	Pour Gantt
-priorite 	enum(basse, moyenne, haute) 	Optionnel
-progression 	int (0-100) 	Pour Gantt, tableau liste
-```
-
-+ role voir ci dessous
-+ personne_id => register
-	+  -> 2 création une personne et un user
-
-### A définir
-user distinguer rôle et décrire les relation selon les rôles
-rôle
-	planificateur
-	responsable
-	réalisateur
-
-relations user affectées au tache 
-	planificateur 1- 1 tache,
-	responsable 1-1 tache, 
-	réalisateur personnel affecté n-1 tache
-
-relations taches mères/ filles
-
-ouverture vers 
-projet / réalisation ??
-projets d'entreprise, établissement  / maintenance système / site , portail /  personnel / 
-export vers obsidian
-md 
-```
-- [x] Todo #Laravel #Hostinger 🔺 ➕ 2025-04-27 📅 2025-04-29 ✅ 2025-04-30
-```
-mermaid
-	kanban
-	gantt
-
-
-exemple 
-portail / projets / ajouter mots à la base mot
-portail / projets / ajouter des prénoms à la base mot
-portail / projets / liers des mots à une image (n mots -n images  )
-
-entreprise établissement  / tache selon fonction et service alimente par un autre workflow
-
-voir code obsidian
-[[DOCUMENTATION/OUTILS/OBSIDIAN/PLUGINS/Dataview#Timeline]]
-
-
----
 
 priorité 
 - [X] supprimer la route et le code controller pour profile ?
 	- OUI a faire après vérification usage et ou migration ui.html -> portail
-- [X]voir le besoin d'un model user avec relation personne_id ?
+- [X] voir le besoin d'un model user avec relation personne_id ?
 	- NON il faut passer par un profilclilent
 - tester et valider register depuis ui.html / uiapp.js
 	- [ ] nécessaire - #3
 - préparer la gestion des rôles et permissions
 	- [ ] priorité - #2
-- déterminer la structure des tasks
+- déterminer la structure des tasks . priorité - #4
 	- utiliser json
  	- exploitation via systeme de task obsidian icon due, status etc..
   	- mermaid js
+- construire un mini dashboard admin dans ui.html / uiapp.js priorité - #1
 
 Objectif :
 - créer des users via register
 	- voir config : action `app/Config/Auth.php`
-	- créer des comptes mail
+	- créer des comptes mail - fait 1 sur protonmail
 	- améliorer sécurité : tester ip ?
 	- groupe : 
 		- Groups are defined within the `Shield\Config\AuthGroups` config class.
@@ -203,6 +146,56 @@ se déduit automatiquement des dates
 - si connues
 - sinon BOOLEAN doit devenir tri state 0 non vivan, 1 oui vivant, -1 INCONNU vivant
 ```
+---
+
+
+# RELICS
+
++ role voir ci dessous
++ personne_id => register
+	+  -> 2 création une personne et un user
+
+### A définir
+user distinguer rôle et décrire les relation selon les rôles
+rôle
+	planificateur
+	responsable
+	réalisateur
+
+relations user affectées au tache 
+	planificateur 1- 1 tache,
+	responsable 1-1 tache, 
+	réalisateur personnel affecté n-1 tache
+
+relations taches mères/ filles
+
+ouverture vers 
+projet / réalisation ??
+projets d'entreprise, établissement  / maintenance système / site , portail /  personnel / 
+export vers obsidian
+md 
+```
+- [x] Todo #Laravel #Hostinger 🔺 ➕ 2025-04-27 📅 2025-04-29 ✅ 2025-04-30
+```
+mermaid
+	kanban
+	gantt
+
+
+exemple 
+portail / projets / ajouter mots à la base mot
+portail / projets / ajouter des prénoms à la base mot
+portail / projets / liers des mots à une image (n mots -n images  )
+
+entreprise établissement  / tache selon fonction et service alimente par un autre workflow
+
+voir code obsidian
+[[DOCUMENTATION/OUTILS/OBSIDIAN/PLUGINS/Dataview#Timeline]]
+
+
+---
+
+
 
 # Personne
 La relation peut se faire avec un Profilclient
