@@ -8,12 +8,12 @@ priorité
 - tester et valider register depuis ui.html / uiapp.js
 	- [ ] nécessaire - #3
 - préparer la gestion des rôles et permissions
-	- [ ] priorité - #2
+	- [ ] priorité - #2 voir https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-006.md#permissions_shield
 - déterminer la structure des tasks . priorité - #4
 	- utiliser json
  	- exploitation via systeme de task obsidian icon due, status etc..
   	- mermaid js
-- construire un mini dashboard admin dans ui.html / uiapp.js priorité - #1
+- construire un mini dashboard admin dans ui.html / uiapp.js priorité - #1 voir [`2026-09-26-005`](/project/daily/2026-09-26-005.md)
 
 Objectif :
 - créer des users via register
