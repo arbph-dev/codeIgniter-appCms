@@ -96,7 +96,7 @@ utilisation actuelle des user shield
 
 ## users
 https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-006.md#permissions_shield
-- [ ] Voir TaskPolicy
+- [ ] Voir TaskPolicy et https://shield.codeigniter.com/latest/references/authorization/#addpermission
 
 # 2026-09-26-009
 
