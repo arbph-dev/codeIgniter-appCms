@@ -59,11 +59,18 @@ voir code obsidian
 ---
 
 priorité 
-- supprimer la route et le code controller pour profile ?
-- voir le besoin d'un model user avec relation personne_id ?
+- [X] supprimer la route et le code controller pour profile ?
+	- OUI a faire après vérification usage et ou migration ui.html -> portail
+- [X]voir le besoin d'un model user avec relation personne_id ?
+	- NON il faut passer par un profilclilent
 - tester et valider register depuis ui.html / uiapp.js
+	- [ ] nécessaire - #3
 - préparer la gestion des rôles et permissions
-- déterminer la structure des tasks, utiliser json et exploitation viaa systeme de task obsidian icon due, status etc..
+	- [ ] priorité - #2
+- déterminer la structure des tasks
+	- utiliser json
+ 	- exploitation via systeme de task obsidian icon due, status etc..
+  	- mermaid js
 
 Objectif :
 - créer des users via register
