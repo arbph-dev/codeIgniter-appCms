@@ -3,6 +3,36 @@
 **siège** Description : établissement principal de l’entreprise. Règle : is_siege = 1 garantit un seul siège par organisation. Correspond à “établissement principal / head office”
 
 
+## Routes
+```php
+    // relation domaine Organisation
+    $routes->post  ('organisation/(:num)/entreprise'		, 'Entreprise::attach/$1');	// Sous-ressource AVANT les routes paramétrées génériques
+	$routes->get   ('organisation/(:num)/etablissements'	, 'Api\Etablissement::byOrganisation/$1');
+	$routes->post  ('organisation/(:num)/etablissement'		, 'Api\Etablissement::siege/$1');
+    // Organisation
+	$routes->get   ('organisation/like'						, 'Organisation::like');
+	$routes->get   ('organisation',        'Organisation::index');
+    $routes->get   ('organisation/(:num)', 'Organisation::show/$1');
+    $routes->post  ('organisation',        'Organisation::create');
+    $routes->put   ('organisation/(:num)', 'Organisation::update/$1');
+    $routes->delete('organisation/(:num)', 'Organisation::delete/$1');
+    // Entreprise
+	$routes->get   ('entreprise/like',   'Entreprise::like');
+    $routes->get   ('entreprise',        'Entreprise::index');
+    $routes->get   ('entreprise/(:num)', 'Entreprise::show/$1');
+    $routes->post  ('entreprise',        'Entreprise::create');
+    $routes->put   ('entreprise/(:num)', 'Entreprise::update/$1');
+    $routes->delete('entreprise/(:num)', 'Entreprise::delete/$1');
+    // Etablissement
+    $routes->get   ('etablissement/like'                    , 'Etablissement::like');
+    $routes->get   ('etablissement'                         , 'Etablissement::index');
+    $routes->get   ('etablissement/(:num)'                  , 'Etablissement::show/$1');
+    $routes->post  ('etablissement'                         , 'Etablissement::create');
+    $routes->put   ('etablissement/(:num)'                  , 'Etablissement::update/$1');
+    $routes->delete('etablissement/(:num)'                  , 'Etablissement::delete/$1');
+```
+
+
 ## EntrepriseService
 ### app/Services/EntrepriseService.php
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Services/EntrepriseService.php
