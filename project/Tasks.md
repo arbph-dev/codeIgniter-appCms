@@ -236,6 +236,9 @@ Events publiés / consommés
 
 ### 2.2 auth.service.js
 [/assets/js/features/auth/auth.service.js](/old/public/assets/js/features/auth/auth.service.js)
+modification
+- suppression version me commentée
+- ajout fetchRegister ligne 33
 
 #### Exports
 
@@ -245,8 +248,7 @@ Events publiés / consommés
 | fetchRegister | POST /api/auth/register | Public           |
 | fetchMe       | GET /api/auth/me        | Bearer optionnel |
 | fetchLogout   | POST /api/auth/logout   | Bearer           |
-suppression version me commentée
-ajout fetchRegister ligne 33
+
 
 
 
