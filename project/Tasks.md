@@ -200,7 +200,7 @@ Modification Routes.php AJOUT POST /api/auth/register
 $routes->group('api/auth', ['namespace' => 'App\Controllers\Api'], function($routes) {
     $routes->post('login',    'AuthController::login');    // POST /api/auth/login
 
-    $routes->post('register', 'AuthController::register'); // POST /api/auth/register  ← AJOUT
+    $routes->post('register', 'AuthController::register'); // POST /api/auth/register  ← AJOUT 2026-09-27-002 / 1.2
 });
 ```
 
