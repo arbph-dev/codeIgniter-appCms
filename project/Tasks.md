@@ -19,7 +19,10 @@ priorité
   	- mermaid js
 - construire un mini dashboard admin dans ui.html / uiapp.js priorité - #1 voir [`2026-09-26-005`](/project/daily/2026-09-26-005.md) et [uiapp.js](/WebUI/uiapp.js)
 	- on commence par : GET /api/auth/me
- 		- version actuelle dans uiapp.js - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js#L70
+ 		- version actuelle dans uiapp.js lors de login pas de fetchme car login renvoie les mêmes infos que fetchme
+    		- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js#L70
+      		- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/app/Controllers/Api/AuthController.php#L60
+      		- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/app/Controllers/Api/AuthController.php#L138
  	- voir [app/Controllers/Api/AuthController.php](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/app/Controllers/Api/AuthController.php)
   	- ajouter getUser si useradmin AuthController.php pour gérer liste des users
   		- [app/Controllers/Admin.php](/old/app/Controllers/Admin.php)
