@@ -19,6 +19,7 @@ priorité
   	- mermaid js
 - construire un mini dashboard admin dans ui.html / uiapp.js priorité - #1 voir [`2026-09-26-005`](/project/daily/2026-09-26-005.md) et [uiapp.js](/WebUI/uiapp.js)
 	- on commence par : GET /api/auth/me
+ 		- version actuelle dans uiapp.js - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js#L70
  	- voir [app/Controllers/Api/AuthController.php](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/old/app/Controllers/Api/AuthController.php)
   	- ajouter getUser si useradmin AuthController.php pour gérer liste des users
   		- [app/Controllers/Admin.php](/old/app/Controllers/Admin.php)
@@ -49,6 +50,9 @@ Ressources
   		- [auth.renderer.js](/old/public/assets/js/features/auth/auth.renderer.js)
 		- [auth.store.js](/old/public/assets/js/features/auth/auth.store.js)
 		- [Workbench - ToolbarAuthPanel](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
+  		- version actuelle dans uiapp.js - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js#L70
+  			
+ 		
 - Note sur auth / register :
 	- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-005.md#post-apiauthregister
 	- https://shield.codeigniter.com/latest/references/authorization/#user-activation
