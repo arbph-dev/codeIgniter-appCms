@@ -173,6 +173,7 @@ Etape
 - [X] migration user_profils
 - Model + Route + Controller/Service (backend register minimal + stub profil)
 	- [X] 1.1 Model
+	- [X] 1.2 Route
 - Formulaire register dans ui.html + gestion bus dans uiapp.js / auth.*
 - Toolbar2AuthPanel (boutons + affichage panel board)
 - Dashboards user / admin (contenu des panel-card)
@@ -191,7 +192,8 @@ app/Models/UserProfilModel.php - G:\WWW\OVH\BETA\refactoring\app\Models\UserProf
 - [X] copier dans /refactoring/app/Models/ 
 
 ### 1.2 Route
-Modification à faire dans refactoring/app/Config/Routes.php — groupe api/auth déjà existant.
+Modification à faire dansModification à faire dans [app/Config/Routes.php](/refactoring/app/Config/Routes.php) — groupe api/auth déjà existant.
+Modification Routes.php AJOUT POST /api/auth/register — groupe api/auth déjà existant.
 
 Modification Routes.php AJOUT POST /api/auth/register
 ```php
