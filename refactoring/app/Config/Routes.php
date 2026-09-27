@@ -105,8 +105,7 @@ $routes->group('api/auth', ['namespace' => 'App\Controllers\Api'], function($rou
     $routes->get('profile',   'AuthController::profile'); // GET /api/auth/profile
     $routes->get ('me',       'AuthController::me');       // GET  /api/auth/me
     $routes->post('logout',   'AuthController::logout');   // POST /api/auth/logout
-
-//5->    // $routes->post('register','AuthController::register'); // futur
+    $routes->post('register', 'AuthController::register'); // POST /api/auth/register  ← AJOUT 2026-09-27-002 / 1.2
 });
 
 //$routes->get('api/debug/token', 'Api\AuthController::debugToken');
