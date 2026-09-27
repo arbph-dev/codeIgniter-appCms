@@ -174,7 +174,10 @@ Etape
 - Model + Route + Controller/Service (backend register minimal + stub profil)
 	- [X] 1.1 Model
 	- [X] 1.2 Route
+ 	- [X] 1.3 Controller
 - Formulaire register dans ui.html + gestion bus dans uiapp.js / auth.*
+	- [X] 2.1 auth.controller.js
+ 	- [X] 2.2 auth.service.js
 - Toolbar2AuthPanel (boutons + affichage panel board)
 - Dashboards user / admin (contenu des panel-card)
 - Activation mail + tests
@@ -207,6 +210,45 @@ $routes->group('api/auth', ['namespace' => 'App\Controllers\Api'], function($rou
 ### 1.3 Controller
 - [X] uploader [`app/Controllers/Api/AuthController.php`](/refactoring/app/Controllers/Api/AuthController.php)
 - [X] copier dans `/refactoring/app/Controllers/Api/`
+
+### 2.1 auth.controller.js
+[/assets/js/features/auth/auth.controller.js](/old/public/assets/js/features/auth/auth.controller.js)
+conserve le pattern existant (bus → service → store) et gère les deux cas renvoyés par l’API :
+- email_verified: false → message « vérifiez votre email » (pas de token)
+- email_verified: true → login immédiat (token + user)
+
+ajout des events 
+- auth:register
+- auth:register:pending
+
+#### Events
+
+Events publiés / consommés
+
+| Event                 | Direction                    | Rôle                                     |
+| --------------------- | ---------------------------- | ---------------------------------------- |
+| auth:check         	| ← bus (application ) 		   | démarrage app , session OU token existe ?|
+| auth:register         | ← bus (formulaire / Toolbar) | Déclenche l’inscription                  |
+| auth:register:pending | → bus                        | Compte créé, email à valider             |
+| auth:success          | → bus                        | Login immédiat (si pas d’EmailActivator) |
+| auth:error            | → bus                        | Erreur validation / conflit / serveur    |
+| auth:loading          | → bus                        | Spinner on/off                           |
+
+### 2.2 auth.service.js
+[/assets/js/features/auth/auth.service.js](/old/public/assets/js/features/auth/auth.service.js)
+
+#### Exports
+
+| Fonction      | Endpoint                | Auth             |
+| ------------- | ----------------------- | ---------------- |
+| fetchLogin    | POST /api/auth/login    | Public           |
+| fetchRegister | POST /api/auth/register | Public           |
+| fetchMe       | GET /api/auth/me        | Bearer optionnel |
+| fetchLogout   | POST /api/auth/logout   | Bearer           |
+suppression version me commentée
+ajout fetchRegister ligne 33
+
+
 
 
  ----
