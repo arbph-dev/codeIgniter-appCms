@@ -116,6 +116,68 @@ utilisation actuelle des user shield
  	- recuperer ProfileClient avec user_id
 - tasks
  	- ajout champs : project_id
+- user_profils
+
+### user_profils
+migration user_profils à construire depuis client_profil ci dessous
+
+- renommer client_profil en user_profils
+- UNIQUE KEY uk_client_profil_user (user_id) doit evoluer
+	- 1 profil par user par organisation
+  		user.id shield et user_profils_persid peuvent être associé a plusieurs user_profils
+ 		user_profils peut avoir les mêmes  user.id shield , user_profils_persid si et seulement si  user_profils_orgid est différent (consultant pour deux entreprises distincts)
+   		il faudra permettre la sélection apres login si on trouve plusieurs profil
+   		un select dans Toolbar2AuthPanel sera affiché ou masque selon qu'il y est plusieurs profils
+- on peut ajouter une valeur default true dans user_profils
+	- 	le dashboard user permettra de modifier le profil par defaut
+
+### 2026-09-27-001-N000
+
+TABLE user_profils / champ organisation_id , actuellement nullable.
+
+Contexte : En MySQL, un UNIQUE(user_id, organisation_id) autorise plusieurs lignes avec organisation_id = NULL. C'est peut-être souhaité pour les profils sans organisation, mais il faut le décider avant la migration
+
+Choix organisation_id :
+- devient `organisation_id BIGINT UNSIGNED NOT NULL DEFAULT 0,`
+- Par defaut le champ organisation sera mis a 0 (usage personnel)
+- Par la suite on ajoutera un dialog pour la selection de organisation
+- choix actuel 0 = personnel => ON DELETE RESTRICT une contrainte de clé étrangère qui empêche la suppression d'une ligne parente si des lignes enfants y font référence, garantissant ainsi l'intégrité référentielle.
+```sql
+CREATE TABLE user_profils (
+    id              BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    user_id         INT UNSIGNED NOT NULL,
+    tel_fixe        VARCHAR(20) NULL,
+    tel_mobile      VARCHAR(20) NULL,
+    personne_id     BIGINT UNSIGNED NULL,
+	adresse_id      BIGINT UNSIGNED NULL,
+    organisation_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    defaut          BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at      DATETIME NULL,
+    updated_at      DATETIME NULL,
+
+    PRIMARY KEY (id),
+
+    UNIQUE KEY uk_user_profils_user_org (user_id, organisation_id),
+
+    CONSTRAINT fk_user_profils_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+
+    CONSTRAINT fk_user_profils_personne
+        FOREIGN KEY (personne_id) REFERENCES personnes(id)
+        ON DELETE SET NULL ON UPDATE CASCADE,
+
+	CONSTRAINT fk_user_profils_adresse
+        FOREIGN KEY (adresse_id) REFERENCES adresses(id)
+        ON DELETE SET NULL ON UPDATE CASCADE,
+
+    CONSTRAINT fk_user_profils_organisation
+        FOREIGN KEY (organisation_id) REFERENCES organisations(id)
+        ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
+
 
 ## users
 https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-006.md#permissions_shield
