@@ -180,22 +180,20 @@ Etape
 - Activation mail + tests
 
 ### 1.1 Model
-	- GROK +1 : code aligné sur les conventions du projet Models + Entities
+GROK +1 : code aligné sur les conventions du projet Models + Entities
 
 app/Entities/UserProfil.php - G:\WWW\OVH\BETA\refactoring\app\Entities\UserProfil.php
 - [X] uploader [`app/Entities/UserProfil.php`](/refactoring/app/Entities/UserProfil.php)
-
-- [X] copier dans /refactoring/app/Entities/
+- [X] copier dans `/refactoring/app/Entities/`
 
 app/Models/UserProfilModel.php - G:\WWW\OVH\BETA\refactoring\app\Models\UserProfilModel.php
 - [X] uploader [`app/Models/UserProfilModel.php`](/refactoring/app/Models/UserProfilModel.php)
-- [X] copier dans /refactoring/app/Models/ 
+- [X] copier dans `/refactoring/app/Models/` 
 
 ### 1.2 Route
-Modification à faire dansModification à faire dans [app/Config/Routes.php](/refactoring/app/Config/Routes.php) — groupe api/auth déjà existant.
-Modification Routes.php AJOUT POST /api/auth/register — groupe api/auth déjà existant.
+Modification  [app/Config/Routes.php](/refactoring/app/Config/Routes.php) 
+Ajout `POST /api/auth/register` au groupe `api/auth` déjà existant.
 
-Modification Routes.php AJOUT POST /api/auth/register
 ```php
 // 1  grouper sous `/api/auth/`
 //── Auth ────────────────────────────────────────────────────────────────────
@@ -205,6 +203,11 @@ $routes->group('api/auth', ['namespace' => 'App\Controllers\Api'], function($rou
     $routes->post('register', 'AuthController::register'); // POST /api/auth/register  ← AJOUT 2026-09-27-002 / 1.2
 });
 ```
+
+### 1.3 Controller
+- [X] uploader [`app/Controllers/Api/AuthController.php`](/refactoring/app/Controllers/Api/AuthController.php)
+- [X] copier dans `/refactoring/app/Controllers/Api/`
+
 
  ----
 
