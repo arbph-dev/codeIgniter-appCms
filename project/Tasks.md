@@ -120,28 +120,6 @@ utilisation actuelle des user shield
 
 ### user_profils
 migration user_profils à construire depuis client_profil ci dessous
-
-- renommer client_profil en user_profils
-- UNIQUE KEY uk_client_profil_user (user_id) doit evoluer
-	- 1 profil par user par organisation
-  		user.id shield et user_profils_persid peuvent être associé a plusieurs user_profils
- 		user_profils peut avoir les mêmes  user.id shield , user_profils_persid si et seulement si  user_profils_orgid est différent (consultant pour deux entreprises distincts)
-   		il faudra permettre la sélection apres login si on trouve plusieurs profil
-   		un select dans Toolbar2AuthPanel sera affiché ou masque selon qu'il y est plusieurs profils
-- on peut ajouter une valeur default true dans user_profils
-	- 	le dashboard user permettra de modifier le profil par defaut
-
-### 2026-09-27-001-N000
-
-TABLE user_profils / champ organisation_id , actuellement nullable.
-
-Contexte : En MySQL, un UNIQUE(user_id, organisation_id) autorise plusieurs lignes avec organisation_id = NULL. C'est peut-être souhaité pour les profils sans organisation, mais il faut le décider avant la migration
-
-Choix organisation_id :
-- devient `organisation_id BIGINT UNSIGNED NOT NULL DEFAULT 0,`
-- Par defaut le champ organisation sera mis a 0 (usage personnel)
-- Par la suite on ajoutera un dialog pour la selection de organisation
-- choix actuel 0 = personnel => ON DELETE RESTRICT une contrainte de clé étrangère qui empêche la suppression d'une ligne parente si des lignes enfants y font référence, garantissant ainsi l'intégrité référentielle.
 ```sql
 CREATE TABLE user_profils (
     id              BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -176,6 +154,68 @@ CREATE TABLE user_profils (
         ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
+- renommer client_profil en user_profils
+- UNIQUE KEY uk_client_profil_user (user_id) doit evoluer
+	- 1 profil par user par organisation
+  		user.id shield et user_profils_persid peuvent être associé a plusieurs user_profils
+ 		user_profils peut avoir les mêmes  user.id shield , user_profils_persid si et seulement si  user_profils_orgid est différent (consultant pour deux entreprises distincts)
+   		il faudra permettre la sélection apres login si on trouve plusieurs profil
+   		un select dans Toolbar2AuthPanel sera affiché ou masque selon qu'il y est plusieurs profils
+- on peut ajouter une valeur default true dans user_profils
+	- 	le dashboard user permettra de modifier le profil par defaut
+
+
+## 2026-09-27-002
+
+migration user_profils : fait
+
+Etape
+- Model + Route + Controller/Service (backend register minimal + stub profil)
+- Formulaire register dans ui.html + gestion bus dans uiapp.js / auth.*
+- Toolbar2AuthPanel (boutons + affichage panel board)
+- Dashboards user / admin (contenu des panel-card)
+- Activation mail + tests
+
+1.1 Model
+GROK +1 : code aligné sur les conventions du projet Models + Entities
+
+
+app/Entities/UserProfil.php - G:\WWW\OVH\BETA\refactoring\app\Entities\UserProfil.php
+- [X] uploader app/Entities/UserProfil.php
+- [X] copier dans /refactoring/app/Entities/
+
+app/Models/UserProfilModel.php - G:\WWW\OVH\BETA\refactoring\app\Models\UserProfilModel.php
+- [X] uploader app/Models/UserProfilModel.php
+- [X] copier dans /refactoring/app/Models/ 
+
+
+
+ ----
+
+# Notes
+### 2026-09-27-001-N000
+
+TABLE user_profils / champ organisation_id , actuellement nullable.
+
+Contexte : En MySQL, un UNIQUE(user_id, organisation_id) autorise plusieurs lignes avec organisation_id = NULL. C'est peut-être souhaité pour les profils sans organisation, mais il faut le décider avant la migration
+
+Choix organisation_id :
+- devient `organisation_id BIGINT UNSIGNED NOT NULL DEFAULT 0,`
+- Par defaut le champ organisation sera mis a 0 (usage personnel)
+- Par la suite on ajoutera un dialog pour la selection de organisation
+- choix actuel 0 = personnel => ON DELETE RESTRICT une contrainte de clé étrangère qui empêche la suppression d'une ligne parente si des lignes enfants y font référence, garantissant ainsi l'intégrité référentielle.
+
+
+### 2026-09-27-001-N001
+- [ ] Dans admin exploiter SELECT * FROM `auth_logins` pour voir log ou recherche
+
+
+### 2026-09-27-001-N002
+organisation_id : is_natural (accepte 0) car la migration a DEFAULT 0.
+defaut casté en boolean (comme actif dans Relation).
+Méthodes utilitaires prêtes pour le register et le select multi-profils de la toolbar.
+Pas de soft-delete (conforme à la table)
+
 
 
 
