@@ -181,11 +181,12 @@ GROK +1 : code aligné sur les conventions du projet Models + Entities
 
 
 app/Entities/UserProfil.php - G:\WWW\OVH\BETA\refactoring\app\Entities\UserProfil.php
-- [X] uploader app/Entities/UserProfil.php
+- [X] uploader [`app/Entities/UserProfil.php`](/refactoring/app/Entities/UserProfil.php)
+
 - [X] copier dans /refactoring/app/Entities/
 
 app/Models/UserProfilModel.php - G:\WWW\OVH\BETA\refactoring\app\Models\UserProfilModel.php
-- [X] uploader app/Models/UserProfilModel.php
+- [X] uploader [`app/Models/UserProfilModel.php`](/refactoring/app/Models/UserProfilModel.php)
 - [X] copier dans /refactoring/app/Models/ 
 
 
