@@ -2,8 +2,8 @@
 
 import { bus }                          from '../../core/eventBus.js'
 import { authStore }                    from './auth.store.js'
-import { fetchLogin, fetchMe, fetchLogout } from './auth.service.js'
-
+import { fetchLogin, fetchMe, fetchLogout , fetchRegister } from './auth.service.js'
+    // fetchRegister à ajouter dans auth.service.js
 export function initAuthController() {
 
     // ── auth:check ───────────────────────────────────────────────────────────
@@ -60,7 +60,56 @@ export function initAuthController() {
             bus.publish('auth:loading', false)
         }
     })
+    
+    // ── auth:register ────────────────────────────────────────────────────────
+    // Payload attendu (après validation front des 2 mots de passe) :
+    // {
+    //   shield_username, shield_email, shield_password,
+    //   client_profil_tel?, client_profil_mobile?,
+    //   client_profil_persid?, client_profil_orgid?
+    // }
+    bus.subscribe('auth:register', async (payload) => {
+        authStore.loading = true
+        authStore.error   = null
+        bus.publish('auth:loading', true)
 
+        try {
+            const data = await fetchRegister(payload)
+
+            // Cas EmailActivator actif — pas de token, compte non activé
+            if (data.email_verified === false) {
+                bus.publish('auth:register:pending', {
+                    message: data.message ?? 'Compte créé. Vérifiez votre email pour activer votre compte.',
+                })
+                return
+            }
+
+            // Cas sans activation — login immédiat
+            if (data.token && data.user) {
+                authStore.user     = data.user
+                authStore.token    = data.token
+                authStore.loggedIn = true
+                authStore.persist()
+
+                bus.publish('auth:success', { user: data.user, token: data.token })
+                bus.publish('auth:changed')
+                return
+            }
+
+            // Fallback — succès sans token ni pending explicite
+            bus.publish('auth:register:pending', {
+                message: data.message ?? 'Compte créé.',
+            })
+
+        } catch (err) {
+            authStore.error = err.message
+            bus.publish('auth:error', err.message)
+        } finally {
+            authStore.loading = false
+            bus.publish('auth:loading', false)
+        }
+    })
+    
     // ── auth:logout ──────────────────────────────────────────────────────────
     bus.subscribe('auth:logout', async () => {
         authStore.loading = true
@@ -88,4 +137,5 @@ export function initAuthController() {
         const groups = user?.groups ?? []
         console.log(`[auth] connecté : ${user?.username} [${groups.join(', ')}]`)
     })
+    
 }
