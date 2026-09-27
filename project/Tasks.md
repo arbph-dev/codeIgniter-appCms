@@ -167,18 +167,19 @@ CREATE TABLE user_profils (
 
 ## 2026-09-27-002
 
-migration user_profils : fait
+
 
 Etape
+- [X] migration user_profils
 - Model + Route + Controller/Service (backend register minimal + stub profil)
+	- [X] 1.1 Model
 - Formulaire register dans ui.html + gestion bus dans uiapp.js / auth.*
 - Toolbar2AuthPanel (boutons + affichage panel board)
 - Dashboards user / admin (contenu des panel-card)
 - Activation mail + tests
 
-1.1 Model
-GROK +1 : code aligné sur les conventions du projet Models + Entities
-
+### 1.1 Model
+	- GROK +1 : code aligné sur les conventions du projet Models + Entities
 
 app/Entities/UserProfil.php - G:\WWW\OVH\BETA\refactoring\app\Entities\UserProfil.php
 - [X] uploader [`app/Entities/UserProfil.php`](/refactoring/app/Entities/UserProfil.php)
@@ -189,7 +190,19 @@ app/Models/UserProfilModel.php - G:\WWW\OVH\BETA\refactoring\app\Models\UserProf
 - [X] uploader [`app/Models/UserProfilModel.php`](/refactoring/app/Models/UserProfilModel.php)
 - [X] copier dans /refactoring/app/Models/ 
 
+### 1.2 Route
+Modification à faire dans refactoring/app/Config/Routes.php — groupe api/auth déjà existant.
 
+Modification Routes.php AJOUT POST /api/auth/register
+```php
+// 1  grouper sous `/api/auth/`
+//── Auth ────────────────────────────────────────────────────────────────────
+$routes->group('api/auth', ['namespace' => 'App\Controllers\Api'], function($routes) {
+    $routes->post('login',    'AuthController::login');    // POST /api/auth/login
+
+    $routes->post('register', 'AuthController::register'); // POST /api/auth/register  ← AJOUT
+});
+```
 
  ----
 
