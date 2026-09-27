@@ -7,6 +7,10 @@ priorité
 	- NON il faut passer par un profilclilent
 - tester et valider register depuis ui.html / uiapp.js
 	- [ ] nécessaire - #3
+ 		- [X] https://zealot.fr/register affiche un formulaire
+   		- [ ] voir https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Config/Auth.php#L50
+     	- [ ] voir https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/app/Config/Auth.php#L106
+   
 - préparer la gestion des rôles et permissions
 	- [ ] priorité - #2 voir https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-006.md#permissions_shield
 - déterminer la structure des tasks . priorité - #4
