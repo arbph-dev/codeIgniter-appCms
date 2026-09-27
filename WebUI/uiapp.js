@@ -98,6 +98,7 @@ function typeofObj( Obj ){
 }
 
 /*  ======================================================================================================================  */
+//2026-09-27-002 - Modifier readPage() pour ignorer les panels auth :
 function readPage(){
 
   let articleObj = null  
@@ -105,8 +106,8 @@ function readPage(){
   let strTemp = null
 
   if ( _main && _menu) { 
-  
-  _main_panels = qsa("div.panel-card" , _main )  // on extrait les informations de la page
+  _main_panels = qsa('div.panel-card:not([data-role])', _main) // ignorer les panels auth
+  //_main_panels = qsa("div.panel-card" , _main )  // on extrait les informations de la page
   
   _main_panels.forEach((  panel , index ) => {
 
@@ -302,6 +303,63 @@ function statusWrite( textContent ){
     }    
 }
 
+
+
+
+// ── Boards auth (hors pagination / menu) ─────────────────────────────────────
+//2026-09-27-002
+function getAuthBoards() {
+
+    return {
+        admin: document.querySelector('div.panel-card[data-role="admin"]'),
+        user:  document.querySelector('div.panel-card[data-role="user"]'),
+    }
+}
+
+function hideAuthBoards() {
+    const { admin, user } = getAuthBoards()
+    admin?.classList.add('hidden')
+    user?.classList.add('hidden')
+}
+
+function showAuthBoard(role) {
+
+    hideAuthBoards()
+    // Masquer aussi les panels "contenu" classiques
+    qsa('div.panel-card:not([data-role])', _main)
+        .forEach(p => p.classList.add('hidden'))
+
+    const board = document.querySelector(`div.panel-card[data-role="${role}"]`)
+    board?.classList.remove('hidden')
+    statusWrite(`Board : ${role}`)
+}
+
+function initAuthBoards() {
+    bus.subscribe('board:admin',    () => showAuthBoard('admin'))
+    bus.subscribe('board:user',     () => showAuthBoard('user'))
+    bus.subscribe('board:register', () => showAuthBoard('user'))  // form dans panel user
+    bus.subscribe('board:hide',     () => {
+        hideAuthBoards()
+        // Revenir au panel courant
+        if (typeof switchPanel === 'function') switchPanel(_currentPanel)
+    })
+
+    // Au logout → masquer les boards
+    bus.subscribe('auth:guest', () => hideAuthBoards())
+}
+
+// ── end  Boards auth  ─────────────────────────────────────
+
+
+
+
+
+
+
+
+
+
+
 async function mountApplication()
 {
   console.log('Auth success; app can run')
@@ -318,16 +376,19 @@ function noAuth()
 
 function boot()
 {
+    
     initAuthController()
     new ToolbarAuthPanel().init()
+    
+    initAuthBoards()  //2026-09-27-002
 
     bus.subscribe('auth:success', () => mountApplication() )
     bus.subscribe('auth:guest',   () => noAuth())
+    //----- 2026-09-27-003
+    bus.subscribe('board:register', () => showAuthBoard('user'))
 
     bus.publish('auth:check')
 }
-
-
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -349,5 +410,4 @@ window.onload = (event) => {
 
   //initLeaflet()
   boot()
-} 
-  
+}
