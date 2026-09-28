@@ -1,32 +1,33 @@
  - [/assets/js/core/domhelper.js](/assets/js/core/domhelper.js)
  - /public/assets/js/core/domhelper.js
 
+# [`/assets/js/core/domhelper.js`](/assets/js/core/domhelper.js)
 
-# Exploitation
+## Exploitation
 
 ```js
 import { byId, byName , qs , qsa , create } from '/assets/js/core/domhelper.js'
 ```
 
-# Améliorations
+## Améliorations
 intégrer `function typeofObj( Obj )` de [uiapp.js](/WebUI/uiapp.js#L69)
 
 
-# helpers DOM
+## helpers DOM
 - byId
 - byName
 - qs
 - qsa
 - create
 
-## byId
+### byId
 
 **exemple** : 
 ```js
   sidebar = byId("sidebar", document)
 ```
 
-## byName
+### byName
 
 **exemple** : 
 ```js
@@ -38,7 +39,7 @@ intégrer `function typeofObj( Obj )` de [uiapp.js](/WebUI/uiapp.js#L69)
 ```
 
 
-## qs
+### qs
 
 **exemple** : 
 ```js
@@ -47,7 +48,7 @@ intégrer `function typeofObj( Obj )` de [uiapp.js](/WebUI/uiapp.js#L69)
   _header_actions_btn_fullscreen = qs( "header#header > div.header-actions > button#fullscreenBtn")
 ```
 
-## qsa
+### qsa
 
 **exemple** : 
 ```js
@@ -58,7 +59,7 @@ panelSections = qsa( "div.section-tab  > div.tab-content > h3" , panel )
 const menuPanels = qsa('.nav-article', _menu )
 ```
 
-## create
+### create
 
 **exemple** : 
 ```js
