@@ -3,7 +3,7 @@ Regroupe documentation
 # Front
 
 - tester et valider register depuis ui.html / uiapp.js
-	- [X] https://zealot.fr/register affiche un formulaire
+	- [X] https://zealot.fr/register affiche un formulaire via shield au niveau session
 
 
 # Backend
