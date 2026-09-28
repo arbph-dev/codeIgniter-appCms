@@ -2,10 +2,11 @@ Regroupe documentation
 
 # Front
 
-- Frontend - [Workbench](/documentation/WORKBENCH/ARCHITECTURE/authentification.md)
+- [features](/documentation/WORKBENCH/ARCHITECTURE/authentification.md)
 	- [auth.renderer.js](/assets/js/features/auth/auth.renderer.js)
 	- [auth.store.js](/assets/js/features/auth/auth.store.js)
-	- [Workbench - ToolbarAuthPanel](/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
+
+- [Workbench - ToolbarAuthPanel](/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
 		
 - tester et valider register depuis ui.html / uiapp.js
 	- [X] https://zealot.fr/register affiche un formulaire via shield au niveau session
