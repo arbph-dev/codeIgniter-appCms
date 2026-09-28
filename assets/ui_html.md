@@ -99,7 +99,7 @@ modifier [`uiapp.js`](/WebUI/uiapp.js)
 |div.panel-card[data-role="user"]|Dashboard user (+ form register temporaire)|bus board:user / board:register / board:hide|
 |#user-board-body|formulaire register complet| | 
 
-
+- `#user-board-body` sert pour register et les infos users
 
 
 ### structure
