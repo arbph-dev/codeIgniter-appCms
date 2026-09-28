@@ -17,16 +17,17 @@ C'est le dossier OVH à gérer
 /public/ui.html
 ```
 
-## Arborescence
+## Arborescence 
+(base /public/) => ui.html est /public/ui.html
 
-- [`/public/ui.html`](/assets/ui_html.md)
-- /public/assets/
-  - /public/assets/css/
+- [`/ui.html`](/assets/ui_html.md)
+- [`/assets/`](/assets/)
+  - [`/css/`](/assets/css/)
     - [`uistyle.css`](/assets/css/uistyle_css.md)
-  - /public/assets/js/
+  - [`/js/`](/assets/js/)
     - [`uiapp.js`](/assets/js/uiapp_js.md)
-    - /public/assets/js/components/ - /assets/js/components/ 
-      - [/assets/js/components/apex.js](/assets/js/components/apex.js) - [documentation apex.js](/assets/js/components/apex_js.md)
+    - [`/components/`](/assets/js/components/)
+      - [`apex.js`](/assets/js/components/apex.js) - [documentation apex.js](/assets/js/components/apex_js.md)
       - [codeval.js](/assets/js/components/codeval_js.md)
       - [mermaid.js](/assets/js/components/mermaid_js.md)
     - /public/assets/js/core/
@@ -37,7 +38,9 @@ C'est le dossier OVH à gérer
 - /assets/js/ui/
   - /assets/js/ui/workbench/
     - /assets/js/ui/workbench/auth/
-- [`/assets/js/ui/workbench/auth/ToolbarAuthPanel.js`](/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
+      - [`/assets/js/ui/workbench/auth/ToolbarAuthPanel.js`](/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
+    - /assets/js/ui/workbench/core/
+      - [/assets/js/ui/workbench/core/AuthPanelBase.js](/assets/js/ui/workbench/core/AuthPanelBase.js) - [documentation AuthPanelBase.js](/assets/js/ui/workbench/core/AuthPanelBase_js.md)
 
 [documentation](/assets/js/ui/workbench/auth/ToolbarAuthPanel_js.md)
 
