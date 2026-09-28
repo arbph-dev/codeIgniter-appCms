@@ -1,3 +1,10 @@
+- **DOMAINE** [WebUI](/WebUI/README.md) - voir pour notes , évolutions et tâches
+- **DEV** : [WebUI/ui.html](/WebUI/ui.html)
+- **PATH** : `/ui.html`
+
+
+# [`/ui.html`](/WebUI/ui.html)
+
 # Structure du document
 
 ```
