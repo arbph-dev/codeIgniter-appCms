@@ -32,6 +32,13 @@ header#header
         button#fullscreenBtn
 ```
 
+
+|Zone|Contenu|
+|---|---|
+|.header-auth (guest)|email + password + Connexion + **Inscription**|
+|.header-auth (register en cours)|bouton « Retour » minimal (optionnel)|
+
+
 ## Sidebar
 
 Sidebar doit etre généré par script
@@ -88,18 +95,11 @@ modifier [`uiapp.js`](/WebUI/uiapp.js)
 
 |Zone|Rôle|Contrôle|
 |---|---|---|
-|.header-auth|Toolbar (login / register / user bar)|AuthPanelBase + ToolbarAuthPanel|
 |div.panel-card[data-role="admin"]|Dashboard admin|bus board:admin / board:hide|
 |div.panel-card[data-role="user"]|Dashboard user (+ form register temporaire)|bus board:user / board:register / board:hide|
+|#user-board-body|formulaire register complet| | 
 
-### css associé
-- panel-card
-- panel-title
-- panel-description
-- section-tab
-- tab-headers
-- tab-btn et tab-btn active
-- tab-content et tab-content active
+
 
 
 ### structure
@@ -128,3 +128,11 @@ modifier [`uiapp.js`](/WebUI/uiapp.js)
 
 
 
+### css associé
+- panel-card
+- panel-title
+- panel-description
+- section-tab
+- tab-headers
+- tab-btn et tab-btn active
+- tab-content et tab-content active
