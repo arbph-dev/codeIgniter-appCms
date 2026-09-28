@@ -11,4 +11,10 @@ La version pour les travaux : [WebUI/uiapp.js](/WebUI/uiapp.js) est a mettre a j
 
 ## Fonctions
 
-a décrire
+offset readpage 
+show/hide boards
+- Modifier readPage() pour ignorer les panels auth :
+- ajout function getAuthBoards()
+- ajout function hideAuthBoards()
+- ajout function showAuthBoard(role)
+- ajout function initAuthBoards() 
