@@ -119,3 +119,4 @@ Objectif :
 		- Groups are defined within the `Shield\Config\AuthGroups` config class.
 	- faire un dash admin minimal dans ui.html
 		- affectation des users au groupe et droits par domaine voir projets
+- [X] voir le besoin d'un model user avec relation personne_id ? NON il faut passer par un user_profils
