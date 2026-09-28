@@ -325,14 +325,26 @@ Les events souscrits et les callback sont déja définis et gérés  par exemple
 On branche le formulaire register dans #user-board-body plutôt que dans la toolbar
 On place le formulaire register dans #user-board-body, la toolbar ne garde que le bouton « Inscription ».
 
+```
+Guest toolbar
+  [Inscription] → _render('register')
+       ├─ toolbar  : bouton « Retour connexion »
+       └─ #user-board-body : formulaire register
+            [Créer le compte] → auth:register
+                 ├─ pending → message dans #user-board-body
+                 └─ success → auth:success → UserBar + clear board
+  [Retour] → _render('guest') + clear board + board:hide (via uiapp)
+```
+
+
 |Zone|Contenu|
 |---|---|
 |.header-auth (guest)|email + password + Connexion + **Inscription**|
 |#user-board-body|formulaire register complet|
 |.header-auth (register en cours)|bouton « Retour » minimal (optionnel)|
 
-### [`AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
-AuthPanelBase.js — ajustements dans _render()
+#### [`AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
+AuthPanelBase.js — ajustements dans _render(), Toolbar = login / retour / user bar
 - remplacer le case 'register'
 - remplacer le case 'register-pending'
 - Nouvelles méthodes
@@ -346,10 +358,20 @@ AuthPanelBase.js — ajustements dans _render()
  - Et sur guest / success, nettoyer le board : this._clearBoardBody()
  
  
- 
- /** Mini barre affichée dans .header-auth pendant l'inscription */
-_buildRegisterToolbar()
- 
+#### [`ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
+`_buildRegisterToolbar()`
+- Mini barre affichée dans .header-auth pendant l'inscription 
+
+Formulaire dans #user-board-body pour register + message pending
+- suppresion bouton back
+
+#### [`uiapp.js`](/WebUI/uiapp.js)
+Afficher panel user , le formulaire est déjà monté par AuthPanelBase._mountRegisterForm.
+bus.subscribe('board:register', () => showAuthBoard('user'))
+
+
+
+
  ----
 
 
@@ -369,7 +391,35 @@ return $this->response->setStatusCode(200)->setJSON([
 ]);
 ```
 
+Helper de rendu dans uiapp.js
+- function badgeGroups(groups)
+- function badgePerms(permissions)
+- function renderUserCard(user, { title = 'Mon profil' } = {})
+	- Carte profil minimale des données endpoint /me { id, username, email, groups, permissions }
 
+2 Montage dans les boards
+fait sentir la nécessité d'un panel user ou workbench
+- function mountUserBoard(user) {
+- function mountAdminBoard(user) {
+
+3 Branchement bus dans initAuthBoards()
+
+4 CSS minimal (si pas déjà présent)
+
+### Ordre de test recommandé
+
+Register (API + form dans #user-board-body)
+Seeder 3 users (ex. user / admin / superadmin)
+Login → Board user → carte /me
+Login admin → bouton Admin → board admin
+Ensuite : enrichir /me (ou endpoint dédié) avec user_profils
+
+
+Prochaine étape utile : 
+seeder 3 users (Shield + éventuellement 1 user_profil chacun), ou on reste sur le test register API en premier ?
+
+
+ 
  ----
 
 # Notes
