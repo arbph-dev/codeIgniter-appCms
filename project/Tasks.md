@@ -98,14 +98,14 @@ modèle de données
 
 # [`2026-09-26-005`](/project/daily/2026-09-26-005.md)
 utilisation actuelle des user shield
-- [ ] Valider me
-- [ ] Supprimer profile route et controller
+- [X] Valider me
+- [X] Supprimer profile route et controller
 
 # [`2026-09-26-006`](/project/daily/2026-09-26-006.md)
 - [ ] Valider ajout des tables : projects , project_members (necessaire pour ajuster les droits)
 - [-] relation projets - Organisation/entreprise/Etablissement , user - personne
 	- peu d'intérêt sans telephone
-- [ ] ProfileClient  avec tel fixe, mobile, index user_id user relation ou id personne  et organisation
+- [X] user_profils  avec tel fixe, mobile, index user_id user relation ou id personne  et organisation
 - [ ] voir possibilité de trouver: user - Etablissement avec user - personne et personne - Organisation/entreprise/Etablissement
 
 ## tables a ajouter
@@ -165,7 +165,7 @@ CREATE TABLE user_profils (
 	- 	le dashboard user permettra de modifier le profil par defaut
 
 
-## 2026-09-27-002
+## 2026-09-27-001
 
 
 
@@ -250,8 +250,19 @@ modification
 | fetchLogout   | POST /api/auth/logout   | Bearer           |
 
  ----
+## 2026-09-27-002
+ui 
+- [X] réserver 2 panels en tête de #stack dans  [`ui.html`](/WebUI/ui.html#L60)
 
-ui.html — réserver 2 panels en tête de #stack
+La version finale doit être séparé 
+https://zealot.fr/ui.html
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/ui.html
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uiapp.js
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uistyle.css
+le fin du refactor , on integre et on liste les composants dont les workbench https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/readme.md
+
+
 AuthPanelBase.js — états + bindings /assets/js/ui/workbench/core/AuthPanelBase.js
 ToolbarAuthPanel.js /assets/js/ui/workbench/auth/ToolbarAuthPanel.js
 uiapp.js — offset + show/hide boards
@@ -277,13 +288,7 @@ Les events souscrits et les callback sont déja définis et gérés  par exemple
 ```
 
 
-La version finale doit être séparé 
-https://zealot.fr/ui.html
 
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/ui.html
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uiapp.js
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uistyle.css
-le fin du refactor , on integre et on liste les composants dont les workbench https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/readme.md
 
 
 
