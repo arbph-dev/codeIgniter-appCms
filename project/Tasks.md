@@ -251,16 +251,36 @@ modification
 
  ----
 ## 2026-09-27-002
-ui 
+
+ui : https://zealot.fr/ui.html 
+
+
+En fin de refactor: https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/readme.md
+- on integre
+- on liste les composants dont les workbench
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/ui.html
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uiapp.js
+- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uistyle.css
+
 - [X] réserver 2 panels en tête de #stack dans  [`ui.html`](/WebUI/ui.html#L60)
 
-La version finale doit être séparé 
-https://zealot.fr/ui.html
 
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/ui.html
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uiapp.js
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uistyle.css
-le fin du refactor , on integre et on liste les composants dont les workbench https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/readme.md
+### réserver 2 panels 
+en tête de #stack dans 
+- [`ui.html - ligne 68`](/WebUI/ui.html#L68)
+- [`ui.html - ligne 82`](/WebUI/ui.html#L82)
+
+```html
+ <div class="panel-card hidden" data-role="admin" data-index="-2">
+```
+note :
+- data-role="admin" pour eviter de les intégrer au menu
+- data-index="-2"
+
+
+
+
+
 
 
 AuthPanelBase.js — états + bindings /assets/js/ui/workbench/core/AuthPanelBase.js
