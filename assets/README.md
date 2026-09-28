@@ -37,10 +37,10 @@ C'est le dossier OVH à gérer
     - [physics.js](/assets/js/libs/physics.js)- [documentation physics.js](/assets/js/libs/physics_js.md)
   - [`/ui/`](/assets/js/ui/)
     - [`/workbench/`](/assets/js/ui/workbench/)
-      - /assets/js/ui/workbench/auth/
+      - [`/auth/`](/assets/js/ui/workbench/auth/)
         - [ToolbarAuthPanel.js](/assets/js/ui/workbench/auth/ToolbarAuthPanel.js) - [documentation ToolbarAuthPanel.js](/assets/js/ui/workbench/auth/ToolbarAuthPanel_js.md)
-      - /assets/js/ui/workbench/core/
-        - [/assets/js/ui/workbench/core/AuthPanelBase.js](/assets/js/ui/workbench/core/AuthPanelBase.js) - [documentation AuthPanelBase.js](/assets/js/ui/workbench/core/AuthPanelBase_js.md)
+      - [`/core/`](/assets/js/ui/workbench/core/)
+        - [AuthPanelBase.js](/assets/js/ui/workbench/core/AuthPanelBase.js) - [documentation AuthPanelBase.js](/assets/js/ui/workbench/core/AuthPanelBase_js.md)
 
 
 
