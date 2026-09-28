@@ -74,10 +74,6 @@ Ressources
 
 ---
 ## tables 
-### [users](/documentation/MIGRATIONS/users.md)
-### [user_profils](/documentation/MIGRATIONS/user_profils.md)
-CREATION + SEEDER : migration user_profils 
-
 
 **à définir et ajouter**
 - projects 
