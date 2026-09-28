@@ -4,8 +4,8 @@ Regroupe documentation
 
 - [features](/documentation/WORKBENCH/ARCHITECTURE/authentification.md)
 	- [auth.renderer.js](/assets/js/features/auth/auth.renderer.js)
+	- [auth.service.js](/assets/js/features/auth/auth.service.js)
 	- [auth.store.js](/assets/js/features/auth/auth.store.js)
-
 - [Workbench - ToolbarAuthPanel](/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
 		
 - tester et valider register depuis ui.html / uiapp.js
