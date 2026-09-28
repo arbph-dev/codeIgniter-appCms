@@ -26,31 +26,18 @@ On va préparer la version final du repository pour un backup serveur et un nett
 
 Projet / tasks induit des évolutions pour authentification et administration
 
-
-
-
-
 ---
 
+## authentification
 
-[documentation](/assets/js/features/auth/auth.controller_js.md)
-/assets/js/features/auth/auth.controller.js
-
-suite a evolution de 
-[`app/Controllers/Api/AuthController.php`](/refactoring/app/Controllers/Api/AuthController.php)
-2026-09-27-001
-
-### 2.1 auth.controller.js
-[/assets/js/features/auth/auth.controller.js](/old/public/assets/js/features/auth/auth.controller.js)
-conserve le pattern existant (bus → service → store) et gère les deux cas renvoyés par l’API :
-- email_verified: false → message « vérifiez votre email » (pas de token)
-- email_verified: true → login immédiat (token + user)
-
-ajout des events 
+[/assets/js/features/auth/auth.controller.js](/assets/js/features/auth/auth.controller.js) - [documentation](/assets/js/features/auth/auth.controller_js.md)
 - auth:register
 - auth:register:pending
+[/assets/js/features/auth/auth.service.js](/assets/js/features/auth/auth.service.js)
 
-#### Events
+
+
+### Events
 
 Events publiés / consommés
 
@@ -63,9 +50,6 @@ Events publiés / consommés
 | auth:error            | → bus                        | Erreur validation / conflit / serveur    |
 | auth:loading          | → bus                        | Spinner on/off                           |
 
-### 2.2 auth.service.js
-[/assets/js/features/auth/auth.service.js](/old/public/assets/js/features/auth/auth.service.js)
-modification
-- suppression version me commentée
-- ajout fetchRegister ligne 33
+
+
 
