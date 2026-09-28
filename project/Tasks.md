@@ -450,7 +450,10 @@ INSERT INTO `user_profils`(`user_id`,`tel_fixe`,`tel_mobile`,`personne_id`,`adre
 	VALUES (	1,	'0200000001',	'0600000001',	1,	1,	1,	NOW() ) , (	2,	'0200000002',	'0600000002',	2,	2,	2,	NOW() ) , (	3,	'0200000003',	'0600000003',	3,	3,	3,	NOW() ) ;
 ```
 
-organisations : 
+`user_profils`
+- Un user avec 2 orgs (contrainte UNIQUE user_id + organisation_id)
+
+`organisations` 
 - 0 interdit si FK RESTRICT sans ligne id=0 , utiliser un id réel ou assouplir le seed
 
 ## 2026-09-28-003
