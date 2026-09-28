@@ -88,3 +88,19 @@ https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-
 	- [ ]  OUI valider avec des tests token différent de session
 - préparer la gestion des rôles et permissions ( priorité - #2 )
 	- [ ] voir https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-006.md#permissions_shield
+
+ - auth usage actuelle et futur
+	- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-005.md
+ 	- Frontend - [Workbench](/documentation/WORKBENCH/ARCHITECTURE/authentification.md)
+  		- [auth.renderer.js](/old/public/assets/js/features/auth/auth.renderer.js)
+		- [auth.store.js](/old/public/assets/js/features/auth/auth.store.js)
+		- [Workbench - ToolbarAuthPanel](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
+  		- version actuelle dans uiapp.js - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js#L70
+- auth / register :
+	- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-005.md#post-apiauthregister
+	- https://shield.codeigniter.com/latest/references/authorization/#user-activation
+	- https://shield.codeigniter.com/latest/references/authentication/auth_actions/
+- permissions :
+	- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-006.md
+	- https://shield.codeigniter.com/latest/references/authorization/#managing-user-permissions
+	- https://shield.codeigniter.com/latest/guides/api_tokens/#token-permissions
