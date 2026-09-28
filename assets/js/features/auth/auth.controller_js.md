@@ -11,15 +11,3 @@ ajout des events
 - auth:register
 - auth:register:pending
 
-## Events
-
-Events publiés / consommés
-
-| Event                 | Direction                    | Rôle                                     |
-| --------------------- | ---------------------------- | ---------------------------------------- |
-| auth:check         	| ← bus (application ) 		   | démarrage app , session OU token existe ?|
-| auth:register         | ← bus (formulaire / Toolbar) | Déclenche l’inscription                  |
-| auth:register:pending | → bus                        | Compte créé, email à valider             |
-| auth:success          | → bus                        | Login immédiat (si pas d’EmailActivator) |
-| auth:error            | → bus                        | Erreur validation / conflit / serveur    |
-| auth:loading          | → bus                        | Spinner on/off                           |
