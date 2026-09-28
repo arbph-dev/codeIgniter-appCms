@@ -9,7 +9,7 @@ priorité
 	- utiliser json
  	- exploitation via systeme de task obsidian icon due, status etc..
   	- mermaid js
-- construire un mini dashboard admin dans ui.html / uiapp.js priorité - #1 voir [`2026-09-26-005`](/project/daily/2026-09-26-005.md) et [uiapp.js](/WebUI/uiapp.js)
+
 	- on commence par : GET /api/auth/me
  		- version actuelle dans uiapp.js
    			- lors de login pas de fetchme car login renvoie les mêmes infos que fetchme
