@@ -11,6 +11,20 @@ Regroupe documentation
 - tester et valider register depuis ui.html / uiapp.js
 	- [X] https://zealot.fr/register affiche un formulaire via shield au niveau session
 
+Workbench
+- On branche le formulaire register dans #user-board-body plutôt que dans la toolbar
+- On place le formulaire register dans #user-board-body, la toolbar ne garde que le bouton « Inscription ».
+
+```
+Guest toolbar
+  [Inscription] → _render('register')
+       ├─ toolbar  : bouton « Retour connexion »
+       └─ #user-board-body : formulaire register
+            [Créer le compte] → auth:register
+                 ├─ pending → message dans #user-board-body
+                 └─ success → auth:success → UserBar + clear board
+  [Retour] → _render('guest') + clear board + board:hide (via uiapp)
+```
 
 
 
