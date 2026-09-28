@@ -35,10 +35,10 @@ On doit lister les projets et les ressources, front, backend, notes
   - Web
 
 
-## Authentification
-### users
-https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-006.md#permissions_shield
-- [ ] Voir TaskPolicy et https://shield.codeigniter.com/latest/references/authorization/#addpermission
+## [Authentification](/documentation/authentification.md)
+
+
+
 
 
 # Dossier
