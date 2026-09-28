@@ -254,6 +254,13 @@ modification
 
 ui : https://zealot.fr/ui.html 
 
+|Zone|Rôle|Contrôle|
+|---|---|---|
+|.header-auth|Toolbar (login / register / user bar)|AuthPanelBase + ToolbarAuthPanel|
+|div.panel-card[data-role="admin"]|Dashboard admin|bus board:admin / board:hide|
+|div.panel-card[data-role="user"]|Dashboard user (+ form register temporaire)|bus board:user / board:register / board:hide|
+
+
 
 En fin de refactor: https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/readme.md
 - on integre
