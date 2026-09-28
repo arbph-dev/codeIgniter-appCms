@@ -498,7 +498,9 @@ documentation/ROADMAP/INVENTORY_index.md - SectionPanels
 ### 2026-09-28-001-N001
 table `user_profils` et organisations : 0 interdit si FK RESTRICT sans ligne id=0 , utiliser un id réel ou assouplir le seed
 - A revoir
-
+```sql
+organisation_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
+```
 
 ## users
 https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-006.md#permissions_shield
