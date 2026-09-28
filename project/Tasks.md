@@ -86,115 +86,24 @@ Etape
 
 
 
-### [`ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
-ToolbarAuthPanel herite  de AuthPanelBase
-- [`/assets/js/ui/workbench/auth/ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
-- [`ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
-- /assets/js/ui/workbench/auth/ToolbarAuthPanel.js
-
-
-
-Les events souscrits et les callback sont déja définis et gérés  par exemple :
-- appel de this._render('user') 
-
-```js
-	this._buildUserBar(this._user).forEach(el => this._target.appendChild(el))
-    this._bindLogout()
-```
-
-
-
-
-
 
 ## 2026-09-27-003
 
-On branche le formulaire register dans #user-board-body plutôt que dans la toolbar
-On place le formulaire register dans #user-board-body, la toolbar ne garde que le bouton « Inscription ».
-
-```
-Guest toolbar
-  [Inscription] → _render('register')
-       ├─ toolbar  : bouton « Retour connexion »
-       └─ #user-board-body : formulaire register
-            [Créer le compte] → auth:register
-                 ├─ pending → message dans #user-board-body
-                 └─ success → auth:success → UserBar + clear board
-  [Retour] → _render('guest') + clear board + board:hide (via uiapp)
-```
 
 
-|Zone|Contenu|
-|---|---|
-|.header-auth (guest)|email + password + Connexion + **Inscription**|
-|#user-board-body|formulaire register complet|
-|.header-auth (register en cours)|bouton « Retour » minimal (optionnel)|
 
-#### [`AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
-AuthPanelBase.js — ajustements dans _render(), Toolbar = login / retour / user bar
-- remplacer le case 'register'
-- remplacer le case 'register-pending'
-- Nouvelles méthodes
-	- _boardBody() reference au Conteneur du board user
-	- _mountRegisterForm(error = null)
- 	- _mountRegisterPending(message)
- 	- _clearBoardBody()
-- modifier
-	- _bindRegister doit cibler le board root, pas seulement this._target
-	- _emitRegister() const root = this._boardBody() ?? this._target
- - Et sur guest / success, nettoyer le board : this._clearBoardBody()
+
+
  
  
-#### [`ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
-`_buildRegisterToolbar()`
-- Mini barre affichée dans .header-auth pendant l'inscription 
-
-Formulaire dans #user-board-body pour register + message pending
-- suppresion bouton back
-
-#### [`uiapp.js`](/WebUI/uiapp.js)
-Afficher panel user , le formulaire est déjà monté par AuthPanelBase._mountRegisterForm.
-bus.subscribe('board:register', () => showAuthBoard('user'))
 
 
 
 
- ----
 
 
-## 2026-09-28-001
-[`ui.html`](/WebUI/ui.html) :
-- `#user-board-body` sert pour register et les infos users
 
-On doit gérer les données du Endpoint `/api/auth/me` renvoyées par le controller dans boards user 
 
-```php
-return $this->response->setStatusCode(200)->setJSON([
-	'id'          => $user->id,
-	'username'    => $user->username,
-	'email'       => $user->email,
-	'groups'      => $user->getGroups(),
-	'permissions' => $user->getPermissions(),
-]);
-```
-
-#### Helper de rendu dans [`/assets/js/uiapp.js`](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uiapp.js)
-- function badgeGroups(groups)
-- function badgePerms(permissions)
-- function renderUserCard(user, { title = 'Mon profil' } = {})
-	- Carte profil minimale des données endpoint /me { id, username, email, groups, permissions }
-
-#### Montage dans les boards [`/assets/js/uiapp.js`](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uiapp.js)
-fait sentir la nécessité d'un panel user ou workbench
-- function mountUserBoard(user) {
-- function mountAdminBoard(user) {
-
-####  Branchement bus [`/assets/js/uiapp.js`](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uiapp.js)
-- import '/assets/js/features/auth/auth.store.js'
-- remplacer initAuthBoards
-
-#### CSS minimal [`/assets/css/uistyle.css`](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uistyle.css)
-ligne 450
 
 ---
 
