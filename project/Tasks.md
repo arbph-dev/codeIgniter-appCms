@@ -93,25 +93,14 @@ ui : https://zealot.fr/ui.html
 
 
 
-En fin de refactor: https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/readme.md
-- on integre
-- on liste les composants dont les workbench
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/ui.html
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uiapp.js
-- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uistyle.css
+
 
 - [X] réserver 2 panels en tête de #stack dans  [`ui.html`](/WebUI/ui.html)
 
 
 
 
-### [`uiapp.js`](/WebUI/uiapp.js)
-uiapp.js — offset readpage + show/hide boards
-- Modifier readPage() pour ignorer les panels auth :
-- ajout function getAuthBoards()
-- ajout function hideAuthBoards()
-- ajout function showAuthBoard(role)
-- ajout function initAuthBoards() 
+
 
 ### [`AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
 Base des panels d'authentification. 
