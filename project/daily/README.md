@@ -1,10 +1,38 @@
+# DAILY
+Le refactoring touche à sa fin 
+
+On reprendra en documentation toutes les ressources frontend , web et python, backend php codeigniter dans 3 dossiers "application"
+- assets
+- app
+- python
+
+chaque fichier **frontend - web** employé est listé dans le fichier et associé à une note dans l'arborescence annexe : 
+- [/assets/ressources.md](/assets/ressources.md)
+  - chaque fonction importée doit être répertorié et expliqué si besoin
+
+
+## [project/Tasks.md](/project/Tasks.md)
+Mobilise beaucoup de ressources
+- Frontend ui
+- Backend
+  - Authentification -> TEST Register à faire
+  - Administration
+  - Métier
+    -  Tasks 
+
+
 # PROJETS
 On doit lister les projets et les ressources, front, backend, notes
 
 - Authentification
 - Administration
 - CMS
-- Adresse
+- Métiers
+  - Adresse
+  - Tasks
+- Frontend
+  - Python
+  - Web
 
 
 ## Authentification
