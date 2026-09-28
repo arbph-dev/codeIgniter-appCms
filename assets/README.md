@@ -20,20 +20,26 @@ C'est le dossier OVH à gérer
 ## Arborescence
 
 - [`/public/ui.html`](/assets/ui_html.md)
-- /public/assets/css/
-  - [`uistyle.css`](/assets/css/uistyle_css.md)
-- /public/assets/js/
-  - [`uiapp.js`](/assets/js/uiapp_js.md)
-- /assets/js/components/
-  - [apex.js](/assets/js/components/apex_js.md)
-  - [codeval.js](/assets/js/components/codeval_js.md)
-  - [mermaid.js](/assets/js/components/mermaid_js.md)
-- /assets/js/core/
-  - domhelper.js
-  - eventBus.js
+- /public/assets/
+  - /public/assets/css/
+    - [`uistyle.css`](/assets/css/uistyle_css.md)
+  - /public/assets/js/
+    - [`uiapp.js`](/assets/js/uiapp_js.md)
+    - /public/assets/js/components/ - /assets/js/components/ 
+      - [apex.js](/assets/js/components/apex_js.md) - /assets/js/components/apex.js
+      - [codeval.js](/assets/js/components/codeval_js.md)
+      - [mermaid.js](/assets/js/components/mermaid_js.md)
+    - /public/assets/js/core/
+      - [domhelper.js](/assets/js/core/domhelper_js.md)
+      - [eventBus.js](/public/assets/js/core/eventBus_js.md) - /public/assets/js/core/eventBus.js 
 - /assets/js/libs/
   - [/assets/js/libs/physics_js.md](/assets/js/libs/physics_js.md)
+- /assets/js/ui/
+  - /assets/js/ui/workbench/
+    - /assets/js/ui/workbench/auth/
+- [`/assets/js/ui/workbench/auth/ToolbarAuthPanel.js`](/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
 
+[documentation](/assets/js/ui/workbench/auth/ToolbarAuthPanel_js.md)
 
 ## Domaine
 
