@@ -1,5 +1,4 @@
-- chaque fichier employé est listé dans une note annexe [/assets/ressources.md](/assets/ressources.md)
-- chaque fonction importée doit être répertorié et expliqué si besoin
+
 
 # Ressources serveur : (/public)
 
