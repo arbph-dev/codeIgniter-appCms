@@ -31,7 +31,7 @@ C'est le dossier OVH à gérer
       - [mermaid.js](/assets/js/components/mermaid_js.md)
     - /public/assets/js/core/
       - [/assets/js/core/domhelper.js](/assets/js/core/domhelper.js) - [documentation domhelper.js](/assets/js/core/domhelper_js.md)
-      - [/assets/js/core/eventBus.js](/assets/js/core/eventBus.js) [documentation eventBus.js](/public/assets/js/core/eventBus_js.md)
+      - [/assets/js/core/eventBus.js](/assets/js/core/eventBus.js) [documentation eventBus.js](/assets/js/core/eventBus_js.md)
 - /assets/js/libs/
   - [/assets/js/libs/physics_js.md](/assets/js/libs/physics_js.md)
 - /assets/js/ui/
