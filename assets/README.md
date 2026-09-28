@@ -30,19 +30,19 @@ C'est le dossier OVH à gérer
       - [`apex.js`](/assets/js/components/apex.js) - [documentation apex.js](/assets/js/components/apex_js.md)
       - [codeval.js](/assets/js/components/codeval_js.md)
       - [mermaid.js](/assets/js/components/mermaid_js.md)
-    - /public/assets/js/core/
+    - [`/core/`](/public/assets/js/core/)
       - [/assets/js/core/domhelper.js](/assets/js/core/domhelper.js) - [documentation domhelper.js](/assets/js/core/domhelper_js.md)
       - [/assets/js/core/eventBus.js](/assets/js/core/eventBus.js) [documentation eventBus.js](/assets/js/core/eventBus_js.md)
-- /assets/js/libs/
-  - [/assets/js/libs/physics_js.md](/assets/js/libs/physics_js.md)
-- /assets/js/ui/
-  - /assets/js/ui/workbench/
-    - /assets/js/ui/workbench/auth/
-      - [`/assets/js/ui/workbench/auth/ToolbarAuthPanel.js`](/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
-    - /assets/js/ui/workbench/core/
-      - [/assets/js/ui/workbench/core/AuthPanelBase.js](/assets/js/ui/workbench/core/AuthPanelBase.js) - [documentation AuthPanelBase.js](/assets/js/ui/workbench/core/AuthPanelBase_js.md)
+  - [`/libs/`](/public/assets/js/libs/)
+    - [physics.js](/assets/js/libs/physics.js)- [documentation physics.js](/assets/js/libs/physics_js.md)
+  - [`/ui/`](/assets/js/ui/)
+    - [`/workbench/`](/assets/js/ui/workbench/)
+      - /assets/js/ui/workbench/auth/
+        - [ToolbarAuthPanel.js](/assets/js/ui/workbench/auth/ToolbarAuthPanel.js) - [documentation ToolbarAuthPanel.js](/assets/js/ui/workbench/auth/ToolbarAuthPanel_js.md)
+      - /assets/js/ui/workbench/core/
+        - [/assets/js/ui/workbench/core/AuthPanelBase.js](/assets/js/ui/workbench/core/AuthPanelBase.js) - [documentation AuthPanelBase.js](/assets/js/ui/workbench/core/AuthPanelBase_js.md)
 
-[documentation](/assets/js/ui/workbench/auth/ToolbarAuthPanel_js.md)
+
 
 ## Domaine
 
