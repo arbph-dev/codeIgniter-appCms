@@ -1,4 +1,4 @@
-[/assets/js/features/auth/auth.controller.js](/old/public/assets/js/features/auth/auth.controller.js)
+[/assets/js/features/auth/auth.controller.js](/assets/js/features/auth/auth.controller.js)
 
 # auth.controller.js
 
