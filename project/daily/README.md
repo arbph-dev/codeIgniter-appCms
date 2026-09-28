@@ -14,6 +14,7 @@ chaque fichier **frontend - web** employé est listé dans le fichier et associ�
 ## [project/Tasks.md](/project/Tasks.md)
 Mobilise beaucoup de ressources
 - Frontend ui
+  - construire un mini dashboard admin dans ui.html / uiapp.js priorité - #1 voir [`2026-09-26-005`](/project/daily/2026-09-26-005.md) et [uiapp.js](/WebUI/uiapp.js) 
 - Backend
   - Authentification -> TEST Register à faire
   - Administration
