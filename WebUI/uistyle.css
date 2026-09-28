@@ -447,6 +447,29 @@ nav a.closebtn {
 
 /* --------------------------------------------------------------- */
 
+.adm-detail-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.adm-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; background: var(--accent, #0057b8); color: #fff;
+}
+.adm-dl { display: grid; grid-template-columns: 8rem 1fr; gap: .35rem 1rem; }
+.adm-dl dt { opacity: .7; }
+.adm-badge {
+    display: inline-block; padding: .15rem .45rem; margin: .1rem;
+    border-radius: 4px; font-size: .8rem; background: #333; color: #eee;
+}
+.adm-badge--admin, .adm-badge--superadmin { background: #8b0000; }
+.adm-badge--user { background: #1a4a1a; }
+.adm-badge--none { opacity: .5; }
+.panel-hint { margin-top: 1rem; opacity: .6; font-size: .85rem; }
+
+
+
+
+
+
+
 /*-------------------------------------------------*/
 .cp_voxzone_textarea {
   width: 100%;
