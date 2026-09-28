@@ -1,5 +1,8 @@
 # [`app/Config/Routes.php`](/app/Config/Routes.php)
+2026-09-27-001 - Groupe `api/auth` - Commenter `GET /api/auth/profile`
+2026-09-27-001 - Groupe `api/auth` - Ajout `POST /api/auth/register`
 
 
-2026-09-27-001 - Ajout `POST /api/auth/register` au groupe `api/auth` déjà existant.
 
+## Groupe 
+- `api/auth`
