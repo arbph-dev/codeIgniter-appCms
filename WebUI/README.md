@@ -3,18 +3,23 @@ Pour séparer les parties frontend et backend on utilise le serveur pour
 - les pages html, ressources images
 - les apis
 
+En fin de refactor: https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/readme.md
+- on integre
+- on liste les composants dont les workbench
+
+# Application
 Trois fichiers sont les piliers de l'évolution 
-- [/WebUI/ui.html](/WebUI/ui.html) il est a documenté ici [/assets/ui_html.md](/assets/ui_html.md)
-- [/WebUI/uiapp.js](/WebUI/uiapp.js)
-  - path serveur : (/public) /assets/js/uiapp.js
-  - documenté ici [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
-- [/WebUI/uistyle.css](/WebUI/uistyle.css) path serveur : (/public) /assets/css/uistyle.css
+- [/WebUI/ui.html](/WebUI/ui.html) - [documentation](/assets/ui_html.md)
+- [/WebUI/uiapp.js](/WebUI/uiapp.js) - [documentation](/assets/js/uiapp_js.md)
+- [/WebUI/uistyle.css](/WebUI/uistyle.css) - [documentation](/assets/css/uistyle_css.md)
 
 [Orbis](/Orbis/index.md) reste en soutien pour réaliser des jeux de données via d'autres sources
 
 **Important**
 On va préparer la version final du repository pour un backup serveur et un nettoyage avant publication
 
+
+# Historique
 
 
 
