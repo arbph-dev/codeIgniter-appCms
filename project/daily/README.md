@@ -6,19 +6,26 @@ On doit lister les projets et les ressources, front, backend, notes
 - CMS
 - Adresse
 
-## Dossier
+
+## Authentification
+### users
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-006.md#permissions_shield
+- [ ] Voir TaskPolicy et https://shield.codeigniter.com/latest/references/authorization/#addpermission
+
+
+# Dossier
 les dossiers importants
 
 
 
 
-## Endpoint
+# Endpoint
 les Endpoint sont associés a des projets, route, controller, service models et entities
 
 on doit détailler les usages et les réponses
 
 
-## Notes et taches
+# Notes et taches
 
 ### 2026-09-27-001-N001
 - [ ] Dans admin exploiter SELECT * FROM `auth_logins` pour voir log ou recherche
