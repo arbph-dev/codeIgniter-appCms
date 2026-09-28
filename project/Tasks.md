@@ -1,9 +1,5 @@
 
 
-priorité 
-
-- [X] voir le besoin d'un model user avec relation personne_id ?
-	- NON il faut passer par un profilclilent
 
 - déterminer la structure des tasks . priorité - #4
 	- utiliser json
@@ -23,15 +19,7 @@ priorité
   		- [app/Controllers/Admin.php](/old/app/Controllers/Admin.php)
   	 	- [app/Views/cms/admin.php](/old/app/Views/cms/admin.php)
 
-Objectif :
-- créer des users via register
-	- voir config : action `app/Config/Auth.php`
-	- créer des comptes mail - fait 1 sur protonmail
-	- améliorer sécurité : tester ip ?
-	- groupe : 
-		- Groups are defined within the `Shield\Config\AuthGroups` config class.
-	- faire un dash admin minimal dans ui.html
-		- affectation des users au groupe et droits par domaine voir projets
+
 - tasks
 	- créer un projet avec des taches
 	- visualisation, liste projets, liste taches par projet liste de toutes les taches / responsables, personne affectée,  gantt / mermaid
@@ -64,84 +52,33 @@ Ressources
 
 
 
-
-
 [`2026-09-26-003`](/project/daily/2026-09-26-003.md) - modèle de données
 - [ ] Valider champ et index
 	- [ ] https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-003.md#111---tasks
  - [ ] Apres validation du model tasks supprimer Fichier : 2025-01-01-000001_create_taches.sql
 
-[`2026-09-26-005`](/project/daily/2026-09-26-005.md) - utilisation actuelle des user shield
-- [X] Valider me
-- [X] Supprimer profile route et controller
+
 
 [`2026-09-26-006`](/project/daily/2026-09-26-006.md)
 - [ ] Valider ajout des tables : projects , project_members (necessaire pour ajuster les droits)
-- [-] relation projets - Organisation/entreprise/Etablissement , user - personne
+- [ ] relation projets - Organisation/entreprise/Etablissement , user - personne
 	- peu d'intérêt sans telephone
 - [X] user_profils  avec tel fixe, mobile, index user_id user relation ou id personne  et organisation
 - [ ] voir possibilité de trouver: user - Etablissement avec user - personne et personne - Organisation/entreprise/Etablissement
 
 
 
-
-
 ## 2026-09-27-001
-
-
-
 Etape
 - [X] migration user_profils
 - Model + Route + Controller/Service (backend register minimal + stub profil)
-	- [X] 1.1 Model
-	- [X] 1.2 Route
- 	- [X] 1.3 Controller
 - Formulaire register dans ui.html + gestion bus dans uiapp.js / auth.*
-	- [X] 2.1 auth.controller.js
- 	- [X] 2.2 auth.service.js
 - Toolbar2AuthPanel (boutons + affichage panel board)
 - Dashboards user / admin (contenu des panel-card)
 - Activation mail + tests
 
 
 
-### 2.1 auth.controller.js
-[/assets/js/features/auth/auth.controller.js](/old/public/assets/js/features/auth/auth.controller.js)
-conserve le pattern existant (bus → service → store) et gère les deux cas renvoyés par l’API :
-- email_verified: false → message « vérifiez votre email » (pas de token)
-- email_verified: true → login immédiat (token + user)
-
-ajout des events 
-- auth:register
-- auth:register:pending
-
-#### Events
-
-Events publiés / consommés
-
-| Event                 | Direction                    | Rôle                                     |
-| --------------------- | ---------------------------- | ---------------------------------------- |
-| auth:check         	| ← bus (application ) 		   | démarrage app , session OU token existe ?|
-| auth:register         | ← bus (formulaire / Toolbar) | Déclenche l’inscription                  |
-| auth:register:pending | → bus                        | Compte créé, email à valider             |
-| auth:success          | → bus                        | Login immédiat (si pas d’EmailActivator) |
-| auth:error            | → bus                        | Erreur validation / conflit / serveur    |
-| auth:loading          | → bus                        | Spinner on/off                           |
-
-### 2.2 auth.service.js
-[/assets/js/features/auth/auth.service.js](/old/public/assets/js/features/auth/auth.service.js)
-modification
-- suppression version me commentée
-- ajout fetchRegister ligne 33
-
-#### Exports
-
-| Fonction      | Endpoint                | Auth             |
-| ------------- | ----------------------- | ---------------- |
-| fetchLogin    | POST /api/auth/login    | Public           |
-| fetchRegister | POST /api/auth/register | Public           |
-| fetchMe       | GET /api/auth/me        | Bearer optionnel |
-| fetchLogout   | POST /api/auth/logout   | Bearer           |
 
  ----
 ## 2026-09-27-002
