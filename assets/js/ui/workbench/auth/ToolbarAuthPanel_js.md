@@ -14,4 +14,8 @@ Les events souscrits et les callback sont déjà définis et gérés  par exempl
     this._bindLogout()
 ```
 
+`_buildRegisterToolbar()`
+- Mini barre affichée dans .header-auth pendant l'inscription 
 
+Formulaire dans #user-board-body pour register + message pending
+- suppresion bouton back
