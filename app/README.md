@@ -9,3 +9,5 @@ voir aussi [/assets/](/assets)
     - app/Controllers/Api/
       - app/Controllers/Api/AuthController_php.md
       - app/Controllers/Api/AuthController.php
+  - app/Entities/
+    - app/Entities/UserProfil.php
