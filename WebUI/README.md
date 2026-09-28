@@ -5,7 +5,9 @@ Pour séparer les parties frontend et backend on utilise le serveur pour
 
 Trois fichiers sont les piliers de l'évolution 
 - [/WebUI/ui.html](/WebUI/ui.html) il est a documenté ici [/assets/ui_html.md](/assets/ui_html.md)
-- [/WebUI/uiapp.js](/WebUI/uiapp.js) path serveur : (/public) /assets/js/uiapp.js
+- [/WebUI/uiapp.js](/WebUI/uiapp.js)
+  - path serveur : (/public) /assets/js/uiapp.js
+  - documenté ici [/assets/js/uiapp_js.md](/assets/js/uiapp_js.md)
 - [/WebUI/uistyle.css](/WebUI/uistyle.css) path serveur : (/public) /assets/css/uistyle.css
 
 [Orbis](/Orbis/index.md) reste en soutien pour réaliser des jeux de données via d'autres sources
