@@ -402,22 +402,29 @@ return $this->response->setStatusCode(200)->setJSON([
 ]);
 ```
 
-Helper de rendu dans uiapp.js
+#### Helper de rendu dans [`/assets/js/uiapp.js`](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uiapp.js)
 - function badgeGroups(groups)
 - function badgePerms(permissions)
 - function renderUserCard(user, { title = 'Mon profil' } = {})
 	- Carte profil minimale des données endpoint /me { id, username, email, groups, permissions }
 
-2 Montage dans les boards
+#### Montage dans les boards [`/assets/js/uiapp.js`](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uiapp.js)
 fait sentir la nécessité d'un panel user ou workbench
 - function mountUserBoard(user) {
 - function mountAdminBoard(user) {
 
-3 Branchement bus dans initAuthBoards()
+####  Branchement bus [`/assets/js/uiapp.js`](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uiapp.js)
+- import '/assets/js/features/auth/auth.store.js'
+- remplacer initAuthBoards
 
-4 CSS minimal (si pas déjà présent)
+#### CSS minimal [`/assets/css/uistyle.css`](https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uistyle.css)
+ligne 450
 
-### Ordre de test recommandé
+---
+
+## 2026-09-28-002
+
+#### Ordre de test recommandé
 
 Register (API + form dans #user-board-body)
 Seeder 3 users (ex. user / admin / superadmin)
