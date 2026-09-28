@@ -83,41 +83,7 @@ Etape
  ----
 ## 2026-09-27-002
 
-ui : https://zealot.fr/ui.html 
 
-|Zone|Rôle|Contrôle|
-|---|---|---|
-|.header-auth|Toolbar (login / register / user bar)|AuthPanelBase + ToolbarAuthPanel|
-|div.panel-card[data-role="admin"]|Dashboard admin|bus board:admin / board:hide|
-|div.panel-card[data-role="user"]|Dashboard user (+ form register temporaire)|bus board:user / board:register / board:hide|
-
-
-
-
-
-- [X] réserver 2 panels en tête de #stack dans  [`ui.html`](/WebUI/ui.html)
-
-
-
-
-
-
-### [`AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
-Base des panels d'authentification. 
-
-Contrat sous-classes :_buildLoading(), _buildGuestForm(error) , _buildRegisterForm(error) NOUVEAU ,  _buildUserBar(user)
-- ToolbarAuthPanel doit réimplementer _buildUserBar
-
-AuthPanelBase.js gere le bus états + bindings 
-
-```js
-this._onSuccess = ({ user }) => { this._user = user; this._render('user') }
-
-bus.subscribe('auth:success', this._onSuccess)
-```
-- [`/assets/js/ui/workbench/core/AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
-- [`AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
-- /assets/js/ui/workbench/core/AuthPanelBase.js 
 
 
 ### [`ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
