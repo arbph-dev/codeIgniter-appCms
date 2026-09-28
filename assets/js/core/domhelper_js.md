@@ -1,3 +1,6 @@
+ - [/assets/js/core/domhelper.js](/assets/js/core/domhelper.js)
+ - /public/assets/js/core/domhelper.js
+
 
 # Exploitation
 
