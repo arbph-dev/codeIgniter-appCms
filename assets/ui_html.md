@@ -71,7 +71,18 @@ Sidebar doit etre généré par script
 
 ## Panels / Onglets
 
-le css associé
+réserver 2 panels en tête de #stack dans 
+- [`ui.html - ligne 68`](/WebUI/ui.html#L68)
+- [`ui.html - ligne 82`](/WebUI/ui.html#L82)
+
+```html
+ <div class="panel-card hidden" data-role="admin" data-index="-2">
+```
+note :
+- data-role pour eviter de les intégrer au menu
+- data-index="-2"
+
+### css associé
 - panel-card
 - panel-title
 - panel-description
@@ -80,6 +91,8 @@ le css associé
 - tab-btn et tab-btn active
 - tab-content et tab-content active
 
+
+### structure
 ```html
 <div class="panel-card">
     <h2 class="panel-title">...</h2>
