@@ -1,5 +1,14 @@
 # user_profils
 
+#### a tester
+`user_profils` 
+- Un user avec 2 orgs (contrainte UNIQUE user_id + organisation_id)
+
+#### revoir
+`organisations` 
+- 0 interdit si FK RESTRICT sans ligne id=0 , utiliser un id réel ou assouplir le seed
+
+
 ## migration sql (mysql)
 
 ```sql
@@ -67,11 +76,7 @@ INSERT INTO `user_profils`(`user_id`,`tel_fixe`,`tel_mobile`,`personne_id`,`adre
 	(	3,	'0200000003',	'0600000003',	3,	3,	3,	NOW() ) ;
 ```
 
-`user_profils`
-- Un user avec 2 orgs (contrainte UNIQUE user_id + organisation_id)
 
-`organisations` 
-- 0 interdit si FK RESTRICT sans ligne id=0 , utiliser un id réel ou assouplir le seed
 
 
 
