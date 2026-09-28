@@ -83,7 +83,7 @@ REGISTER
 ### [users](/documentation/MIGRATIONS/users.md)
 
 ### user_profils
-### 2026-09-27-001
+2026-09-27-001
 - [X] [migration user_profils](/documentation/MIGRATIONS/user_profils.md)
 - [X] Model
 	- [`app/Entities/UserProfil.php`](/app/Entities/UserProfil.php)
