@@ -33,6 +33,7 @@ Projet / tasks induit des évolutions pour authentification et administration
 [/assets/js/features/auth/auth.controller.js](/assets/js/features/auth/auth.controller.js) - [documentation](/assets/js/features/auth/auth.controller_js.md)
 - auth:register
 - auth:register:pending
+ 
 [/assets/js/features/auth/auth.service.js](/assets/js/features/auth/auth.service.js)
 
 
