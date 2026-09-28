@@ -109,3 +109,13 @@ https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-
 	- https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-006.md
 	- https://shield.codeigniter.com/latest/references/authorization/#managing-user-permissions
 	- https://shield.codeigniter.com/latest/guides/api_tokens/#token-permissions
+
+Objectif :
+- créer des users via register
+	- voir config : action `app/Config/Auth.php`
+	- créer des comptes mail - fait 1 sur protonmail
+	- améliorer sécurité : tester ip ?
+	- groupe : 
+		- Groups are defined within the `Shield\Config\AuthGroups` config class.
+	- faire un dash admin minimal dans ui.html
+		- affectation des users au groupe et droits par domaine voir projets
