@@ -86,7 +86,11 @@ modifier [`uiapp.js`](/WebUI/uiapp.js)
 - show/hide boards
 - Modifier readPage() pour ignorer les panels auth :
 
-
+|Zone|Rôle|Contrôle|
+|---|---|---|
+|.header-auth|Toolbar (login / register / user bar)|AuthPanelBase + ToolbarAuthPanel|
+|div.panel-card[data-role="admin"]|Dashboard admin|bus board:admin / board:hide|
+|div.panel-card[data-role="user"]|Dashboard user (+ form register temporaire)|bus board:user / board:register / board:hide|
 
 ### css associé
 - panel-card
