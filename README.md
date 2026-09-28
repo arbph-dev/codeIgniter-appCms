@@ -38,6 +38,8 @@ Après différentes versions on arrive a une stabilisation du pattern
 - Travaux [/index.md](/index.md)
 - Documentation [/documentation](/documentation)
 - Notes quotidiennes : [/project/daily](/project/daily)
+- [project/Tasks.md](/project/Tasks.md) à éclater dans [/documentation](/documentation)
+
 
 ### Pyhton
 Audit de projet 
