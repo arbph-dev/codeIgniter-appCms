@@ -18,8 +18,8 @@ bus.subscribe('auth:success', this._onSuccess)
 
 
 
-#### [`AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
-AuthPanelBase.js — ajustements dans _render(), Toolbar = login / retour / user bar
+## historique
+ajustements dans _render(), Toolbar = login / retour / user bar
 - remplacer le case 'register'
 - remplacer le case 'register-pending'
 - Nouvelles méthodes
@@ -30,4 +30,4 @@ AuthPanelBase.js — ajustements dans _render(), Toolbar = login / retour / user
 - modifier
 	- _bindRegister doit cibler le board root, pas seulement this._target
 	- _emitRegister() const root = this._boardBody() ?? this._target
- - Et sur guest / success, nettoyer le board : this._clearBoardBody()
+ - sur guest / success, nettoyer le board : this._clearBoardBody()
