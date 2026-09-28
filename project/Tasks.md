@@ -269,11 +269,11 @@ En fin de refactor: https://github.com/arbph-dev/codeIgniter-appCms/blob/main/as
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uiapp.js
 - https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uistyle.css
 
-- [X] réserver 2 panels en tête de #stack dans  [`ui.html`](/WebUI/ui.html#L60)
+- [X] réserver 2 panels en tête de #stack dans  [`ui.html`](/WebUI/ui.html)
 
 
-### réserver 2 panels 
-en tête de #stack dans 
+###  [`ui.html`](/WebUI/ui.html)
+réserver 2 panels en tête de #stack dans 
 - [`ui.html - ligne 68`](/WebUI/ui.html#L68)
 - [`ui.html - ligne 82`](/WebUI/ui.html#L82)
 
@@ -284,33 +284,39 @@ note :
 - data-role="admin" pour eviter de les intégrer au menu
 - data-index="-2"
 
+### [`uiapp.js`](/WebUI/uiapp.js)
+uiapp.js — offset readpage + show/hide boards
+- Modifier readPage() pour ignorer les panels auth :
+- ajout function getAuthBoards()
+- ajout function hideAuthBoards()
+- ajout function showAuthBoard(role)
+- ajout function initAuthBoards() 
 
-
-
-
-AuthPanelBase
-- [`/assets/js/ui/workbench/core/AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
-- [`AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
-- 
-AuthPanelBase.js — états + bindings /assets/js/ui/workbench/core/AuthPanelBase.js
-
-ToolbarAuthPanel.js
-- [`/assets/js/ui/workbench/auth/ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
-- [`ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
-- /assets/js/ui/workbench/auth/ToolbarAuthPanel.js
-
-
-uiapp.js — offset + show/hide boards
-
-
-
-gere le bus
+### [`AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
+AuthPanelBase.js gere le bus états + bindings 
 
 ```js
 this._onSuccess = ({ user }) => { this._user = user; this._render('user') }
 
 bus.subscribe('auth:success', this._onSuccess)
 ```
+- [`/assets/js/ui/workbench/core/AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
+- [`AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
+- /assets/js/ui/workbench/core/AuthPanelBase.js 
+
+
+### [`ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
+ToolbarAuthPanel.js
+- [`/assets/js/ui/workbench/auth/ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
+- [`ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
+- /assets/js/ui/workbench/auth/ToolbarAuthPanel.js
+
+
+
+
+
+
+
 
 ToolbarAuthPanel herite  de AuthPanelBase mais ToolbarAuthPanel doit réimplementer _buildUserBar
 
