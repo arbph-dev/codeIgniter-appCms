@@ -26,12 +26,12 @@ C'est le dossier OVH à gérer
   - /public/assets/js/
     - [`uiapp.js`](/assets/js/uiapp_js.md)
     - /public/assets/js/components/ - /assets/js/components/ 
-      - [apex.js](/assets/js/components/apex_js.md) - /assets/js/components/apex.js
+      - [/assets/js/components/apex.js](/assets/js/components/apex.js) - [documentation apex.js](/assets/js/components/apex_js.md)
       - [codeval.js](/assets/js/components/codeval_js.md)
       - [mermaid.js](/assets/js/components/mermaid_js.md)
     - /public/assets/js/core/
-      - [domhelper.js](/assets/js/core/domhelper_js.md)
-      - [eventBus.js](/public/assets/js/core/eventBus_js.md) - /public/assets/js/core/eventBus.js 
+      - [/assets/js/core/domhelper.js](/assets/js/core/domhelper.js) - [documentation domhelper.js](/assets/js/core/domhelper_js.md)
+      - [/assets/js/core/eventBus.js](/assets/js/core/eventBus.js) [documentation eventBus.js](/public/assets/js/core/eventBus_js.md)
 - /assets/js/libs/
   - [/assets/js/libs/physics_js.md](/assets/js/libs/physics_js.md)
 - /assets/js/ui/
