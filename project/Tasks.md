@@ -423,18 +423,43 @@ ligne 450
 ---
 
 ## 2026-09-28-002
+Préparation du seeder `user_profils` . on réalise un jeu de donnés qui sera corrigés ensuite
 
-#### Ordre de test recommandé
+#### lister les champs
+1. `id`
+2. `user_id`
+3. `tel_fixe`
+4. `tel_mobile`
+5. `personne_id`
+6. `adresse_id`
+7. `organisation_id`
+8. `defaut`, 
+9. `created_at`,
+10. `updated_at`
 
-Register (API + form dans #user-board-body)
-Seeder 3 users (ex. user / admin / superadmin)
-Login → Board user → carte /me
-Login admin → bouton Admin → board admin
-Ensuite : enrichir /me (ou endpoint dédié) avec user_profils
+**champs a employer**
+2 `user_id`
+3 `tel_fixe`
+4 `tel_mobile`
+5 `personne_id`
+6 `adresse_id`
+7 `organisation_id`
+9 `created_at`, TIMESTAMP
+```sql
+INSERT INTO `user_profils`(`user_id`,`tel_fixe`,`tel_mobile`,`personne_id`,`adresse_id`, `organisation_id`, `created_at`) 
+	VALUES (	1,	'0200000001',	'0600000001',	1,	1,	1,	NOW() ) , (	2,	'0200000002',	'0600000002',	2,	2,	2,	NOW() ) , (	3,	'0200000003',	'0600000003',	3,	3,	3,	NOW() ) ;
+```
+
+## 2026-09-28-003
+ Tests
+- Register (API + form dans #user-board-body)
+- Seeder 3 users (ex. user / admin / superadmin)
+- Login → Board user → carte /me
+- Login admin → bouton Admin → board admin
+- Ensuite : enrichir /me (ou endpoint dédié) avec user_profils
 
 
-Prochaine étape utile : 
-seeder 3 users (Shield + éventuellement 1 user_profil chacun), ou on reste sur le test register API en premier ?
+
 
 
  
