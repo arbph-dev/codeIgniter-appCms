@@ -103,17 +103,7 @@ En fin de refactor: https://github.com/arbph-dev/codeIgniter-appCms/blob/main/as
 - [X] réserver 2 panels en tête de #stack dans  [`ui.html`](/WebUI/ui.html)
 
 
-###  [`ui.html`](/WebUI/ui.html)
-réserver 2 panels en tête de #stack dans 
-- [`ui.html - ligne 68`](/WebUI/ui.html#L68)
-- [`ui.html - ligne 82`](/WebUI/ui.html#L82)
 
-```html
- <div class="panel-card hidden" data-role="admin" data-index="-2">
-```
-note :
-- data-role="admin" pour eviter de les intégrer au menu
-- data-index="-2"
 
 ### [`uiapp.js`](/WebUI/uiapp.js)
 uiapp.js — offset readpage + show/hide boards
