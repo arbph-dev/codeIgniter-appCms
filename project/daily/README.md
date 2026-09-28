@@ -15,7 +15,7 @@ https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-
 
 # Dossier
 les dossiers importants
-
+- [documentation/MIGRATIONS](/documentation/MIGRATIONS)
 
 
 
