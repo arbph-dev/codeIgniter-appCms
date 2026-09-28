@@ -36,6 +36,44 @@ CREATE TABLE user_profils (
         ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
+## Seeder
+**lister les champs**
+1. `id`
+2. `user_id`
+3. `tel_fixe`
+4. `tel_mobile`
+5. `personne_id`
+6. `adresse_id`
+7. `organisation_id`
+8. `defaut`, 
+9. `created_at`,
+10. `updated_at`
+
+**champs a employer**
+- 2 `user_id`
+- 3 `tel_fixe`
+- 4 `tel_mobile`
+- 5 `personne_id`
+- 6 `adresse_id`
+- 7 `organisation_id`
+- 9 `created_at`, TIMESTAMP
+
+**Code sql**
+```sql
+INSERT INTO `user_profils`(`user_id`,`tel_fixe`,`tel_mobile`,`personne_id`,`adresse_id`, `organisation_id`, `created_at`) 
+	VALUES
+	(	1,	'0200000001',	'0600000001',	1,	1,	1,	NOW() ) ,
+    (	2,	'0200000002',	'0600000002',	2,	2,	2,	NOW() ) ,
+	(	3,	'0200000003',	'0600000003',	3,	3,	3,	NOW() ) ;
+```
+
+`user_profils`
+- Un user avec 2 orgs (contrainte UNIQUE user_id + organisation_id)
+
+`organisations` 
+- 0 interdit si FK RESTRICT sans ligne id=0 , utiliser un id réel ou assouplir le seed
+
+
 
 ## historique
 - renommer client_profil en user_profils
