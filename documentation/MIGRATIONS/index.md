@@ -8,6 +8,7 @@ ordre d'import : Les tables sont listées par projet dans l'ordre de création, 
 
 | PROJET | NOTES | LIEN |
 | --- | --- | --- |
+| CI | table système CI | [users](/documentation/MIGRATIONS/users.md) |
 | CMS | articles des catégories | [cmsarticles](/documentation/MIGRATIONS/cmsarticles.md) |
 | CMS | catégories pour classer les articles | [cmscategories](/documentation/MIGRATIONS/cmscategories.md) |
 | CMS |  | [cmsparts](/documentation/MIGRATIONS/cmsparts.md) |
@@ -17,7 +18,8 @@ ordre d'import : Les tables sont listées par projet dans l'ordre de création, 
 
 
 # Projet
-
+## CI
+table système CI
 ## CMS
 ordre d'import : 
 1. [component_types](/documentation/MIGRATIONS/component_types.md)
