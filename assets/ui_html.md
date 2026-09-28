@@ -71,7 +71,7 @@ Sidebar doit etre généré par script
 
 ## Panels / Onglets
 
-réserver 2 panels en tête de #stack dans 
+#### réserver 2 panels en tête de #stack dans 
 - [`ui.html - ligne 68`](/WebUI/ui.html#L68)
 - [`ui.html - ligne 82`](/WebUI/ui.html#L82)
 
@@ -81,6 +81,12 @@ réserver 2 panels en tête de #stack dans
 note :
 - data-role pour eviter de les intégrer au menu
 - data-index="-2"
+
+modifier [`uiapp.js`](/WebUI/uiapp.js) 
+- show/hide boards
+- Modifier readPage() pour ignorer les panels auth :
+
+
 
 ### css associé
 - panel-card
