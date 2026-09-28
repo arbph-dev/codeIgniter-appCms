@@ -1,8 +1,7 @@
 
 
 priorité 
-- [X] supprimer la route et le code controller pour profile ? [app/Controllers/Api/AuthController.php](/old/app/Controllers/Api/AuthController.php)
-	- OUI a faire après vérification usage et ou migration ui.html -> portail
+
 - [X] voir le besoin d'un model user avec relation personne_id ?
 	- NON il faut passer par un profilclilent
 - tester et valider register depuis ui.html / uiapp.js
