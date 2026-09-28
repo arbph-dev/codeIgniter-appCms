@@ -293,6 +293,11 @@ uiapp.js — offset readpage + show/hide boards
 - ajout function initAuthBoards() 
 
 ### [`AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
+Base des panels d'authentification. 
+
+Contrat sous-classes :_buildLoading(), _buildGuestForm(error) , _buildRegisterForm(error) NOUVEAU ,  _buildUserBar(user)
+- ToolbarAuthPanel doit réimplementer _buildUserBar
+
 AuthPanelBase.js gere le bus états + bindings 
 
 ```js
@@ -306,19 +311,12 @@ bus.subscribe('auth:success', this._onSuccess)
 
 
 ### [`ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
-ToolbarAuthPanel.js
+ToolbarAuthPanel herite  de AuthPanelBase
 - [`/assets/js/ui/workbench/auth/ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
 - [`ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
 - /assets/js/ui/workbench/auth/ToolbarAuthPanel.js
 
 
-
-
-
-
-
-
-ToolbarAuthPanel herite  de AuthPanelBase mais ToolbarAuthPanel doit réimplementer _buildUserBar
 
 Les events souscrits et les callback sont déja définis et gérés  par exemple :
 - appel de this._render('user') 
