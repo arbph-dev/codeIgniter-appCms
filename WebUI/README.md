@@ -4,7 +4,7 @@ Pour séparer les parties frontend et backend on utilise le serveur pour
 - les apis
 
 Trois fichiers sont les piliers de l'évolution 
-- [/WebUI/ui.html](/WebUI/ui.html)
+- [/WebUI/ui.html](/WebUI/ui.html) il est a documenté ici [/assets/ui_html.md](/assets/ui_html.md)
 - [/WebUI/uiapp.js](/WebUI/uiapp.js) path serveur : (/public) /assets/js/uiapp.js
 - [/WebUI/uistyle.css](/WebUI/uistyle.css) path serveur : (/public) /assets/css/uistyle.css
 
