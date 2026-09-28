@@ -74,29 +74,13 @@ Ressources
 - articles GMAO devront pouvoir bénéficier des droits comme Tasks : https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-004.md
 
 ---
-**Tables**
-- [users](/documentation/MIGRATIONS/users.md)
+## tables 
+### [users](/documentation/MIGRATIONS/users.md)
+### [user_profils](/documentation/MIGRATIONS/user_profils.md)
+CREATION + SEEDER : migration user_profils 
 
 
-# [`2026-09-26-003`](/project/daily/2026-09-26-003.md)
-modèle de données
-- [ ] Valider champ et index
-	- [ ] https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-003.md#111---tasks
- - [ ] Apres validation du model tasks supprimer Fichier : 2025-01-01-000001_create_taches.sql
-
-# [`2026-09-26-005`](/project/daily/2026-09-26-005.md)
-utilisation actuelle des user shield
-- [X] Valider me
-- [X] Supprimer profile route et controller
-
-# [`2026-09-26-006`](/project/daily/2026-09-26-006.md)
-- [ ] Valider ajout des tables : projects , project_members (necessaire pour ajuster les droits)
-- [-] relation projets - Organisation/entreprise/Etablissement , user - personne
-	- peu d'intérêt sans telephone
-- [X] user_profils  avec tel fixe, mobile, index user_id user relation ou id personne  et organisation
-- [ ] voir possibilité de trouver: user - Etablissement avec user - personne et personne - Organisation/entreprise/Etablissement
-
-## tables a ajouter
+**à définir et ajouter**
 - projects 
 	- champs : id, name, created_at
 - project_members
@@ -104,53 +88,29 @@ utilisation actuelle des user shield
  	- recuperer ProfileClient avec user_id
 - tasks
  	- ajout champs : project_id
-- user_profils
 
-### user_profils
-migration user_profils à construire depuis client_profil ci dessous
-```sql
-CREATE TABLE user_profils (
-    id              BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    user_id         INT UNSIGNED NOT NULL,
-    tel_fixe        VARCHAR(20) NULL,
-    tel_mobile      VARCHAR(20) NULL,
-    personne_id     BIGINT UNSIGNED NULL,
-	adresse_id      BIGINT UNSIGNED NULL,
-    organisation_id BIGINT UNSIGNED NOT NULL DEFAULT 0,
-    defaut          BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at      DATETIME NULL,
-    updated_at      DATETIME NULL,
 
-    PRIMARY KEY (id),
 
-    UNIQUE KEY uk_user_profils_user_org (user_id, organisation_id),
 
-    CONSTRAINT fk_user_profils_user
-        FOREIGN KEY (user_id) REFERENCES users(id)
-        ON DELETE CASCADE ON UPDATE CASCADE,
 
-    CONSTRAINT fk_user_profils_personne
-        FOREIGN KEY (personne_id) REFERENCES personnes(id)
-        ON DELETE SET NULL ON UPDATE CASCADE,
+[`2026-09-26-003`](/project/daily/2026-09-26-003.md) - modèle de données
+- [ ] Valider champ et index
+	- [ ] https://github.com/arbph-dev/codeIgniter-appCms/blob/main/project/daily/2026-09-26-003.md#111---tasks
+ - [ ] Apres validation du model tasks supprimer Fichier : 2025-01-01-000001_create_taches.sql
 
-	CONSTRAINT fk_user_profils_adresse
-        FOREIGN KEY (adresse_id) REFERENCES adresses(id)
-        ON DELETE SET NULL ON UPDATE CASCADE,
+[`2026-09-26-005`](/project/daily/2026-09-26-005.md) - utilisation actuelle des user shield
+- [X] Valider me
+- [X] Supprimer profile route et controller
 
-    CONSTRAINT fk_user_profils_organisation
-        FOREIGN KEY (organisation_id) REFERENCES organisations(id)
-        ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-```
-- renommer client_profil en user_profils
-- UNIQUE KEY uk_client_profil_user (user_id) doit evoluer
-	- 1 profil par user par organisation
-  		user.id shield et user_profils_persid peuvent être associé a plusieurs user_profils
- 		user_profils peut avoir les mêmes  user.id shield , user_profils_persid si et seulement si  user_profils_orgid est différent (consultant pour deux entreprises distincts)
-   		il faudra permettre la sélection apres login si on trouve plusieurs profil
-   		un select dans Toolbar2AuthPanel sera affiché ou masque selon qu'il y est plusieurs profils
-- on peut ajouter une valeur default true dans user_profils
-	- 	le dashboard user permettra de modifier le profil par defaut
+[`2026-09-26-006`](/project/daily/2026-09-26-006.md)
+- [ ] Valider ajout des tables : projects , project_members (necessaire pour ajuster les droits)
+- [-] relation projets - Organisation/entreprise/Etablissement , user - personne
+	- peu d'intérêt sans telephone
+- [X] user_profils  avec tel fixe, mobile, index user_id user relation ou id personne  et organisation
+- [ ] voir possibilité de trouver: user - Etablissement avec user - personne et personne - Organisation/entreprise/Etablissement
+
+
+
 
 
 ## 2026-09-27-001
@@ -413,36 +373,7 @@ ligne 450
 ## 2026-09-28-002
 Préparation du seeder `user_profils` . on réalise un jeu de donnés qui sera corrigés ensuite
 
-#### lister les champs
-1. `id`
-2. `user_id`
-3. `tel_fixe`
-4. `tel_mobile`
-5. `personne_id`
-6. `adresse_id`
-7. `organisation_id`
-8. `defaut`, 
-9. `created_at`,
-10. `updated_at`
 
-**champs a employer**
-2 `user_id`
-3 `tel_fixe`
-4 `tel_mobile`
-5 `personne_id`
-6 `adresse_id`
-7 `organisation_id`
-9 `created_at`, TIMESTAMP
-```sql
-INSERT INTO `user_profils`(`user_id`,`tel_fixe`,`tel_mobile`,`personne_id`,`adresse_id`, `organisation_id`, `created_at`) 
-	VALUES (	1,	'0200000001',	'0600000001',	1,	1,	1,	NOW() ) , (	2,	'0200000002',	'0600000002',	2,	2,	2,	NOW() ) , (	3,	'0200000003',	'0600000003',	3,	3,	3,	NOW() ) ;
-```
-
-`user_profils`
-- Un user avec 2 orgs (contrainte UNIQUE user_id + organisation_id)
-
-`organisations` 
-- 0 interdit si FK RESTRICT sans ligne id=0 , utiliser un id réel ou assouplir le seed
 
 ## 2026-09-28-003
  Tests
