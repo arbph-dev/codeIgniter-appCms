@@ -87,9 +87,9 @@ REGISTER
 - [X] [migration user_profils](/documentation/MIGRATIONS/user_profils.md)
 - [X] Model
 	- [`app/Entities/UserProfil.php`](/app/Entities/UserProfil.php)
-	- [`app/Models/UserProfilModel.php`](/refactoring/app/Models/UserProfilModel.php)
+	- [`app/Models/UserProfilModel.php`](/app/Models/UserProfilModel.php)
 - [X] [app/Config/Routes.php](app/Config/Routes_php.md)
-- [X] [`app/Controllers/Api/AuthController.php`](/refactoring/app/Controllers/Api/AuthController.php)
+- [X] [`app/Controllers/Api/AuthController.php`](/app/Controllers/Api/AuthController.php)
 
 
 
