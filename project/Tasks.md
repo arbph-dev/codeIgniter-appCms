@@ -249,8 +249,66 @@ modification
 | fetchMe       | GET /api/auth/me        | Bearer optionnel |
 | fetchLogout   | POST /api/auth/logout   | Bearer           |
 
+ ----
+
+ui.html — réserver 2 panels en tête de #stack
+AuthPanelBase.js — états + bindings /assets/js/ui/workbench/core/AuthPanelBase.js
+ToolbarAuthPanel.js /assets/js/ui/workbench/auth/ToolbarAuthPanel.js
+uiapp.js — offset + show/hide boards
 
 
+AuthPanelBase
+gere le bus
+
+```js
+this._onSuccess = ({ user }) => { this._user = user; this._render('user') }
+
+bus.subscribe('auth:success', this._onSuccess)
+```
+
+ToolbarAuthPanel herite  de AuthPanelBase mais ToolbarAuthPanel doit réimplementer _buildUserBar
+
+Les events souscrits et les callback sont déja définis et gérés  par exemple :
+- appel de this._render('user') 
+
+```js
+	this._buildUserBar(this._user).forEach(el => this._target.appendChild(el))
+    this._bindLogout()
+```
+
+
+La version finale doit être séparé 
+https://zealot.fr/ui.html
+
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/ui.html
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uiapp.js
+https://github.com/arbph-dev/codeIgniter-appCms/blob/main/WebUI/uistyle.css
+le fin du refactor , on integre et on liste les composants dont les workbench https://github.com/arbph-dev/codeIgniter-appCms/blob/main/assets/readme.md
+
+
+
+## 2026-09-27-003
+
+On branche le formulaire register dans #user-board-body plutôt que dans la toolbar
+
+ ----
+
+
+## 2026-09-28-001
+[`ui.html`](/WebUI/ui.html) :
+- `#user-board-body` sert pour register et les infos users
+
+On doit gérer les données du Endpoint `/api/auth/me` renvoyées par le controller dans boards user 
+
+```php
+return $this->response->setStatusCode(200)->setJSON([
+	'id'          => $user->id,
+	'username'    => $user->username,
+	'email'       => $user->email,
+	'groups'      => $user->getGroups(),
+	'permissions' => $user->getPermissions(),
+]);
+```
 
 
  ----
@@ -279,6 +337,8 @@ defaut casté en boolean (comme actif dans Relation).
 Méthodes utilitaires prêtes pour le register et le select multi-profils de la toolbar.
 Pas de soft-delete (conforme à la table)
 
+### 2026-09-28-001-N000
+documentation/ROADMAP/INVENTORY_index.md - SectionPanels
 
 
 
