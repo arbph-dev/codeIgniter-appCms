@@ -281,14 +281,22 @@ note :
 
 
 
-
-
+AuthPanelBase
+- [`/assets/js/ui/workbench/core/AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
+- [`AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
+- 
 AuthPanelBase.js — états + bindings /assets/js/ui/workbench/core/AuthPanelBase.js
-ToolbarAuthPanel.js /assets/js/ui/workbench/auth/ToolbarAuthPanel.js
+
+ToolbarAuthPanel.js
+- [`/assets/js/ui/workbench/auth/ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
+- [`ToolbarAuthPanel.js`](/refactoring/assets/js/ui/workbench/auth/ToolbarAuthPanel.js)
+- /assets/js/ui/workbench/auth/ToolbarAuthPanel.js
+
+
 uiapp.js — offset + show/hide boards
 
 
-AuthPanelBase
+
 gere le bus
 
 ```js
@@ -315,7 +323,33 @@ Les events souscrits et les callback sont déja définis et gérés  par exemple
 ## 2026-09-27-003
 
 On branche le formulaire register dans #user-board-body plutôt que dans la toolbar
+On place le formulaire register dans #user-board-body, la toolbar ne garde que le bouton « Inscription ».
 
+|Zone|Contenu|
+|---|---|
+|.header-auth (guest)|email + password + Connexion + **Inscription**|
+|#user-board-body|formulaire register complet|
+|.header-auth (register en cours)|bouton « Retour » minimal (optionnel)|
+
+### [`AuthPanelBase.js`](/refactoring/assets/js/ui/workbench/core/AuthPanelBase.js)
+AuthPanelBase.js — ajustements dans _render()
+- remplacer le case 'register'
+- remplacer le case 'register-pending'
+- Nouvelles méthodes
+	- _boardBody() reference au Conteneur du board user
+	- _mountRegisterForm(error = null)
+ 	- _mountRegisterPending(message)
+ 	- _clearBoardBody()
+- modifier
+	- _bindRegister doit cibler le board root, pas seulement this._target
+	- _emitRegister() const root = this._boardBody() ?? this._target
+ - Et sur guest / success, nettoyer le board : this._clearBoardBody()
+ 
+ 
+ 
+ /** Mini barre affichée dans .header-auth pendant l'inscription */
+_buildRegisterToolbar()
+ 
  ----
 
 
