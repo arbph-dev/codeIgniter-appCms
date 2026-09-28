@@ -8,6 +8,7 @@ import { initCallout} from '/assets/js/components/callout.js'
 import { initLeaflet }  from '/assets/js/components/leaflet.js'
 //2026-09-22-000 ajout de auth
 import { initAuthController } from '/assets/js/features/auth/auth.controller.js'
+import { authStore } from '/assets/js/features/auth/auth.store.js'                      //2026-09-28-001
 import ToolbarAuthPanel       from '/assets/js/ui/workbench/auth/ToolbarAuthPanel.js'
 import AdresseWorkbench from '/assets/js/ui/workbench/adresse/AdresseWorkbench.js'
 
@@ -305,7 +306,44 @@ function statusWrite( textContent ){
 
 
 
+// ── Rendu minimal board user / admin ─────────────────────────────────────────
+//2026-09-28-001
+function badgeGroups(groups) {
+    if (!groups?.length) return '<span class="adm-badge adm-badge--none">—</span>'
+    return groups.map(g =>
+        `<span class="adm-badge adm-badge--${g}">${g}</span>`
+    ).join(' ')
+}
 
+function badgePerms(permissions) {
+    if (!permissions?.length) return '<span class="adm-badge adm-badge--none">—</span>'
+    return permissions.map(p => `<span class="adm-badge">${p}</span>`).join(' ')
+}
+
+/**
+ * Carte profil minimale — données endpoint /me
+ * { id, username, email, groups, permissions }
+ */
+function renderUserCard(user, { title = 'Mon profil' } = {}) {
+    const initial = (user?.username?.[0] ?? '?').toUpperCase()
+    return `
+        <div class="adm-detail-header">
+            <div class="adm-avatar">${initial}</div>
+            <div>
+                <h3>${title}</h3>
+                <p>${user?.username ?? '—'} · ${user?.email ?? '—'}</p>
+            </div>
+        </div>
+        <dl class="adm-dl">
+            <dt>ID</dt>          <dd>${user?.id ?? '—'}</dd>
+            <dt>Username</dt>    <dd>${user?.username ?? '—'}</dd>
+            <dt>Email</dt>       <dd>${user?.email ?? '—'}</dd>
+            <dt>Groupes</dt>     <dd>${badgeGroups(user?.groups)}</dd>
+            <dt>Permissions</dt> <dd>${badgePerms(user?.permissions)}</dd>
+        </dl>
+        <p class="panel-hint"><em>Profils (user_profils) — à venir après seeder + tests register</em></p>
+    `
+}
 // ── Boards auth (hors pagination / menu) ─────────────────────────────────────
 //2026-09-27-002
 function getAuthBoards() {
@@ -333,7 +371,7 @@ function showAuthBoard(role) {
     board?.classList.remove('hidden')
     statusWrite(`Board : ${role}`)
 }
-
+/* //2026-09-28-001
 function initAuthBoards() {
     bus.subscribe('board:admin',    () => showAuthBoard('admin'))
     bus.subscribe('board:user',     () => showAuthBoard('user'))
@@ -347,12 +385,85 @@ function initAuthBoards() {
     // Au logout → masquer les boards
     bus.subscribe('auth:guest', () => hideAuthBoards())
 }
+*/
+
+function initAuthBoards() {
+    const show = (role) => {
+        hideAuthBoards()
+        qsa('div.panel-card:not([data-role])', _main)
+            .forEach(p => p.classList.add('hidden'))
+
+        const board = document.querySelector(`div.panel-card[data-role="${role}"]`)
+        board?.classList.remove('hidden')
+        statusWrite(`Board : ${role}`)
+    }
+
+    bus.subscribe('board:user', () => {
+        show('user')
+        // Ne pas écraser un formulaire register en cours
+        const body = document.querySelector('#user-board-body')
+        if (body && !body.querySelector('.auth-register-form') && !body.querySelector('.auth-pending')) {
+            mountUserBoard(authStore.user)
+        }
+    })
+
+    bus.subscribe('board:admin', () => {
+        show('admin')
+        mountAdminBoard(authStore.user)
+    })
+
+    // register : ouvre le panel user ; le form est monté par AuthPanelBase
+    bus.subscribe('board:register', () => show('user'))
+
+    bus.subscribe('board:hide', () => {
+        hideAuthBoards()
+        if (typeof switchPanel === 'function') switchPanel(_currentPanel)
+    })
+
+    bus.subscribe('auth:guest', () => {
+        hideAuthBoards()
+        const body = document.querySelector('#user-board-body')
+        if (body) body.innerHTML = ''
+        const admin = document.querySelector('#admin-board-body')
+        if (admin) admin.innerHTML = ''
+    })
+
+    // Après login réussi : rafraîchir la carte si le board user est visible
+    bus.subscribe('auth:success', ({ user }) => {
+        const userBoard = document.querySelector('div.panel-card[data-role="user"]')
+        if (userBoard && !userBoard.classList.contains('hidden')) {
+            mountUserBoard(user)
+        }
+    })
+}
 
 // ── end  Boards auth  ─────────────────────────────────────
 
+//2026-09-28-001
 
+function mountUserBoard(user) {
+    const body = document.querySelector('#user-board-body')
+    if (!body) return
+    body.innerHTML = renderUserCard(user, { title: 'Mon espace' })
+}
 
+function mountAdminBoard(user) {
+    const body = document.querySelector('#admin-board-body')
+    if (!body) return
 
+    // Minimal admin : même carte + mention rôle
+    const isAdmin = (user?.groups ?? []).some(g =>
+        ['admin', 'superadmin'].includes(g)
+    )
+
+    body.innerHTML = `
+        ${renderUserCard(user, { title: 'Administration' })}
+        <hr>
+        <p>${isAdmin
+            ? 'Accès admin OK. Gestion utilisateurs / seeder — prochaine étape.'
+            : 'Accès refusé — groupe admin requis.'}</p>
+    `
+}
 
 
 
@@ -391,6 +502,8 @@ function boot()
 }
 
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
   setPageRef() //definit les references aux elements dom
   initSidebar() // event + bus handlers 
@@ -410,4 +523,5 @@ window.onload = (event) => {
 
   //initLeaflet()
   boot()
-}
+} 
+  
