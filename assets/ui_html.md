@@ -128,7 +128,7 @@ modifier [`uiapp.js`](/WebUI/uiapp.js)
 
 
 
-### css associé
+### css associe
 - panel-card
 - panel-title
 - panel-description
