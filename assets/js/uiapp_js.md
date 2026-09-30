@@ -12,6 +12,46 @@ La version pour les travaux : [WebUI/uiapp.js](/WebUI/uiapp.js) est a mettre a j
 
 
 ## Fonctions
+- themeSwitch
+
+- fullscreenSwitch
+- switchPanel
+- switchSection
+
+- statusWrite
+
+- typeofObj
+ 
+- readPage
+- initPagination
+- initNavigation
+- openMenuPanel
+- initMenu
+- setPageRef
+
+- openSidebar
+- closeSidebar
+- initSidebar
+- openNav
+- closeNav
+
+
+
+- getAuthBoards
+- hideAuthBoards
+- showAuthBoard
+- initAuthBoards
+- show
+- mountUserBoard
+- mountAdminBoard
+- mountApplication
+- noAuth
+- boot
+- onload
+
+
+
+
 
 offset readpage 
 show/hide boards
@@ -22,7 +62,7 @@ show/hide boards
 - ajout function initAuthBoards() 
 
 
-#### Helper de rendu
+## Helper de rendu
 - function badgeGroups(groups)
 - function badgePerms(permissions)
 - function renderUserCard(user, { title = 'Mon profil' } = {})
